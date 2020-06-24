@@ -19,7 +19,7 @@ public class UserMapperTests {
 	
 	@Test
 	public void testGetList() {
-		mapper.getList().forEach(user->log.info(user));
+		mapper.getTotalList().forEach(user->log.info(user));
 	}
 
 	
