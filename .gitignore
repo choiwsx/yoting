@@ -98,3 +98,4 @@ hs_err_pid*
 #haeri
 .classpath
 MANIFEST.mf
+/.classpath
