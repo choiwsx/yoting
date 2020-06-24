@@ -100,3 +100,5 @@ hs_err_pid*
 MANIFEST.mf
 /.classpath
 /target
+/.project
+/.project
