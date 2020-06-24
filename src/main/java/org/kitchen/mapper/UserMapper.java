@@ -6,5 +6,5 @@ import org.kitchen.domain.UserVO;
 
 public interface UserMapper {
 	public List<UserVO> getList();
-
+	
 }
