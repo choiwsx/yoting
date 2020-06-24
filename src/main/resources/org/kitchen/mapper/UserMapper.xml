@@ -20,7 +20,7 @@
 </resultMap>
 
 <insert id="register">
-	<selectKey keyProperty="userNo" order="before" resultType="Long">
+	<selectKey keyProperty="userNo" order="BEFORE" resultType="Long">
 	select u_seq.nextval from dual
 	</selectKey>
 	insert into tbl_user 
@@ -30,6 +30,10 @@
 	#{nickName}, #{profilePhoto}, #{webUrl}, #{bio}, 
 	#{emailSub}, #{privacy}, #{status})
 </insert>
+
+<select id="getByUserNo" resultMap="user">
+select * from tbl_user where u_num = #{userNo}
+</select>
 
 <select id="getTotalList" resultMap="user">
 <![CDATA[

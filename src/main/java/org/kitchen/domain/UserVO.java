@@ -8,12 +8,12 @@ public class UserVO {
 	private String userId;
 	private String userPwd;
 	private String email;
-	private String emailAuth;
+	private char emailAuth;
 	private String nickName;
 	private String profilePhoto;
 	private String webUrl;
-	private String bio; //¼Ò°³±Û
-	private String emailSub;
-	private boolean privacy;
-	private String status;
+	private String bio; //ï¿½Ò°ï¿½ï¿½ï¿½
+	private char emailSub;
+	private char privacy;
+	private char status;
 }

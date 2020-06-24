@@ -18,28 +18,28 @@ public class UserMapperTests {
 	@Setter(onMethod_=@Autowired)
 	private UserMapper mapper;
 	
-	@Test
-	public void testRegister() {
-		UserVO user = new UserVO();
-		user.setUserId("newUserID");
-		user.setUserPwd("1234");
-		user.setEmail("abc@sss.com");
-		user.setEmailAuth("y");
-		user.setNickName("우롱차");
-		user.setProfilePhoto("http://www.google.com");
-		user.setWebUrl("http://nav.com");
-		user.setBio("나는18살이다");
-		user.setEmailSub("y");
-		user.setPrivacy(true);
-		user.setStatus("a");
-		
-		int userNo=mapper.register(user);
-		log.info("TestRegister"+user+" userNo="+userNo);
-	}
+//	@Test
+//	public void testRegister() {
+//		UserVO user = new UserVO();
+//		user.setUserId("newUserID");
+//		user.setUserPwd("1234");
+//		user.setEmail("abc@sss.com");
+//		user.setEmailAuth('0');
+//		user.setNickName("우롱차");
+//		user.setProfilePhoto("http://www.google.com");
+//		user.setWebUrl("http://nav.com");
+//		user.setBio("나는18살이다");
+//		user.setEmailSub('1');
+//		user.setPrivacy('0');
+//		user.setStatus('1');
+//		
+//		int userNo=mapper.register(user);
+//		log.info("TestRegister"+user+" userNo="+userNo);
+//	}
 	
 	@Test
 	public void testGetByUser() {
-		
+
 	}
 	
 	@Test
@@ -49,7 +49,12 @@ public class UserMapperTests {
 	
 	@Test
 	public void testGetByUserNo() {
-		
+		UserVO user1 = mapper.getByUserNo(1L);
+		log.info("1: "+user1);
+		UserVO user2 = mapper.getByUserNo(4L);
+		log.info("4: "+user2);
+		UserVO user3 = mapper.getByUserNo(12L);
+		log.info("12: "+user3);
 	}
 	
 	@Test
