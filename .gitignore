@@ -2,7 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse
 
-### Eclipse ###
+### Eclipse #################
 .metadata
 bin/
 tmp/
@@ -94,9 +94,11 @@ local.properties
 hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
-MANIFEST.MF
-pom.properties
+
+#haeri
 .classpath
-/target
+MANIFEST.mf
 /.classpath
+/target
+/.project
 /.project
