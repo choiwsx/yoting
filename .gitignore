@@ -97,3 +97,5 @@ hs_err_pid*
 MANIFEST.MF
 pom.properties
 .classpath
+/target
+/.classpath
