@@ -5,7 +5,7 @@ import java.util.List;
 import org.kitchen.domain.UserVO;
 
 public interface UserMapper {
-	public void register(UserVO user);
+	public int register(UserVO user);
 	public UserVO get(UserVO user);
 	public UserVO get(String userId);
 	public UserVO get(Long userNo);
