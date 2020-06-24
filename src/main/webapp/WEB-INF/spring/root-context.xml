@@ -21,5 +21,8 @@
 	</bean>
 
 	<mybatis-spring:scan base-package="org.kitchen.mapper" />
+	
+	<context:component-scan base-package="org.kitchen.service">
+	</context:component-scan>
 
 </beans>
