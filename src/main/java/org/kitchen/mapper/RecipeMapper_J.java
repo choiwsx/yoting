@@ -10,4 +10,5 @@ public interface RecipeMapper_J {
 	public void insert(RecipeVO recipe);
 	
 	public void insertSelectkey(long rno);
+	
 }

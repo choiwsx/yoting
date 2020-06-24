@@ -4,19 +4,33 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kitchen.mapper.RecipeMapper_J">
 
-<resultMap id="recipe" type="org.kitchen.domain.RecipeVO">
-   <result property="rno" column="r_num"/>
-   <result property="title" column="title"/>
-   <result property="thumbnail" column="thumbnail"/>
-   <result property="regdate" column="regdate"/>
-   <result property="updateDate" column="updatedate"/>
-   <result property="cookingTime" column="cookingtime"/>
-   <result property="difficulty" column="difficulty"/>
-   <result property="userNo" column="u_num"/>
-</resultMap>
+	<resultMap id="recipe" type="org.kitchen.domain.RecipeVO">
+		<result property="rno" column="r_num" />
+		<result property="title" column="title" />
+		<result property="thumbnail" column="thumbnail" />
+		<result property="regdate" column="regdate" />
+		<result property="updateDate" column="updatedate" />
+		<result property="cookingTime" column="cookingtime" />
+		<result property="difficulty" column="difficulty" />
+		<result property="userNo" column="u_num" />
+	</resultMap>
 
-<select id="getList" resultMap="recipe">
+	<select id="getList" resultMap="recipe">
 <![CDATA[select * from tbl_recipe where r_num>0]]>
-</select>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO tbl_recipe(r_num, cookingtime, difficulty, u_num, thumbnail, title)
+		VALUES (r_seq.nextval, #{cookingtime}, #{difficulty}, #{u_num}, #{thumbnail}, #{title}))
+	</insert>
+
+	<insert id="insertSelectkey">
+		<selectKey keyProperty="r_num" order="BEFORE"
+			resultType="long">
+			SELECT #{r_num} FROM tbl_recipe
+		</selectKey>
+		INSERT INTO tbl_recipe(r_num, cookingtime, difficulty, u_num, thumbnail, title)
+		VALUES (r_seq.nextval, #{cookingtime}, #{difficulty}, #{u_num}, #{thumbnail}, #{title}))
+	</insert>
 
 </mapper>
