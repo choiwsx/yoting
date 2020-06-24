@@ -19,7 +19,7 @@
    <result property="status" column="status"/>
 </resultMap>
 
-<insert id="register">
+<insert id="insert">
 	<selectKey keyProperty="userNo" order="BEFORE" resultType="Long">
 	select u_seq.nextval from dual
 	</selectKey>
@@ -27,13 +27,35 @@
 	(u_num, u_id, u_pwd, email, email_auth, email_news, u_photo, 
 	u_url, u_public, status, info, nickname)
 	values(#{userNo}, #{userId}, #{userPwd}, #{email}, #{emailAuth},  
-	#{nickName}, #{profilePhoto}, #{webUrl}, #{bio}, 
-	#{emailSub}, #{privacy}, #{status})
+	#{emailSub}, #{profilePhoto}, #{webUrl}, #{privacy}, 
+	#{status}, #{bio}, #{nickName})
 </insert>
 
-<select id="getByUserNo" resultMap="user">
+<select id="selectById" resultMap="user">
+select * from tbl_user where u_id = #{userId}
+</select>
+
+<select id="selectByNo" resultMap="user">
 select * from tbl_user where u_num = #{userNo}
 </select>
+
+<update id="update" parameterType="org.kitchen.domain.UserVO">
+update tbl_user set u_id=#{userId}, u_pwd=#{userPwd}, email=#{email}, email_auth=#{emailAuth}, email_news=#{emailSub}, 
+u_photo=#{profilePhoto}, u_url=#{webUrl}, u_public=#{privacy}, status=#{status}, info=#{bio}, nickname=#{nickName}
+where u_num = #{userNo}
+</update>
+
+<delete id="delete" parameterType="org.kitchen.domain.UserVO">
+delete from tbl_user where u_num = #{userNo}
+</delete>
+
+<delete id="deleteByNo">
+delete from tbl_user where u_num = #{userNo}
+</delete>
+
+<delete id="deleteById">
+delete from tbl_user where u_id = #{userId}
+</delete>
 
 <select id="getTotalList" resultMap="user">
 <![CDATA[

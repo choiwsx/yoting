@@ -19,9 +19,9 @@ public class UserMapperTests {
 	private UserMapper mapper;
 	
 //	@Test
-//	public void testRegister() {
+//	public void testInsert() {
 //		UserVO user = new UserVO();
-//		user.setUserId("newUserID");
+//		user.setUserId("newUserID7");
 //		user.setUserPwd("1234");
 //		user.setEmail("abc@sss.com");
 //		user.setEmailAuth('0');
@@ -33,45 +33,72 @@ public class UserMapperTests {
 //		user.setPrivacy('0');
 //		user.setStatus('1');
 //		
-//		int userNo=mapper.register(user);
+//		int userNo=mapper.insert(user);
 //		log.info("TestRegister"+user+" userNo="+userNo);
 //	}
+//	
+//	@Test
+//	public void testGetByUser() {
+//
+//	}
+//	
+//	@Test
+//	public void testSelectById() {
+//		UserVO user1 = mapper.selectById("user01");
+//		log.info("1: "+user1);
+//		UserVO user2 = mapper.selectById("user04");
+//		log.info("4: "+user2);
+//		UserVO user3 = mapper.selectById("newUserID");
+//		log.info("12: "+user3);
+//	}
+//	
+//	@Test
+//	public void testSelectByNo() {
+//		UserVO user1 = mapper.selectByNo(1L);
+//		log.info("1: "+user1);
+//		UserVO user2 = mapper.selectByNo(4L);
+//		log.info("4: "+user2);
+//		UserVO user3 = mapper.selectByNo(12L);
+//		log.info("12: "+user3);
+//	}
+//	
+//	@Test
+//	public void testUpdate() {
+//		UserVO user = mapper.selectByNo(17L);
+//		user.setUserId("newu");
+//		log.info(mapper.update(user));
+//		mapper.getTotalList().forEach(u->log.info(u));
+//	}
+//	
+//	@Test
+//	public void testDelete() {
+//		log.info("#################################");
+//		UserVO user = mapper.selectByNo(22L);
+//		log.info(mapper.delete(user));
+//	}
 	
-	@Test
-	public void testGetByUser() {
+	
+//	@Test
+//	public void testDeletByNo() {
+//		log.info("delete");
+//		log.info(mapper.deleteByNo(20L));
+////		log.info(mapper.deleteByNo(13L));
+////		log.info(mapper.deleteByNo(14L));
+//
+//	}
+	
+//	@Test
+//	public void testDeleteById() {
+//		log.info("delete");
+//		log.info(mapper.deleteById("newu"));
+//	}
 
-	}
-	
-	@Test
-	public void testGetByUserId() {
-		
-	}
-	
-	@Test
-	public void testGetByUserNo() {
-		UserVO user1 = mapper.getByUserNo(1L);
-		log.info("1: "+user1);
-		UserVO user2 = mapper.getByUserNo(4L);
-		log.info("4: "+user2);
-		UserVO user3 = mapper.getByUserNo(12L);
-		log.info("12: "+user3);
-	}
-	
-	@Test
-	public void testModify() {
-		
-	}
-	
-	@Test
-	public void testRemove() {
-		
-	}
-	
-	@Test
-	public void testGetList() {
-		
-	}
-	
+//	
+//	@Test
+//	public void testGetList() {
+//		
+//	}
+//	
 	@Test
 	public void testGetTotalList() {
 		mapper.getTotalList().forEach(user->log.info(user));
