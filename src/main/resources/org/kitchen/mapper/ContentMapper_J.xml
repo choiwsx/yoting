@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.ContentMapper_J">
+
+<resultMap id="recipecontent" type="org.kitchen.domain.ContentVO">
+   <result property="stepNo" column="rc_stepnum"/>
+   <result property="rno" column="r_num"/>
+   <result property="photoUrl" column="photo"/>
+   <result property="content" column="rc_content"/>
+</resultMap>
+
+<select id="getList" resultMap="recipecontent">
+<![CDATA[select * from tbl_recipecontent where r_num>0 and rc_stempnum>0]]>
+</select>
+
+	
+</mapper>
