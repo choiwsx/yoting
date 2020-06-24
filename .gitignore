@@ -99,3 +99,4 @@ pom.properties
 .classpath
 /target
 /.classpath
+/.project
