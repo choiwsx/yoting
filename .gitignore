@@ -94,3 +94,6 @@ local.properties
 hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
+MANIFEST.MF
+pom.properties
+.classpath
