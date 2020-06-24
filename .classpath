@@ -36,7 +36,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/sts-bundle/sts-3.9.12.RELEASE/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hal/com/sts-bundle/sts-3.9.12.RELEASE/lombok.jar"/>
 	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -48,6 +48,6 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/sts-bundle/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Hal/com/sts-bundle/ojdbc8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
