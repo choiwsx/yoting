@@ -21,19 +21,20 @@
 	</select>
 
 	<insert id="insert">
-		INSERT INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, c_code)
-		VALUES (r_seq.nextval, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title}, #{categoryNo})
+		INSERT INTO tbl_recipe(r_num, cookingTime,
+		difficulty, u_num, thumbnail, title, c_code)
+		VALUES (r_seq.nextval,
+		#{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title},
+		#{categoryNo})
 	</insert>
 
-<!-- 	<insert id="insertSelectkey">
-		<selectKey keyProperty="rno" order="BEFORE"
-			resultType="long">
-			SELECT r_seq.nextval, u FROM tbl_recipe
-		</selectKey>
-		INSERT INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, c_code)
-		VALUES (#{rno}, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title}, #{categoryNo})
-	</insert>  -->
-	
+
+	<!-- <insert id="insertSelectkey"> <selectKey keyProperty="rno" order="BEFORE" 
+		resultType="long"> SELECT r_seq.nextval, u FROM tbl_recipe </selectKey> INSERT 
+		INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, 
+		c_code) VALUES (#{rno}, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, 
+		#{title}, #{categoryNo}) </insert> -->
+
 	<select id="read" resultMap="recipe">
 	<![CDATA[
 	SELECT * FROM tbl_recipe where r_num > 0

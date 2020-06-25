@@ -15,17 +15,18 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/recipeBoard/*")
 public class RecipeController_w {
 
-	@Setter(onMethod_ = {@Autowired})
+	@Setter(onMethod_ = { @Autowired })
 	private RecipeService_w service;
-	
+
 	@GetMapping("/list_w")
-	public void list(Model model)
-	{
+	public void list(Model model) {
 		log.info("list");
 		model.addAttribute("list_w", service.getList());
 	}
-
-	 
-
+	
+	@GetMapping("/list_k")
+	public void list1(Model model) {
+		
+	}
 
 }
