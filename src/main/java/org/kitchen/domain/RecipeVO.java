@@ -14,7 +14,8 @@ public class RecipeVO {
 	private int cookingTime;
 	private String difficulty;
 	private Long userNo;
-	private ContentVO[] contents;
-	private String[] material;
-	private long[] reviewRecipes;
+//	private ContentVO[] contents;
+//	private String[] material;
+//	private long[] reviewRecipes;
+	private int categoryNo;
 }

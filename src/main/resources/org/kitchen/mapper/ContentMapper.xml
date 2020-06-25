@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.ContentMapper">
+
+	<resultMap id="content" type="org.kitchen.domain.ContentVO">
+		<result property="stepNo" column="rc_stepnum" />
+		<result property="rno" column="r_num" />
+		<result property="photoUrl" column="photo" />
+		<result property="content" column="rc_content" />
+	</resultMap>
+
+	<select id="getList" resultMap="content">
+<![CDATA[SELECT * FROM tbl_recipecontent WHERE r_num>0 AND rc_stepnum>0]]>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
+		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
+	</insert>
+
+	<insert id="insertSelectkey">
+		<selectKey keyProperty="r_num" order="BEFORE"
+			resultType="long">
+			SELECT #{r_num} FROM tbl_recipecontent
+		</selectKey>
+		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
+		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
+	</insert>
+
+</mapper>
