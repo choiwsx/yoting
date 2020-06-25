@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.kitchen.mapper.RecipeMapper">
+<mapper namespace="org.kitchen.mapper.RecipeMapper_w">
 
 <resultMap id="recipe" type="org.kitchen.domain.RecipeVO">
    <result property="rno" column="r_num"/>
@@ -19,4 +19,11 @@
 <![CDATA[select * from tbl_recipe where r_num>0]]>
 </select>
 
+<select id="searchTest" resultMap="recipe">
+select rno, title, userNo, regdate
+from
+tbl_recipe
+where
+title like '%'||#{keyword}||'%'
+</select>
 </mapper>

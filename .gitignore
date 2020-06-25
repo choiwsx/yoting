@@ -101,3 +101,7 @@ MANIFEST.mf
 /.classpath
 /target
 /.project
+<<<<<<< HEAD
+=======
+/.project
+>>>>>>> 567e3f66c33a3e6e1fe03f3a2300dfcfcc3510a8
