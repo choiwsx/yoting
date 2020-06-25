@@ -15,15 +15,77 @@
    <result property="userNo" column="u_num"/>
 </resultMap>
 
+<resultMap id="user" type="org.kitchen.domain.UserVO">
+   <result property="userNo" column="u_num"/>
+   <result property="userId" column="u_id"/>
+   <result property="userPwd" column="u_pwd"/>
+   <result property="email" column="email"/>
+   <result property="emailAuth" column="email_auth"/>
+   <result property="nickName" column="nickname"/>
+   <result property="profilePhoto" column="u_photo"/>
+   <result property="webUrl" column="u_url"/>
+   <result property="bio" column="info"/>
+   <result property="emailSub" column="email_news"/>
+   <result property="privacy" column="u_public"/>
+   <result property="status" column="status"/>
+</resultMap>
+
 <select id="getList" resultMap="recipe">
 <![CDATA[select * from tbl_recipe where r_num>0]]>
 </select>
 
-<select id="searchTest" resultMap="recipe">
-select rno, title, userNo, regdate
+
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 		<foreach item='type' collection="typeArr">
+ 			<trim prefix="OR">
+ 				<choose>
+ 					<when test="type == 'T'.toString()">
+ 						title like '%'||#{keyword}||'%'
+					</when>
+ 					<when test="type == 'W'.toString()">
+ 						 u_id like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+
+
+<select id="getListWithPaging" resultMap="recipe">
+<![CDATA[
+select r_num, title, u_num, regdate
 from
-tbl_recipe
-where
-title like '%'||#{keyword}||'%'
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num ,title, u_num, regdate
+	
+ 	from
+ 	tbl_recipe
+ 	where  
+ ]]>
+ 	<include refid="criteria"></include>
+	
+	<![CDATA[ 	
+	 	rownum<= #{pageNum} * #{amount}
+	 	)
+	where rn> (#{pageNum}-1) * #{amount}
+	]]>
 </select>
+
+<select id="getUserList" resultMap="user">
+
+select u_num, u_id, nickname
+from
+ 	tbl_user
+where  
+ 	u_id like '%'||#{keyword}||'%'
+
+</select>
+
+
+
+
 </mapper>

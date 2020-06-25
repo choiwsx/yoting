@@ -2,6 +2,7 @@ package org.kitchen.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kitchen.domain.Criteria_w;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,6 +19,6 @@ public class RecipeServiceTests_w {
 	
 	@Test
 	public void testGetList() {
-		service.getList().forEach(recipe->log.info(recipe));
+		service.getList(new Criteria_w(2,5)).forEach(recipe->log.info(recipe));
 	}
 }

@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 public class RecipeMapperTests_w {
 	
 	@Setter(onMethod_ = @Autowired)
-	private RecipeMapper mapper;
+	private RecipeMapper_w mapper;
 	
 	@Test
 	public void testGetList()
@@ -28,11 +28,13 @@ public class RecipeMapperTests_w {
 	}
 	
 	@Test
-	public void testSearch() {
+	public void testPaging() {
 		Criteria_w cri = new Criteria_w();
-		cri.setKeyword("Á¦¸ñ1");
 		
-//		List<RecipeVO> list = mapper
+		cri.setKeyword("7");
+		List<RecipeVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(recipe->log.info(recipe));
 	}
 	
 }
