@@ -19,4 +19,11 @@
 <![CDATA[select * from tbl_recipe where r_num>0]]>
 </select>
 
+<select id="searchTest" resultMap="recipe">
+select rno, title, userNo, regdate
+from
+tbl_recipe
+where
+title like '%'||#{keyword}||'%'
+</select>
 </mapper>

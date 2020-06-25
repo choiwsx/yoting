@@ -24,4 +24,8 @@ public class RecipeController_w {
 		log.info("list");
 		model.addAttribute("list_w", service.getList());
 	}
+
+	 
+
+
 }
