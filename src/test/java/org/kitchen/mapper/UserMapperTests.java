@@ -34,36 +34,37 @@ public class UserMapperTests {
 //		mapper.testcheck().forEach(a->log.info(a));
 //	}
 	
-	@Test
-	public void testInsert() {
-		UserVO user = new UserVO();
-		user.setUserId("new10");
-		user.setUserPwd("1234");
-		user.setEmail("abc@sss.com");
-		user.setEmailAuth(true);
-		user.setNickName("우롱차");
-		user.setProfilePhoto("http://www.google.com");
-		user.setWebUrl("http://nav.com");
-		user.setBio("나는18살이다");
-		user.setEmailSub(true);
-		user.setPrivacy(false);
-		user.setStatus(UserStatus.PENDING);
-		mapper.insert(user);
-		
-		log.info("#####: "+mapper.selectById(user.getUserId()));
-		
-	}
+//	@Test
+//	public void testInsert() {
+//		UserVO user = new UserVO();
+//		user.setUserId("new10");
+//		user.setUserPwd("1234");
+//		user.setEmail("abc@sss.com");
+//		user.setEmailAuth(true);
+//		user.setNickName("우롱차");
+//		user.setProfilePhoto("http://www.google.com");
+//		user.setWebUrl("http://nav.com");
+//		user.setBio("나는18살이다");
+//		user.setEmailSub(true);
+//		user.setPrivacy(false);
+//		user.setStatus(UserStatus.PENDING);
+//		mapper.insert(user);
+//		
+//		log.info("#####: "+mapper.selectById(user.getUserId()));
+//		
+//	}
 	
 
-//	
+	
 //	@Test
 //	public void testSelectById() {
 //		UserVO user1 = mapper.selectById("user01");
 //		log.info("1: "+user1);
 //		UserVO user2 = mapper.selectById("user04");
 //		log.info("4: "+user2);
-//		UserVO user3 = mapper.selectById("newUserID");
-//		log.info("12: "+user3);
+//		log.info("#########"+user2.getStatus());
+////		UserVO user3 = mapper.selectById("newUserID");
+////		log.info("12: "+user3);
 //	}
 	
 //	@Test
@@ -154,16 +155,16 @@ public class UserMapperTests {
 //		log.info(mapper.deleteById("newu"));
 //	}
 
-//	
-//	@Test
-//	public void testGetList() {
-//		
-//	}
-//	
+	
 	@Test
-	public void testGetTotalList() {
-		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+	public void testGetMailingList() {
+		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 	}
+	
+//	@Test
+//	public void testGetTotalList() {
+//		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+//	}
 
 	
 }

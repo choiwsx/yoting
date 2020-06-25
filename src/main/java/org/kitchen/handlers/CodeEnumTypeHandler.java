@@ -12,11 +12,11 @@ import org.kitchen.enums.CodeEnum;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class CodeEnumHandler<E extends Enum<E>> implements TypeHandler<CodeEnum> {
+public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeEnum> {
 
 	private Class <E> type;
 	
-	public CodeEnumHandler(Class <E> type) {
+	public CodeEnumTypeHandler(Class <E> type) {
 		this.type = type;
 	}
 

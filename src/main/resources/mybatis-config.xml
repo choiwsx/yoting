@@ -4,6 +4,6 @@
 
 <configuration>
 	<typeHandlers>
-	        <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="org.kitchen.domain.code.UserStatus" />
+		<typeHandler handler="org.kitchen.handlers.CodeEnumTypeHandler" />
 	</typeHandlers>
 </configuration>

@@ -16,11 +16,8 @@
    <result property="bio" column="info"/>
    <result property="emailSub" column="email_news"/>
    <result property="privacy" column="u_privacy"/>
-   <result property="status" column="status"  typeHandler="org.kitchen.handlers.CodeEnumHandler" />
+   <result property="status" column="status"  typeHandler="org.kitchen.handlers.CodeEnumTypeHandler" />
 </resultMap>
-
-
-
 
 <insert id="test">
 insert into tbl_test values(#{test})
@@ -92,11 +89,16 @@ delete from tbl_user where u_num = #{userNo}
 delete from tbl_user where u_id = #{userId}
 </delete>
 
-<select id="getTotalList" resultMap="user">
+<select id="getMailingList" resultMap="user">
 <![CDATA[
-select * from tbl_user where u_num>0
+select * from tbl_user where email_news > 0
 ]]>
 </select>	
 
+<select id="getTotalList" resultMap="user">
+<![CDATA[
+select * from tbl_user where u_num > 0
+]]>
+</select>	
 	
 </mapper>
