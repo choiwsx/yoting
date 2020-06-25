@@ -3,6 +3,7 @@ package org.kitchen.mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
+import org.kitchen.enums.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,6 +19,14 @@ public class UserMapperTests {
 	@Setter(onMethod_=@Autowired)
 	private UserMapper mapper;
 	
+	
+//	@Test
+//	public void test() {
+//
+//	}
+	
+	
+	
 //	@Test
 //	public void test() {
 //		Boolean test = null;
@@ -28,7 +37,7 @@ public class UserMapperTests {
 	@Test
 	public void testInsert() {
 		UserVO user = new UserVO();
-		user.setUserId("new4");
+		user.setUserId("new10");
 		user.setUserPwd("1234");
 		user.setEmail("abc@sss.com");
 		user.setEmailAuth(true);
@@ -38,16 +47,14 @@ public class UserMapperTests {
 		user.setBio("나는18살이다");
 		user.setEmailSub(true);
 		user.setPrivacy(false);
-		user.setStatus('1');
+		user.setStatus(UserStatus.PENDING);
+		mapper.insert(user);
 		
-		int userNo=mapper.insert(user);
-		log.info("TestRegister"+user+" userNo="+userNo);
+		log.info("#####: "+mapper.selectById(user.getUserId()));
+		
 	}
-//	
-//	@Test
-//	public void testGetByUser() {
-//
-//	}
+	
+
 //	
 //	@Test
 //	public void testSelectById() {
@@ -58,6 +65,11 @@ public class UserMapperTests {
 //		UserVO user3 = mapper.selectById("newUserID");
 //		log.info("12: "+user3);
 //	}
+	
+//	@Test
+//	public void testSelectByEmail() {
+//		log.info("#####: "+mapper.selectByEmail(mapper.selectByNo(4L).getEmail()));
+//	}
 //	
 //	@Test
 //	public void testSelectByNo() {
@@ -67,6 +79,48 @@ public class UserMapperTests {
 //		log.info("4: "+user2);
 //		UserVO user3 = mapper.selectByNo(12L);
 //		log.info("12: "+user3);
+//	}
+	
+//	@Test
+//	public void testGetNoById() {
+//		log.info(mapper.getNoById("new5"));
+//		log.info(mapper.getNoById("new6"));
+//		log.info(mapper.getNoById("user01"));
+//	}
+	
+//	@Test
+//	public void testIsLegitId() {
+//		boolean f = mapper.isLegitId("user33");
+//		log.info("##############"+f);
+//		
+//	}
+	
+//	@Test
+//	public void testIsLegitEmail() {
+//		boolean f = mapper.isLegitEmail("abc@sss.com");
+//		log.info("##############"+f);
+//	}
+	
+//	@Test
+//	public void testIsPrivate() {
+//		boolean f1 = mapper.isPrivate("user01");
+//		log.info("##############1t"+f1);
+//		boolean f2 = mapper.isPrivate("user02");
+//		log.info("##############2t"+f2);
+//		boolean f3 = mapper.isPrivate("user03");
+//		log.info("##############3f"+f3);
+//		boolean f4 = mapper.isPrivate("user04");
+//		log.info("##############4f"+f4);
+//	}
+
+//	@Test
+//	public void testGetStatus() {
+//		UserStatus s = mapper.getStatus("user01");
+//		log.info(s);
+//		log.info(mapper.getStatus("user01"));
+//		log.info(mapper.getStatus("user02"));
+//		log.info(mapper.getStatus("user03"));
+//		log.info(mapper.getStatus("user04"));
 //	}
 //	
 //	@Test
@@ -106,10 +160,10 @@ public class UserMapperTests {
 //		
 //	}
 //	
-//	@Test
-//	public void testGetTotalList() {
-//		mapper.getTotalList().forEach(user->log.info(user));
-//	}
+	@Test
+	public void testGetTotalList() {
+		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+	}
 
 	
 }

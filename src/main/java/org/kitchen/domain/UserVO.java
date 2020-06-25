@@ -1,6 +1,6 @@
 package org.kitchen.domain;
 
-import org.kitchen.domain.code.UserStatus;
+import org.kitchen.enums.UserStatus;
 
 import lombok.Data;
 
