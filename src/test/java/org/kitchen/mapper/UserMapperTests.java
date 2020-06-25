@@ -19,23 +19,30 @@ public class UserMapperTests {
 	private UserMapper mapper;
 	
 //	@Test
-//	public void testInsert() {
-//		UserVO user = new UserVO();
-//		user.setUserId("newUserID7");
-//		user.setUserPwd("1234");
-//		user.setEmail("abc@sss.com");
-//		user.setEmailAuth('0');
-//		user.setNickName("우롱차");
-//		user.setProfilePhoto("http://www.google.com");
-//		user.setWebUrl("http://nav.com");
-//		user.setBio("나는18살이다");
-//		user.setEmailSub('1');
-//		user.setPrivacy('0');
-//		user.setStatus('1');
-//		
-//		int userNo=mapper.insert(user);
-//		log.info("TestRegister"+user+" userNo="+userNo);
+//	public void test() {
+//		Boolean test = null;
+//		mapper.test(test);
+//		mapper.testcheck().forEach(a->log.info(a));
 //	}
+	
+	@Test
+	public void testInsert() {
+		UserVO user = new UserVO();
+		user.setUserId("new4");
+		user.setUserPwd("1234");
+		user.setEmail("abc@sss.com");
+		user.setEmailAuth(true);
+		user.setNickName("우롱차");
+		user.setProfilePhoto("http://www.google.com");
+		user.setWebUrl("http://nav.com");
+		user.setBio("나는18살이다");
+		user.setEmailSub(true);
+		user.setPrivacy(false);
+		user.setStatus('1');
+		
+		int userNo=mapper.insert(user);
+		log.info("TestRegister"+user+" userNo="+userNo);
+	}
 //	
 //	@Test
 //	public void testGetByUser() {
@@ -99,10 +106,10 @@ public class UserMapperTests {
 //		
 //	}
 //	
-	@Test
-	public void testGetTotalList() {
-		mapper.getTotalList().forEach(user->log.info(user));
-	}
+//	@Test
+//	public void testGetTotalList() {
+//		mapper.getTotalList().forEach(user->log.info(user));
+//	}
 
 	
 }

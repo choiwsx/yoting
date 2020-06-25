@@ -15,9 +15,17 @@
    <result property="webUrl" column="u_url"/>
    <result property="bio" column="info"/>
    <result property="emailSub" column="email_news"/>
-   <result property="privacy" column="u_public"/>
+   <result property="privacy" column="u_privacy"/>
    <result property="status" column="status"/>
 </resultMap>
+
+<insert id="test">
+insert into tbl_test values(#{test})
+</insert>
+
+<select id="testcheck" resultType="Boolean">
+select * from tbl_test
+</select> 
 
 <insert id="insert">
 	<selectKey keyProperty="userNo" order="BEFORE" resultType="Long">
@@ -25,7 +33,7 @@
 	</selectKey>
 	insert into tbl_user 
 	(u_num, u_id, u_pwd, email, email_auth, email_news, u_photo, 
-	u_url, u_public, status, info, nickname)
+	u_url, u_privacy, status, info, nickname)
 	values(#{userNo}, #{userId}, #{userPwd}, #{email}, #{emailAuth},  
 	#{emailSub}, #{profilePhoto}, #{webUrl}, #{privacy}, 
 	#{status}, #{bio}, #{nickName})
@@ -41,7 +49,7 @@ select * from tbl_user where u_num = #{userNo}
 
 <update id="update" parameterType="org.kitchen.domain.UserVO">
 update tbl_user set u_id=#{userId}, u_pwd=#{userPwd}, email=#{email}, email_auth=#{emailAuth}, email_news=#{emailSub}, 
-u_photo=#{profilePhoto}, u_url=#{webUrl}, u_public=#{privacy}, status=#{status}, info=#{bio}, nickname=#{nickName}
+u_photo=#{profilePhoto}, u_url=#{webUrl}, u_privacy=#{privacy}, status=#{status}, info=#{bio}, nickname=#{nickName}
 where u_num = #{userNo}
 </update>
 
