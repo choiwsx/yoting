@@ -28,16 +28,52 @@
 <!-- 	<insert id="insertSelectkey">
 		<selectKey keyProperty="rno" order="BEFORE"
 			resultType="long">
-			SELECT r_seq.nextval, u FROM tbl_recipe
+			SELECT r_seq.nextval AND , u FROM tbl_recipe
 		</selectKey>
 		INSERT INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, c_code)
 		VALUES (#{rno}, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title}, #{categoryNo})
 	</insert>  -->
 	
 	<select id="read" resultMap="recipe">
-	<![CDATA[
-	SELECT * FROM tbl_recipe where r_num > 0
-	]]>
+	SELECT * FROM tbl_recipe WHERE r_num = #{rno}
 	</select>
+	
+	<delete id="deleteContent" >
+	DELETE FROM tbl_recipecontent WHERE r_num = #{rno}
+	</delete>
+	
+	<delete id="deleteMaterial" >
+	DELETE FROM tbl_recipematerial WHERE r_num = #{rno}
+	</delete>
+	
+	<delete id="deleteReview" >
+	DELETE FROM tbl_recipereview WHERE r_num = #{rno}
+	</delete>
+	
+	<delete id="deleteTag" >
+	DELETE FROM tbl_recipetag WHERE r_num = #{rno}
+	</delete>
+	
+	<delete id="deletewishRe" >
+	DELETE FROM tbl_wishrecipe WHERE r_num = #{rno}
+	</delete>
+	
+	<delete id="deleteRecipe" >
+	DELETE FROM tbl_recipe WHERE r_num = #{rno}
+	</delete>
+	
+	<update id ="update">
+	UPDATE tbl_recipe
+	SET
+	title = #{title},
+	thumbnail = #{thumbnail},
+	regdate = #{regdate},
+	updatedate = sysdate,
+	cookingtime = #{cookingTime},
+	difficulty = #{difficulty},
+	u_num = #{userNo},
+	c_code = #{categoryNo}
+	WHERE r_num = #{rno}
+	</update>
 
 </mapper>
