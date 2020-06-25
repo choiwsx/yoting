@@ -1,10 +1,13 @@
 package org.kitchen.mapper;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -34,38 +37,40 @@ public class UserMapperTests {
 //		mapper.testcheck().forEach(a->log.info(a));
 //	}
 	
-//	@Test
-//	public void testInsert() {
-//		UserVO user = new UserVO();
-//		user.setUserId("new10");
-//		user.setUserPwd("1234");
-//		user.setEmail("abc@sss.com");
-//		user.setEmailAuth(true);
-//		user.setNickName("우롱차");
-//		user.setProfilePhoto("http://www.google.com");
-//		user.setWebUrl("http://nav.com");
-//		user.setBio("나는18살이다");
-//		user.setEmailSub(true);
-//		user.setPrivacy(false);
-//		user.setStatus(UserStatus.PENDING);
-//		mapper.insert(user);
-//		
-//		log.info("#####: "+mapper.selectById(user.getUserId()));
-//		
-//	}
+	//@Test
+	public void testInsert() {
+		UserVO user = new UserVO();
+		user.setUserId("new14");
+		user.setUserPwd("1234");
+		user.setEmail("abc@sss.com");
+		user.setEmailAuth(true);
+		user.setNickName("우롱차");
+		user.setProfilePhoto("http://www.google.com");
+		user.setWebUrl("http://nav.com");
+		user.setBio("나는18살이다");
+		user.setEmailSub(true);
+		user.setPrivacy(false);
+		user.setStatus(UserStatus.PENDING);
+		try {
+			mapper.insert(user);
+		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
+		}
+		log.info("#####################"+user.getUserNo());		
+	}
 	
 
 	
-//	@Test
-//	public void testSelectById() {
-//		UserVO user1 = mapper.selectById("user01");
-//		log.info("1: "+user1);
-//		UserVO user2 = mapper.selectById("user04");
-//		log.info("4: "+user2);
-//		log.info("#########"+user2.getStatus());
-////		UserVO user3 = mapper.selectById("newUserID");
-////		log.info("12: "+user3);
-//	}
+	//@Test
+	public void testSelectById() {
+		UserVO user1 = mapper.selectById("user001");
+		log.info("####1: "+user1);
+		UserVO user2 = mapper.selectById("user04");
+		log.info("#####4: "+user2);
+
+//		UserVO user3 = mapper.selectById("newUserID");
+//		log.info("12: "+user3);
+	}
 	
 //	@Test
 //	public void testSelectByEmail() {
@@ -124,30 +129,45 @@ public class UserMapperTests {
 //		log.info(mapper.getStatus("user04"));
 //	}
 //	
-//	@Test
-//	public void testUpdate() {
-//		UserVO user = mapper.selectByNo(17L);
-//		user.setUserId("newu");
-//		log.info(mapper.update(user));
-//		mapper.getTotalList().forEach(u->log.info(u));
-//	}
-//	
-//	@Test
+	//@Test
+	public void testUpdate() {
+		UserVO user = new UserVO();
+		user.setUserId("new14");
+		user.setUserPwd("1234");
+		user.setEmail("abc@sss.com");
+		user.setEmailAuth(true);
+		user.setNickName("우롱차");
+		user.setProfilePhoto("http://www.google.com");
+		user.setWebUrl("http://nav.com");
+		user.setBio("나는18살이다");
+		user.setEmailSub(true);
+		user.setPrivacy(false);
+		user.setStatus(UserStatus.PENDING);
+		log.info(mapper.update(user));
+		mapper.getTotalList().forEach(u->log.info(u));
+	}
+	
+	//@Test
 //	public void testDelete() {
 //		log.info("#################################");
 //		UserVO user = mapper.selectByNo(22L);
-//		log.info(mapper.delete(user));
+//		try {
+//			log.info(mapper.delete(user));
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //	}
 	
 	
-//	@Test
-//	public void testDeletByNo() {
-//		log.info("delete");
-//		log.info(mapper.deleteByNo(20L));
-////		log.info(mapper.deleteByNo(13L));
-////		log.info(mapper.deleteByNo(14L));
-//
-//	}
+	@Test
+	public void testDeletByNo() {
+		log.info("delete");
+		log.info(mapper.deleteByNo(4L));
+//		log.info(mapper.deleteByNo(13L));
+//		log.info(mapper.deleteByNo(14L));
+
+	}
 	
 //	@Test
 //	public void testDeleteById() {
@@ -156,15 +176,15 @@ public class UserMapperTests {
 //	}
 
 	
-	@Test
-	public void testGetMailingList() {
-		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
-	}
-	
 //	@Test
-//	public void testGetTotalList() {
-//		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+//	public void testGetMailingList() {
+//		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 //	}
+	
+	//@Test
+	public void testGetTotalList() {
+		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+	}
 
 	
 }

@@ -1,12 +1,12 @@
 package org.kitchen.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
-
 import org.kitchen.domain.UserVO;
-import org.kitchen.enums.UserStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public interface UserMapper {
-	public int insert(UserVO user);
+	public void insert(UserVO user) throws DataIntegrityViolationException;
 
 	public UserVO selectById(String userId);
 	public UserVO selectByEmail(String email);
@@ -23,7 +23,7 @@ public interface UserMapper {
 	public int delete(UserVO user);
 	public int deleteByNo(Long userNo);
 	public int deleteById(String userId);
-
+	
 	public List<UserVO> getMailingList();
 	public List<UserVO> getTotalList();
 
