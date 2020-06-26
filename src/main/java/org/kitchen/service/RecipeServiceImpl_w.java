@@ -35,6 +35,12 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	public List<?> getAll(Criteria_w cri) {
 		// TODO Auto-generated method stub
 		return mapper.getAll(cri);
+	}
+
+	@Override
+	public List<RecipeVO> getTagList(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTagList(cri);
 	} 
 
 }

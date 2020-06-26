@@ -72,6 +72,7 @@
 </sql>
 
 
+
 <select id="getListWithPaging" resultMap="recipe">
 <![CDATA[
 select r_num, title, u_num, regdate
@@ -107,10 +108,32 @@ from
 ]]>
 	<include refid="criteria_user"></include> 
 	<![CDATA[
-		u_num>0
+		u_num>0 
 	)
 	where u_num>0
 ]]>
 </select>
+
+<sql id="criteria_tag">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 		<foreach item='type' collection="typeArr">
+ 			<trim prefix="OR">
+ 				<choose>
+ 					<when test="type == 'Tag'.toString()">
+ 						tbl_tag.t_content like '%'||{#keyword}||'%';
+ 					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+<select id="getTagList" resultMap="recipe">
+select a.r_num 
+from tbl_recipetag a inner join tbl_tag b
+on a.t_num = b.t_num
+where b.t_content like '%'||#{keyword}||'%'
+</select>
+
 
 </mapper>

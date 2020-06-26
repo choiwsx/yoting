@@ -1,7 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+ 
+<%@page import="java.util.*"%>
+<%
+ 
+    request.setCharacterEncoding("UTF-8");
+ 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +19,10 @@
 <form id='searchForm' action="/recipeBoard/list_w" method='get'>
 	<select name='type'>
 		<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : '' }"/>>--</option>
-		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>Á¦¸ñ</option>
-		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>ÀÛ¼ºÀÚ</option>
-		<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>Á¦¸ñ or ÀÛ¼ºÀÚ</option>
+		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>ì œëª©</option>
+		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>ì‘ì„±ì</option>
+		<option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>íƒœê·¸</option>
+		<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>ì œëª© or ì‘ì„±ì</option>
 	</select>
 			
 	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
@@ -26,10 +33,10 @@
 
 <table>
 	<tr>
-		<th>#¹øÈ£</th>
-		<th>Á¦¸ñ</th>
-		<th>ÀÛ¼ºÀÚ</th>
-		<th>ÀÛ¼ºÀÏ</th>
+		<th>#ë²ˆí˜¸</th>
+		<th>ì œëª©</th>
+		<th>ì‘ì„±ì</th>
+		<th>ì‘ì„±ì¼</th>
 	</tr>
 	<c:forEach items="${list_w}" var="recipe">
 	<tr>
@@ -42,15 +49,25 @@
 </table>
 <table>
 	<tr>
-		<th>#À¯Àú¹øÈ£</th>
-		<th>À¯ÀúÀÌ¸§</th>
-		<th>´Ğ³×ÀÓ</th>
+		<th>#ìœ ì €ë²ˆí˜¸</th>
+		<th>ìœ ì €ì´ë¦„</th>
+		<th>ë‹‰ë„¤ì„</th>
 	</tr>
 	<c:forEach items="${list_user}" var="recipe">
 	<tr>
 		<td><c:out value="${recipe.userNo}"/></td>
 		<td><c:out value="${recipe.userId}"/></td>
 		<td><c:out value="${recipe.nickName}"/></td>
+	</tr>
+	</c:forEach>
+</table>
+<table>
+	<tr>
+		<th>ê²Œì‹œë¬¼ë²ˆí˜¸</th>
+	</tr>
+	<c:forEach items="${list_tag}" var="recipe">
+	<tr>
+		<td><c:out value="${recipe.rno}"/></td>
 	</tr>
 	</c:forEach>
 </table>
@@ -103,13 +120,13 @@ $(document).ready(function(){
 	var searchForm = $("#searchForm");
 	$("#searchForm button").on("click", function(e){
 		if(!searchForm.find("option:selected").val()){
-			alert("°Ë»öÁ¾·ù¸¦ ¼±ÅÃÇÏ¼¼¿ä.");
+			alert("ê²€ìƒ‰ì¢…ë¥˜ë¥¼ ì„ íƒí•˜ì„¸ìš”.");
 			return false;
 		}
 		
 		if(!searchForm.find("input[name='keyword']").val())
 		{
-			alert("Å°¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+			alert("í‚¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 			return false;
 		}
 		

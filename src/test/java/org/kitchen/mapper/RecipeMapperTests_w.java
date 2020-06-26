@@ -38,7 +38,7 @@ public class RecipeMapperTests_w {
 		list.forEach(recipe->log.info(recipe));
 	}
 	
-	@Test
+//	@Test
 	public void testUser() {
 		Criteria_w cri = new Criteria_w();
 		cri.setKeyword("2");
@@ -46,4 +46,11 @@ public class RecipeMapperTests_w {
 		list.forEach(user->log.info(user.getUserId()+"###"+user.getNickName()));
 	}
 	
+	@Test
+	public void testTag() {
+		Criteria_w cri = new Criteria_w();
+		cri.setKeyword("Æ÷Å×");
+		List<RecipeVO> list = mapper.getTagList(cri);
+		list.forEach(tag->log.info(tag));
+	}
 }

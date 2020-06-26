@@ -15,4 +15,6 @@ public interface RecipeMapper_w {
 	
 	public List<?> getAll(Criteria_w cri);
 	
+	public List<RecipeVO> getTagList(Criteria_w cri);
+	
 }

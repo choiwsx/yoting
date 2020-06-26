@@ -27,12 +27,14 @@ public class RecipeController_w {
 //		model.addAttribute("list_w", service.getList());
 //		
 //	}
+	
 	@GetMapping("/list_w")
 	public void list(Criteria_w cri, Model model)
 	{
 		log.info("list : " + cri);
 		model.addAttribute("list_w", service.getList(cri));
 		model.addAttribute("list_user", service.getUserList(cri));
+		model.addAttribute("list_tag", service.getTagList(cri));
 		model.addAttribute("pageMaker", new PageDTO_w(cri, 100));
 	}
 	 

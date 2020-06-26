@@ -14,6 +14,10 @@ public interface RecipeService_w {
 	
 	public List<UserVO> getUserList(Criteria_w cri);
 	
+	public List<RecipeVO> getTagList(Criteria_w cri);
+	
 	public List<?> getAll(Criteria_w cri);
+	
+	
 	
 }
