@@ -26,8 +26,8 @@
    <result property="webUrl" column="u_url"/>
    <result property="bio" column="info"/>
    <result property="emailSub" column="email_news"/>
-   <result property="privacy" column="u_public"/>
-   <result property="status" column="status"/>
+   <result property="privacy" column="u_privacy"/>
+   <result property="status" column="status"  typeHandler="org.kitchen.handlers.CodeEnumTypeHandler" />
 </resultMap>
 
 <select id="getList" resultMap="recipe">
@@ -77,11 +77,21 @@ from
 
 
 <select id="getUserList" resultMap="user">
+<![CDATA[
 select u_num, u_id, nickname
 from
- 	tbl_user
-where  
- 	u_id like '%'||#{keyword}||'%'
+(
+	select /*+INDEX_DESC(tbl_user)*/
+		rownum rn, u_num, u_id, nickname
+	from
+ 		tbl_user
+	where
+]]>
+	<include refid="criteria"></include>
+	<![CDATA[
+	)
+	where rn>0	 
+]]>	
 </select>
 
 
