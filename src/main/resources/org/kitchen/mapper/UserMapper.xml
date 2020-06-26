@@ -99,11 +99,6 @@ select * from tbl_user where email_news > 0
 <![CDATA[
 select * from tbl_user where u_num > 0
 ]]>
-</select>	
-	
-<select id="getInfobyId" resultMap="user">
-select u_photo,nickname,u_id
-from tbl_user
-where u_id like '%'||'%';
+
 </select>	
 </mapper>

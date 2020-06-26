@@ -18,9 +18,9 @@
 <table>
 	<c:forEach items="${list_k}" var="user">
 	<tr>
-		<td><c:out value="${user.userNO}"/></td>
-		<td><c:out value="${user.nickName}"/></td>
-		<td><c:out value="${user.profilePhoto}"/></td>
+		<td><c:out value="${user.userId}"/></td>
+		<td><a href="1"><c:out value="${user.nickName}"/></a></td>
+		<td><a href="1"><img src="<c:out value="${user.profilePhoto}"/>" width="180" height="120" /></a></td>
 	</tr>
 	</c:forEach>
 </table>

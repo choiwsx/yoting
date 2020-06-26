@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.UserMapper_k">
+
+<resultMap id="user" type="org.kitchen.domain.UserVO">
+   <result property="userNo" column="u_num"/>
+   <result property="userId" column="u_id"/>
+   <result property="userPwd" column="u_pwd"/>
+   <result property="email" column="email"/>
+   <result property="emailAuth" column="email_auth"/>
+   <result property="nickName" column="nickname"/>
+   <result property="profilePhoto" column="u_photo"/>
+   <result property="webUrl" column="u_url"/>
+   <result property="bio" column="info"/>
+   <result property="emailSub" column="email_news"/>
+   <result property="privacy" column="u_privacy"/>
+   <result property="status" column="status"  typeHandler="org.kitchen.handlers.CodeEnumTypeHandler" />
+</resultMap>
+
+
+<select id="getInfobyId" resultMap="user">
+
+select u_photo,nickname,u_id
+from tbl_user
+where u_id like '%'||'%'
+</select>	
+</mapper>
