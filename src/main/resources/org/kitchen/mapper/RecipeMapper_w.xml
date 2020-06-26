@@ -43,15 +43,33 @@
  					<when test="type == 'T'.toString()">
  						title like '%'||#{keyword}||'%'
 					</when>
- 					<when test="type == 'W'.toString()">
- 						 u_id like '%'||#{keyword}||'%'
-					</when>
 				</choose>
 			</trim>
 		</foreach>
 	</trim>
 </sql>
 
+
+<sql id="criteria_user">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 		<foreach item='type' collection="typeArr">
+ 			<trim prefix="OR">
+ 				<choose>
+ 					<when test="type == 'W'.toString()">
+ 						u_id like '%'||#{keyword}||'%'
+ 						or
+ 						nickname like '%'||#{keyword}||'%'
+					</when>
+ 					<when test="type == 'TW'.toString()">
+ 						u_id like '%'||#{keyword}||'%'
+ 						or
+ 						nickname like '%'||{#keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
 
 
 <select id="getListWithPaging" resultMap="recipe">
@@ -63,7 +81,7 @@ from
 		rownum rn, r_num ,title, u_num, regdate
 	
  	from
- 	tbl_recipe
+ 		tbl_recipe
  	where  
  ]]>
  	<include refid="criteria"></include>
@@ -84,15 +102,15 @@ from
 	select /*+INDEX_DESC(tbl_user)*/
 		rownum rn, u_num, u_id, nickname
 	from
- 		tbl_user
+		tbl_user
 	where
 ]]>
-	<include refid="criteria"></include>
+	<include refid="criteria_user"></include> 
 	<![CDATA[
+		u_num>0
 	)
-	where rn>0	 
-]]>	
+	where u_num>0
+]]>
 </select>
-
 
 </mapper>

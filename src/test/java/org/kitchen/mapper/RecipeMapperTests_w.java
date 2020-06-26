@@ -22,13 +22,13 @@ public class RecipeMapperTests_w {
 	@Setter(onMethod_ = @Autowired)
 	private RecipeMapper_w mapper;
 	
-	@Test
+//	@Test
 	public void testGetList()
 	{
 		mapper.getList().forEach(recipe->log.info(recipe));
 	}
 	
-	@Test
+//	@Test
 	public void testPaging() {
 		Criteria_w cri = new Criteria_w();
 		
@@ -43,7 +43,7 @@ public class RecipeMapperTests_w {
 		Criteria_w cri = new Criteria_w();
 		cri.setKeyword("2");
 		List<UserVO> list = mapper.getUserList(cri);
-		list.forEach(user->log.info(user));
+		list.forEach(user->log.info(user.getUserId()+"###"+user.getNickName()));
 	}
 	
 }

@@ -13,4 +13,6 @@ public interface RecipeMapper_w {
 	
 	public List<UserVO> getUserList(Criteria_w cri);
 	
+	public List<?> getAll(Criteria_w cri);
+	
 }

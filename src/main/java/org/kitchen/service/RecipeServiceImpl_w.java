@@ -29,6 +29,12 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	public List<UserVO> getUserList(Criteria_w cri) {
 		// TODO Auto-generated method stub
 		return mapper.getUserList(cri);
+	}
+
+	@Override
+	public List<?> getAll(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getAll(cri);
 	} 
 
 }

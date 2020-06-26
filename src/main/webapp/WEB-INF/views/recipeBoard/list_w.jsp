@@ -46,11 +46,11 @@
 		<th>유저이름</th>
 		<th>닉네임</th>
 	</tr>
-	<c:forEach items="${list_user}" var="recipe_u">
+	<c:forEach items="${list_user}" var="recipe">
 	<tr>
-		<td><c:out value="${recipe_u.userNo}"/></td>
-		<td><c:out value="${recipe_u.userId}"/></td>
-		<td><c:out value="${recipe_u.nickName}"/></td>
+		<td><c:out value="${recipe.userNo}"/></td>
+		<td><c:out value="${recipe.userId}"/></td>
+		<td><c:out value="${recipe.nickName}"/></td>
 	</tr>
 	</c:forEach>
 </table>
@@ -60,6 +60,7 @@
 	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
 	 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
+
 <div class='pull-right'>
 <ul>
 	<c:if test="${pageMaker.prev}">
