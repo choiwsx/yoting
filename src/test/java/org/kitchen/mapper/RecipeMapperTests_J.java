@@ -41,7 +41,6 @@ public class RecipeMapperTests_J {
 		log.info(recipe);
 	}
 	
-	// PK 여러개+타입이달라서 어케 가져오지.. 생각즁,,,
 //	@Test
 	public void testInsertSelectKey()
 	{
@@ -50,8 +49,8 @@ public class RecipeMapperTests_J {
 		recipe.setCookingTime(45);
 		recipe.setDifficulty("3");
 		recipe.setUserNo(6L);
-		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("계란 푸딩 만들기~! selectkey");
+		recipe.setThumbnail("hii");
+		recipe.setTitle("selectkey");
 		recipe.setCategoryNo(77);
 		
 		mapper.insertSelectkey(recipe);
@@ -62,7 +61,7 @@ public class RecipeMapperTests_J {
 //	@Test
 	public void testRead()
 	{
-		RecipeVO recipe = mapper.read(6L);
+		RecipeVO recipe = mapper.read(41L);
 		
 		log.info(recipe);
 	}
@@ -82,15 +81,16 @@ public class RecipeMapperTests_J {
 	public void testUpdate()
 	{
 		RecipeVO recipe = new RecipeVO();
+		RecipeVO original = mapper.read(41L);
 		
 		recipe.setRno(41L);
 		recipe.setCookingTime(65);
 		recipe.setDifficulty("4");
 //		여기 어떻게 해야할지 날짜 2020-06-23만 넣고 싶은데 그러면 8자리수만 됨
-//		recipe.setRegdate(2020-06-23);
+		recipe.setRegdate(original.getRegdate());
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("바질페스토 토마토 파스타 만들기!");
+		recipe.setTitle("바질페스토 토마토 파스타 만들기! 수정");
 		recipe.setCategoryNo(44);
 		
 		int count = mapper.update(recipe);

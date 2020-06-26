@@ -20,19 +20,14 @@
 <![CDATA[select * from tbl_recipe where r_num>0]]>
 	</select>
 
-	<insert id="insert">
-		INSERT INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, c_code)
-		VALUES (r_seq.nextval, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title}, #{categoryNo})
-	</insert>
-
-<!-- 	<insert id="insertSelectkey">
+ 	<insert id="insert">
 		<selectKey keyProperty="rno" order="BEFORE"
 			resultType="long">
-			SELECT r_seq.nextval AND , u FROM tbl_recipe
+			SELECT r_seq.nextval from dual
 		</selectKey>
 		INSERT INTO tbl_recipe(r_num, cookingTime, difficulty, u_num, thumbnail, title, c_code)
 		VALUES (#{rno}, #{cookingTime}, #{difficulty}, #{userNo}, #{thumbnail}, #{title}, #{categoryNo})
-	</insert>  -->
+	</insert>
 	
 	<select id="read" resultMap="recipe">
 	SELECT * FROM tbl_recipe WHERE r_num = #{rno}

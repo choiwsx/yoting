@@ -58,11 +58,18 @@ public class ContentMapperTests {
 	@Test
 	public void testUpdate()
 	{
-		ContentVO content = new ContentVO();
-		content.setRno(41L);
-		content.setStepNo(1);
-		content.setContent("바질페스토 파스타 step1 수정");
-		content.setPhotoUrl("수정");
+		List<ContentVO> contentList = mapper.read(41L);
+		int step = 1;
+		ContentVO content = contentList.get(step-1);
+		
+//		log.info("번호 : " +content.getStepNo());
+		
+		content.setRno(content.getRno());
+		content.setStepNo(content.getStepNo());
+		content.setContent("바질페스토 파스타 step1 수정22");
+		content.setPhotoUrl("수정22");
+		
+		log.info(content);
 		
 		int count = mapper.update(content);
 		log.info("UPDATE COUNT : " + count);
