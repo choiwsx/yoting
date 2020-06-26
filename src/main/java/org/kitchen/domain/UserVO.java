@@ -2,9 +2,11 @@ package org.kitchen.domain;
 
 import org.kitchen.enums.UserStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class UserVO {
 	private Long userNo;
 	private String userId;
@@ -18,4 +20,18 @@ public class UserVO {
 	private boolean emailSub;
 	private boolean privacy;
 	private UserStatus status;
+	
+	public UserVO() {
+		super();
+	}
+	
+	public UserVO(String userId, String userPwd, String email, boolean emailAuth) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.email = email;
+		this.emailAuth = emailAuth;
+	}
+
+
 }

@@ -38,7 +38,7 @@ public class UserMapperTests {
 	//@Test
 	public void testInsert() {
 		UserVO user = new UserVO();
-		user.setUserId("new14");
+		user.setUserId("new16");
 		user.setUserPwd("1234");
 		user.setEmail("abc@sss.com");
 		user.setEmailAuth(true);
@@ -54,7 +54,6 @@ public class UserMapperTests {
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 		}
-		log.info("#####################"+user.getUserNo());		
 	}
 	
 
@@ -85,7 +84,7 @@ public class UserMapperTests {
 //		log.info("12: "+user3);
 //	}
 	
-	@Test
+	//@Test
 	public void testGetNoById() {
 		Long a = mapper.getNoById("new4");
 		log.info(a);
@@ -149,13 +148,27 @@ public class UserMapperTests {
 	}
 	
 
-	//@Test
+	@Test
 	public void testUpdate2() {
-		UserVO user = mapper.selectByNo(2L);
-		//user.setUserNo(1L);
-		//log.info("########"+mapper.update(user));
-		//mapper.getTotalList().forEach(u->log.info(u));
-		log.info("###########"+user.getStatus().code);
+		UserVO user = mapper.selectByNo(41L);
+		log.info("#####");
+		log.info("#####b"+user.getBio());		
+		log.info("#####e"+user.getEmail());
+		log.info("#####nn"+user.getNickName());
+		log.info("#####pp"+user.getProfilePhoto());
+		log.info("#####id"+user.getUserId());
+		log.info("#####pwd"+user.getUserPwd());
+		log.info("#####web"+user.getWebUrl());
+		log.info("#####no"+user.getUserNo());
+		log.info("#####stat"+user.getStatus());
+		log.info("#####emailauth"+user.isEmailAuth());
+		log.info("#####sub"+user.isEmailSub());
+		log.info("#####priv"+user.isPrivacy());
+
+		log.info("#####");
+		user.setUserId("NEWNEW");
+		log.info("########"+mapper.update(user));
+
 	}
 //	
 //	@Test
@@ -181,11 +194,11 @@ public class UserMapperTests {
 
 	}
 	
-//	@Test
-//	public void testDeleteById() {
-//		log.info("delete");
-//		log.info(mapper.deleteById("newu"));
-//	}
+	@Test
+	public void testDeleteById() {
+		log.info("###########3");
+		log.info(mapper.deleteById("NEWNEW"));
+	}
 
 	
 //	@Test
@@ -193,7 +206,7 @@ public class UserMapperTests {
 //		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 //	}
 	
-	@Test
+	//@Test
 	public void testGetTotalList() {
 		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
 	}

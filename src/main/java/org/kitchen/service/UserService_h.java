@@ -5,21 +5,24 @@ import java.util.List;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception_h.DuplicatedUserException;
 import org.kitchen.exception_h.NoUserFoundException;
+import org.kitchen.exception_h.UserMapperFailException;
 
 public interface UserService_h {
 	UserVO getUserById(String userId) throws NoUserFoundException;
-	UserVO getUserbyEmail(String email) throws NoUserFoundException;
+	UserVO getUserByEmail(String email) throws NoUserFoundException;
 	UserVO getUserByNo(Long userNo) throws NoUserFoundException;
 	Long getUserNoById(String userId) throws NoUserFoundException;
 	
-	void registerNewUser(UserVO user) throws DuplicatedUserException;
-	
+	boolean isLegitNewUser(UserVO user) throws DuplicatedUserException;
+
 	boolean isLegitUserId(String userId);
-	boolean isLegitUserEmail(String email);
+	boolean isLegitUserEmail(String email);	
 	
-	UserVO modifyUser(UserVO user) throws NoUserFoundException;
-	boolean deleteUser(UserVO user) throws NoUserFoundException;
+	void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException;
 	
-	List<UserVO> getTotalList();
-	List<UserVO> getMailingnList();
+	boolean modifyUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
+	boolean deleteUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
+	
+	List<UserVO> getTotalList() throws NoUserFoundException;
+	List<UserVO> getMailingnList() throws NoUserFoundException;
 }

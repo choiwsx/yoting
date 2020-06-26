@@ -13,14 +13,14 @@ public enum UserStatus implements CodeEnum {
 	SUSPENDED("3");
 	
 	@Getter
-	public final String code;
+	public final String status;
 	
-	private UserStatus(String code) {
-		this.code = code;
+	private UserStatus(String status) {
+		this.status = status;
 	}
 	
 	public String getCode() {
-		return this.code;
+		return this.status;
 	}
 	
 	@MappedTypes(UserStatus.class)

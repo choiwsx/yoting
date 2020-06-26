@@ -5,6 +5,7 @@ import java.util.List;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception_h.DuplicatedUserException;
 import org.kitchen.exception_h.NoUserFoundException;
+import org.kitchen.exception_h.UserMapperFailException;
 import org.kitchen.mapper.UserMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -32,23 +33,35 @@ public class UserServiceImpl implements UserService_h {
 	@Override
 	public UserVO getUserById(String userId) throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		UserVO user = mapper.selectById(userId);
+		if(user==null) {
+			throw new NoUserFoundException();
+		}
+		return user;
 	}
 
 	@Override
-	public UserVO getUserbyEmail(String email) throws NoUserFoundException {
+	public UserVO getUserByEmail(String email) throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		return mapper.selectByEmail(email);
+		UserVO user = mapper.selectByEmail(email);
+		if(user==null) {
+			throw new NoUserFoundException();
+		}
+		return user;
 	}
 
 	@Override
 	public UserVO getUserByNo(Long userNo) throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		return mapper.selectByNo(userNo);
+		UserVO user = mapper.selectByNo(userNo);
+		if(user==null) {
+			throw new NoUserFoundException();
+		}
+		return user;
 	}
 	
 	@Override
-	public void registerNewUser(UserVO user) throws DuplicatedUserException {
+	public void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException {
 		// TODO Auto-generated method stub
 		if(!isLegitUserId(user.getUserId())) {
 			throw new DuplicatedUserException("id");
@@ -59,8 +72,14 @@ public class UserServiceImpl implements UserService_h {
 			mapper.insert(user);
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
-			log.info("유저서비스임플#########sql integrity 문제로 가입실패");
+			throw new UserMapperFailException();
 		}
+	}
+	
+	@Override
+	public boolean isLegitNewUser(UserVO user) throws DuplicatedUserException {
+		// TODO Auto-generated method stub
+		return isLegitUserId(user.getUserId()) && isLegitUserEmail(user.getEmail());
 	}
 
 	@Override
@@ -76,23 +95,22 @@ public class UserServiceImpl implements UserService_h {
 	}
 
 	@Override
-	public UserVO modifyUser(UserVO user) throws NoUserFoundException {
+	public boolean modifyUser(UserVO user) throws NoUserFoundException, UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = mapper.update(user);
 			if(i==0) {
 				throw new NoUserFoundException();
 			}
-			return user;
+			return true;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
-			log.info("유저서비스임플#########sql integrity 문제로 업뎃실패");
+			throw new UserMapperFailException();
 		}
-		return null;
 	}
 
 	@Override
-	public boolean deleteUser(UserVO user) throws NoUserFoundException {
+	public boolean deleteUser(UserVO user) throws NoUserFoundException, UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = mapper.delete(user);
@@ -102,21 +120,29 @@ public class UserServiceImpl implements UserService_h {
 			return true;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
-			log.info("유저서비스임플#########sql integrity 문제로 업뎃실패");
+			throw new UserMapperFailException();
 		}
-		return false;
 	}
 
 	@Override
-	public List<UserVO> getTotalList() {
+	public List<UserVO> getTotalList() throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		return mapper.getTotalList();
+		List<UserVO> totalList = mapper.getTotalList();
+		if(totalList.size()==0) {
+			throw new NoUserFoundException();
+		}
+		return totalList;
 	}
 
 	@Override
-	public List<UserVO> getMailingnList() {
+	public List<UserVO> getMailingnList() throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		return mapper.getMailingList();
+		List<UserVO> mailingList = mapper.getMailingList();
+		if(mailingList.size()==0) {
+			throw new NoUserFoundException();
+		}
+		return mailingList;
 	}
+
 
 }

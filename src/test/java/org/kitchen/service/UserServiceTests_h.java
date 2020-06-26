@@ -5,6 +5,8 @@ import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.kitchen.exception_h.DuplicatedUserException;
+import org.kitchen.exception_h.NoUserFoundException;
+import org.kitchen.exception_h.UserMapperFailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,25 +22,45 @@ public class UserServiceTests_h {
 	@Setter(onMethod_= {@Autowired})
 	private UserService_h service;
 	
-	@Test
+	//@Test
 	public void testGetUserNoById() {
-		Long userNo = service.getUserNoById("user");
+		try {
+			Long userNo = service.getUserNoById("user");
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetuserById() {
-		
+		try {
+			UserVO user = service.getUserById("user01");
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	@Test
+	//@Test
 	public void testGetUserByEmail() {
-		
+		try {
+			UserVO user = service.getUserByEmail("a@a.a");
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	@Test
+	//@Test
 	public void testGetUserByNo() {
-		
+		try {
+			UserVO user = service.getUserByNo(3L);
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//@Test
@@ -60,39 +82,80 @@ public class UserServiceTests_h {
 		} catch (DuplicatedUserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (UserMapperFailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//@Test
+	public void testIsLegitUserId() {
+		boolean f1 = service.isLegitUserId("user");
+		log.info("$$$LEGITID"+f1);
+		boolean f2 = service.isLegitUserId("user01");
+		log.info("$$$LEGITID"+f2);
+	}
+	
+	//@Test
+	public void testIsLegitUserEmail() {
+		boolean f1 = service.isLegitUserEmail("a@a.a");
+		log.info("$$$LEGITEMAIL"+f1);
+		boolean f2 = service.isLegitUserEmail("a@a.aa");
+		log.info("$$$LEGITEMAIL"+f2);
+	}
+	
+	//@Test
+	public void testModifyUser() {
+		try {
+			UserVO user = service.getUserById("user01");
+			user.setBio("zzzz");
+			if(service.modifyUser(user)) {
+				log.info("########유저#업뎃완료");
+			}			
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserMapperFailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//@Test
+	public void testDeleteUser() {
+		try {
+			UserVO user = service.getUserById("user01");
+			user.setBio("zzzz");
+			if(service.deleteUser(user)) {
+				log.info("########유저#삭제완료");
+			}			
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserMapperFailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
 	@Test
-	public void testIsLegitUserId() {
-		boolean f = service.isLegitUserId("user");
-		log.info("$$$LEGITID"+f);
-	}
-	
-	@Test
-	public void testIsLegitUserEmail() {
-		boolean f = service.isLegitUserEmail("a@a.a");
-		log.info("$$$LEGITEMAIL"+f);
-	}
-	
-	@Test
-	public void testModifyUser() {
-		
-	}
-	
-	@Test
-	public void testDeleteUser() {
-		
-	}
-	
-	@Test
 	public void testGetTotalList() {
-		
+		try {
+			service.getTotalList().forEach(a->log.info(a));
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testGetMailingList() {
-		
+		try {
+			service.getMailingnList().forEach(a->log.info("mail##########"+a.isEmailSub()));
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
