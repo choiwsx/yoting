@@ -124,13 +124,14 @@ public class UserMapperTests {
 //		log.info(mapper.getStatus("user04"));
 //	}
 //	
-//	@Test
-//	public void testUpdate() {
-//		UserVO user = mapper.selectByNo(17L);
-//		user.setUserId("newu");
-//		log.info(mapper.update(user));
-//		mapper.getTotalList().forEach(u->log.info(u));
-//	}
+	@Test
+	public void testUpdate() {
+		UserVO user = mapper.selectByNo(2L);
+		//user.setUserNo(1L);
+		//log.info("########"+mapper.update(user));
+		//mapper.getTotalList().forEach(u->log.info(u));
+		log.info("###########"+user.getStatus().code);
+	}
 //	
 //	@Test
 //	public void testDelete() {
@@ -140,14 +141,14 @@ public class UserMapperTests {
 //	}
 	
 	
-//	@Test
-//	public void testDeletByNo() {
-//		log.info("delete");
-//		log.info(mapper.deleteByNo(20L));
-////		log.info(mapper.deleteByNo(13L));
-////		log.info(mapper.deleteByNo(14L));
-//
-//	}
+	//@Test
+	public void testDeletByNo() {
+		log.info("delete");
+		log.info("##########"+mapper.deleteByNo(38L));
+//		log.info(mapper.deleteByNo(13L));
+//		log.info(mapper.deleteByNo(14L));
+
+	}
 	
 //	@Test
 //	public void testDeleteById() {
@@ -156,15 +157,15 @@ public class UserMapperTests {
 //	}
 
 	
-	@Test
-	public void testGetMailingList() {
-		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
-	}
-	
 //	@Test
-//	public void testGetTotalList() {
-//		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+//	public void testGetMailingList() {
+//		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 //	}
+	
+	//@Test
+	public void testGetTotalList() {
+		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+	}
 
 	
 }
