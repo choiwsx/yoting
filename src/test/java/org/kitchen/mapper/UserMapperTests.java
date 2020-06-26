@@ -1,7 +1,5 @@
 package org.kitchen.mapper;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
@@ -129,6 +127,7 @@ public class UserMapperTests {
 //		log.info(mapper.getStatus("user04"));
 //	}
 //	
+
 	//@Test
 	public void testUpdate() {
 		UserVO user = new UserVO();
@@ -147,7 +146,17 @@ public class UserMapperTests {
 		mapper.getTotalList().forEach(u->log.info(u));
 	}
 	
-	//@Test
+
+	@Test
+	public void testUpdate2() {
+		UserVO user = mapper.selectByNo(2L);
+		//user.setUserNo(1L);
+		//log.info("########"+mapper.update(user));
+		//mapper.getTotalList().forEach(u->log.info(u));
+		log.info("###########"+user.getStatus().code);
+	}
+//	
+//	@Test
 //	public void testDelete() {
 //		log.info("#################################");
 //		UserVO user = mapper.selectByNo(22L);
@@ -160,10 +169,11 @@ public class UserMapperTests {
 //	}
 	
 	
-	@Test
+
+	//@Test
 	public void testDeletByNo() {
 		log.info("delete");
-		log.info(mapper.deleteByNo(4L));
+		log.info("##########"+mapper.deleteByNo(38L));
 //		log.info(mapper.deleteByNo(13L));
 //		log.info(mapper.deleteByNo(14L));
 
