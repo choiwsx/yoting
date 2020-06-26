@@ -1,9 +1,10 @@
 package org.kitchen.service;
 
-import java.sql.SQLException;
+import java.util.List;
 
 import org.kitchen.domain.UserVO;
-import org.kitchen.exception_h.UserDuplicatedException;
+import org.kitchen.exception_h.DuplicatedUserException;
+import org.kitchen.exception_h.NoUserFoundException;
 import org.kitchen.mapper.UserMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -19,38 +20,69 @@ public class UserServiceImpl implements UserService_h {
 	private UserMapper mapper;
 	
 	@Override
-	public UserVO registerNewUser(UserVO user) throws UserDuplicatedException {
+	public Long getUserNoById(String userId) throws NoUserFoundException {
 		// TODO Auto-generated method stub
-		if(idExists(user.getUserId()) || emailExists(user.getEmail())) {
-			throw new UserDuplicatedException();
-		}
-		try {
-			mapper.insert(user);
-			return user;
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			log.info("유저서비스임플#########sql integrity 문제로 가입실패");
-		}
+		Long userNo = mapper.getNoById(userId);
+		if(userNo==null) {
+			throw new NoUserFoundException();
+		}		
+		return userNo;
+	}
+	
+	@Override
+	public UserVO getUserById(String userId) throws NoUserFoundException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean idExists(String userId) {
+	public UserVO getUserbyEmail(String email) throws NoUserFoundException {
+		// TODO Auto-generated method stub
+		return mapper.selectByEmail(email);
+	}
+
+	@Override
+	public UserVO getUserByNo(Long userNo) throws NoUserFoundException {
+		// TODO Auto-generated method stub
+		return mapper.selectByNo(userNo);
+	}
+	
+	@Override
+	public void registerNewUser(UserVO user) throws DuplicatedUserException {
+		// TODO Auto-generated method stub
+		if(!isLegitUserId(user.getUserId())) {
+			throw new DuplicatedUserException("id");
+		} else if (!isLegitUserEmail(user.getEmail())) {			
+			throw new DuplicatedUserException("email");
+		}
+		try {
+			mapper.insert(user);
+		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
+			log.info("유저서비스임플#########sql integrity 문제로 가입실패");
+		}
+	}
+
+	@Override
+	public boolean isLegitUserId(String userId) {
 		// TODO Auto-generated method stub
 		return mapper.isLegitId(userId);
 	}
 
 	@Override
-	public boolean emailExists(String email) {
+	public boolean isLegitUserEmail(String email) {
 		// TODO Auto-generated method stub
 		return mapper.isLegitEmail(email);
 	}
 
 	@Override
-	public UserVO modifyUser(UserVO user) {
+	public UserVO modifyUser(UserVO user) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		try {
-			mapper.update(user);
+			int i = mapper.update(user);
+			if(i==0) {
+				throw new NoUserFoundException();
+			}
 			return user;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
@@ -60,16 +92,31 @@ public class UserServiceImpl implements UserService_h {
 	}
 
 	@Override
-	public boolean deleteUser(UserVO user) {
+	public boolean deleteUser(UserVO user) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		try {
-			mapper.delete(user);
+			int i = mapper.delete(user);
+			if(i==0) {
+				throw new NoUserFoundException();
+			}
 			return true;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			log.info("유저서비스임플#########sql integrity 문제로 업뎃실패");
 		}
 		return false;
+	}
+
+	@Override
+	public List<UserVO> getTotalList() {
+		// TODO Auto-generated method stub
+		return mapper.getTotalList();
+	}
+
+	@Override
+	public List<UserVO> getMailingnList() {
+		// TODO Auto-generated method stub
+		return mapper.getMailingList();
 	}
 
 }

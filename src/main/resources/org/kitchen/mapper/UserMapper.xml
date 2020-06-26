@@ -56,13 +56,13 @@ select u_num from tbl_user where u_id = #{userId}
 </select>
 
 <select id="isLegitId" resultType="Boolean">
-SELECT CASE WHEN MAX(u_id) IS NULL THEN '1' ELSE '0' END User_exists
+SELECT CASE WHEN MAX(u_id) IS NULL THEN '1' ELSE '0' END Legit_Id
   FROM tbl_user
  WHERE u_id = #{userId}
 </select>
 
 <select id="isLegitEmail" resultType="Boolean">
-SELECT CASE WHEN MAX(email) IS NULL THEN '1' ELSE '0' END User_exists
+SELECT CASE WHEN MAX(email) IS NULL THEN '1' ELSE '0' END Legit_Email
   FROM tbl_user
  WHERE email = #{email}
 </select>

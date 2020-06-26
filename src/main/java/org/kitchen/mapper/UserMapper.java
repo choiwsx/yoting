@@ -1,6 +1,5 @@
 package org.kitchen.mapper;
 
-import java.sql.SQLException;
 import java.util.List;
 import org.kitchen.domain.UserVO;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,7 +10,7 @@ public interface UserMapper {
 	public UserVO selectById(String userId);
 	public UserVO selectByEmail(String email);
 	public UserVO selectByNo(Long userNo);
-	public int getNoById(String userId);
+	public Long getNoById(String userId);
 	
 	public boolean isLegitId(String userId);
 	public boolean isLegitEmail(String email);
