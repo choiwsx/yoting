@@ -18,7 +18,7 @@
 <table>
 	<c:forEach items="${list_k}" var="user">
 	<tr>
-		<td><c:out value="${user.u_id}"/></td>
+		<td><c:out value="${user.userNO}"/></td>
 		<td><c:out value="${user.nickName}"/></td>
 		<td><c:out value="${user.profilePhoto}"/></td>
 	</tr>
@@ -36,7 +36,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		var key = document.getElementById("keyword").value;
 		console.log(key);
-		searchForm.submit();
+		//searchForm.submit();
 	});
 });
 </script>

@@ -1,6 +1,5 @@
 package org.kitchen.controller;
 
-import org.kitchen.service.RecipeService_w;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,17 +13,15 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/recipeBoard/*")
-public class RecipeController_w {
+public class UserController_k {
 
 	@Setter(onMethod_ = { @Autowired })
-	private RecipeService_w service;
+	private UserService Service;
 
-	@GetMapping("/list_w")
+	@GetMapping("/list_k")
 	public void list(Model model) {
-		log.info("list");
-		model.addAttribute("list_w", service.getList());
+		model.addAttribute("list_k", Service.getInfobyId());
+
 	}
-
-
 
 }
