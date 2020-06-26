@@ -1,5 +1,7 @@
 package org.kitchen.domain;
 
+import org.kitchen.enums.UserStatus;
+
 import lombok.Data;
 
 @Data
@@ -8,12 +10,12 @@ public class UserVO {
 	private String userId;
 	private String userPwd;
 	private String email;
-	private String emailAuth;
+	private boolean emailAuth;
 	private String nickName;
 	private String profilePhoto;
 	private String webUrl;
-	private String bio; //¼Ò°³±Û
-	private String emailSub;
+	private String bio; //ï¿½Ò°ï¿½ï¿½ï¿½
+	private boolean emailSub;
 	private boolean privacy;
-	private String status;
+	private UserStatus status;
 }
