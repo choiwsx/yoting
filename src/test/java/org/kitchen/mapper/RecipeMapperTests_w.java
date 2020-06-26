@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.Criteria_w;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,6 +36,14 @@ public class RecipeMapperTests_w {
 		List<RecipeVO> list = mapper.getListWithPaging(cri);
 		
 		list.forEach(recipe->log.info(recipe));
+	}
+	
+	@Test
+	public void testUser() {
+		Criteria_w cri = new Criteria_w();
+		cri.setKeyword("2");
+		List<UserVO> list = mapper.getUserList(cri);
+		list.forEach(user->log.info(user));
 	}
 	
 }

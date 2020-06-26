@@ -75,17 +75,14 @@ from
 	]]>
 </select>
 
-<select id="getUserList" resultMap="user">
 
+<select id="getUserList" resultMap="user">
 select u_num, u_id, nickname
 from
  	tbl_user
 where  
  	u_id like '%'||#{keyword}||'%'
-
 </select>
-
-
 
 
 </mapper>
