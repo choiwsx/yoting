@@ -18,11 +18,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <form id='searchForm' action="/recipeBoard/list_w" method='get'>
 	<select name='type'>
-		<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : '' }"/>>--</option>
+		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
 		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
 		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
 		<option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
-		<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : '' }"/>>제목 or 작성자</option>
 	</select>
 			
 	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
@@ -38,6 +37,13 @@
 		<th>작성자</th>
 		<th>작성일</th>
 	</tr>
+	<tr>
+		<td>
+			<c:if test="${empty list_w}">
+			 	검색 값이 없습니다.
+			</c:if>
+		</td>
+	</tr>
 	<c:forEach items="${list_w}" var="recipe">
 	<tr>
 		<td><c:out value="${recipe.rno}"/></td>
@@ -52,6 +58,13 @@
 		<th>#유저번호</th>
 		<th>유저이름</th>
 		<th>닉네임</th>
+	</tr>
+	<tr>
+		<td>
+			<c:if test="${empty list_user}">
+			 	검색 값이 없습니다.
+			</c:if>
+		</td>
 	</tr>
 	<c:forEach items="${list_user}" var="recipe">
 	<tr>

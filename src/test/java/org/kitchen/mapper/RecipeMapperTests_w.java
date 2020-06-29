@@ -49,10 +49,15 @@ public class RecipeMapperTests_w {
 	@Test
 	public void testTag() {
 		Criteria_w cri = new Criteria_w();
-//		cri.setKeyword("포테");
+		cri.setKeyword("감자");
 		Long list = mapper.getTagNum(cri);
-		List<Long> rno = mapper.getRnoByTagNum(list);
-		List<RecipeVO> recipeList = mapper.getRecipeByRno(rno);
+		List<RecipeVO> recipeList = null;
+		if(list!=null)
+		{
+			List<Long> rno = mapper.getRnoByTagNum(list);
+			if(rno!=null)
+				recipeList =  mapper.getRecipeByRno(rno);
+		}
 		recipeList.forEach(recipe1->log.info(recipe1));
 	}
 }

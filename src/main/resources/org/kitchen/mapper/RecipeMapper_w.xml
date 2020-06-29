@@ -37,40 +37,21 @@
 
 <sql id="criteria">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
- 		<foreach item='type' collection="typeArr">
  			<trim prefix="OR">
- 				<choose>
- 					<when test="type == 'T'.toString()">
+ 			
  						title like '%'||#{keyword}||'%'
-					</when>
- 					<when test="type == 'TW'.toString()">
- 						title like '%'||#{keyword}||'%'
-					</when>
-				</choose>
 			</trim>
-		</foreach>
 	</trim>
 </sql>
 
 
 <sql id="criteria_user">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
- 		<foreach item='type' collection="typeArr">
  			<trim prefix="OR">
- 				<choose>
- 					<when test="type == 'W'.toString()">
  						u_id like '%'||#{keyword}||'%'
  						or
  						nickname like '%'||#{keyword}||'%'
-					</when>
- 					<when test="type == 'TW'.toString()">
- 						u_id like '%'||#{keyword}||'%'
- 						or
- 						nickname like '%'||{#keyword}||'%'
-					</when>
-				</choose>
 			</trim>
-		</foreach>
 	</trim>
 </sql>
 
@@ -119,27 +100,33 @@ from
 	
 <sql id="criteria_tag">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
- 		<foreach item='type' collection="typeArr">
  			<trim prefix="OR">
- 				<choose>
- 					<when test="type == 'Tag'.toString()">
- 						t_content like '%'||#{keyword,jdbcType=VARCHAR2}||'%';
- 					</when>
-				</choose>
+ 						t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
 			</trim>
-		</foreach>
 	</trim>
 </sql>
 
 <select id="getTagNum" resultType="Long">
+<![CDATA[
 select 
 	t_num
 from 
-	tbl_tag
-where 
+(
+	select /*+INDEX_DESC(tbl_tag)*/
+		rownum rn, t_num
+	from
+		tbl_tag
+	where
+]]>
 	<if test="keyword!=null">
-	 t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+		<include refid="criteria_tag"></include>
 	</if>
+	<![CDATA[
+		rownum<=5
+		)
+	where rn>0
+]]>
+ 
 </select>
 
 <select id="getRnoByTagNum" resultType="Long">

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -36,14 +37,33 @@ public class RecipeController_w {
 	
 	@GetMapping("/list_w")
 	public void list(Criteria_w cri, Model model)
-	{
-		log.info("list : " + cri);
+	{	
+		
+	String type = cri.getType();
+	System.out.println("type@@@"+type);
+	switch(type) {
+
+	case "T":
+		model.addAttribute("list_w", service.getList(cri));
+		break;
+	case "W":
+		model.addAttribute("list_user", service.getUserList(cri));
+		break;
+	case "Tag":
+		model.addAttribute("list_tag", service.getTagNum(cri));
+		System.out.println("@@@@"+service.getTagNum(cri));
+		break;
+	case "A":
 		model.addAttribute("list_w", service.getList(cri));
 		model.addAttribute("list_user", service.getUserList(cri));
-		if(cri.getKeyword()!=null||cri.getKeyword()!="") {	
-			model.addAttribute("list_tag", service.getTagNum(cri));
-		}
-		model.addAttribute("pageMaker", new PageDTO_w(cri, 100));
+		model.addAttribute("list_tag", service.getTagNum(cri));
+		break;
+	}
+	model.addAttribute("pageMaker", new PageDTO_w(cri, 100));
+		log.info("list : " + cri);
+//		if(cri.getKeyword()!=null||cri.getKeyword()!="") {	
+//			model.addAttribute("list_tag", service.getTagNum(cri));
+		
 	}
 	 
 
