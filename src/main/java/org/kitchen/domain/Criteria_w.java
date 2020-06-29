@@ -9,6 +9,24 @@ import lombok.ToString;
 @Getter
 public class Criteria_w {
 	
+	
+	private int pageNum;
+	private int amount;
+	
+	private String type;
 	private String keyword;
 	
+	public Criteria_w() {
+		this(1,3);
+	}
+	
+	public Criteria_w(int pageNum, int amount)
+	{
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
+	
+	public String[] getTypeArr() {
+		return type == null ? new String[] {} : type.split("");
+	}
 }

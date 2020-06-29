@@ -45,4 +45,14 @@ public class RecipeControllerTests_w {
 				.getModelMap()
 				);
 	}
+
+	@Test
+	public void testListPaging() throws Exception{
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/recipeBoard/list_w")
+				.param("pageNum", "2")
+				.param("amount", "3")
+				).andReturn().getModelAndView().getModelMap());
+	}
+
 }

@@ -9,6 +9,8 @@ import lombok.ToString;
 @Getter
 public class Criteria_k {
 	
-	private String keyword;
+	private int amount;
 	
+	private String keyword;
+
 }

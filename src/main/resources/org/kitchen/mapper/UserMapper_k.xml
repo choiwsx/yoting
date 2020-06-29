@@ -21,9 +21,14 @@
 
 
 <select id="getInfobyId" resultMap="user">
-
 select u_photo,nickname,u_id
 from tbl_user
-where u_id like '%'||'%'
+where u_id like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+</select>	
+
+<select id="getprofile" resultMap="user">
+select u_photo,nickname,u_url,u_id,email
+from tbl_user
+where u_id like '%' ||'user'||'%'
 </select>	
 </mapper>
