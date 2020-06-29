@@ -27,6 +27,12 @@ public class RecipeController_w {
 //		model.addAttribute("list_w", service.getList());
 //		
 //	}
+	@GetMapping("/index_w")
+	public void search(Criteria_w cri, Model model)
+	{
+		model.addAttribute("pageMaker", new PageDTO_w(cri, 100));
+		
+	}
 	
 	@GetMapping("/list_w")
 	public void list(Criteria_w cri, Model model)
@@ -34,7 +40,9 @@ public class RecipeController_w {
 		log.info("list : " + cri);
 		model.addAttribute("list_w", service.getList(cri));
 		model.addAttribute("list_user", service.getUserList(cri));
-		model.addAttribute("list_tag", service.getTagList(cri));
+		if(cri.getKeyword()!=null||cri.getKeyword()!="") {	
+			model.addAttribute("list_tag", service.getTagNum(cri));
+		}
 		model.addAttribute("pageMaker", new PageDTO_w(cri, 100));
 	}
 	 

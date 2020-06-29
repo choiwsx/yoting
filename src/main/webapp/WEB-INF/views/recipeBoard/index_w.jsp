@@ -31,59 +31,7 @@
 	<button class='btn btn-default'>Search</button>
 </form>
 
-<table>
-	<tr>
-		<th>#번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>작성일</th>
-	</tr>
-	<c:forEach items="${list_w}" var="recipe">
-	<tr>
-		<td><c:out value="${recipe.rno}"/></td>
-		<td><c:out value="${recipe.title}"/></td>
-		<td><c:out value="${recipe.userNo}"/></td>
-		<td><c:out value="${recipe.regdate}"/></td>
-	</tr>
-	</c:forEach>
-</table>
-<table>
-	<tr>
-		<th>#유저번호</th>
-		<th>유저이름</th>
-		<th>닉네임</th>
-	</tr>
-	<c:forEach items="${list_user}" var="recipe">
-	<tr>
-		<td><c:out value="${recipe.userNo}"/></td>
-		<td><c:out value="${recipe.userId}"/></td>
-		<td><c:out value="${recipe.nickName}"/></td>
-	</tr>
-	</c:forEach>
-</table>
-<table>
-	<tr>
-		<th>게시물번호</th>
-	</tr>
-	<tr>
-		<td>
-			<c:if test="${empty list_tag}">
-			 	검색 값이 없습니다.
-			</c:if>
-		</td>
-	</tr>
-		<c:if test="${not empty list_tag}">
-			<c:forEach items="${list_tag}" var="recipe">
-				<tr>
-					<td><c:out value="${recipe.rno}"/></td>
-					<td><c:out value="${recipe.title}"/></td>
-					<td><c:out value="${recipe.userNo}"/></td>
-					<td><c:out value="${recipe.regdate}"/></td>
-				</tr>
-			</c:forEach>
-		</c:if>
-	
-</table>
+
 <form id='actionForm' action="/recipeBoard/list_w" method='get'>
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
@@ -91,24 +39,7 @@
 	 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
 
-<div class='pull-right'>
-<ul>
-	<c:if test="${pageMaker.prev}">
-		<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">Previous</a>
-		</li>
-	</c:if>
-	
-	<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : ""}"><a href="${num}">${num}</a></li></c:forEach>
 
-	<c:if test="${pageMaker.next}">
-		<li class="paginate_button next"><a href="${pageMaker.endPage+1}">Next</a>
-		</li>
-	</c:if>
-
-
-</ul>
-</div>
 </body>
 
 <script type="text/javascript">
@@ -123,8 +54,6 @@ $(document).ready(function(){
 	var actionForm = $("#actionForm");
 	$(".paginate_button a").on("click", function(e){
 		e.preventDefault();
-		console.log('click');
-		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionForm.submit();
 	});
 	

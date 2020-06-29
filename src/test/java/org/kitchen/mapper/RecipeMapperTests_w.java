@@ -49,8 +49,10 @@ public class RecipeMapperTests_w {
 	@Test
 	public void testTag() {
 		Criteria_w cri = new Criteria_w();
-		cri.setKeyword("포테");
-		List<RecipeVO> list = mapper.getTagList(cri);
-		list.forEach(tag->log.info(tag));
+//		cri.setKeyword("포테");
+		Long list = mapper.getTagNum(cri);
+		List<Long> rno = mapper.getRnoByTagNum(list);
+		List<RecipeVO> recipeList = mapper.getRecipeByRno(rno);
+		recipeList.forEach(recipe1->log.info(recipe1));
 	}
 }

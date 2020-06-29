@@ -15,6 +15,9 @@ public interface RecipeMapper_w {
 	
 	public List<?> getAll(Criteria_w cri);
 	
-	public List<RecipeVO> getTagList(Criteria_w cri);
+	public Long getTagNum(Criteria_w cri);
 	
+	public List<Long> getRnoByTagNum(Long tagNum);
+	 
+	public List<RecipeVO> getRecipeByRno(List<Long> rnoList);
 }

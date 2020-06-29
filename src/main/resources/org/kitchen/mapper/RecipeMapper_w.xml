@@ -43,6 +43,9 @@
  					<when test="type == 'T'.toString()">
  						title like '%'||#{keyword}||'%'
 					</when>
+ 					<when test="type == 'TW'.toString()">
+ 						title like '%'||#{keyword}||'%'
+					</when>
 				</choose>
 			</trim>
 		</foreach>
@@ -113,14 +116,14 @@ from
 	where u_num>0
 ]]>
 </select>
-
+	
 <sql id="criteria_tag">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
  		<foreach item='type' collection="typeArr">
  			<trim prefix="OR">
  				<choose>
  					<when test="type == 'Tag'.toString()">
- 						tbl_tag.t_content like '%'||{#keyword}||'%';
+ 						t_content like '%'||#{keyword,jdbcType=VARCHAR2}||'%';
  					</when>
 				</choose>
 			</trim>
@@ -128,11 +131,36 @@ from
 	</trim>
 </sql>
 
-<select id="getTagList" resultMap="recipe">
-select a.r_num 
-from tbl_recipetag a inner join tbl_tag b
-on a.t_num = b.t_num
-where b.t_content like '%'||#{keyword}||'%'
+<select id="getTagNum" resultType="Long">
+select 
+	t_num
+from 
+	tbl_tag
+where 
+	<if test="keyword!=null">
+	 t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+	</if>
+</select>
+
+<select id="getRnoByTagNum" resultType="Long">
+select 
+	r_num
+from 
+	tbl_recipetag
+where
+	 t_num	= #{tagNum}
+</select>
+
+<select id="getRecipeByRno" resultMap="recipe">
+select 
+ 	r_num, title, u_num, regdate
+from 
+	tbl_recipe
+where 
+	r_num in 
+	<foreach collection='list' index='index' item='rnoList' open='(' close=')' separator=','>
+		#{rnoList}
+	</foreach>
 </select>
 
 

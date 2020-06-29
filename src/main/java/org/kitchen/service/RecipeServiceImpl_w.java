@@ -38,9 +38,22 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	}
 
 	@Override
-	public List<RecipeVO> getTagList(Criteria_w cri) {
+	public List<RecipeVO> getTagNum(Criteria_w cri) {
 		// TODO Auto-generated method stub
-		return mapper.getTagList(cri);
-	} 
+		List<RecipeVO> recipeList = null;
+		Long tno = mapper.getTagNum(cri);
+		if(tno!=null) {
+			List<Long> rno = mapper.getRnoByTagNum(tno);
+			if(rno.size()>0)
+				recipeList = mapper.getRecipeByRno(rno);
+		}
+		return recipeList;
+	}
 
+	@Override
+	public List<Long> getRnoByTagNum(Long tagNum) {
+		// TODO Auto-generated method stub
+		return null;
+	} 
+	
 }
