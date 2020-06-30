@@ -18,7 +18,7 @@ public class UserVO {
 	private String nickName;
 	private String profilePhoto;
 	private String webUrl;
-	private String bio; //ï¿½Ò°ï¿½ï¿½ï¿½
+	private String bio; // ¼Ò°³±Û
 	private boolean emailSub;
 	private boolean privacy;
 	private UserStatus status;
