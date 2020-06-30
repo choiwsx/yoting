@@ -18,10 +18,27 @@ public class RecipeServiceImpl_J implements RecipeService_J {
 
 	private RecipeMapper_J mapper;
 	private ContentMapper mapperCon;
+	
+	@Override
+	public void register(RecipeVO recipe, ContentVO content) {
+		Long rno = register(recipe);
+		content.setRno(rno);
+		registerCon(content);
+	}
 
 	@Override
-	public void register(RecipeVO recipe) {
+	public void register(RecipeVO recipe, List<ContentVO> contents) {
+		// TODO Auto-generated method stub
+		Long rno = register(recipe);
+		contents.forEach(a->a.setRno(rno));
+		contents.forEach(a->registerCon(a));
+	}
+	
+	@Override
+	public Long register(RecipeVO recipe) {
 		mapper.insert(recipe);
+		
+		return recipe.getRno();
 	}
 
 	@Override
@@ -81,4 +98,6 @@ public class RecipeServiceImpl_J implements RecipeService_J {
 		log.info("getList..........");
 		return mapper.getList();
 	}
+
+
 }

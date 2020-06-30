@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
 
 public interface RecipeService_J {
 	
-	public void register(RecipeVO recipe);
+
+	public void register(RecipeVO recipe, ContentVO content);
+	
+	public void register(RecipeVO recipe, List<ContentVO> contents);
+	
+	public Long register(RecipeVO recipe);
 	
 	public void registerCon(ContentVO content);
 	
