@@ -94,15 +94,20 @@ public class UserServiceImpl implements UserService_h {
 			throw new DuplicatedUserException("email");
 		}
 		try {
-			String key = VerificationEmailSender.generateString();
-			log.info("key:@@@@@@"+key);
 			mapper.insert(user);
-			mapper.insertVeriKey(user.getUserNo(), key);
-			verificationEmailSender.send(user, key);
+			sendVerificationEmail(user);
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			throw new UserMapperFailException();
 		}
+	}
+	
+	@Override
+	public void sendVerificationEmail(UserVO user) {
+		String key = VerificationEmailSender.generateString();
+		log.info("key:@@@@@@"+key);
+		mapper.insertVeriKey(user.getUserNo(), key);
+		verificationEmailSender.send(user, key);
 	}
 
 	@Override

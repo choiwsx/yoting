@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-	    <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-	    <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<property name="username" value="kitchen_dba"></property>
-		<property name="password" value="1234"></property>
-	</bean>
-	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-	
-	<!-- Gmail -->
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+   
+	<!-- 우리가 추가하는 시작 -->
+      
+	<mybatis-spring:scan base-package="org.kitchen.mapper" />
+   
+	<context:component-scan base-package="org.kitchen.service">
+	</context:component-scan>
+   
+	<!-- 2020.06.30지호 -->
+	<context:component-scan base-package="org.kitchen.util">
+	</context:component-scan>
+   
+	<!-- email설정 해리-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
@@ -34,11 +33,19 @@
 	</bean>
 	
 	<bean id="verificationEmailSender" class="org.kitchen.validation_h.VerificationEmailSender"></bean>
-
-	<mybatis-spring:scan base-package="org.kitchen.mapper" />
-	
-	<context:component-scan base-package="org.kitchen.service">
-	</context:component-scan>
-	
-
+    
+   <!-- 우리가 추가하는 마지막 -->
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+       <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+       <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+      <property name="username" value="kitchen_dba"></property>
+      <property name="password" value="1234"></property>
+   </bean>
+   
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource"></property>
+   </bean>
+   
 </beans>

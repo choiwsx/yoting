@@ -20,6 +20,8 @@ public interface UserService_h {
 	
 	void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException;
 	
+	void sendVerificationEmail(UserVO user);
+	
 	boolean verifyEmail(String userno, String key) throws NoUserFoundException;
 	boolean activateUser(Long userNo) throws NoUserFoundException;
 	
