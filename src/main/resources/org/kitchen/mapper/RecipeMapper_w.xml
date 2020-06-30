@@ -38,7 +38,6 @@
 <sql id="criteria">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
  			<trim prefix="OR">
- 			
  						title like '%'||#{keyword}||'%'
 			</trim>
 	</trim>
@@ -72,9 +71,9 @@ from
  	<include refid="criteria"></include>
 	
 	<![CDATA[ 	
-	 	rownum<= #{pageNum} * #{amount}
+	 	rownum<= 5
 	 	)
-	where rn> (#{pageNum}-1) * #{amount}
+	where rn> 0
 	]]>
 </select>
 
@@ -92,9 +91,9 @@ from
 ]]>
 	<include refid="criteria_user"></include> 
 	<![CDATA[
-		u_num>0 
+		rownum<=5 
 	)
-	where u_num>0
+	where rn>0
 ]]>
 </select>
 	

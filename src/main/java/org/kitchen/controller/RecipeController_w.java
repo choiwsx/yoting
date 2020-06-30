@@ -40,18 +40,21 @@ public class RecipeController_w {
 	{	
 		
 	String type = cri.getType();
-	System.out.println("type@@@"+type);
+	String more = cri.getWhere();
+	System.out.println("more@@@"+more);
 	switch(type) {
 
 	case "T":
-		model.addAttribute("list_w", service.getList(cri));
+		if(more==null||more=="")
+			model.addAttribute("list_w", service.getList(cri));
+		else
+			
 		break;
 	case "W":
 		model.addAttribute("list_user", service.getUserList(cri));
 		break;
 	case "Tag":
 		model.addAttribute("list_tag", service.getTagNum(cri));
-		System.out.println("@@@@"+service.getTagNum(cri));
 		break;
 	case "A":
 		model.addAttribute("list_w", service.getList(cri));

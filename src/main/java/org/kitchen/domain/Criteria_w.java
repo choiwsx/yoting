@@ -15,6 +15,7 @@ public class Criteria_w {
 	
 	private String type;
 	private String keyword;
+	private String where;
 	
 	public Criteria_w() {
 		this(1,3);

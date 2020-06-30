@@ -44,7 +44,7 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 		List<RecipeVO> recipeList = null;
 		if(tno!=null) {
 			List<Long> rno = mapper.getRnoByTagNum(tno);
-			if(rno!=null)
+			if(rno!=null)	
 				recipeList = mapper.getRecipeByRno(rno);
 		}
 		return recipeList;

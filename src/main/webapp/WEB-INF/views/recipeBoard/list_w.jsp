@@ -27,6 +27,7 @@
 	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
 	<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 	<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+	<input type='hidden' name='where' value='<c:out value="${pageMaker.cri.where}"/>'/>
 	<button class='btn btn-default'>Search</button>
 </form>
 
@@ -52,6 +53,13 @@
 		<td><c:out value="${recipe.regdate}"/></td>
 	</tr>
 	</c:forEach>
+	<tr>
+	<td>
+		<c:if test="${list_w.size()>=5}">
+			<a class="more_button" href="${where}recipe">더보기</a>
+		</c:if>
+	</td>
+	</tr>
 </table>
 <table>
 	<tr>
@@ -73,6 +81,13 @@
 		<td><c:out value="${recipe.nickName}"/></td>
 	</tr>
 	</c:forEach>
+		<tr>
+	<td>
+		<c:if test="${list_user.size()>=5}">
+			<a class="more_button" href="${where}user">더보기</a>
+		</c:if>
+	</td>
+	</tr>
 </table>
 <table>
 	<tr>
@@ -94,6 +109,13 @@
 					<td><c:out value="${recipe.regdate}"/></td>
 				</tr>
 			</c:forEach>
+		<tr>
+			<td>
+				<c:if test="${list_tag.size()>=5}">
+					<a class="more_button" href="${where}tag">더보기</a>
+				</c:if>
+			</td>
+		</tr>
 		</c:if>
 	
 </table>
@@ -101,6 +123,7 @@
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
 	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+	<input type='hidden' name='where' value='<c:out value="${pageMaker.cri.where}"/>'>
 	 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
 
@@ -141,6 +164,12 @@ $(document).ready(function(){
 		actionForm.submit();
 	});
 	
+	$(".more_button").on("click", function(e){
+		e.preventDefault();
+		console.log('click-더보기');
+		actionForm.find("input[name='where']").val($(this).attr("href"));
+		actionForm.submit();
+	});
 	
 	
 	var searchForm = $("#searchForm");
