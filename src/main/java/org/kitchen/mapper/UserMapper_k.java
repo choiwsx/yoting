@@ -10,6 +10,7 @@ public interface UserMapper_k {
 
 	public List<UserVO> getInfobyId(Criteria_k cri);
 
-	public List<UserVO> getprofile(); 
+
+	public List<UserVO> getProfile(String userId); 
 
 }

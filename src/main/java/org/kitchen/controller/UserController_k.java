@@ -26,8 +26,8 @@ public class UserController_k {
 	}
 
 	@GetMapping("/profile")
-	public void profile(Model model) {
-		model.addAttribute("profile", Service.getprofile());
+	public void profile(Model model , String userId) {
+		model.addAttribute("profile", Service.getProfile(userId));
 
 	}
 }

@@ -26,9 +26,9 @@ from tbl_user
 where u_id like '%'||#{keyword,jdbcType=VARCHAR}||'%'
 </select>	
 
-<select id="getprofile" resultMap="user">
+<select id="getProfile" resultMap="user">
 select u_photo,nickname,u_url,u_id,email
 from tbl_user
-where u_id like '%' ||'user'||'%'
+where u_id = #{userId}
 </select>	
 </mapper>

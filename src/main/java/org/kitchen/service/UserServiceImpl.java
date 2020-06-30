@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> getprofile() {
-		return mapper.getprofile();
+	public List<UserVO> getProfile(String userId) {
+		return mapper.getProfile(userId);
 	}
 
 
