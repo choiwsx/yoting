@@ -5,7 +5,7 @@ import java.util.List;
 import org.kitchen.domain.Criteria_k;
 import org.kitchen.domain.UserVO;
 
-public interface UserService {
+public interface UserService_k {
 	
 	public List<UserVO> getInfobyId(Criteria_k cri);
 

@@ -1,7 +1,7 @@
 package org.kitchen.controller;
 
 import org.kitchen.domain.Criteria_k;
-import org.kitchen.service.UserService;
+import org.kitchen.service.UserService_k;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 public class UserController_k {
 
 	@Setter(onMethod_ = { @Autowired })
-	private UserService Service;
+	private UserService_k Service;
 
 	@GetMapping("/userSearch")
 	public void list(Criteria_k cri, Model model) {

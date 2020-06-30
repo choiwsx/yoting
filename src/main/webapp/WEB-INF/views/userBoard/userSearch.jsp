@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,26 +18,24 @@
 		<button class='btn btn-default'>Search</button>
 	</form>
 	<table>
+	<div> 총 <c:out value="${fn:length(userSearch)} " />명의 요리사가 있어요</div>
 		<c:forEach items="${userSearch}" var="user">
-		<div style="border=1px dashed #BDBDBD;z">
 			<a href='profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
 				<img src="<c:out value="${user.profilePhoto}"/>" width="140" height="120" />
 				<c:out value="${user.nickName}" /> </a>
-				</div>
 		</c:forEach>
 	</table>
 </body>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	var searchForm = $("#searchForm");
-	$("#searchForm button").on("click", function(e){
-		e.preventDefault();
-		var key = document.getElementById("keyword").value;
-		console.log(key);
-		searchForm.submit();
-	});
-});
+//$(document).ready(function(){
+//	var searchForm = $("#searchForm");
+//	$("#searchForm button").on("click", function(e){
+//		e.preventDefault();
+//		var key = document.getElementById("keyword").value;
+//		searchForm.submit();
+//	});
+// });
 
 </script>
 </html>

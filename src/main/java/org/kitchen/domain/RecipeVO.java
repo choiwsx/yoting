@@ -18,4 +18,5 @@ public class RecipeVO {
 //	private String[] material;
 //	private long[] reviewRecipes;
 	private int categoryNo;
+	
 }

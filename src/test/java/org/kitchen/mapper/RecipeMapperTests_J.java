@@ -33,15 +33,14 @@ public class RecipeMapperTests_J {
 		recipe.setDifficulty("5");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("¹ÙÁúÆä½ºÅä Åä¸¶Åä ÆÄ½ºÅ¸ ¸¸µé±â!");
-		recipe.setCategoryNo(44);
+		recipe.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ä½ºï¿½ï¿½ ï¿½ä¸¶ï¿½ï¿½ ï¿½Ä½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ï¿½!");
 		
 		mapper.insert(recipe);
 		
 		log.info(recipe);
 	}
 	
-	// PK ¿©·¯°³+Å¸ÀÔÀÌ´Þ¶ó¼­ ¾îÄÉ °¡Á®¿ÀÁö.. »ý°¢£O,,,
+	// PK ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½+Å¸ï¿½ï¿½ï¿½Ì´Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.. ï¿½ï¿½ï¿½ï¿½ï¿½O,,,
 //	@Test
 	public void testInsertSelectKey()
 	{
@@ -51,8 +50,7 @@ public class RecipeMapperTests_J {
 		recipe.setDifficulty("3");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("°è¶õ Çªµù ¸¸µé±â~! selectkey");
-		recipe.setCategoryNo(77);
+		recipe.setTitle("ï¿½ï¿½ï¿½ Çªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½~! selectkey");
 		
 		mapper.insertSelectkey(recipe);
 		

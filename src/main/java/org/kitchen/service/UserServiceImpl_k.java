@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl_k implements UserService_k {
 	
 	@Setter(onMethod_ = @Autowired)
 	private UserMapper_k mapper;
