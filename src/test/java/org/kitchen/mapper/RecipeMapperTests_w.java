@@ -1,7 +1,11 @@
 package org.kitchen.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kitchen.domain.Criteria_w;
+import org.kitchen.domain.RecipeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,4 +26,13 @@ public class RecipeMapperTests_w {
 	{
 		mapper.getList().forEach(recipe->log.info(recipe));
 	}
+	
+	@Test
+	public void testSearch() {
+		Criteria_w cri = new Criteria_w();
+		cri.setKeyword("Á¦¸ñ1");
+		
+//		List<RecipeVO> list = mapper
+	}
+	
 }
