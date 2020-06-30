@@ -17,7 +17,9 @@
 	</resultMap>
 
 	<select id="getList" resultMap="recipe">
-<![CDATA[select * from tbl_recipe where r_num>0]]>
+<![CDATA[
+select * from tbl_recipe where r_num>0
+]]>
 	</select>
 
  	<insert id="insert">

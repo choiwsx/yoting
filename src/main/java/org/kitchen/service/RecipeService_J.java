@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.springframework.stereotype.Service;
 
 public interface RecipeService_J {
 	
@@ -24,5 +25,5 @@ public interface RecipeService_J {
 	public void removeCon(Long rno);
 	
 	public List<RecipeVO> getList();
-	
+		
 }

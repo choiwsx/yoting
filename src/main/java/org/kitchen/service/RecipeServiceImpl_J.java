@@ -37,6 +37,7 @@ public class RecipeServiceImpl_J implements RecipeService_J {
 
 	@Override
 	public boolean ModifyCon(ContentVO content) {
+		
 		log.info("modifyCon........" + content);
 		return mapperCon.update(content) == 1;
 	}
@@ -62,12 +63,14 @@ public class RecipeServiceImpl_J implements RecipeService_J {
 
 	@Override
 	public RecipeVO get(Long rno) {
+		
 		log.info("get.........." + rno);
 		return mapper.read(rno);
 	}
 
 	@Override
 	public List<ContentVO> getCon(Long rno) {
+		
 		log.info("getCon......" + rno);
 		return mapperCon.read(rno);
 	}

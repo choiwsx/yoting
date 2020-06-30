@@ -66,7 +66,7 @@ public class RecipeServiceTests_J {
 
 	}
 	
-	// 컨텐트만 등록
+//	컨텐트만 등록
 //	@Test
 	public void testRegisterCon()
 	{
@@ -100,7 +100,7 @@ public class RecipeServiceTests_J {
 		log.info("REMOVE RESULT : " + service.remove(6L));
 	}
 	
-	@Test
+//	@Test
 	public void testUpdateRecipeContent()
 	{
 		RecipeVO recipe = service.get(48L);
@@ -134,6 +134,4 @@ public class RecipeServiceTests_J {
 		log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
 		
 	}
-	
-	
 }
