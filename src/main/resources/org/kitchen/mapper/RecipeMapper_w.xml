@@ -162,19 +162,19 @@ from
 <sql id="criteria_tag">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
  			<trim prefix="OR">
- 						t_content like 	#{keyword,jdbcType=VARCHAR}
+ 						t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
 			</trim>
 	</trim>
 </sql>
 
-<select id="getTagNum" resultType="long">
+<select id="getTagNum" resultType="Long">
 <![CDATA[
 select 
 	t_num
 from 
 (
 	select /*+INDEX_DESC(tbl_tag)*/
-		rownum rn, t_num
+		rownum rn, t_num	
 	from
 		tbl_tag
 	where
@@ -183,7 +183,7 @@ from
 		<include refid="criteria_tag"></include>
 	</if>
 	<![CDATA[
-		rownum>0
+		rownum<=5
 		)
 	where rn>0
 ]]>
@@ -205,10 +205,7 @@ select
 from 
 	tbl_recipe
 where 
-	r_num in 
-	<foreach collection='list' index='index' item='rnoList' open='(' close=')' separator=','>
-		#{rnoList}
-	</foreach>
+	r_num = #{rnoList} 
 </select>
 
 

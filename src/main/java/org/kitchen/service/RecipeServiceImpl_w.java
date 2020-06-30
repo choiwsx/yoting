@@ -1,5 +1,7 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.kitchen.domain.Criteria_w;
@@ -40,20 +42,34 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	@Override
 	public List<RecipeVO> getTagNum(Criteria_w cri) {
 		// TODO Auto-generated method stub
-		Long tno = mapper.getTagNum(cri);
-		List<RecipeVO> recipeList = null;
-		if(tno!=null) {
-			List<Long> rno = mapper.getRnoByTagNum(tno);
-			if(rno!=null)	
-				recipeList = mapper.getRecipeByRno(rno);
+		List<Long> tno = mapper.getTagNum(cri);
+		
+		HashSet<Long> rno = new HashSet<Long>();
+		List<RecipeVO> recipeList = new ArrayList<RecipeVO>();
+		if(tno!=null)
+		{
+			for(int i=0; i<tno.size(); i++) {
+				List<Long> tmp = mapper.getRnoByTagNum(tno.get(i));
+				for(int j=0; j<tmp.size(); j++)
+				{
+					rno.add(tmp.get(j));
+				}
+			}
 		}
+		Object[] arr = rno.toArray();
+		for(int i=0; i<rno.size(); i++) {
+			String stringToConvert = String.valueOf(arr[i]);
+			Long convertedLong = Long.parseLong(stringToConvert);
+			recipeList.add(mapper.getRecipeByRno(convertedLong));
+		}
+		
 		return recipeList;
 	}
 
 	@Override
 	public List<Long> getRnoByTagNum(Long tagNum) {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.getRnoByTagNum(tagNum);
 	}
 
 	@Override

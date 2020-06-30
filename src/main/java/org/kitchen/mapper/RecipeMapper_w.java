@@ -17,11 +17,11 @@ public interface RecipeMapper_w {
 	
 	public List<?> getAll(Criteria_w cri);
 	
-	public Long getTagNum(Criteria_w cri);
+	public List<Long> getTagNum(Criteria_w cri);
 	
 	public List<Long> getRnoByTagNum(Long tagNum);
 	 
-	public List<RecipeVO> getRecipeByRno(List<Long> rnoList);
+	public RecipeVO getRecipeByRno(Long rnoList);
 
 	public int getTotalRecipeCount(Criteria_w cri);
 	public int getTotalUserCount(Criteria_w cri);
