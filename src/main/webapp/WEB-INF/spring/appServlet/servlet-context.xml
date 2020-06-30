@@ -25,6 +25,4 @@
 	
 	<context:component-scan base-package="org.kitchen.controller" />
 	
-	
-	
 </beans:beans>

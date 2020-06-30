@@ -1,11 +1,15 @@
 package org.kitchen.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.kitchen.domain.UserVO;
 import org.springframework.dao.DataIntegrityViolationException;
 
 public interface UserMapper {
 	public void insert(UserVO user) throws DataIntegrityViolationException;
+	public void insertVeriKey(@Param("userNo") Long userNo, @Param("key") String key);
+	public String getVeriKey(Long userNo);
 
 	public UserVO selectById(String userId);
 	public UserVO selectByEmail(String email);

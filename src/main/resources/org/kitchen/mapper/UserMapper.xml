@@ -35,9 +35,17 @@ select * from tbl_test
 	(u_num, u_id, u_pwd, email, email_auth, email_news, u_photo, 
 	u_url, u_privacy, status, info, nickname)
 	values(#{userNo}, #{userId}, #{userPwd}, #{email}, #{emailAuth},  
-	#{emailSub}, #{profilePhoto}, #{webUrl}, #{privacy}, 
-	#{status, typeHandler=org.kitchen.handlers.CodeEnumTypeHandler}, #{bio}, #{nickName})
+	#{emailSub}, #{profilePhoto,jdbcType=VARCHAR}, #{webUrl,jdbcType=VARCHAR}, #{privacy}, 
+	#{status,typeHandler=org.kitchen.handlers.CodeEnumTypeHandler}, #{bio}, #{nickName})
 </insert>
+
+<insert id="insertVeriKey">
+	insert into tbl_user_key (userNo, keyNo) values(#{userNo}, #{key})
+</insert>
+
+<select id="getVeriKey" resultType="String">
+select keyNo from tbl_user_key where userNo = #{userNo}
+</select>
 
 <select id="selectById" resultMap="user">
 select * from tbl_user where u_id = #{userId}

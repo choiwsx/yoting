@@ -22,7 +22,9 @@ public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeE
 
     @Override
     public void setParameter(PreparedStatement ps, int i, CodeEnum parameter, JdbcType jdbcType) throws SQLException {
-        ps.setString(i, parameter.getCode());
+    	String code = parameter==null?"1":parameter.getCode();
+        ps.setString(i, code);
+
     }
  
     @Override

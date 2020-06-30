@@ -20,8 +20,12 @@ public interface UserService_h {
 	
 	void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException;
 	
+	boolean verifyEmail(String userno, String key) throws NoUserFoundException;
+	boolean activateUser(Long userNo) throws NoUserFoundException;
+	
 	boolean modifyUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
 	boolean deleteUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
+	boolean deleteUserByNo(Long userNo) throws NoUserFoundException, UserMapperFailException;
 	
 	List<UserVO> getTotalList() throws NoUserFoundException;
 	List<UserVO> getMailingnList() throws NoUserFoundException;

@@ -4,8 +4,10 @@ import org.kitchen.enums.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
 	private Long userNo;
@@ -21,17 +23,10 @@ public class UserVO {
 	private boolean privacy;
 	private UserStatus status;
 	
-	public UserVO() {
-		super();
+	public UserVO setNewProfile(String nickName, String bio, boolean privacy) {
+		this.nickName = nickName;
+		this.bio = bio;
+		this.privacy = privacy;
+		return this;
 	}
-	
-	public UserVO(String userId, String userPwd, String email, boolean emailAuth) {
-		super();
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.email = email;
-		this.emailAuth = emailAuth;
-	}
-
-
 }
