@@ -33,14 +33,13 @@ public class RecipeMapperTests_J {
 		recipe.setDifficulty("4");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("¹ÙÁúÆä½ºÅä Åä¸¶Åä ÆÄ½ºÅ¸ ¸¸µé±â!");
-		recipe.setCategoryNo(44);
+		recipe.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ä½ºï¿½ï¿½ ï¿½ä¸¶ï¿½ï¿½ ï¿½Ä½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ï¿½!");
 		
 		mapper.insert(recipe);
 		
 		log.info(recipe);
 	}
-	
+
 //	@Test
 	public void testInsertSelectKey()
 	{
@@ -49,9 +48,14 @@ public class RecipeMapperTests_J {
 		recipe.setCookingTime(45);
 		recipe.setDifficulty("3");
 		recipe.setUserNo(6L);
+
+		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
+		recipe.setTitle("ï¿½ï¿½ï¿½ Çªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½~! selectkey");
+
 		recipe.setThumbnail("hii");
 		recipe.setTitle("selectkey");
 		recipe.setCategoryNo(77);
+
 		
 		mapper.insertSelectkey(recipe);
 		
@@ -86,11 +90,10 @@ public class RecipeMapperTests_J {
 		recipe.setRno(41L);
 		recipe.setCookingTime(65);
 		recipe.setDifficulty("4");
-//		¿©±â ¾î¶»°Ô ÇØ¾ßÇÒÁö ³¯Â¥ 2020-06-23¸¸ ³Ö°í ½ÍÀºµ¥ ±×·¯¸é 8ÀÚ¸®¼ö¸¸ µÊ
 		recipe.setRegdate(original.getRegdate());
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
-		recipe.setTitle("¹ÙÁúÆä½ºÅä Åä¸¶Åä ÆÄ½ºÅ¸ ¸¸µé±â! ¼öÁ¤");
+		recipe.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ä½ºï¿½ï¿½ ï¿½ä¸¶ï¿½ï¿½ ï¿½Ä½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ï¿½! ï¿½ï¿½ï¿½ï¿½");
 		recipe.setCategoryNo(44);
 		
 		int count = mapper.update(recipe);

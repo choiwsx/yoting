@@ -107,6 +107,6 @@ select * from tbl_user where email_news > 0
 <![CDATA[
 select * from tbl_user where u_num > 0
 ]]>
+
 </select>	
-	
 </mapper>
