@@ -96,16 +96,78 @@ from
 	where rn>0
 ]]>
 </select>
+
+<select id="getUserListWithPaging" resultMap="user">
+<![CDATA[
+select u_num, u_id, nickname
+from
+(
+	select /*+INDEX_DESC(tbl_user)*/
+		rownum rn, u_num, u_id, nickname
+	from
+		tbl_user
+	where
+]]>
+	<include refid="criteria_user"></include> 
+	<![CDATA[
+		rownum<=#{pageNum} * #{amount} 
+	)
+	where rn> (#{pageNum}-1) * #{amount}
+]]>
+</select>
+
+
+<select id="getRecipeListWithPaging" resultMap="recipe">
+<![CDATA[
+select r_num, title, u_num, regdate
+from
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num ,title, u_num, regdate
+	
+ 	from
+ 		tbl_recipe
+ 	where  
+ ]]>
+ 	<include refid="criteria"></include>
+	
+	<![CDATA[ 	
+	 	rownum<= #{pageNum} * #{amount}
+	 	)
+	where rn> (#{pageNum}-1) * #{amount}
+	]]>
+</select>
+
+<select id="getTotalRecipeCount" resultType="int">
+	select count(*) from tbl_recipe where title like '%'||#{keyword}||'%'
+</select>
+
+<select id="getTotalUserCount" resultType="int">
+	select count(*) from tbl_user where u_id like '%'||#{keyword}||'%'
+	 									or
+	 									nickname like '%'||#{keyword}||'%'
+</select>
+
+
+<select id="getTotalTagCount" resultType="int">
+	select count(a.r_num) 
+	from tbl_recipetag a inner join tbl_tag b
+	on a.t_num = b.t_num
+	where b.t_content like '%'||#{keyword}||'%'
+</select>
+
+
+
 	
 <sql id="criteria_tag">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
  			<trim prefix="OR">
- 						t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+ 						t_content like 	#{keyword,jdbcType=VARCHAR}
 			</trim>
 	</trim>
 </sql>
 
-<select id="getTagNum" resultType="Long">
+<select id="getTagNum" resultType="long">
 <![CDATA[
 select 
 	t_num
@@ -121,7 +183,7 @@ from
 		<include refid="criteria_tag"></include>
 	</if>
 	<![CDATA[
-		rownum<=5
+		rownum>0
 		)
 	where rn>0
 ]]>

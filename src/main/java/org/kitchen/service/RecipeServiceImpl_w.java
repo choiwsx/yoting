@@ -54,6 +54,33 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	public List<Long> getRnoByTagNum(Long tagNum) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<RecipeVO> moreRecipeList(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getRecipeListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalRecipe(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTotalRecipeCount(cri);
+	}
+
+	@Override
+	public List<UserVO> moreUserList(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getUserListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalUser(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTotalUserCount(cri);
 	} 
+	
+	
+	
 	
 }

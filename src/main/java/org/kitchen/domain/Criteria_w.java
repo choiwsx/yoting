@@ -17,8 +17,9 @@ public class Criteria_w {
 	private String keyword;
 	private String where;
 	
+	
 	public Criteria_w() {
-		this(1,3);
+		this(1,2);
 	}
 	
 	public Criteria_w(int pageNum, int amount)

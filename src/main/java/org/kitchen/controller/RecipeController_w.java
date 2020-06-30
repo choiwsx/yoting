@@ -35,6 +35,29 @@ public class RecipeController_w {
 		
 	}
 	
+	@GetMapping("/morelist")
+	public void getMoreList(Criteria_w cri, Model model)
+	{
+		String more = cri.getWhere();
+		int total = 0;
+		switch(more)
+		{
+		case "recipe":
+			model.addAttribute("moreList", service.moreRecipeList(cri));
+			total = service.getTotalRecipe(cri);
+			break;
+		case "user":
+			model.addAttribute("moreList_u", service.moreUserList(cri));
+			total = service.getTotalUser(cri);
+			break;
+		case "tag":
+			
+		}
+		model.addAttribute("pageMaker", new PageDTO_w(cri, total));
+	}
+	
+	
+	
 	@GetMapping("/list_w")
 	public void list(Criteria_w cri, Model model)
 	{	
@@ -43,12 +66,8 @@ public class RecipeController_w {
 	String more = cri.getWhere();
 	System.out.println("more@@@"+more);
 	switch(type) {
-
 	case "T":
-		if(more==null||more=="")
-			model.addAttribute("list_w", service.getList(cri));
-		else
-			
+		model.addAttribute("list_w", service.getList(cri));
 		break;
 	case "W":
 		model.addAttribute("list_user", service.getUserList(cri));

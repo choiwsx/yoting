@@ -31,8 +31,8 @@ public class RecipeMapperTests_w {
 //	@Test
 	public void testPaging() {
 		Criteria_w cri = new Criteria_w();
-		
 		cri.setKeyword("7");
+		
 		List<RecipeVO> list = mapper.getListWithPaging(cri);
 		
 		list.forEach(recipe->log.info(recipe));
@@ -49,7 +49,7 @@ public class RecipeMapperTests_w {
 	@Test
 	public void testTag() {
 		Criteria_w cri = new Criteria_w();
-		cri.setKeyword("감자");
+		cri.setKeyword("포테");
 		Long list = mapper.getTagNum(cri);
 		List<RecipeVO> recipeList = null;
 		if(list!=null)
