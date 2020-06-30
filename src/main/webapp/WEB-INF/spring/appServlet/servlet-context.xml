@@ -8,6 +8,17 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 우리가 추가하는 부분 -->
+	<!-- 2020.06.30지호 -->
+	<!-- 파일 업로드로 들어오는 데이터를 처리하는 객체 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="maxUploadSize" value="100000000"/>
+	<beans:property name="maxInMemorySize" value="100000000"/>
+	</beans:bean>
+	
+	<!-- 우리가 추가하는 마지막 -->
+
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
