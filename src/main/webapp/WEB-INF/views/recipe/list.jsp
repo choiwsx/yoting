@@ -9,6 +9,7 @@
 <title>Recipe List</title>
 </head>
 <body>
+${recipe.cookingTime} ${recipe.content} ${recipe.thumbnail }
 	<table>
 		<thead>
 			<tr>

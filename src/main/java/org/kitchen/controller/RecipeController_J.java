@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -31,11 +32,14 @@ public class RecipeController_J {
 	}
 	
 	@PostMapping("/register")
-	public String register(RecipeVO recipe, RedirectAttributes rttr)
+	public String register(RecipeVO recipe, RedirectAttributes rttr, MultipartHttpServletRequest mttr)
 	{
 		log.info("register : " + recipe);
 		
+//		recipe.setThumbnail(mttr.);
+		service.register(recipe);
 		rttr.addFlashAttribute("result", recipe.getRno());
+		
 		
 		return "redirect:/recipe/list";
 	}

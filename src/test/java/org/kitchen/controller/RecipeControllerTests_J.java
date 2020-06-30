@@ -46,25 +46,25 @@ public class RecipeControllerTests_J {
 				.getModelMap());
 	}
 	
-	@Test
-	public void testRegister() throws Exception
-	{
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/recipe/register")
-				.param("cookingTime", "30")
-				.param("difficulty", "1")
-				.param("userNo", "3")
-				.param("thumbnail", "간장계란밥사진")
-				.param("title", "간장계란밥 만들기~!~~~")
-				.param("categoryNo", "44")
-				/*
-				.param("stepNo", "1")
-				.param("title", "하이")
-				.param("stepNo", "2" )
-				.param("title", "두번째 제목") */
-				).andReturn().getModelAndView().addObject(attributeValue).getViewName();
-		
-		log.info(resultPage);
-	}
+//	@Test
+//	public void testRegister() throws Exception
+//	{
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/recipe/register")
+//				.param("cookingTime", "30")
+//				.param("difficulty", "1")
+//				.param("userNo", "3")
+//				.param("thumbnail", "간장계란밥사진")
+//				.param("title", "간장계란밥 만들기~!~~~")
+//				.param("categoryNo", "44")
+//				/*
+//				.param("stepNo", "1")
+//				.param("title", "하이")
+//				.param("stepNo", "2" )
+//				.param("title", "두번째 제목") */
+//				).andReturn().getModelAndView().addObject(attributeValue).getViewName();
+//		
+//		log.info(resultPage);
+//	}
 	
 //	@Test
 	public void testGet() throws Exception

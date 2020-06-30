@@ -9,14 +9,19 @@
 <title>Recipe Register</title>
 </head>
 <body>
-	<form role="form" action="board/register" method="post">
-		<div class="form-group">
+	<form role="form" action="/recipe/register" method="post" >
+		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo} -->
 
-			<select>
-				<option>카테고리</option>
-				<option value="11">주식</option>
-				<option value="33">반찬</option>
-				<option value="77">디저트</option>
+		<div class="form-group">
+		<!-- 
+		<input type=file name='thumbnail'><br>	
+		 -->
+		 <input name='thumbnail'><br>
+			<select name='categoryNo'>
+				<option value='null'>카테고리</option>
+				<option value='11'>주식</option>
+				<option value='22'>디저트</option>
+				<option value='33'>반찬</option>
 			</select> <input class="form-control" name='title' placeholder="제목을 입력하세요">
 		</div>
 		<div class="form-group">
@@ -24,10 +29,17 @@
 		</div>
 		
 		<div class="form-group">
+			<input class="form-control" name='cookingTime' placeholder="소요시간?">
+		</div>
+		
+		<div class="form-group">
+		<!-- 
 		<input class="form-control" name='serving' placeholder="몇인분?">
+		 -->
 		<input class="form-control" name='difficulty' placeholder="난이도" style="width=40px;">
 		</div><br>
 		
+		<!-- 
 		<div class="form-group">
 		<label>재료</label><br>
 		<input class="form-control" name='ingredient' placeholder="재료 추가">
@@ -35,10 +47,16 @@
 		</div><br>
 		
 		<div class="form-group">
-		<label>요리과정</label><br>
-		<input type=file>
-		
+		<label>요리과정</label><br><br>
+		<h3 name='stepNo'>1.</h3>
+		<input type=file name='photoUrl'>
+		<br>
+		<textarea rows="2" name='rc_content' placeholder="요리 순서를 작성해보세요!"></textarea>
+		<button name="pluse" onclick="">+</button>	
 		</div>
+		<br>
+		 -->
+		<input type="submit" value="레시피 등록">
 	</form>
 </body>
 </html>
