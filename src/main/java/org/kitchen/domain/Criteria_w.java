@@ -1,5 +1,7 @@
 package org.kitchen.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,9 +17,12 @@ public class Criteria_w {
 	
 	private String type;
 	private String keyword;
+	private String where;
+	
+	private List<Long> rnoList;
 	
 	public Criteria_w() {
-		this(1,3);
+		this(1,2);
 	}
 	
 	public Criteria_w(int pageNum, int amount)

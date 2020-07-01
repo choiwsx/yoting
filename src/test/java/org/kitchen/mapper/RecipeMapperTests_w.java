@@ -1,5 +1,7 @@
 package org.kitchen.mapper;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -31,14 +33,14 @@ public class RecipeMapperTests_w {
 //	@Test
 	public void testPaging() {
 		Criteria_w cri = new Criteria_w();
-		
 		cri.setKeyword("7");
+		
 		List<RecipeVO> list = mapper.getListWithPaging(cri);
 		
 		list.forEach(recipe->log.info(recipe));
 	}
 	
-	@Test
+//	@Test
 	public void testUser() {
 		Criteria_w cri = new Criteria_w();
 		cri.setKeyword("2");
@@ -46,4 +48,29 @@ public class RecipeMapperTests_w {
 		list.forEach(user->log.info(user.getUserId()+"###"+user.getNickName()));
 	}
 	
+	@Test
+	public void testTag() {
+		Criteria_w cri = new Criteria_w();
+		cri.setKeyword("¹°");
+		List<Long> tno = mapper.getTagNum(cri);		
+		HashSet<Long> rno = new HashSet<Long>();
+		List<RecipeVO> recipeList = new ArrayList<>();
+		if(tno!=null)
+		{
+			for(int i=0; i<tno.size(); i++) {
+				List<Long> tmp = mapper.getRnoByTagNum(tno.get(i));
+				for(int j=0; j<tmp.size(); j++)
+				{
+					rno.add(tmp.get(j));
+				}
+			}
+			Object[] arr = rno.toArray();
+			for(int i=0; i<rno.size(); i++) {
+				String stringToConvert = String.valueOf(arr[i]);
+				Long convertedLong = Long.parseLong(stringToConvert);
+				recipeList.add(mapper.getRecipeByRno(convertedLong));
+			}
+		}
+		recipeList.forEach(recipe1->log.info(recipe1));
+	}
 }
