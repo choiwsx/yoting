@@ -30,7 +30,7 @@ ${recipe.cookingTime} ${recipe.content} ${recipe.thumbnail }
 				<td><img src="<c:out value='${recipe.thumbnail }'/>" width=30px height=30px></td>
 				<td><c:out value="${recipe.userNo }" /></td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
-						value="${recipe.regdate }" /></td>
+						value="${recipe.regDate }" /></td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${recipe.updateDate }" /></td>
 			</tr>

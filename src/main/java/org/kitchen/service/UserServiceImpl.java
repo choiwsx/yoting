@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
-import org.kitchen.exception_h.DuplicatedUserException;
-import org.kitchen.exception_h.NoUserFoundException;
-import org.kitchen.exception_h.UserMapperFailException;
+import org.kitchen.exception.DuplicatedUserException;
+import org.kitchen.exception.NoUserFoundException;
+import org.kitchen.exception.UserMapperFailException;
 import org.kitchen.mapper.UserMapper;
-import org.kitchen.validation_h.VerificationEmailSender;
+import org.kitchen.validation.VerificationEmailSender;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -20,28 +20,28 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService_h {
+public class UserServiceImpl implements UserService {
 
 	private UserMapper mapper;
-	
+
 	@Resource
 	private VerificationEmailSender verificationEmailSender;
-	
+
 	@Override
 	public Long getUserNoById(String userId) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		Long userNo = mapper.getNoById(userId);
-		if(userNo==null) {
+		if (userNo == null) {
 			throw new NoUserFoundException();
-		}		
+		}
 		return userNo;
 	}
-	
+
 	@Override
 	public UserVO getUserById(String userId) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		UserVO user = mapper.selectById(userId);
-		if(user==null) {
+		if (user == null) {
 			throw new NoUserFoundException();
 		}
 		return user;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService_h {
 	public UserVO getUserByEmail(String email) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		UserVO user = mapper.selectByEmail(email);
-		if(user==null) {
+		if (user == null) {
 			throw new NoUserFoundException();
 		}
 		return user;
@@ -61,12 +61,12 @@ public class UserServiceImpl implements UserService_h {
 	public UserVO getUserByNo(Long userNo) throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		UserVO user = mapper.selectByNo(userNo);
-		if(user==null) {
+		if (user == null) {
 			throw new NoUserFoundException();
 		}
 		return user;
 	}
-	
+
 	@Override
 	public boolean isLegitNewUser(UserVO user) throws DuplicatedUserException {
 		// TODO Auto-generated method stub
@@ -84,13 +84,13 @@ public class UserServiceImpl implements UserService_h {
 		// TODO Auto-generated method stub
 		return mapper.isLegitEmail("email");
 	}
-	
+
 	@Override
 	public void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException {
 		// TODO Auto-generated method stub
-		if(!isLegitUserId(user.getUserId())) {
+		if (!isLegitUserId(user.getUserId())) {
 			throw new DuplicatedUserException("id");
-		} else if (!isLegitUserEmail(user.getEmail())) {			
+		} else if (!isLegitUserEmail(user.getEmail())) {
 			throw new DuplicatedUserException("email");
 		}
 		try {
@@ -101,33 +101,34 @@ public class UserServiceImpl implements UserService_h {
 			throw new UserMapperFailException();
 		}
 	}
-	
+
 	@Override
 	public void sendVerificationEmail(UserVO user) {
 		String key = VerificationEmailSender.generateString();
-		log.info("key:@@@@@@"+key);
+		log.info("key:@@@@@@" + key);
 		mapper.insertVeriKey(user.getUserNo(), key);
 		verificationEmailSender.send(user, key);
 	}
 
 	@Override
 	public boolean verifyEmail(String userno, String paramKey) throws NoUserFoundException {
-		if(paramKey==null) {
+		if (paramKey == null) {
 			throw new NoUserFoundException();
 		}
 		String solidKey = mapper.getVeriKey(Long.valueOf(userno));
-		if(solidKey.equals(paramKey)) return true;
+		if (solidKey.equals(paramKey))
+			return true;
 		return false;
 	}
-	
+
 	@Override
 	public boolean activateUser(Long userNo) throws NoUserFoundException {
 		UserVO user = mapper.selectByNo(userNo);
-		if(user==null) {
+		if (user == null) {
 			throw new NoUserFoundException();
 		}
 		user.setStatus(UserStatus.ACTIVE);
-		return mapper.update(user)==1;
+		return mapper.update(user) == 1;
 	}
 
 	@Override
@@ -135,7 +136,7 @@ public class UserServiceImpl implements UserService_h {
 		// TODO Auto-generated method stub
 		try {
 			int i = mapper.update(user);
-			if(i==0) {
+			if (i == 0) {
 				throw new NoUserFoundException();
 			}
 			return true;
@@ -150,7 +151,7 @@ public class UserServiceImpl implements UserService_h {
 		// TODO Auto-generated method stub
 		try {
 			int i = mapper.delete(user);
-			if(i==0) {
+			if (i == 0) {
 				throw new NoUserFoundException();
 			}
 			return true;
@@ -159,13 +160,13 @@ public class UserServiceImpl implements UserService_h {
 			throw new UserMapperFailException();
 		}
 	}
-	
+
 	@Override
 	public boolean deleteUserByNo(Long userNo) throws NoUserFoundException, UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = mapper.deleteByNo(userNo);
-			if(i==0) {
+			if (i == 0) {
 				throw new NoUserFoundException();
 			}
 			return true;
@@ -179,7 +180,7 @@ public class UserServiceImpl implements UserService_h {
 	public List<UserVO> getTotalList() throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		List<UserVO> totalList = mapper.getTotalList();
-		if(totalList.size()==0) {
+		if (totalList.size() == 0) {
 			throw new NoUserFoundException();
 		}
 		return totalList;
@@ -189,10 +190,15 @@ public class UserServiceImpl implements UserService_h {
 	public List<UserVO> getMailingnList() throws NoUserFoundException {
 		// TODO Auto-generated method stub
 		List<UserVO> mailingList = mapper.getMailingList();
-		if(mailingList.size()==0) {
+		if (mailingList.size() == 0) {
 			throw new NoUserFoundException();
 		}
 		return mailingList;
+	}
+
+	@Override
+	public List<UserVO> getProfile(String userId) {
+		return mapper.getProfile(userId);
 	}
 
 }

@@ -1,5 +1,7 @@
 package org.kitchen.mapper;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
@@ -35,7 +37,7 @@ public class UserMapperTests {
 //		mapper.testcheck().forEach(a->log.info(a));
 //	}
 	
-	//@Test
+	@Test
 	public void testInsert() {
 		UserVO user = new UserVO();
 		user.setUserId("new16");
@@ -58,7 +60,7 @@ public class UserMapperTests {
 	
 
 	
-	//@Test
+	@Test
 	public void testSelectById() {
 		UserVO user1 = mapper.selectById("user001");
 		log.info("####1: "+user1);
@@ -69,22 +71,22 @@ public class UserMapperTests {
 //		log.info("12: "+user3);
 	}
 	
-//	@Test
-//	public void testSelectByEmail() {
-//		log.info("#####: "+mapper.selectByEmail(mapper.selectByNo(4L).getEmail()));
-//	}
-//	
-//	@Test
-//	public void testSelectByNo() {
-//		UserVO user1 = mapper.selectByNo(1L);
-//		log.info("1: "+user1);
-//		UserVO user2 = mapper.selectByNo(4L);
-//		log.info("4: "+user2);
-//		UserVO user3 = mapper.selectByNo(12L);
-//		log.info("12: "+user3);
-//	}
+	@Test
+	public void testSelectByEmail() {
+		log.info("#####: "+mapper.selectByEmail(mapper.selectByNo(4L).getEmail()));
+	}
 	
-	//@Test
+	@Test
+	public void testSelectByNo() {
+		UserVO user1 = mapper.selectByNo(1L);
+		log.info("1: "+user1);
+		UserVO user2 = mapper.selectByNo(4L);
+		log.info("4: "+user2);
+		UserVO user3 = mapper.selectByNo(12L);
+		log.info("12: "+user3);
+	}
+	
+	@Test
 	public void testGetNoById() {
 		Long a = mapper.getNoById("new4");
 		log.info(a);
@@ -93,43 +95,32 @@ public class UserMapperTests {
 		log.info(mapper.getNoById("user01"));
 	}
 	
-	//@Test
+	@Test
 	public void testIsLegitId() {
 		boolean f = mapper.isLegitId("new001");
 		log.info("##############ISLEGITID"+f);
 		
 	}
 	
-	//@Test
+	@Test
 	public void testIsLegitEmail() {
 		boolean f = mapper.isLegitEmail("abc@ssss.com");
 		log.info("##############ISLEGITEMAIL"+f);
 	}
 	
-//	@Test
-//	public void testIsPrivate() {
-//		boolean f1 = mapper.isPrivate("user01");
-//		log.info("##############1t"+f1);
-//		boolean f2 = mapper.isPrivate("user02");
-//		log.info("##############2t"+f2);
-//		boolean f3 = mapper.isPrivate("user03");
-//		log.info("##############3f"+f3);
-//		boolean f4 = mapper.isPrivate("user04");
-//		log.info("##############4f"+f4);
-//	}
+	@Test
+	public void testIsPrivate() {
+		boolean f1 = mapper.isPrivate("user01");
+		log.info("##############1t"+f1);
+		boolean f2 = mapper.isPrivate("user02");
+		log.info("##############2t"+f2);
+		boolean f3 = mapper.isPrivate("user03");
+		log.info("##############3f"+f3);
+		boolean f4 = mapper.isPrivate("user04");
+		log.info("##############4f"+f4);
+	}	
 
-//	@Test
-//	public void testGetStatus() {
-//		UserStatus s = mapper.getStatus("user01");
-//		log.info(s);
-//		log.info(mapper.getStatus("user01"));
-//		log.info(mapper.getStatus("user02"));
-//		log.info(mapper.getStatus("user03"));
-//		log.info(mapper.getStatus("user04"));
-//	}
-//	
-
-	//@Test
+	@Test
 	public void testUpdate() {
 		UserVO user = new UserVO();
 		user.setUserId("new14");
@@ -170,22 +161,17 @@ public class UserMapperTests {
 		log.info("########"+mapper.update(user));
 
 	}
-//	
-//	@Test
-//	public void testDelete() {
-//		log.info("#################################");
-//		UserVO user = mapper.selectByNo(22L);
-//		try {
-//			log.info(mapper.delete(user));
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	
+	@Test
+	public void testDelete() {
+		log.info("#################################");
+		UserVO user = mapper.selectByNo(22L);
+		log.info(mapper.delete(user));
+	}
 	
 	
 
-	//@Test
+	@Test
 	public void testDeletByNo() {
 		log.info("delete");
 		log.info("##########"+mapper.deleteByNo(38L));
@@ -201,12 +187,12 @@ public class UserMapperTests {
 	}
 
 	
-//	@Test
-//	public void testGetMailingList() {
-//		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
-//	}
+	@Test
+	public void testGetMailingList() {
+		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
+	}
 	
-	//@Test
+	@Test
 	public void testGetTotalList() {
 		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
 	}

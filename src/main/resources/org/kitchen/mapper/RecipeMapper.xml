@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.RecipeMapper">
+
+<resultMap id="recipe" type="org.kitchen.domain.RecipeVO">
+   <result property="rno" column="r_num"/>
+   <result property="userNo" column="u_num"/>
+   <result property="userNo" column="u_num"/>
+   <result property="categoryNo" column="c_code"/>
+   <result property="regDate" column="regdate"/>
+   <result property="updateDate" column="updatedate"/>
+   <result property="cookingTime" column="cookingtime"/>
+   <result property="difficulty" column="difficulty"/>
+   <result property="portion" column="portion"/>
+   <result property="thumbnail" column="thumbnail"/>
+   <result property="title" column="title"/>
+   
+</resultMap>
+
+<resultMap id="user" type="org.kitchen.domain.UserVO">
+   <result property="userNo" column="u_num"/>
+   <result property="userId" column="u_id"/>
+   <result property="userPwd" column="u_pwd"/>
+   <result property="email" column="email"/>
+   <result property="emailAuth" column="email_auth"/>
+   <result property="nickName" column="nickname"/>
+   <result property="profilePhoto" column="u_photo"/>
+   <result property="webUrl" column="u_url"/>
+   <result property="bio" column="info"/>
+   <result property="emailSub" column="email_news"/>
+   <result property="privacy" column="u_privacy"/>
+   <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" />
+</resultMap>
+
+<insert id="insert">
+	<selectKey keyProperty="rno" order="BEFORE"
+		resultType="long">
+		SELECT r_seq.nextval from dual
+	</selectKey>
+	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title)
+	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title})
+</insert>
+	
+<select id="read" resultMap="recipe">
+   SELECT * FROM tbl_recipe WHERE r_num = #{rno}
+</select>
+   
+<update id ="update">
+   UPDATE tbl_recipe
+   SET
+   title = #{title},
+   thumbnail = #{thumbnail},
+   regdate = #{regDate},
+   updatedate = sysdate,
+   cookingtime = #{cookingTime},
+   difficulty = #{difficulty},
+   u_num = #{userNo},
+   c_code = #{categoryNo}
+   WHERE r_num = #{rno}
+</update>
+
+<delete id="deleteContent" >
+   DELETE FROM tbl_recipecontent WHERE r_num = #{rno}
+</delete>
+   
+<delete id="deleteMaterial" >
+   DELETE FROM tbl_recipematerial WHERE r_num = #{rno}
+</delete>
+   
+<delete id="deleteReview" >
+   DELETE FROM tbl_recipereview WHERE r_num = #{rno}
+</delete>
+   
+<delete id="deleteTag" >
+   DELETE FROM tbl_recipetag WHERE r_num = #{rno}
+</delete>
+   
+<delete id="deletewishRe" >
+   DELETE FROM tbl_wishrecipe WHERE r_num = #{rno}
+</delete>
+   
+<delete id="deleteRecipe" >
+   DELETE FROM tbl_recipe WHERE r_num = #{rno}
+</delete>
+   
+<select id="getTotalRecipeCount" resultType="int">
+	select count(*) from tbl_recipe where title like '%'||#{keyword}||'%'
+</select>
+
+<select id="getTotalUserCount" resultType="int">
+	select count(*) from tbl_user where u_id like '%'||#{keyword}||'%'
+	 									or
+	 									nickname like '%'||#{keyword}||'%'
+</select>   
+   
+<select id="getList" resultMap="recipe">
+	<![CDATA[select * from tbl_recipe where r_num>0]]>
+</select>
+
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 			<trim prefix="OR">
+ 						title like '%'||#{keyword}||'%'
+			</trim>
+	</trim>
+</sql>
+
+<sql id="criteria_user">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 			<trim prefix="OR">
+ 						u_id like '%'||#{keyword}||'%'
+ 						or
+ 						nickname like '%'||#{keyword}||'%'
+			</trim>
+	</trim>
+</sql>
+
+<sql id="criteria_tag">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+ 			<trim prefix="OR">
+ 						t_content like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+			</trim>
+	</trim>
+</sql>
+
+<select id="getListWithPaging" resultMap="recipe">
+<![CDATA[
+select r_num, title, u_num, regdate
+from
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num ,title, u_num, regdate
+	
+ 	from
+ 		tbl_recipe
+ 	where  
+ ]]>
+ 	<include refid="criteria"></include>
+	
+	<![CDATA[ 	
+	 	rownum<= 5
+	 	)
+	where rn> 0
+	]]>
+</select>
+
+<select id="getRecipeListWithPaging" resultMap="recipe">
+<![CDATA[
+select r_num, title, u_num, regdate
+from
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num ,title, u_num, regdate
+	
+ 	from
+ 		tbl_recipe
+ 	where  
+ ]]>
+ 	<include refid="criteria"></include>
+	
+	<![CDATA[ 	
+	 	rownum<= #{pageNum} * #{amount}
+	 	)
+	where rn> (#{pageNum}-1) * #{amount}
+	]]>
+</select>
+
+<select id="getUserList" resultMap="user">
+<![CDATA[
+select u_num, u_id, nickname
+from
+(
+	select /*+INDEX_DESC(tbl_user)*/
+		rownum rn, u_num, u_id, nickname
+	from
+		tbl_user
+	where
+]]>
+	<include refid="criteria_user"></include> 
+	<![CDATA[
+		rownum<=5 
+	)
+	where rn>0
+]]>
+</select>
+
+<select id="getUserListWithPaging" resultMap="user">
+<![CDATA[
+select u_num, u_id, nickname
+from
+(
+	select /*+INDEX_DESC(tbl_user)*/
+		rownum rn, u_num, u_id, nickname
+	from
+		tbl_user
+	where
+]]>
+	<include refid="criteria_user"></include> 
+	<![CDATA[
+		rownum<=#{pageNum} * #{amount} 
+	)
+	where rn> (#{pageNum}-1) * #{amount}
+]]>
+</select>
+
+<select id="getTagNum" resultType="Long">
+<![CDATA[
+select 
+	t_num
+from 
+(
+	select /*+INDEX_DESC(tbl_tag)*/
+		rownum rn, t_num	
+	from
+		tbl_tag
+	where
+]]>
+	<if test="keyword!=null">
+		<include refid="criteria_tag"></include>
+	</if>
+	<![CDATA[
+		rownum<=5
+		)
+	where rn>0
+]]>
+ 
+</select>
+
+<select id="getRnoByTagNum" resultType="Long">
+select 
+	r_num
+from 
+	tbl_recipetag
+where
+	 t_num	= #{tagNum}
+</select>
+
+<select id="getRecipeByRno" resultMap="recipe">
+<![CDATA[
+select 
+ 	r_num, title, u_num, regdate
+from 
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num, title, u_num, regdate
+	from
+		tbl_recipe
+	where 
+]]>	
+	r_num in   
+	<foreach collection='list' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
+   	<![CDATA[
+   	and
+   		rownum<=5
+   		)
+	where rn>0
+]]>
+</select>
+
+<select id="getRecipeByRnoWithPaging" resultMap="recipe">
+<![CDATA[
+select 
+ 	r_num, title, u_num, regdate
+from 
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num, title, u_num, regdate
+	from
+		tbl_recipe
+	where 
+]]>	
+	r_num in   
+	<foreach collection='rnoList' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
+   	<![CDATA[
+   	and
+	 	rownum<= #{pageNum} * #{amount}
+	 	)
+	where rn> (#{pageNum}-1) * #{amount}
+]]>   
+</select>
+
+<select id="getTotalTagCount" resultMap="recipe">
+select 
+ 	r_num, title, u_num, regdate
+from 
+		tbl_recipe
+where
+		r_num in   
+	<foreach collection='rnoList' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
+</select>
+
+<select id="getCategoryCode" resultMap="recipe">
+	select * 
+	from 
+	tbl_recipe 
+	where 
+	c_code = #{categoryNo,jdbcType=INTEGER}
+</select>
+
+</mapper>

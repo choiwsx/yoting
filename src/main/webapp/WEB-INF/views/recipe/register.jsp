@@ -10,7 +10,6 @@
 </head>
 <body>
 	<form role="form" action="/recipe/register" method="post" >
-		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 
 		<div class="form-group">
 		<!-- 
@@ -48,7 +47,6 @@
 		-->
 		
 		<form:form commandName="ContentVO" action="/recipe/register" method="post">
-		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 		<div class="form-group">
 		<label>요리과정</label><br>
 		<h3 name='stepNo' value='2'>1.</h3>

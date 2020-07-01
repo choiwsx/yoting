@@ -4,6 +4,6 @@
 
 <configuration>
 	<typeHandlers>
-		<typeHandler handler="org.kitchen.handlers.CodeEnumTypeHandler" />
+		<typeHandler handler="org.kitchen.handler.CodeEnumTypeHandler" />
 	</typeHandlers>
 </configuration>

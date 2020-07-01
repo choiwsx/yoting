@@ -7,16 +7,13 @@ import lombok.Data;
 @Data
 public class RecipeVO {
 	private Long rno;
-	private String title;
-	private String thumbnail;
-	private Date regdate;
+	private Long userNo;
+	private int categoryNo;
+	private Date regDate;
 	private Date updateDate;
 	private int cookingTime;
 	private String difficulty;
-	private Long userNo;
-//	private ContentVO[] contents;
-//	private String[] material;
-//	private long[] reviewRecipes;
-	private int categoryNo;
-	
+	private String portion;
+	private String thumbnail;
+	private String title;
 }

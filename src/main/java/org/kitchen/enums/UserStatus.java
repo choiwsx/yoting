@@ -1,7 +1,7 @@
 package org.kitchen.enums;
 
 import org.apache.ibatis.type.MappedTypes;
-import org.kitchen.handlers.CodeEnumTypeHandler;
+import org.kitchen.handler.CodeEnumTypeHandler;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j;

@@ -3,6 +3,7 @@ package org.kitchen.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.kitchen.domain.Criteria;
 import org.kitchen.domain.UserVO;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -29,5 +30,8 @@ public interface UserMapper {
 	
 	public List<UserVO> getMailingList();
 	public List<UserVO> getTotalList();
+	
+	public List<UserVO> getInfobyId(Criteria cri);
+	public List<UserVO> getProfile(String userId); 
 
 }
