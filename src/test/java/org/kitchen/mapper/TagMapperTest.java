@@ -13,36 +13,37 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class TagMapperTest {
-	
-	@Setter(onMethod_=@Autowired)
+
+	@Setter(onMethod_ = @Autowired)
 	private TagMapper mapper;
-	
-	
-	//@Test
+
+	// @Test
 	public void testInsert() {
 		mapper.insert("호박고구마");
 	}
-	
+
 	//@Test
 	public void testSelectByNo() {
-		log.info("result: " + mapper.selectByNo(30L));
-		
+		log.info("result: " + mapper.selectByNo(13L));
+
 	}
+
 	//@Test
 	public void testSelectByName() {
-		log.info("result: " + mapper.selectByName("김치"));
-		
+		log.info("result: " + mapper.selectByName("냉면"));
+
 	}
-	//@Test
+
+	// @Test
 	public void testDeleteByNo() {
 		log.info("delete tag: " + mapper.deleteByNo(30L));
-		
+
 	}
-	//@Test
+
+	// @Test
 	public void testDeleteByName() {
 		log.info("delete tag: " + mapper.deleteByName("김치"));
-		
+
 	}
-	
-	
+
 }

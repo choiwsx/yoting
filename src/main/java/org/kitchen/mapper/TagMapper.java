@@ -1,5 +1,7 @@
 package org.kitchen.mapper;
 
+import java.util.List;
+
 
 public interface TagMapper {
 	
@@ -9,8 +11,8 @@ public interface TagMapper {
 	
 	public int deleteByNo(Long tagNo);
 	
-	public int selectByName(String tagName);
+	public Long selectByName(String tagName);
 	
-	public int selectByNo(Long tagNo);
+	public String selectByNo(Long tagNo);
 
 }

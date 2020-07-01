@@ -30,6 +30,14 @@ public class RecipeController_k {
 		    
 		
 	}
+	
+	@GetMapping("/NewFile")
+	public void list(Model model)
+	{
+			model.addAttribute("NewFile");
+		    
+		
+	}
 
 
 }

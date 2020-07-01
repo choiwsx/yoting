@@ -17,14 +17,14 @@
 	<delete id="deleteByName">
 		DELETE FROM tbl_tag WHERE t_content = #{tagName}
 	</delete>
-
-	<select id="selectByNo">
-		select * from tbl_tag where
+	
+	<select id="selectByNo" resultType="String">
+		select t_content from tbl_tag where
 		t_num = #{tagNo}
 	</select>
 
-	<select id="selectByName">
-		select * from tbl_tag where
+	<select id="selectByName" resultType="Long">
+		select t_num from tbl_tag where
 		t_content = #{tagName}
 	</select>
 
