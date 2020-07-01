@@ -21,8 +21,10 @@ public interface RecipeMapper_w {
 	
 	public List<Long> getRnoByTagNum(Long tagNum);
 	 
-	public RecipeVO getRecipeByRno(Long rnoList);
+	public List<RecipeVO> getRecipeByRno(List<Long> rnoList);
+	public List<RecipeVO> getRecipeByRnoWithPaging(Criteria_w cri);
 
 	public int getTotalRecipeCount(Criteria_w cri);
 	public int getTotalUserCount(Criteria_w cri);
+	public List<RecipeVO> getTotalTagCount(Criteria_w cri);
 }

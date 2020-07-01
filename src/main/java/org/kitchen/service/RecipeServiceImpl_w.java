@@ -45,9 +45,12 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 		List<Long> tno = mapper.getTagNum(cri);
 		
 		HashSet<Long> rno = new HashSet<Long>();
-		List<RecipeVO> recipeList = new ArrayList<RecipeVO>();
+		List<RecipeVO> recipeList = null;
+		List<Long> rnoList = null;
 		if(tno!=null)
 		{
+			recipeList = new ArrayList<RecipeVO>();
+			rnoList = new ArrayList<Long>();
 			for(int i=0; i<tno.size(); i++) {
 				List<Long> tmp = mapper.getRnoByTagNum(tno.get(i));
 				for(int j=0; j<tmp.size(); j++)
@@ -55,14 +58,17 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 					rno.add(tmp.get(j));
 				}
 			}
+			Object[] arr = rno.toArray();
+			for(int i=0; i<rno.size(); i++) {
+				String stringToConvert = String.valueOf(arr[i]);
+				Long convertedLong = Long.parseLong(stringToConvert);
+				rnoList.add(convertedLong);
+//			recipeList = mapper.getRecipeByRno(listArr);
+			}
+			System.out.println("@@@@@@@@@"+rnoList);
+			if(rnoList.size()>0)
+				return mapper.getRecipeByRno(rnoList);
 		}
-		Object[] arr = rno.toArray();
-		for(int i=0; i<rno.size(); i++) {
-			String stringToConvert = String.valueOf(arr[i]);
-			Long convertedLong = Long.parseLong(stringToConvert);
-			recipeList.add(mapper.getRecipeByRno(convertedLong));
-		}
-		
 		return recipeList;
 	}
 
@@ -94,6 +100,73 @@ public class RecipeServiceImpl_w implements RecipeService_w {
 	public int getTotalUser(Criteria_w cri) {
 		// TODO Auto-generated method stub
 		return mapper.getTotalUserCount(cri);
+	}
+
+	@Override
+	public long getTotalTag(Criteria_w cri) {
+		// TODO Auto-generated method stub
+		List<Long> tno = mapper.getTagNum(cri);
+		
+		HashSet<Long> rno = new HashSet<Long>();
+		List<RecipeVO> recipeList = null;
+		List<Long> rnoList = null;
+		if(tno!=null)
+		{
+			recipeList = new ArrayList<RecipeVO>();
+			rnoList = new ArrayList<Long>();
+			for(int i=0; i<tno.size(); i++) {
+				List<Long> tmp = mapper.getRnoByTagNum(tno.get(i));
+				for(int j=0; j<tmp.size(); j++)
+				{
+					rno.add(tmp.get(j));
+				}
+			}
+			Object[] arr = rno.toArray();
+			for(int i=0; i<rno.size(); i++) {
+				String stringToConvert = String.valueOf(arr[i]);
+				Long convertedLong = Long.parseLong(stringToConvert);
+				rnoList.add(convertedLong);
+//			recipeList = mapper.getRecipeByRno(listArr);
+			}
+			System.out.println("recipeListSize="+recipeList.size());
+			cri.setRnoList(rnoList);
+			return mapper.getTotalTagCount(cri).size();
+		}
+		return 0; 
+	}
+
+	@Override
+	public List<RecipeVO> moreTagList(Criteria_w cri) {
+		// TODO Auto-generated method stub
+				List<Long> tno = mapper.getTagNum(cri);
+				
+				HashSet<Long> rno = new HashSet<Long>();
+				List<RecipeVO> recipeList = null;
+				List<Long> rnoList = null;
+				if(tno!=null)
+				{
+					recipeList = new ArrayList<RecipeVO>();
+					rnoList = new ArrayList<Long>();
+					for(int i=0; i<tno.size(); i++) {
+						List<Long> tmp = mapper.getRnoByTagNum(tno.get(i));
+						for(int j=0; j<tmp.size(); j++)
+						{
+							rno.add(tmp.get(j));
+						}
+					}
+					Object[] arr = rno.toArray();
+					for(int i=0; i<rno.size(); i++) {
+						String stringToConvert = String.valueOf(arr[i]);
+						Long convertedLong = Long.parseLong(stringToConvert);
+						rnoList.add(convertedLong);
+//					recipeList = mapper.getRecipeByRno(listArr);
+					}
+					System.out.println("@@@@@@@@@"+rnoList);
+					cri.setRnoList(rnoList);
+					if(rnoList.size()>0)
+						return mapper.getRecipeByRnoWithPaging(cri);
+				}
+				return recipeList;
 	} 
 	
 	

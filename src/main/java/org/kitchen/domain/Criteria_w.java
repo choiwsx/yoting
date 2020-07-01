@@ -1,5 +1,7 @@
 package org.kitchen.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +19,7 @@ public class Criteria_w {
 	private String keyword;
 	private String where;
 	
+	private List<Long> rnoList;
 	
 	public Criteria_w() {
 		this(1,2);

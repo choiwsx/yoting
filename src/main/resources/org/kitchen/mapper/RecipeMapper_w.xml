@@ -149,14 +149,6 @@ from
 </select>
 
 
-<select id="getTotalTagCount" resultType="int">
-	select count(a.r_num) 
-	from tbl_recipetag a inner join tbl_tag b
-	on a.t_num = b.t_num
-	where b.t_content like '%'||#{keyword}||'%'
-</select>
-
-
 
 	
 <sql id="criteria_tag">
@@ -200,12 +192,64 @@ where
 </select>
 
 <select id="getRecipeByRno" resultMap="recipe">
+<![CDATA[
 select 
  	r_num, title, u_num, regdate
 from 
-	tbl_recipe
-where 
-	r_num = #{rnoList} 
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num, title, u_num, regdate
+	from
+		tbl_recipe
+	where 
+]]>	
+	r_num in   
+	<foreach collection='list' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
+   	<![CDATA[
+   	and
+   		rownum<=5
+   		)
+	where rn>0
+]]>
+</select>
+
+
+<select id="getRecipeByRnoWithPaging" resultMap="recipe">
+<![CDATA[
+select 
+ 	r_num, title, u_num, regdate
+from 
+(
+	select /*+INDEX_DESC(tbl_recipe)*/
+		rownum rn, r_num, title, u_num, regdate
+	from
+		tbl_recipe
+	where 
+]]>	
+	r_num in   
+	<foreach collection='rnoList' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
+   	<![CDATA[
+   	and
+	 	rownum<= #{pageNum} * #{amount}
+	 	)
+	where rn> (#{pageNum}-1) * #{amount}
+]]>   
+</select>
+
+<select id="getTotalTagCount" resultMap="recipe">
+select 
+ 	r_num, title, u_num, regdate
+from 
+		tbl_recipe
+where
+		r_num in   
+	<foreach collection='rnoList' index='index' item='rnoList' open='(' close=')' separator=','>
+      #{rnoList}
+   </foreach>
 </select>
 
 

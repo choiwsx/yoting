@@ -51,8 +51,10 @@ public class RecipeController_w {
 			total = service.getTotalUser(cri);
 			break;
 		case "tag":
-			model.addAttribute("moreList", service.getTagNum(cri));
-			total = 100;
+			model.addAttribute("moreList", service.moreTagList(cri));
+			System.out.println("cri="+cri);
+			total = (int)service.getTotalTag(cri);
+			System.out.println("totalcount="+total);
 			break;
 		}
 		model.addAttribute("pageMaker", new PageDTO_w(cri, total));

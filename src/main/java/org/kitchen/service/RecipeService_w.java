@@ -17,6 +17,7 @@ public interface RecipeService_w {
 	public List<UserVO> moreUserList(Criteria_w cri);
 	
 	public List<RecipeVO> getTagNum(Criteria_w cri);
+	public List<RecipeVO> moreTagList(Criteria_w cri);
 	
 	public List<?> getAll(Criteria_w cri);
 	
@@ -24,4 +25,5 @@ public interface RecipeService_w {
 	
 	public int getTotalRecipe(Criteria_w cri);
 	public int getTotalUser(Criteria_w cri);
+	public long getTotalTag(Criteria_w cri);
 }
