@@ -23,12 +23,8 @@
 	 -->
 
 	<insert id="insert">
-		<selectKey keyProperty="r_num" order="BEFORE"
-			resultType="long">
-			SELECT r_seq.nextval FROM dual
-		</selectKey>
 		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
-		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
+		VALUES (#{stepNo}, #{rno}, #{photoUrl}, #{content})
 	</insert>
 	 
 	 <select id="read" resultMap="content">

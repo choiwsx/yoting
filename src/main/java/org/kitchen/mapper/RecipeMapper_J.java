@@ -7,7 +7,7 @@ import org.kitchen.domain.RecipeVO;
 public interface RecipeMapper_J {
 	public List<RecipeVO> getList();
 	
-	public void insert(RecipeVO recipe);
+	public Long insert(RecipeVO recipe);
 	
 	public void insertSelectkey(RecipeVO recipe);
 	

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form role="form" action="/recipe/register" method="post" >
-		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo} -->
+		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 
 		<div class="form-group">
 		<!-- 
@@ -39,23 +39,30 @@
 		<input class="form-control" name='difficulty' placeholder="난이도" style="width=40px;">
 		</div><br>
 		
-		<!-- 
+		<!-- 재료매퍼 어케 할건지
 		<div class="form-group">
 		<label>재료</label><br>
 		<input class="form-control" name='ingredient' placeholder="재료 추가">
 		<button onclick="">+</button>
 		</div><br>
+		-->
 		
+		<form:form commandName="ContentVO" action="/recipe/register" method="post">
+		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 		<div class="form-group">
-		<label>요리과정</label><br><br>
-		<h3 name='stepNo'>1.</h3>
+		<label>요리과정</label><br>
+		<h3 name='stepNo' value='2'>1.</h3>
+		<!-- 
 		<input type=file name='photoUrl'>
+		 -->
+		<input name='photoUrl'><br>
 		<br>
-		<textarea rows="2" name='rc_content' placeholder="요리 순서를 작성해보세요!"></textarea>
-		<button name="pluse" onclick="">+</button>	
+		<textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
+		<button id="pluse" onclick="">+</button>
 		</div>
 		<br>
-		 -->
+		</form:form>
+		
 		<input type="submit" value="레시피 등록">
 	</form>
 </body>

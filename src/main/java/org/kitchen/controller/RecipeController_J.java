@@ -32,14 +32,16 @@ public class RecipeController_J {
 	}
 	
 	@PostMapping("/register")
-	public String register(RecipeVO recipe, RedirectAttributes rttr, MultipartHttpServletRequest mttr)
+	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr)
 	{
 		log.info("register : " + recipe);
 		
-//		recipe.setThumbnail(mttr.);
-		service.register(recipe);
-		rttr.addFlashAttribute("result", recipe.getRno());
+//		service.register(recipe);
+//		service.registerCon(content);
+		service.register(recipe, content);
 		
+		rttr.addFlashAttribute("result", recipe.getRno());
+		rttr.addFlashAttribute("resultCon", content.getRno());
 		
 		return "redirect:/recipe/list";
 	}
