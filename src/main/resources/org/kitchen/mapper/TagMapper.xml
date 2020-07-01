@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.rog//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.TagMapper">
+	
+	<insert id="insert">
+		INSERT INTO tbl_tag(t_num,t_content)
+		VALUES
+		(t_seq.nextval, #{tagName})
+	</insert>
+
+	<delete id="deleteByNo">
+		DELETE FROM tbl_tag WHERE t_num = #{tagNo}
+	</delete>
+
+	<delete id="deleteByName">
+		DELETE FROM tbl_tag WHERE t_content = #{tagName}
+	</delete>
+
+	<select id="selectByNo">
+		select * from tbl_tag where
+		t_num = #{tagNo}
+	</select>
+
+	<select id="selectByName">
+		select * from tbl_tag where
+		t_content = #{tagName}
+	</select>
+
+
+</mapper>
