@@ -20,7 +20,7 @@
 	<table>
 	<div> 총<c:out value="${fn:length(userSearch)} " />명있습니다.</div>
 		<c:forEach items="${userSearch}" var="user">
-			<a href='profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
+			<a href='/user/profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
 				<img src="<c:out value="${user.profilePhoto}"/>" width="140" height="120" />
 				<c:out value="${user.nickName}" /> </a>
 		</c:forEach>
