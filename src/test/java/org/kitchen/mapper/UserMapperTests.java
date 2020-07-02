@@ -37,7 +37,7 @@ public class UserMapperTests {
 //		mapper.testcheck().forEach(a->log.info(a));
 //	}
 	
-	@Test
+	//@Test
 	public void testInsert() {
 		UserVO user = new UserVO();
 		user.setUserId("new16");
@@ -60,7 +60,7 @@ public class UserMapperTests {
 	
 
 	
-	@Test
+	//@Test
 	public void testSelectById() {
 		UserVO user1 = mapper.selectById("user001");
 		log.info("####1: "+user1);
@@ -71,12 +71,12 @@ public class UserMapperTests {
 //		log.info("12: "+user3);
 	}
 	
-	@Test
+	//@Test
 	public void testSelectByEmail() {
 		log.info("#####: "+mapper.selectByEmail(mapper.selectByNo(4L).getEmail()));
 	}
 	
-	@Test
+	//@Test
 	public void testSelectByNo() {
 		UserVO user1 = mapper.selectByNo(1L);
 		log.info("1: "+user1);
@@ -86,7 +86,7 @@ public class UserMapperTests {
 		log.info("12: "+user3);
 	}
 	
-	@Test
+	//@Test
 	public void testGetNoById() {
 		Long a = mapper.getNoById("new4");
 		log.info(a);
@@ -95,20 +95,20 @@ public class UserMapperTests {
 		log.info(mapper.getNoById("user01"));
 	}
 	
-	@Test
+	//@Test
 	public void testIsLegitId() {
 		boolean f = mapper.isLegitId("new001");
 		log.info("##############ISLEGITID"+f);
 		
 	}
 	
-	@Test
+	//@Test
 	public void testIsLegitEmail() {
 		boolean f = mapper.isLegitEmail("abc@ssss.com");
 		log.info("##############ISLEGITEMAIL"+f);
 	}
 	
-	@Test
+	//@Test
 	public void testIsPrivate() {
 		boolean f1 = mapper.isPrivate("user01");
 		log.info("##############1t"+f1);
@@ -120,7 +120,7 @@ public class UserMapperTests {
 		log.info("##############4f"+f4);
 	}	
 
-	@Test
+	//@Test
 	public void testUpdate() {
 		UserVO user = new UserVO();
 		user.setUserId("new14");
@@ -139,9 +139,9 @@ public class UserMapperTests {
 	}
 	
 
-	@Test
+	//@Test
 	public void testUpdate2() {
-		UserVO user = mapper.selectByNo(41L);
+		UserVO user = mapper.selectByNo(1L);
 		log.info("#####");
 		log.info("#####b"+user.getBio());		
 		log.info("#####e"+user.getEmail());
@@ -162,16 +162,17 @@ public class UserMapperTests {
 
 	}
 	
-	@Test
+	//@Test
 	public void testDelete() {
 		log.info("#################################");
-		UserVO user = mapper.selectByNo(22L);
+		UserVO user = mapper.selectByNo(17L);
+		log.info(user);
 		log.info(mapper.delete(user));
 	}
 	
 	
 
-	@Test
+	//@Test
 	public void testDeletByNo() {
 		log.info("delete");
 		log.info("##########"+mapper.deleteByNo(38L));
@@ -180,21 +181,28 @@ public class UserMapperTests {
 
 	}
 	
-	@Test
+	//@Test
 	public void testDeleteById() {
 		log.info("###########3");
 		log.info(mapper.deleteById("NEWNEW"));
 	}
 
 	
-	@Test
+	//@Test
 	public void testGetMailingList() {
 		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 	}
 	
-	@Test
+	//@Test
 	public void testGetTotalList() {
 		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+	}
+	
+	@Test
+	public void testEnumHandler() {
+		UserVO user = mapper.selectByNo(1L);
+		log.info("@@@@"+user);
+		
 	}
 
 	

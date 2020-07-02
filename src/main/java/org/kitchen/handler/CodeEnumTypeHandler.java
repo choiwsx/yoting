@@ -52,11 +52,16 @@ public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeE
     }
  
     private CodeEnum getCodeEnum(String code) {
+    	if(code==null) code="1";
         try {
             CodeEnum[] enumConstants = (CodeEnum[]) type.getEnumConstants();
-            for (CodeEnum codeNum: enumConstants) {           
-                if (codeNum.getCode().equals(code)) {
-                    return codeNum;
+            log.info("enumConstants"+enumConstants+"code"+code);
+            for (CodeEnum codeEnum: enumConstants) {      
+            	log.info("########"+codeEnum.getCode()+"#"+code+"######");
+            	log.info(codeEnum.getCode().equals(code));
+                if (codeEnum.getCode().equals(code)) {
+                	log.info("##########################"+codeEnum);
+                    return codeEnum;
                 }
             }
         } catch (Exception e) {

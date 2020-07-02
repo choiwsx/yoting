@@ -59,7 +59,7 @@
 	select * from tbl_user where u_num = #{userNo}
 </select>
 
-<select id="getNoById" resultType="Integer">
+<select id="getNoById" resultType="Long">
 	select u_num from tbl_user where u_id = #{userId}
 </select>
 

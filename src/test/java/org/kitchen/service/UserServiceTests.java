@@ -21,10 +21,11 @@ public class UserServiceTests {
 	@Autowired
 	private UserService service;
 	
-	@Test
+	//@Test
 	public void testGetUserNoById() {
 		try {
-			Long userNo = service.getUserNoById("user");
+			Long userNo = service.getUserNoById("user01");
+			log.info("@@@"+service.getUserById("user01").getStatus());
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,7 +33,7 @@ public class UserServiceTests {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetuserById() {
 		try {
 			UserVO user = service.getUserById("user01");
@@ -42,7 +43,7 @@ public class UserServiceTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testGetUserByEmail() {
 		try {
 			UserVO user = service.getUserByEmail("a@a.a");
@@ -56,16 +57,17 @@ public class UserServiceTests {
 	public void testGetUserByNo() {
 		try {
 			UserVO user = service.getUserByNo(3L);
+			log.info(user);
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testRegisterNewUser() {
 		UserVO user = new UserVO();
-		user.setUserId("new002");
+		user.setUserId("new1");
 		user.setUserPwd("1234");
 		user.setEmail("abcde@sss.com");
 		user.setEmailAuth(true);
@@ -75,7 +77,7 @@ public class UserServiceTests {
 		user.setBio("나는18살이다");
 		user.setEmailSub(true);
 		user.setPrivacy(false);
-		user.setStatus(UserStatus.PENDING);
+		user.setStatus(UserStatus.DELETED);
 		try {
 			service.registerNewUser(user);
 		} catch (DuplicatedUserException e) {
@@ -87,7 +89,7 @@ public class UserServiceTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testIsLegitUserId() {
 		boolean f1 = service.isLegitUserId("user");
 		log.info("$$$LEGITID"+f1);
@@ -95,7 +97,7 @@ public class UserServiceTests {
 		log.info("$$$LEGITID"+f2);
 	}
 	
-	@Test
+	//@Test
 	public void testIsLegitUserEmail() {
 		boolean f1 = service.isLegitUserEmail("a@a.a");
 		log.info("$$$LEGITEMAIL"+f1);
@@ -103,7 +105,7 @@ public class UserServiceTests {
 		log.info("$$$LEGITEMAIL"+f2);
 	}
 	
-	@Test
+	//@Test
 	public void testModifyUser() {
 		try {
 			UserVO user = service.getUserById("user01");
@@ -120,7 +122,7 @@ public class UserServiceTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testDeleteUser() {
 		try {
 			UserVO user = service.getUserById("user01");
@@ -147,7 +149,7 @@ public class UserServiceTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testGetMailingList() {
 		try {
 			service.getMailingnList().forEach(a->log.info("mail##########"+a.isEmailSub()));
