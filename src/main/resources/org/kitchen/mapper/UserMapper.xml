@@ -16,7 +16,7 @@
    <result property="bio" column="info"/>
    <result property="emailSub" column="email_news"/>
    <result property="privacy" column="u_public"/>
-   <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" javaType="org.kitchen.enums.UserStatus" />
+   <result property="status" column="status" typeHandler="org.kitchen.handler.CodeEnumTypeHandler" javaType="org.kitchen.enums.UserStatus" />
 </resultMap>
 
 <insert id="test">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +10,6 @@
 </head>
 <body>
 <div>
-
-<a href="/user-h/list">리스트로</a>
-</div>
-<div>
-<a href="/user-h/registration">가입하기</a>
-</div>
 
 <h1>가입된 유저 리스트</h1>
 	<table border="1">
@@ -38,7 +33,7 @@
 	<tbody>
 		<c:forEach var="user" items="${list}">
 		<tr>
-			<td><a href="<c:url value='/user-h/user?userno=${user.userNo}' />"><c:out value="${user.userNo}" /></a></td>
+			<td><a href="<c:url value='/user/profile?userId=${user.userId}' />"><c:out value="${user.userNo}" /></a></td>
 			<td><c:out value="${user.userId}" /></td>
 			<td><c:out value="${user.userPwd}" /></td>
 			<td><c:out value="${user.email}" /></td>
@@ -50,7 +45,7 @@
 			<td><c:out value="${user.emailSub}" /></td>
 			<td><c:out value="${user.privacy}" /></td>
 			<td><c:out value="${user.status}" /></td>
-			<td><a href="<c:url value='/user-h/deluser?userno=${user.userNo}' />">삭제</a></td>
+			<td><a href="<c:url value='/user/deluser?userno=${user.userNo}' />">삭제</a></td>
 		</tr>
 		</c:forEach>
 	</tbody>

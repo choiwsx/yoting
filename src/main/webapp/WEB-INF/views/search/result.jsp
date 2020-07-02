@@ -8,15 +8,16 @@
     request.setCharacterEncoding("UTF-8");
  
 %>
+<%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+	<meta charset="utf-8">
 <title>Insert title here</title>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<form id='searchForm' action="/recipe/searchresult" method='get'>
+<form id='searchForm' action="/search/result" method='get'>
 	<select name='type'>
 		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
 		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
@@ -56,14 +57,7 @@
 	<tr>
 	<td>
 		<c:if test="${list.size()>=5 and where==null}">
-		<form id="morelistForm" action="/recipe/morelist" method='get'>
-		<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
-		<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
-		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
-		<input type='hidden' name='where' value='<c:out value="${pageMaker.cri.where = 'recipe' }"/>'>
-		 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-			<a class="more_button" href="${where}recipe">더보기</a>
-		</form>
+			<a class="more_button" href="recipe">더보기</a>
 		</c:if>
 	</td>
 	</tr>
@@ -96,14 +90,7 @@
 		<tr>
 	<td>
 		<c:if test="${list_user.size()>=5}">
-		<form id="morelistForm" action="/recipe/morelist" method='get'>
-			<a class="more_button" href="${where}user">더보기</a>
-			<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
-		<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
-		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
-		<input type='hidden' name='where' value='user'>
-		 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-		</form>
+			<a class="more_button" href="user">더보기</a>
 		</c:if>
 	</td>
 	</tr>
@@ -135,14 +122,7 @@
 		<tr>
 			<td>
 				<c:if test="${list_tag.size()>=5}">
-				<form id="morelistForm" action="/recipe/morelist" method='get'>
-					<a class="more_button" href="${where}tag">더보기</a>
-					<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
-					<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
-					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
-					<input type='hidden' name='where' value='tag'>
-				 	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
-				</form>
+					<a class="more_button" href="tag">더보기</a>
 				</c:if>
 			</td>
 		</tr>
@@ -150,7 +130,7 @@
 </table>
 </c:if>
 
-<form id='actionForm' action="/recipe/searchresult" method='get'>
+<form id='actionForm' action="/search/result" method='get'>
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
 	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
@@ -158,7 +138,13 @@
 	 <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
 
-
+<form id="morelistForm" action="/search/detail" method='get'>
+	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
+	<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
+	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+	<input type='hidden' name='where' value=''>
+</form>
 </body>
 
 <script type="text/javascript">
@@ -182,7 +168,7 @@ $(document).ready(function(){
 	$(".more_button").on("click", function(e){
 		e.preventDefault();
 		console.log('click-더보기');
-		actionForm.find("input[name='where']").val($(this).attr("href"));
+		moreListForm.find("input[name='where']").val($(this).attr("href"));
 		//actionForm.submit();
 		moreListForm.submit();
 	});

@@ -111,6 +111,12 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			log.info("@@@@@@@@@"+service.getUserByNo(1L).getStatus());
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return modelAndView;
 	}
 	

@@ -147,7 +147,7 @@ public class UserMapperTests {
 		log.info("#####e"+user.getEmail());
 		log.info("#####nn"+user.getNickName());
 		log.info("#####pp"+user.getProfilePhoto());
-		log.info("#####id"+user.getUserId());
+		log.info("#####id"+user.getUserId()); 
 		log.info("#####pwd"+user.getUserPwd());
 		log.info("#####web"+user.getWebUrl());
 		log.info("#####no"+user.getUserNo());

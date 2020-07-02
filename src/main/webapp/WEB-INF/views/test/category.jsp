@@ -1,15 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
+<%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+	<meta charset="utf-8">
 <title>Category</title>
 </head>
 <body>
@@ -25,17 +25,19 @@
 		src="https://i.postimg.cc/C1GxHb6x/Jusik.png" /></a>
 	<table>
 		<tr>
-			<th>¹øÈ£</th>
-			<th>Á¦¸ñ</th>
-			<th>ÀÛ¼ºÀÚ</th>
-			<th>ÀÛ¼ºÀÏ</th>
+			<th>rno</th>
+			<th>ì œëª©</th>
+			<th>ìœ ì €ë„˜ë²„</th>
+			<th>ì¹´í…Œê³ ë¦¬</th>
+			<th>ìž…ë ¥ì¼</th>
 		</tr>
-		<div> ÃÑ <c:out value="${fn:length(list)} " />°³ÀÇ ·¹½ÃÇÇ°¡ÀÖ¾î¿ä</div>
+		<div> ì´ <c:out value="${fn:length(list)} " />ê°œìžˆìŠµë‹ˆë‹¤.</div>
 		<c:forEach items="${list}" var="recipe" varStatus="status">
 			<tr>
 				<td><c:out value="${recipe.rno}" /></td>
 				<td><c:out value="${recipe.title}" /></td>
 				<td><c:out value="${recipe.userNo}" /></td>
+				<td><c:out value="${recipe.categoryNo}" /></td>
 				<td><c:out value="${recipe.regDate}" /></td>
 			</tr>
 		</c:forEach>

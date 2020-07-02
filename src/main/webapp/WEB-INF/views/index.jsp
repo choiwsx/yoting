@@ -3,31 +3,27 @@
    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
  
 <%@page import="java.util.*"%>
-<%
- 
-    request.setCharacterEncoding("UTF-8");
- 
-%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%@ include file="includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Recipe Index</title>
+   <meta charset="utf-8">
+<title>Index</title>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<form id='searchForm' action="/recipe/searchresult" method='get'>
-   <select name='type'>
-      <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
-      <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
-      <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
-      <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
-   </select>
-         
-   <input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
-   <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-   <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
-   <button class='btn btn-default'>Search</button>
+<form id='searchForm' action="/search/result" method='get'>
+	<select name='type'>
+		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
+		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
+		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
+		<option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
+	</select>
+			
+	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
+	<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
+	<button class='btn btn-default'>Search</button>
 </form>
 
 
@@ -41,11 +37,6 @@ $(document).ready(function(){
    var result = '<c:out value="${result}"/>';
    
    history.replaceState({},null,null);
-   
-   
-   
-
-   
    
    var searchForm = $("#searchForm");
    $("#searchForm button").on("click", function(e){

@@ -9,6 +9,7 @@ import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j;
@@ -16,8 +17,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 public class SearchServiceImpl implements SearchService {
-
+	
+	@Autowired
 	private UserMapper userMapper;
+	@Autowired
 	private RecipeMapper recipeMapper;
 
 //	REcipeSERACHMethods

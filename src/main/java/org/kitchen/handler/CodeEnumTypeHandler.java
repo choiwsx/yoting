@@ -24,24 +24,30 @@ public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeE
     public void setParameter(PreparedStatement ps, int i, CodeEnum parameter, JdbcType jdbcType) throws SQLException {
     	String code = parameter==null?"1":parameter.getCode();
         ps.setString(i, code);
-
+        log.info("1"+code);
     }
  
     @Override
     public CodeEnum getResult(ResultSet rs, String columnName) throws SQLException {
         String code = rs.getString(columnName);
+        log.info("2"+code);
+
         return getCodeEnum(code);
     }
  
     @Override
     public CodeEnum getResult(ResultSet rs, int columnIndex) throws SQLException {
         String code = rs.getString(columnIndex);
+        log.info("3"+code);
+
         return getCodeEnum(code);
     }
  
     @Override
     public CodeEnum getResult(CallableStatement cs, int columnIndex) throws SQLException {
         String code = cs.getString(columnIndex);
+        log.info("4"+code);
+
         return getCodeEnum(code);
     }
  

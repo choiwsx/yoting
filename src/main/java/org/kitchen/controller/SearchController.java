@@ -3,6 +3,7 @@ package org.kitchen.controller;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
 import org.kitchen.service.SearchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/search/*")
 public class SearchController {
-
+	
+	@Autowired
 	SearchService service;
 
 	@GetMapping("/result")
@@ -49,6 +51,7 @@ public class SearchController {
 
 	@GetMapping("/detail")
 	public void getMoreList(Criteria cri, Model model) {
+		log.info("list : " + cri);
 		String more = cri.getWhere();
 		int total = 0;
 		switch (more) {

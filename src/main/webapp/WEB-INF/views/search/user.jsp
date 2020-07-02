@@ -1,24 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
+<%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+	<meta charset="utf-8">
+<title>κ²€μƒ‰:μ μ € λ¦¬μ¤νΈ</title>
 </head>
 <body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<form id='searchForm' action="/userBoard/userSearch" method='get'>
+	<form id='searchForm' action="/search/user" method='get'>
 		<input type='text' name='keyword' id="keyword"
 			value='<c:out value="${cri.keyword}"/>'>
 		<button class='btn btn-default'>Search</button>
 	</form>
 	<table>
-	<div> ΓΡ <c:out value="${fn:length(userSearch)} " />ΈνΐΗ ΏδΈ®»η°΅ ΐΦΎξΏδ</div>
+	<div> μ΄<c:out value="${fn:length(userSearch)} " />λª…μμµλ‹λ‹¤.</div>
 		<c:forEach items="${userSearch}" var="user">
 			<a href='profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
 				<img src="<c:out value="${user.profilePhoto}"/>" width="140" height="120" />

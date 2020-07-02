@@ -19,7 +19,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/recipe/*")
 public class RecipeController {
-
+	
+	@Autowired
 	private RecipeService service;
 
 	@GetMapping("/register")
@@ -62,6 +63,7 @@ public class RecipeController {
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("list");
+		model.hashCode();
 		model.addAttribute("list", service.getList());
 	}
 

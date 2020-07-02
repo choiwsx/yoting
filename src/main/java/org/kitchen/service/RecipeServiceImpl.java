@@ -14,9 +14,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
-
+	
 	@Autowired
 	private RecipeMapper recipeMapper;
+	@Autowired
 	private ContentMapper contentMapper;
 
 	@Override

@@ -8,15 +8,16 @@
     request.setCharacterEncoding("UTF-8");
  
 %>
+<%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>검색:더보기</title>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<form id='searchForm' action="/recipeBoard/list_w" method='get'>
+<form id='searchForm' action="/search/result" method='get'>
 	<select name='type'>
 		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
 		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
@@ -31,17 +32,20 @@
 <c:if test="${moreList.size()>0}">
 <table>
 	<tr>
-		<th>#번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>작성일</th>
+		<c:if test="${pageMaker.cri.where eq 'recipe'}">
+			<th>#번호</th><th>제목</th><th>작성자</th><th>작성일</th>
+		</c:if>
+		<c:if test="${pageMaker.cri.where eq 'user'}">
+			<th>#유저번호</th><th>유저이름</th><th>닉네임</th>
+		</c:if>
+
 	</tr>
 	<c:forEach items="${moreList}" var="recipe">
 	<tr>
 		<td><c:out value="${recipe.rno}"/></td>
 		<td><c:out value="${recipe.title}"/></td>
 		<td><c:out value="${recipe.userNo}"/></td>
-		<td><c:out value="${recipe.regdate}"/></td>
+		<td><c:out value="${recipe.regDate}"/></td>
 	</tr>
 	</c:forEach>
 	<tr>
@@ -57,9 +61,7 @@
 <c:if test="${moreList_u.size()>0}">
 <table>
 	<tr>
-		<th>#유저번호</th>
-		<th>유저이름</th>
-		<th>닉네임</th>
+		<th>#유저번호</th><th>유저이름</th><th>닉네임</th>
 	</tr>
 	<c:forEach items="${moreList_u}" var="recipe">
 	<tr>
@@ -78,7 +80,7 @@
 </table>
 </c:if>
 
-<form id='actionForm' action="/recipeBoard/morelist" method='get'>
+<form id='actionForm' action="/search/detail" method='get'>
 	<input type='hidden' name='pageNum' value = '${pageMaker.cri.pageNum }'>
 	<input type='hidden' name='amount' value = '${pageMaker.cri.amount }'>
 	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>

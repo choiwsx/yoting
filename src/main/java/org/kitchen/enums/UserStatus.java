@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public enum UserStatus implements CodeEnum {
+	ZERO("0"),
 	PENDING("1"),
 	ACTIVE("2"),
 	SUSPENDED("3"),
