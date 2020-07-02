@@ -49,10 +49,8 @@
 		<label>요리과정</label>
 		<div id="contentGroup">
 		<form:form commandName="ContentVO" action="/recipe/register" method="post">
-		<h3 name='stepNo' value='2'>1.</h3>
-		<!-- 
 		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
-		<div name='stepNo' id='stepNo' value=1>1.</div>
+		<h3 name='stepNo' value='2'>1.</h3>
 		<!--
 		<input type=file name='photoUrl'>
 		 -->
