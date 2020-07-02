@@ -1,6 +1,7 @@
 package org.kitchen.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -198,11 +199,18 @@ public class UserMapperTests {
 		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
 	}
 	
-	@Test
+	//@Test
 	public void testEnumHandler() {
 		UserVO user = mapper.selectByNo(1L);
 		log.info("@@@@"+user);
 		
+	}
+	
+	//@Test
+	public void updateStatus() {
+		List<UserVO> list = mapper.getTotalList();
+		list.forEach(a->mapper.update(a));
+		mapper.getTotalList();
 	}
 
 	
