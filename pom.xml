@@ -10,8 +10,8 @@
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.aspectj-version>1.9.0</org.aspectj-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
 	<!-- 우리가 추가하는 부분 -->
@@ -104,6 +104,26 @@
 <artifactId>commons-fileupload</artifactId>
 <version>1.3.2</version>
 </dependency>
+
+<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+<dependency>
+    <groupId>net.coobird</groupId>
+    <artifactId>thumbnailator</artifactId>
+    <version>0.4.8</version>
+</dependency>
+
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-databind</artifactId>
+	<version>2.9.5</version>
+</dependency>
+
+<dependency>
+	<groupId>com.fasterxml.jackson.dataformat</groupId>
+	<artifactId>jackson-dataformat-xml</artifactId>
+	<version>2.9.5</version>
+</dependency>
+
 <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
 <dependency>
   <groupId>org.springframework.security</groupId>

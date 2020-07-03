@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
 
 	<!-- 우리가 추가하는 부분 -->
 	<!-- 2020.06.30지호 -->
@@ -43,7 +44,15 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+
+	<multipart-config>
+		<location>C:\\upload\\temp</location>
+		<max-file-size>20971520</max-file-size>
+		<max-request-size>41943040</max-request-size>
+		<file-size-threshold>20971520</file-size-threshold>
+	</multipart-config>
 	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
