@@ -23,16 +23,14 @@
 		src="https://i.postimg.cc/Gps2tWFY/Desert.png" /></a>
 	<a href='category?categoryNo=33'> <img
         src="https://i.postimg.cc/C1GxHb6x/Jusik.png" /></a>
-        <a href='category'> <img
-            src="https://i.postimg.cc/kgHGnJbq/ALL.png" /></a>
+        
         <a href='category?categoryNo=44'> <img
             src="https://i.postimg.cc/26R5Z0Gt/BanChan.png" /></a>
         <a href='category?categoryNo=55'> <img
             src="https://i.postimg.cc/Gps2tWFY/Desert.png" /></a>
         <a href='category?categoryNo=66'> <img
             src="https://i.postimg.cc/C1GxHb6x/Jusik.png" /></a>
-            <a href='category'> <img
-                src="https://i.postimg.cc/kgHGnJbq/ALL.png" /></a>
+            
             <a href='category?categoryNo=77'> <img
                 src="https://i.postimg.cc/26R5Z0Gt/BanChan.png" /></a>
             <a href='category?categoryNo=88'> <img
@@ -51,7 +49,7 @@
 		<c:forEach items="${list}" var="recipe" varStatus="status">
 			<tr>
 				<td><c:out value="${recipe.rno}" /></td>
-				<td><c:out value="${recipe.title}" /></td>
+				<td><a href="/recipe/detail?rno=<c:out value="${recipe.rno}" />"><c:out value="${recipe.title}" /></a></td>
 				<td><c:out value="${recipe.userNo}" /></td>
 				<td><c:out value="${recipe.categoryNo}" /></td>
 				<td><c:out value="${recipe.regDate}" /></td>
