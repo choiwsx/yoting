@@ -10,14 +10,14 @@
 <title>Recipe Register</title>
 </head>
 <body>
-   <form id="jiho" role="form" action="/recipe/register" method="post" >
+   <form id="recipeCon" role="form" action="/recipe/register" method="post" >
       <input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 
       <div class="form-group">
       <!-- 
       <input type=file name='thumbnail'><br> 
        -->
-       <input name='thumbnail'><br>
+      <input name='thumbnail' placeholder="사진"><br>
          <select name='categoryNo'>
             <option value='null'>카테고리</option>
             <option value='11'>주식</option>
@@ -34,7 +34,7 @@
       </div>
       
       <div class="form-group">
-      <input class="form-control" name='portion' placeholder="몇인분?">
+      <input class="form-control" name='portion' placeholder="몇인분?"><br>
       <input class="form-control" name='difficulty' placeholder="난이도" style="width=40px;">
       </div><br>
       
@@ -47,44 +47,54 @@
       -->
       
       <label>요리과정</label>
-      <div id="contentGroup">
       <form:form commandName="ContentVO" action="/recipe/register" method="post">
+      <div id='ContentGroup'>
       <input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
-      <h3 name='stepNo' id='stepNo' value='2'>1.</h3>
+      <h3 name='stepNo' id='stepNo' value='1'>1</h3>
       <!--
       <input type=file name='photoUrl'>
        -->
-      <input name='photoUrl'>
+      <input name='photoUrl' placeholder="사진">
       <br>
       <textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
       </form:form>
       <button id="plus" type="button" onclick='addCon();'>+</button>
       <br>
       </div>
-      <input type="submit" value="레시피 등록">
    </form>
+      <input type="submit" value="레시피 등록">
    
-<script type="text/Javascript">   
-   var cnt = 1;
+<script type="text/Javascript">
+   let cnt = 1;
    function addCon() {
-
-      var step = document.getElementById('stepNo');
-      var stepNo = step.value;
-      var itm = document.getElementById('contentGroup');
-      var cln = itm.cloneNode(true);
-      var form = document.getElementById('jiho');
-      
-      //step.value=++cnt;
-      //console.log(step.value);
-      stepNo=++cnt;
-      console.log(stepNo);
-      
-      cln.setAttribute('name', "stepNo");
-      cln.setAttribute('value', stepNo);
-      console.log(cln);
-      
-      form.appendChild(cln);
-      document.body.appendChild(form);
+	      let stepNo = ++cnt;
+	      if(stepNo>20) {
+	    	  alert("더 이상 순서를 추가할 수 없습니다.");
+	    	  return;
+	      }
+	      
+	      let form = document.getElementById('ContentGroup');
+	      
+	      console.log(stepNo);
+	      let addForm =`<div id='ContentGroup'>
+	          <form:form commandName="ContentVO" action="/recipe/register" method="post">
+	          <input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
+	          <h3 name='stepNo' id='stepNo' value=${stepNo}>${stepNo}</h3>
+	          <!--
+	          <input type=file name='photoUrl'>
+	           -->
+	          <input name='photoUrl' placeholder="사진">
+	          <br>
+	          <textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
+	          </form:form>
+	          <button id="plus" type="button" onclick='addCon();'>+</button>
+	          <br>
+	          </div> 
+	       </form>`;
+	    	  
+	      console.log(addForm);
+	      
+	      form.innerHTML += addForm;
    }
    </script>
 </body>

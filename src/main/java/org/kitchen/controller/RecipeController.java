@@ -1,5 +1,7 @@
 package org.kitchen.controller;
 
+import java.util.List;
+
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
