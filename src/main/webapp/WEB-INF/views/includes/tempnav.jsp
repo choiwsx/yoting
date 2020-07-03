@@ -8,7 +8,6 @@
 
   <a href="/user/registration">가입하기</a>
   
-  <a href="/user/login">로그인</a>
 </li>
 
 <li>

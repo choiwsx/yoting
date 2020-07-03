@@ -61,7 +61,7 @@
 <c:if test="${moreList_u.size()>0}">
 <table>
 	<tr>
-		<th>#유저번호</th><th>유저이름</th><th>닉네임</th>
+		<th>#유저번호</th><th>유저ID</th><th>닉네임</th>
 	</tr>
 	<c:forEach items="${moreList_u}" var="recipe">
 	<tr>

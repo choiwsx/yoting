@@ -21,7 +21,7 @@
 </form>
 </div>
 <div>
-   <a href="/user/regstration">회원가입</a>
+   <a href="/user/registration">회원가입</a>
    <a>아이디/비번 찾기</a>
 </div>
 
