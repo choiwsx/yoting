@@ -29,8 +29,7 @@ public class UserController {
 	
 //	User Account Registration process
 	@GetMapping("/registration")
-	public String registrationForm() {
-		return "user/registration";	//jsp에서 result확인	
+	public void registrationForm() {
 	}
 	
 	@PostMapping("/registration")
@@ -47,7 +46,7 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		modelAndView.addObject("result", "duplicatedUser");
+		modelAndView.addObject("result", "중복유저");
 		modelAndView.setViewName("/user/registration");
 		return modelAndView;
 	}
@@ -71,21 +70,20 @@ public class UserController {
 		} catch (DuplicatedUserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			modelAndView.addObject("result", "duplicatedUser");
+			modelAndView.addObject("result", "중복 유저");
 			sessionStatus.setComplete();
 		} catch (UserMapperFailException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			modelAndView.addObject("result", "userMapperFail");
+			modelAndView.addObject("result", "저장 불가한 유저");
 			sessionStatus.setComplete();
 		}
-		modelAndView.setViewName("redirect:/user/newprofile");
+		modelAndView.setViewName("redirect:/user/registration");
 		return modelAndView;
 	}
 	
 	@GetMapping("/welcome")
-	public String welcomePage() {
-		return "/user/welcome";
+	public void welcomePage() {
 	}
 	
 	@GetMapping("/verify")
@@ -103,40 +101,53 @@ public class UserController {
 	}
 	
 	@GetMapping("/list")
-	public ModelAndView showList() {
+	public ModelAndView showList(Model model) {
 		ModelAndView modelAndView = new ModelAndView("/user/list");
 		try {
 			modelAndView.addObject("list", service.getTotalList());
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try {
-			log.info("@@@@@@@@@"+service.getUserByNo(1L).getStatus());
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			model.addAttribute("result", "유저가 없어요");
 		}
 		return modelAndView;
 	}
 	
 	@GetMapping("/deluser")
-	public String delUser(Long userno) {
+	public String delUser(Model model, Long userno) {
 		try {
 			service.deleteUserByNo(userno);
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			model.addAttribute("result", "유저가 없어요");
 		} catch (UserMapperFailException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			model.addAttribute("result", "삭제불가 유저에요");
 		}
 		return "redirect:/user/list";
 	}
 
 	@GetMapping("/profile")
 	public void profile(Model model , String userId) {
-		model.addAttribute("profile", service.getProfile(userId));
-
+		try {
+			UserVO user = service.getUserById(userId);
+			model.addAttribute("user", user);
+			model.addAttribute("recipeList", service.getUserRecipeList(user.getUserNo()));
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("result", "없는 유저");
+		}
+	}
+	
+	@GetMapping("/login")
+	public void loginPage() {
+		
+	}
+	
+	@PostMapping("/login")
+	public void login(UserVO user) {
+		
 	}
 }

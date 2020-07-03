@@ -1,7 +1,11 @@
 package org.kitchen.controller;
 
+import java.util.List;
+
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
+import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,6 +73,10 @@ public class SearchController {
 			total = (int) service.getTotalTagCount(cri);
 			System.out.println("totalcount=" + total);
 			break;
+		case "profile":
+			List<RecipeVO> list = service.searchUserRecipeList(cri);
+			model.addAttribute("moreList", list);
+			total = list.size();
 		}
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}

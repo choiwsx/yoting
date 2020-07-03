@@ -2,6 +2,7 @@ package org.kitchen.service;
 
 import java.util.List;
 
+import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
@@ -42,4 +43,6 @@ public interface UserService {
 	List<UserVO> getMailingnList() throws NoUserFoundException;
 
 	public List<UserVO> getProfile(String userId);
+	
+	List<RecipeVO> getUserRecipeList(Long userNo);
 }

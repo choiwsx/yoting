@@ -28,5 +28,8 @@ public interface SearchService {
 	
 	public List<UserVO> getUserListById(Criteria cri);
 
+	public List<RecipeVO> searchUserRecipeList(Criteria cri);
+	
+	public List<RecipeVO> getUserRecipeList(Long userNo);
 
 }

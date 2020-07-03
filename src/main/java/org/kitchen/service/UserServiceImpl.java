@@ -4,13 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
+import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
 import org.kitchen.validation.VerificationEmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,11 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-
+	
+	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private RecipeMapper recipeMapper;
 
 	@Resource
 	private VerificationEmailSender verificationEmailSender;
@@ -76,13 +82,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isLegitUserId(String userId) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitId("Id");
+		return userMapper.isLegitId(userId);
 	}
 
 	@Override
 	public boolean isLegitUserEmail(String email) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitEmail("email");
+		return userMapper.isLegitEmail(email);
 	}
 
 	@Override
@@ -199,6 +205,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> getProfile(String userId) {
 		return userMapper.getProfile(userId);
+	}
+
+	@Override
+	public List<RecipeVO> getUserRecipeList(Long userNo) {
+		// TODO Auto-generated method stub
+		return recipeMapper.getUserRecipeList(userNo);
 	}
 
 }
