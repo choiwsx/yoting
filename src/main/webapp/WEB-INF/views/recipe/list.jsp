@@ -25,7 +25,7 @@ ${recipe.cookingTime} ${recipe.content} ${recipe.thumbnail }
 		<c:forEach items="${list}" var="recipe">
 			<tr>
 				<td><c:out value="${recipe.rno }" /></td>
-				<td><a class='move' href='<c:out value="${recipe.rno }"/>'>
+				<td><a class='move' href='/recipe/detail?rno=<c:out value="${recipe.rno }"/>'>
 						<c:out value="${recipe.title }" />
 				</a></td>
 				<td><img src="<c:out value='${recipe.thumbnail }'/>" width=30px height=30px></td>

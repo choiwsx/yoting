@@ -43,7 +43,7 @@
 	<c:forEach items="${moreList}" var="recipe">
 	<tr>
 		<td><c:out value="${recipe.rno}"/></td>
-		<td><c:out value="${recipe.title}"/></td>
+		<td><a href='/recipe/detail?rno=<c:out value="${recipe.rno}"/>'><c:out value="${recipe.title}"/></a></td>
 		<td><c:out value="${recipe.userNo}"/></td>
 		<td><c:out value="${recipe.regDate}"/></td>
 	</tr>
@@ -66,7 +66,7 @@
 	<c:forEach items="${moreList_u}" var="recipe">
 	<tr>
 		<td><c:out value="${recipe.userNo}"/></td>
-		<td><c:out value="${recipe.userId}"/></td>
+		<td><a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><c:out value="${recipe.userId}"/></a></td>
 		<td><c:out value="${recipe.nickName}"/></td>
 	</tr>
 	</c:forEach>
