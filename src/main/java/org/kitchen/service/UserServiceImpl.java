@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isLegitNewUser(UserVO user) throws DuplicatedUserException {
+	public boolean isLegitNewUser(UserVO user) {
 		// TODO Auto-generated method stub
 		return isLegitUserId(user.getUserId()) && isLegitUserEmail(user.getEmail());
 	}
@@ -82,13 +82,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isLegitUserId(String userId) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitId(userId);
+		if(userMapper.idExists(userId)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean isLegitUserEmail(String email) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitEmail(email);
+		if(userMapper.emailExists(email)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -112,7 +118,11 @@ public class UserServiceImpl implements UserService {
 	public void sendVerificationEmail(UserVO user) {
 		String key = VerificationEmailSender.generateString();
 		log.info("key:@@@@@@" + key);
+		if(userMapper.getVeriKey(user.getUserNo())==null) {
 		userMapper.insertVeriKey(user.getUserNo(), key);
+		} else {
+			userMapper.updateVeriKey(user.getUserNo(), key);
+		}
 		verificationEmailSender.send(user, key);
 	}
 

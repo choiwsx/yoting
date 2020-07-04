@@ -18,7 +18,7 @@ public interface UserService {
 
 	Long getUserNoById(String userId) throws NoUserFoundException;
 
-	boolean isLegitNewUser(UserVO user) throws DuplicatedUserException;
+	boolean isLegitNewUser(UserVO user);
 
 	boolean isLegitUserId(String userId);
 

@@ -35,19 +35,14 @@ public class UserController {
 	@PostMapping("/registration")
 	public ModelAndView validateuser(UserVO user) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("#############"+user);
-		try {
-			if(service.isLegitNewUser(user)) {
-				modelAndView.setViewName("user/newprofile");
-				modelAndView.addObject("user", user);
-				return modelAndView;
-			}
-		} catch (DuplicatedUserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		log.info("#############"+service.isLegitNewUser(user)+user);		
+		if(service.isLegitNewUser(user)) {
+			modelAndView.setViewName("user/newprofile");
+			modelAndView.addObject("user", user);
+		} else {
 		modelAndView.addObject("result", "중복유저");
 		modelAndView.setViewName("/user/registration");
+		}
 		return modelAndView;
 	}
 	
@@ -149,5 +144,23 @@ public class UserController {
 	@PostMapping("/login")
 	public void login(UserVO user) {
 		
+	}
+	
+	@GetMapping("/sendemail")
+	public String sendEmail(Model model, String userNo) {
+		if(userNo==null) {
+			model.addAttribute("result", "잘못된 접근");
+			return "/user/welcome"; 
+		}
+		try {
+			service.sendVerificationEmail(service.getUserByNo(Long.valueOf(userNo)));
+			model.addAttribute("result", "이멜 전송 완료");
+			return "/user/welcome";
+		} catch (NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("result", "잘못된 유저");
+			return "/user/welcome";
+		}
 	}
 }

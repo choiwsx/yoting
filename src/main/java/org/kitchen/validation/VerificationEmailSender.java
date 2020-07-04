@@ -40,7 +40,7 @@ public class VerificationEmailSender {
 	            +System.getProperty("line.separator")+	  
 	            "다음 링크를 눌러서 이메일을 인증하시면 회원 가입이 완료됩니다."
 	            +System.getProperty("line.separator")+	    
-	            "http://localhost:5050/user-h/verify?key="+key+"&userno="+userNo
+	            "http://localhost:5050/user/verify?key="+key+"&userno="+userNo
 	            +System.getProperty("line.separator")+	            
 	            System.getProperty("line.separator")+	            
 	            "주의:먹스타그램 가입한 적이 없다면 링크를 누르지 마세요."; 

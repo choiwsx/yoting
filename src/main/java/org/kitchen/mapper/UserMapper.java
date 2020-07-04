@@ -9,16 +9,18 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 public interface UserMapper {
 	public void insert(UserVO user) throws DataIntegrityViolationException;
+	
 	public void insertVeriKey(@Param("userNo") Long userNo, @Param("key") String key);
 	public String getVeriKey(Long userNo);
+	public int updateVeriKey(@Param("userNo") Long userNo, @Param("key") String key);
 
 	public UserVO selectById(String userId);
 	public UserVO selectByEmail(String email);
 	public UserVO selectByNo(Long userNo);
 	public Long getNoById(String userId);
 	
-	public boolean isLegitId(String userId);
-	public boolean isLegitEmail(String email);
+	public boolean idExists(String userId);
+	public boolean emailExists(String email);
 	
 	public boolean isPrivate(String userId);
 	
