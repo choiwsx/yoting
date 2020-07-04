@@ -7,6 +7,8 @@ import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,8 +17,9 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j
 public class UserServiceTests {
+	
+	private static final Logger log = LoggerFactory.getLogger(UserServiceTests.class);
 	
 	@Autowired
 	private UserService service;
@@ -57,7 +60,7 @@ public class UserServiceTests {
 	public void testGetUserByNo() {
 		try {
 			UserVO user = service.getUserByNo(3L);
-			log.info(user);
+			log.info(user.toString());
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,7 +145,7 @@ public class UserServiceTests {
 	@Test
 	public void testGetTotalList() {
 		try {
-			service.getTotalList().forEach(a->log.info(a));
+			service.getTotalList().forEach(a->log.info(a.toString()));
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

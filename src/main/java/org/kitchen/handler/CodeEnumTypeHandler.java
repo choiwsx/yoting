@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.kitchen.enums.CodeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.log4j.Log4j;
-
-@Log4j
 public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeEnum> {
+	
+	private static final Logger log = LoggerFactory.getLogger(CodeEnumTypeHandler.class);
 
 	private Class <E> type;
 	
@@ -58,7 +59,7 @@ public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeE
             log.info("enumConstants"+enumConstants+"code"+code);
             for (CodeEnum codeEnum: enumConstants) {      
             	log.info("########"+codeEnum.getCode()+"#"+code+"######");
-            	log.info(codeEnum.getCode().equals(code));
+            	log.info(codeEnum.toString());
                 if (codeEnum.getCode().equals(code)) {
                 	log.info("##########################"+codeEnum);
                     return codeEnum;

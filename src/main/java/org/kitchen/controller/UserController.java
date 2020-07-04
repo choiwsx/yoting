@@ -4,7 +4,10 @@ import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
+import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +19,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import lombok.extern.log4j.Log4j;
-
 @Controller
-@Log4j
 @RequestMapping("/user/*")
 @SessionAttributes("user")
 public class UserController {
+	
+	private static final Logger log = LoggerFactory.getLogger(RecipeService.class);
 	
 	@Autowired
 	private UserService service;

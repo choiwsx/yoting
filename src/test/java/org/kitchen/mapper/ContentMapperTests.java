@@ -5,25 +5,26 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.ContentVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j
 public class ContentMapperTests {
 	
-	@Setter(onMethod_ = @Autowired)
+	private static final Logger log = LoggerFactory.getLogger(ContentMapperTests.class);
+
+	@Autowired
 	private ContentMapper mapper;
 	
 //	@Test
 	public void testGetList()
 	{
-		mapper.getList().forEach(content -> log.info(content));
+		mapper.getList().forEach(content -> log.info(content.toString()));
 	}
 	
 //	@Test
@@ -34,11 +35,11 @@ public class ContentMapperTests {
 		content.setStepNo(1);
 		content.setRno(41L);
 		content.setPhotoUrl("https://www.mediafine.co.kr/news/photo/201608/4153_8093_3852.jpg");
-		content.setContent("¹ÙÁúÆä½ºÅä ÆÄ½ºÅ¸ step1");
+		content.setContent("ï¿½ï¿½ï¿½ï¿½ï¿½ä½ºï¿½ï¿½ ï¿½Ä½ï¿½Å¸ step1");
 		
 		mapper.insert(content);
 		
-		log.info(content);
+		log.info(content.getPhotoUrl());
 	}
 	
 //	@Test
@@ -46,7 +47,7 @@ public class ContentMapperTests {
 	{
 		List<ContentVO> content = mapper.read(3L);
 		
-		log.info(content);
+		log.info(content.toString());
 	}
 	
 //	@Test
@@ -62,14 +63,14 @@ public class ContentMapperTests {
 		int step = 1;
 		ContentVO content = contentList.get(step-1);
 		
-//		log.info("¹øÈ£ : " +content.getStepNo());
+//		log.info("ï¿½ï¿½È£ : " +content.getStepNo());
 		
 		content.setRno(content.getRno());
 		content.setStepNo(content.getStepNo());
-		content.setContent("¹ÙÁúÆä½ºÅä ÆÄ½ºÅ¸ step1 ¼öÁ¤22");
-		content.setPhotoUrl("¼öÁ¤22");
+		content.setContent("ï¿½ï¿½ï¿½ï¿½ï¿½ä½ºï¿½ï¿½ ï¿½Ä½ï¿½Å¸ step1 ï¿½ï¿½ï¿½ï¿½22");
+		content.setPhotoUrl("ï¿½ï¿½ï¿½ï¿½22");
 		
-		log.info(content);
+		log.info(content.toString());
 		
 		int count = mapper.update(content);
 		log.info("UPDATE COUNT : " + count);

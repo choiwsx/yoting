@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,16 +20,17 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j
 public class RecipeMapperTests {
 	
-	@Setter(onMethod_ = @Autowired)
+	private static final Logger log = LoggerFactory.getLogger(RecipeMapperTests.class);
+	
+	@Autowired
 	private RecipeMapper mapper;
 	
 	@Test
 	public void testGetList()
 	{
-		mapper.getList().forEach(recipe->log.info(recipe));
+		mapper.getList().forEach(recipe->log.info(recipe.toString()));
 	}
 	
 	@Test
@@ -37,7 +40,7 @@ public class RecipeMapperTests {
 		
 		List<RecipeVO> list = mapper.getListWithPaging(cri);
 		
-		list.forEach(recipe->log.info(recipe));
+		list.forEach(recipe->log.info(recipe.toString()));
 	}
 	
 	@Test
@@ -73,7 +76,7 @@ public class RecipeMapperTests {
 			}
 			recipeList.addAll(mapper.getRecipeByRno(rnos));
 		}
-		recipeList.forEach(recipe1->log.info(recipe1));
+		recipeList.forEach(recipe1->log.info(recipe1.toString()));
 	}
 	
 	@Test
@@ -89,7 +92,7 @@ public class RecipeMapperTests {
 		
 		mapper.insert(recipe);
 		
-		log.info(recipe);
+		log.info(recipe.toString());
 	}
 
 	@Test
@@ -111,7 +114,7 @@ public class RecipeMapperTests {
 		
 		mapper.insert(recipe);
 		
-		log.info(recipe);
+		log.info(recipe.toString());
 	}
 	
 	@Test
@@ -119,7 +122,7 @@ public class RecipeMapperTests {
 	{
 		RecipeVO recipe = mapper.read(41L);
 		
-		log.info(recipe);
+		log.info(recipe.toString());
 	}
 	
 	@Test

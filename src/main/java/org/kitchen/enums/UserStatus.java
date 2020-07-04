@@ -4,9 +4,7 @@ import org.apache.ibatis.type.MappedTypes;
 import org.kitchen.handler.CodeEnumTypeHandler;
 
 import lombok.Getter;
-import lombok.extern.log4j.Log4j;
 
-@Log4j
 public enum UserStatus implements CodeEnum {
 	ZERO("0"),
 	PENDING("1"),

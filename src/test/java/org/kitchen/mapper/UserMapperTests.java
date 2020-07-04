@@ -1,26 +1,26 @@
 package org.kitchen.mapper;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j
 public class UserMapperTests {
 	
-	@Setter(onMethod_=@Autowired)
+	private static final Logger log = LoggerFactory.getLogger(UserMapperTests.class);
+	
+	@Autowired
 	private UserMapper mapper;
 	
 	
@@ -90,10 +90,8 @@ public class UserMapperTests {
 	//@Test
 	public void testGetNoById() {
 		Long a = mapper.getNoById("new4");
-		log.info(a);
 		Long b = mapper.getNoById("new6");
 		log.info("######"+b);
-		log.info(mapper.getNoById("user01"));
 	}
 	
 	//@Test
@@ -135,8 +133,6 @@ public class UserMapperTests {
 		user.setEmailSub(true);
 		user.setPrivacy(false);
 		user.setStatus(UserStatus.PENDING);
-		log.info(mapper.update(user));
-		mapper.getTotalList().forEach(u->log.info(u));
 	}
 	
 
@@ -167,8 +163,8 @@ public class UserMapperTests {
 	public void testDelete() {
 		log.info("#################################");
 		UserVO user = mapper.selectByNo(17L);
-		log.info(user);
-		log.info(mapper.delete(user));
+		//log.info(user);
+		//log.info(mapper.delete(user));
 	}
 	
 	
@@ -185,7 +181,6 @@ public class UserMapperTests {
 	//@Test
 	public void testDeleteById() {
 		log.info("###########3");
-		log.info(mapper.deleteById("NEWNEW"));
 	}
 
 	
@@ -196,7 +191,7 @@ public class UserMapperTests {
 	
 	//@Test
 	public void testGetTotalList() {
-		mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+		//mapper.getTotalList().forEach(user->log.info(user.getStatus()));
 	}
 	
 	//@Test

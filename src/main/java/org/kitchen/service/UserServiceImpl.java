@@ -13,17 +13,19 @@ import org.kitchen.exception.UserMapperFailException;
 import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
 import org.kitchen.validation.VerificationEmailSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
 
-@Log4j
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+	
+	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
 	private UserMapper userMapper;

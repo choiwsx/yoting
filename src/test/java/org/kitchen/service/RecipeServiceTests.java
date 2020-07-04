@@ -8,16 +8,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lombok.extern.log4j.Log4j;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j
 public class RecipeServiceTests {
+	
+	private static final Logger log = LoggerFactory.getLogger(RecipeServiceTests.class);
+
 	@Autowired
 	private RecipeService service;
 
@@ -29,7 +31,7 @@ public class RecipeServiceTests {
 	@Test
 	public void testExist()
 	{
-		log.info(service);
+		log.info(service.toString());
 		assertNotNull(service);
 	}
 	
@@ -87,13 +89,13 @@ public class RecipeServiceTests {
 //	@Test
 	public void testGetList2()
 	{
-		service.getList().forEach(recipe -> log.info(recipe));
+		service.getList().forEach(recipe -> log.info(recipe.toString()));
 	}
 	
 //	@Test
 	public void testGet()
 	{
-		log.info(service.get(47L));
+		log.info(service.get(47L).toString());
 	}
 	
 //	@Test
@@ -131,7 +133,7 @@ public class RecipeServiceTests {
 		content.setStepNo(content.getStepNo());
 		content.setPhotoUrl("url1 ����");
 		content.setContent("����1 ����");
-		log.info(content);
+		log.info(content.toString());
 		
 		log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
 		

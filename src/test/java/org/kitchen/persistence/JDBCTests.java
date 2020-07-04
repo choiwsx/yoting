@@ -6,11 +6,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.junit.Test;
+import org.kitchen.service.RecipeServiceTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.log4j.Log4j;
-
-@Log4j
 public class JDBCTests {
+	
+	private static final Logger log = LoggerFactory.getLogger(JDBCTests.class);
+
+	
 	static {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -24,7 +28,7 @@ public class JDBCTests {
 	public void testConnection() {
 		try(Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","kitchen_dba","1234"))
 		{
-			log.info(con);
+			log.info(con.toString());
 		}catch(Exception e)
 		{
 			fail(e.getMessage());
