@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <!-- encoders are assigned the type
          ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
     <encoder>
@@ -12,7 +12,7 @@
   <logger name="org.springframework" level="info"/>
   <logger name="org.kitchen.mapper" level="info"/>
   
-  <root level="INFO">
-    <appender-ref ref="console" />
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
   </root>
 </configuration>

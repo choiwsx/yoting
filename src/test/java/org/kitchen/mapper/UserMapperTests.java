@@ -189,9 +189,9 @@ public class UserMapperTests {
 		mapper.getMailingList().forEach(user->log.info("#####"+user.isEmailSub()));
 	}
 	
-	//@Test
+	@Test
 	public void testGetTotalList() {
-		//mapper.getTotalList().forEach(user->log.info(user.getStatus()));
+		mapper.getTotalList().forEach(user->log.info(user.getUserId()));
 	}
 	
 	//@Test
