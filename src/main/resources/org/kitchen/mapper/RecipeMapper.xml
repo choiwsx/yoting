@@ -16,6 +16,7 @@
    <result property="portion" column="portion"/>
    <result property="thumbnail" column="thumbnail"/>
    <result property="title" column="title"/>
+   <result property="content" column="r_content"/>
    
 </resultMap>
 
@@ -39,8 +40,8 @@
 		resultType="long">
 		SELECT r_seq.nextval from dual
 	</selectKey>
-	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title)
-	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title})
+	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
+	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{content})
 </insert>
 	
 <select id="read" resultMap="recipe">
@@ -51,6 +52,7 @@
    UPDATE tbl_recipe
    SET
    title = #{title},
+   content = #{r_content},
    thumbnail = #{thumbnail},
    regdate = #{regDate},
    updatedate = sysdate,
