@@ -25,6 +25,8 @@
     <c:forEach items="${recipe.contentList}" var="content" varStatus="vs">
         <div class="field">
         <c:out value='${vs.count}' />번째 콘텐트
+         <div class="label required">stepNo</div>
+        <div class="output"><input type="text" value="<c:out value='${content.stepNo}' />" /></div>
         <div class="label required">사진</div>
         <div class="output"><input type="text" value="<c:out value='${content.photoUrl}' />" /></div>
         <div class="label required">내용</div>

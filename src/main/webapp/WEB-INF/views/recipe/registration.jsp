@@ -37,12 +37,11 @@
 		<form:input path="portion" placeholder="몇인분"/>
 		<form:input path="difficulty" placeholder="난이도"/>
 		
-		
 
 	    <div id="dl_list_0">
 	    <c:forEach var="content" varStatus="vs" items="${recipe.contentList}">
 	    <c:out value="${vs.count}" />번째 컨텐츠
-	        <div class="dl_item_<c:out value='${vs.index}' />">
+	        <div class="content_<c:out value='${vs.index}' />">
 	        <div class="field">
 	        <div class="label required"><form:label
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid">사진</form:label></div>
@@ -52,7 +51,6 @@
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="icon invalid" /><form:errors
 	            path="contentList[${vs.index}].photoUrl" cssClass="inline_invalid" /></div>
 	        </div>
-	
 	
 	        <div class="field">
 	        <div class="label required"><form:label
