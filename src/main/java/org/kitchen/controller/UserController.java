@@ -1,9 +1,15 @@
 package org.kitchen.controller;
 
+import java.util.List;
+
+import org.kitchen.domain.Criteria;
+import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
+import org.kitchen.service.RecipeService;
+import org.kitchen.service.SearchService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +31,9 @@ import lombok.extern.log4j.Log4j;
 public class UserController {
 	
 	@Autowired
-	private UserService service;
+	private UserService userService;
+	@Autowired
+	private SearchService searchService;
 	
 //	User Account Registration process
 	@GetMapping("/registration")
@@ -35,8 +43,8 @@ public class UserController {
 	@PostMapping("/registration")
 	public ModelAndView validateuser(UserVO user) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("#############"+service.isLegitNewUser(user)+user);		
-		if(service.isLegitNewUser(user)) {
+		log.info("#############"+userService.isLegitNewUser(user)+user);		
+		if(userService.isLegitNewUser(user)) {
 			modelAndView.setViewName("user/newprofile");
 			modelAndView.addObject("user", user);
 		} else {
@@ -54,9 +62,9 @@ public class UserController {
 	@PostMapping("/newprofile")
 	public ModelAndView registeruser(@ModelAttribute("user") UserVO user, ModelAndView modelAndView, SessionStatus sessionStatus) {		
 		try {
-			if(service.isLegitNewUser(user)) {
+			if(userService.isLegitNewUser(user)) {
 				log.info("@@@@@@@@"+user);
-				service.registerNewUser(user);
+				userService.registerNewUser(user);
 				user.setUserPwd(null);
 				modelAndView.addObject("user", user);
 				modelAndView.setViewName("redirect:/user/welcome"); 
@@ -84,8 +92,8 @@ public class UserController {
 	@GetMapping("/verify")
 	public String verify(String key, String userno) {
 		try {
-			if(service.verifyEmail(userno, key)) {
-				service.activateUser(Long.valueOf(userno));
+			if(userService.verifyEmail(userno, key)) {
+				userService.activateUser(Long.valueOf(userno));
 				return "/user/good";
 			}
 		} catch (NoUserFoundException e) {
@@ -99,7 +107,7 @@ public class UserController {
 	public ModelAndView showList(Model model) {
 		ModelAndView modelAndView = new ModelAndView("/user/list");
 		try {
-			modelAndView.addObject("list", service.getTotalList());
+			modelAndView.addObject("list", userService.getTotalList());
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,7 +119,7 @@ public class UserController {
 	@GetMapping("/deluser")
 	public String delUser(Model model, Long userno) {
 		try {
-			service.deleteUserByNo(userno);
+			userService.deleteUserByNo(userno);
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,14 +134,30 @@ public class UserController {
 	@GetMapping("/profile")
 	public void profile(Model model , String userId) {
 		try {
-			UserVO user = service.getUserById(userId);
+			UserVO user = userService.getUserById(userId);
 			model.addAttribute("user", user);
-			model.addAttribute("recipeList", service.getUserRecipeList(user.getUserNo()));
+			model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
 		} catch (NoUserFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			model.addAttribute("result", "없는 유저");
 		}
+	}
+	
+	@GetMapping("/search")
+	public String profileSearch(Model model, String userNo, Criteria cri) {
+		
+		try {
+			model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
+		} catch (NumberFormatException | NoUserFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "redirect:/";
+		}
+		List<RecipeVO> list =searchService.searchUserRecipeList(cri);
+		model.addAttribute("recipeList", list);
+		model.addAttribute("keyword", cri.getKeyword());
+		return "/user/profile";
 	}
 	
 	@GetMapping("/login")
@@ -153,7 +177,7 @@ public class UserController {
 			return "/user/welcome"; 
 		}
 		try {
-			service.sendVerificationEmail(service.getUserByNo(Long.valueOf(userNo)));
+			userService.sendVerificationEmail(userService.getUserByNo(Long.valueOf(userNo)));
 			model.addAttribute("result", "이멜 전송 완료");
 			return "/user/welcome";
 		} catch (NoUserFoundException e) {
