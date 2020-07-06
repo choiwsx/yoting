@@ -1,5 +1,6 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kitchen.domain.ContentVO;
@@ -30,9 +31,9 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public void register(RecipeVO recipe, List<ContentVO> contents) {
 		// TODO Auto-generated method stub
-		Long rno = register(recipe);
-		contents.forEach(a -> a.setRno(rno));
-		contents.forEach(a -> registerCon(a));
+		
+		//contents.forEach(a -> a.setRno(rno));
+		//contents.forEach(a -> registerCon(a));
 	}
 
 	@Override
@@ -101,6 +102,17 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Long register(RecipeVO recipe) {
 		recipeMapper.insert(recipe);
+		log.info("#####################################################");
+		for(int i = 0; i<10; i++) {
+			if(recipe.getContentList().get(i).getContent()=="") {
+				log.info("^^"+i);
+				recipe.setContentList(recipe.getContentList().subList(0, i));
+				break;
+			}
+		}
+		recipe.getContentList().forEach(a -> log.info("#list#"+a));
+		recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
+		recipe.getContentList().forEach(a ->registerCon(a));
 		return recipe.getRno();
 	}
 

@@ -1,6 +1,9 @@
 package org.kitchen.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.kitchen.domain.ContentVO;
@@ -58,7 +61,7 @@ public class RecipeController {
 	@PostMapping("/registrationTest")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
 		//recipeService에 저장하기
-		//recipeService.register(recipe, recipe.getContentList());
+		recipeService.register(recipe);
 		return recipe;
 	}
 
