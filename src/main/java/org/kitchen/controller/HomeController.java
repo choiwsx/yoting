@@ -51,7 +51,16 @@ public class HomeController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession session = attr.getRequest().getSession();
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
-
+	}
+	
+	@GetMapping("/good")
+	public void good(String result, Model model) {
+		model.addAttribute("result", result);
+	}
+	
+	@GetMapping("/error")
+	public void error(String result, Model model) {
+		model.addAttribute("result", result);
 	}
 
 }
