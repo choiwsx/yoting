@@ -52,8 +52,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/newprofile")
-	public String newProfileForm() {
-		return "user/registration";
+	public String newProfileForm(Model model) {
+		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
@@ -90,10 +90,10 @@ public class UserController {
 		if(userService.verifyEmail(userno, key)) {
 			userService.activateUser(Long.valueOf(userno));
 			model.addAttribute("result", "인증되었습니다.");
-			return "/good";
+			return "redirect:/good";
 		}		
 		model.addAttribute("result", "인증 실패. 잘못된 인증 링크입니다.");
-		return "/error";
+		return "redirect:/error";
 	}
 	
 	@GetMapping("/list")
@@ -108,9 +108,9 @@ public class UserController {
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제불가 유저에요");
-			return "/error";
+			return "redirect:/error";
 		}
-		return "/user/list";
+		return "redirect:/user/list";
 	}
 
 	@GetMapping("/profile")
@@ -118,7 +118,7 @@ public class UserController {
 		UserVO user = userService.getUserById(userId);
 		if(user==null) {
 			model.addAttribute("result", "없는 유저입니다.");
-			return "/error";
+			return "redirect:/error";
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
@@ -134,17 +134,22 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			model.addAttribute("result", "잘못된 접근입니다.");
-			return "/error";
+			return "redirect:/error";
 		}
 		List<RecipeVO> list =searchService.searchUserRecipeList(cri);
 		model.addAttribute("recipeList", list);
 		model.addAttribute("keyword", cri.getKeyword());
-		return "/user/profile";
+		return "redirect:/user/profile";
 	}
 	
 	@GetMapping("/login")
-	public void loginPage() {
-		
+	public String loginPage(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")!=null) {
+			log.info("로그인상태임");
+			model.addAttribute("result", "로그인 상태인데 또 로그인?");
+			return "redirect:/error";
+		}
+		return "/user/login";
 	}
 	
 	@PostMapping("/login")
@@ -155,19 +160,30 @@ public class UserController {
 		return "/index";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")==null) {
+			model.addAttribute("result", "로그인도 안해놓고 로그아웃?");
+			return "redirect:/error";
+		}
+		session.removeAttribute("userNo");
+		model.addAttribute("result", "로그아웃 성공");
+		return "redirect:/good";
+	}
+	
 	@GetMapping("/sendEmail")
 	public String sendEmail(Model model, String email) {
 		if(email==null) {
 			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
-			return "/error"; 
+			return "redirect:/error"; 
 		}
 		UserVO user = userService.getUserByEmail(email);
 		if(user==null) {
 			model.addAttribute("result", "이메일 주소로 등록된 사용자가 없습니다.");
-			return "/error"; 
+			return "redirect:/error"; 
 		}
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
-		return "/good";
+		return "redirect:/good";
 	}
 }
