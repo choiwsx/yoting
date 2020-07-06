@@ -45,7 +45,7 @@
 	    <c:out value="${vs.count}" />번째 컨텐츠
 	        <div class="content_<c:out value='${vs.index}' />">
 	        
-        <div class='uploadResult${vs.index}'>
+        <div class='uploadResult'>
        	<ul>
        	</ul>
        	</div>
@@ -53,7 +53,7 @@
 	        <div class="field">
 	        <div class="label required"><form:label
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid">사진</form:label></div>
-			<input type="file" name='uploadFile${vs.index}"' class="testUpload" id="${vs.index}">
+			<input type="file" name='uploadFile${vs.index}' class="testUpload" id="${vs.index}">
 				
 	        <div class="input"><form:input
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid " /><form:label
@@ -103,7 +103,7 @@
 		var event = {};
 		console.log("@@@"+testArr.length);
 	
-		var uploadResult = $(".uploadResult ul");
+		var uploadResult = $(".uploadResult");
 		console.log(uploadResult.length);
 	/*	$(document).ready(function(e){
 		    var formObj = $("form[role='form']");
@@ -149,7 +149,7 @@
 		   return true;
 		}
 		
-		function showUploadedFile(uploadResultArr)
+		function showUploadedFile(uploadResultArr, idx)
 	      {
 	         var str = "";
 	         console.log(uploadResultArr);
@@ -158,33 +158,34 @@
 	            {
 	               var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
 	               console.log(fileCallPath);
-	               str += "<li data-path='"+obj.uploadPath+"'";
+	               str += "<ul><li data-path='"+obj.uploadPath+"'";
 	               str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
 	               str += "><div>";
 	               str += "<span>"+obj.fileName+"</span>";
 	               str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
 	               str += "<img src='/display?fileName="+fileCallPath+"'>";
 	               str += "</div>";
-	               str += "</li>";
+	               str += "</li></ul>";
 	            }
 	            else
 	            {
 	            }
 	         });
-	         uploadResult.append(str);
+	         uploadResult[idx].innerHTML = str;
 	      }
-		var ttt;
+
 		testArr.change(function(e){
 			console.log(e);
 			event = e;
 			console.log("id==="+e.currentTarget.id);
 			var arrNum = e.currentTarget.id;
 			var formData = new FormData();
+			console.log("input[name='uploadFile"+arrNum+"']");
 	        var inputFile = $("input[name='uploadFile"+arrNum+"']");
-	        console.log("@@@@@"+inputFile[0].files);
-	        var files = event.target.files;
-	        var uploadFileName = "uploadFile"+arrNum;
-	        console.log("@@file=="+files);
+	        var files = inputFile[0].files;
+	        var uploadFileName = "uploadFile";
+	        console.log("@@file=="+inputFile[0].files);
+	        console.log("@@file=="+files[0]);
 	        for(let i=0; i<e.target.files.length; i++)
 	        	{
 	        	 	if(!checkExtenstion(files[i].name, files[i].size)){
@@ -205,7 +206,7 @@
 	            success : function(result)
 	            {
 	               console.log("@@@@result@@@@:"+result);
-	               showUploadedFile(result);
+	               showUploadedFile(result, arrNum);
 	               //$(".uploadDiv").html(cloneObj.html());
 	            } 
 	        		
