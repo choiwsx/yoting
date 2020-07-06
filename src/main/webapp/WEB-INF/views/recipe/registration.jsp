@@ -47,11 +47,9 @@
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid">사진</form:label></div>
 	
 	        <div class="input"><form:input
-	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid " /><form:label
-	            path="contentList[${vs.index}].photoUrl" cssErrorClass="icon invalid" /><form:errors
-	            path="contentList[${vs.index}].photoUrl" cssClass="inline_invalid" /></div>
+	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid " />
 	        </div>
-	
+			</div>
 	        <div class="field">
 	        <div class="label required"><form:label
 	            path="contentList[${vs.index}].content" cssErrorClass="invalid">내용</form:label></div>

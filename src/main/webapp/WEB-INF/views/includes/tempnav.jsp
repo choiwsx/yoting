@@ -4,7 +4,7 @@
   <h3><a href="/">인덱스</a></h3>
 </li>
 <li>
-  <h3>유저</h3>  <a href="/user/list">리스트</a>
+  <h3>유저</h3> 
 
   <a href="/user/registration">가입하기</a>
   
@@ -26,6 +26,12 @@
 
   <a href="/search/user">유저검색</a>
 
+</li>
+
+<li>
+	<h3>관리 페이지</h3>
+	
+	 <a href="/admin/userList">유저 리스트</a>
 </li>
 
 </ul>
