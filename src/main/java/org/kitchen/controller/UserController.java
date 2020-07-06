@@ -2,6 +2,8 @@ package org.kitchen.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
@@ -166,8 +168,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public void login(UserVO user) {
-		
+	public String login(UserVO user, HttpSession session) {
+		UserVO result = userService.tempLogin(user);
+		if(result == null) return "/user/login";
+		session.setAttribute("userNo", result.getUserNo());
+		return "/index";
 	}
 	
 	@GetMapping("/sendemail")

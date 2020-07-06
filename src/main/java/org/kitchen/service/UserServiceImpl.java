@@ -223,4 +223,18 @@ public class UserServiceImpl implements UserService {
 		return recipeMapper.getUserRecipeList(userNo);
 	}
 
+	@Override
+	public UserVO tempLogin(UserVO user) {
+		// TODO Auto-generated method stub
+		if(user==null) {
+			return user;
+		}
+		UserVO userCompare = userMapper.selectById(user.getUserId());
+		if(userCompare==null) return null;
+		if(user.getUserPwd().equals(userCompare.getUserPwd())) {
+			return user=userCompare;
+		}
+		return null;
+	}
+
 }
