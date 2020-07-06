@@ -48,7 +48,7 @@
       -->
 
 		<label>요리과정</label>
-		<form:form commandName="ContentVO" action="/recipe/register" method="post">
+		<form:form commandName="ContentVO" action="/recipe/register" method="post" id="parent">
 			<input type='hidden' name='userNo' value='1'>
 			<div class='content-group' id='data-content-1'>
 				<ul>
@@ -71,19 +71,20 @@
 <script type="text/Javascript">
    let cnt = 1;
    let conGroup = $(".content-group ul");
+   let stepNo = 0;
    
    function addCon() {
 	      
+	      stepNo = ++cnt;
 	      let form = document.getElementById('data-content-'+cnt);
-	      let stepNo = ++cnt;
 		  let addbtns = document.getElementsByName('add');
 		  let delbtns = document.getElementsByName('del');
 		  let conChild = "";
 		  
-	      if(stepNo>15) {
+	      if(stepNo>10) {
 	    	  alert("더 이상 순서를 추가할 수 없습니다.");
-	    	  addbtns[14].style.display = 'none';
-	    	  delbtns[14].style.display = '';
+	    	  addbtns[9].style.display = 'none';
+	    	  delbtns[9].style.display = '';
 	    	  return;
 	      }
 	      
@@ -110,6 +111,16 @@
 
 	function delCon() {
 		// form 지우고 cnt 숫자 -1로 바꾸게 하기
+		let num = --stepNo; // x버튼 누르는 폼의 번호
+		console.log(num);
+		
+		let target = document.getElementById('data-content-'+num);
+		console.log(target);
+		
+		let targetParent = document.getElementById('parent');
+		console.log(targetParent);
+		targetParent.removeChild(target);
+		
 	}
 </script>
 </body>
