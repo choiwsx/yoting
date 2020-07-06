@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +53,14 @@ public class UploadController {
 //		log.info("upload ajax");
 	}
 	
-	@PostMapping({"/upload/register","/uplaod/registration"})
+	@PostMapping("/upload/registrationTest")
+	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+		//recipeService에 저장하기
+		service.register(recipe);
+		return recipe;
+	}
+	
+	@PostMapping({"/upload/register"})
 	public String register(RecipeVO recipe, RedirectAttributes rttr)
 	{
 		log.info("==================");
@@ -142,11 +150,14 @@ public class UploadController {
 	
 	@PostMapping("/deleteFile")
 	@ResponseBody
-	public ResponseEntity<String> delteFile(String fileName, String type)
+	public ResponseEntity<String> delteFile(String fileName, String type, HttpServletRequest request)
 	{
 		 File file;
 		 try {
-			 file = new File("c:\\uplaod\\"+URLDecoder.decode(fileName, "UTF-8"));
+			 String path = request.getSession().getServletContext().getRealPath("/");
+			 String attach_path = "resources\\upload";
+			 String uploadFolder = path+attach_path;
+			 file = new File(uploadFolder+"\\"+URLDecoder.decode(fileName, "UTF-8"));
 			 log.info("deleteFile:" +file);
 			 file.delete();
 			 
@@ -156,7 +167,8 @@ public class UploadController {
 				 log.info("Large file:"+file);
 				 file.delete();
 			 }
-		 }catch(UnsupportedEncodingException e)
+		 }
+		 catch(UnsupportedEncodingException e)
 		 {
 			 e.printStackTrace();
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
