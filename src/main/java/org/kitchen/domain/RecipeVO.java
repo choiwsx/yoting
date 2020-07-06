@@ -3,6 +3,7 @@ package org.kitchen.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class RecipeVO {
 	private String portion;
 	private String thumbnail;
 	private String title;
+	private String reContent; // 지호 수정
 	
 	private List<ContentVO> contentList;
 	

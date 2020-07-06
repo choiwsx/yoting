@@ -9,6 +9,7 @@ import org.kitchen.mapper.ContentMapper;
 import org.kitchen.mapper.RecipeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -115,5 +116,21 @@ public class RecipeServiceImpl implements RecipeService {
 		recipe.getContentList().forEach(a ->registerCon(a));
 		return recipe.getRno();
 	}
+	
+
+	@Transactional
+	@Override
+	public void register_w(RecipeVO recipe)
+	{
+		Long rno = register(recipe);
+		log.info("@@@rno"+rno);
+		
+		for(int i=0; i<recipe.getContentList().size(); i++)
+		{
+			recipe.getContentList().get(i).setRno(rno);
+			contentMapper.insert(recipe.getContentList().get(i));
+		}
+	}
+
 
 }

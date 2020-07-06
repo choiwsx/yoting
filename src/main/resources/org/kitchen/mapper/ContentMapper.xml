@@ -15,13 +15,6 @@
 <![CDATA[SELECT * FROM tbl_recipecontent WHERE r_num>0 AND rc_stepnum>0]]>
 	</select>
 
-	<!--
-	<insert id="insert">
-		INSERT INTO tbl_recipecontent (rc_stepnum, r_num ,photo, rc_content)
-		VALUES (#{stepNo}, #{rno} ,#{photoUrl}, #{content})
-	</insert>
-	 -->
-
 	<insert id="insert">
 		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
 		VALUES (#{stepNo}, #{rno}, #{photoUrl,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
