@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% String userNo = request.getSession().getAttribute("userNo").toString(); 
+<% 
+String userNo = null;
+if(session!=null) {
+ Object tmp = session.getAttribute("userNo");
+ if(tmp!=null) {
+	 userNo = tmp.toString(); 
+ }
+}
 %>
 <ul>
 <li>
