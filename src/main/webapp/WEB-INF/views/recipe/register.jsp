@@ -15,9 +15,9 @@
 
 		<div class="form-group">
 		 
-		<input type=file name='thumbnail'><br>	
+		<!--  <input type=file name='thumbnail'>--><br>	
 		 
-		 <!--<input name='thumbnail'>-->
+		 <input name='thumbnail'>
 		 <br>
 			<select name='categoryNo'>
 				<option value='null'>카테고리</option>
@@ -53,9 +53,9 @@
 		<input type='hidden' name='userNo' value='1'> <!-- value="${user.userNo}" -->
 		<h3 name='stepNo' id='stepNo' value='2'>1.</h3>
 		
-		<input type=file name='photoUrl'>
+		<!-- <input type=file name='photoUrl'>-->
 		 
-		<!--<input name='photoUrl'>-->
+		<input name='photoUrl'>
 		<br>
 		<textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
 		</form:form>

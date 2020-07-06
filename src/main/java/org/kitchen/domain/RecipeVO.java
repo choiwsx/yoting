@@ -1,6 +1,7 @@
 package org.kitchen.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class RecipeVO {
 	private String portion;
 	private String thumbnail;
 	private String title;
+	private List<ContentVO> contentList;
 }

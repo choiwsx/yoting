@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.kitchen.domain.AttachFileDTO;
+import org.kitchen.domain.RecipeVO;
+import org.kitchen.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -31,15 +35,35 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
+	
+	@Autowired
+	private RecipeService service;
 
 	@GetMapping("/upload/uploadForm")
 	public void uploadForm() {
 		log.info("upload form");
 	}
 	
-	@GetMapping("/upload/uploadAjax")
+	@GetMapping({"/upload/uploadAjax", "/upload/register"})
 	public void uploadAjax() {
 		log.info("upload ajax");
+	}
+	
+	@PostMapping("/upload/register")
+	public String register(RecipeVO recipe, RedirectAttributes rttr)
+	{
+		log.info("==================");
+		log.info("register : "+ recipe);
+		
+		if(recipe.getContentList() != null)
+		{
+			recipe.getContentList().forEach(content->log.info(content));
+		}
+		
+		service.register_w(recipe);
+		
+		return "redirect:/recipe/list";
+		
 	}
 	
 	
@@ -118,13 +142,13 @@ public class UploadController {
 		 File file;
 		 try {
 			 file = new File("c:\\uplaod\\"+URLDecoder.decode(fileName, "UTF-8"));
-			 log.info("deleteFile: " + file);
+			 log.info("deleteFile:" +file);
 			 file.delete();
 			 
 			 if(type.equals("image")) {
 				 String largeFileName = file.getAbsolutePath().replace("s_","");
 				 file = new File(largeFileName);
-				 System.out.println("Large file : "+file);
+				 log.info("Large file:"+file);
 				 file.delete();
 			 }
 		 }catch(UnsupportedEncodingException e)
@@ -160,6 +184,7 @@ public class UploadController {
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			attachDTO.setFileName(uploadFileName);
+			
 			
 			UUID uuid = UUID.randomUUID();
 			
