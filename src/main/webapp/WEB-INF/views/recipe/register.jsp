@@ -25,7 +25,7 @@
 			</select> <input class="form-control" name='title' placeholder="제목을 입력하세요">
 		</div>
 		<div class="form-group">
-			<textarea rows="4" name='content' placeholder="레시피를 소개해보세요!"></textarea>
+			<textarea rows="4" name='reContent' placeholder="레시피를 소개해보세요!"></textarea>
 		</div>
 
 		<div class="form-group">
@@ -48,12 +48,11 @@
       -->
 
 		<label>요리과정</label>
-		<form:form commandName="ContentVO" action="/recipe/register"
-			method="post">
+		<form:form commandName="ContentVO" action="/recipe/register" method="post">
 			<input type='hidden' name='userNo' value='1'>
 			<div class='content-group' id='data-content-1'>
 				<ul>
-					<h3 name='stepNo' id='stepNo' value='1'>1</h3>
+					<input name='stepNo' value='1'><h3>1</h3></div>
 					<input name='photoUrl' placeholder="사진">
 					<br>
 					<textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
@@ -63,7 +62,8 @@
 		</ul>
 		</div>
 	</form>
-	<button type="submit">레시피 등록</button>
+	<button type="submit" >레시피 등록</button>
+	<input type="button" onclick='hii();' value='확인'>
 
 	<script
   src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -72,35 +72,35 @@
 <script type="text/Javascript">
    let cnt = 1;
    let conGroup = $(".content-group ul");
+   
    function addCon() {
 	      
 	      let form = document.getElementById('data-content-'+cnt);
-	      console.log(form);
-	      
 	      let stepNo = ++cnt;
+		  let addbtns = document.getElementsByName('add');
+		  let delbtns = document.getElementsByName('del');
+		  let conChild = "";
+		  
 	      if(stepNo>15) {
 	    	  alert("더 이상 순서를 추가할 수 없습니다.");
+	    	  addbtns[14].style.display = 'none';
+	    	  delbtns[14].style.display = '';
 	    	  return;
 	      }
 	      
-		  let addbtns = document.getElementsByName('add');
-		  let delbtns = document.getElementsByName('del');
 		  for(i=0; i<addbtns.length; i++){
 			  addbtns[i].style.display = 'none';
 			  delbtns[i].style.display = '';
 		  }
 	      console.log(addbtns);
 
-	let conChild = "";
-	conChild = `<form:form commandName='ContentVO' action='/recipe/register' method='post'>
-			<input type='hidden' name='userNo' value='1'>
-			<div class='content-group' id='data-content-`+cnt+`'>
-			<h3 name='stepNo' id='stepNo' value='`+cnt+`'>`+cnt+`</h3>
-			<input name='photoUrl' placeholder="사진"><br>
+	conChild = `<input type='hidden' name='userNo' value='1'>
+			<div class='content-group' id='data-content-` +cnt+ `'>
+			<div name='stepNo' value='` +cnt+ `'><h3>` +cnt+ `</h3></div>
+			<input name='photoUrl' placeholder='사진'><br>
 			<textarea rows='2' name='content' placeholder='요리 순서를 작성해보세요!'></textarea>
-			</form:form>
-			<input type='button' id='add' name='add' onclick='addCon();' value="+">
-			<input type='button' id='del' name='del' onclick='delCon();' value="x" style='display:none'>
+			<input type='button' id='add' name='add' onclick='addCon();' value='+'>
+			<input type='button' id='del' name='del' onclick='delCon();' value='x' style='display:none'>
 			</div>`;
 		
 		conGroup.append(conChild);
@@ -109,6 +109,11 @@
 
 	function delCon() {
 		// form 지우고 cnt 숫자 -1로 바꾸게 하기
+	}
+	
+	function hii() {
+			alert("하이");
+			console.log($('form').serializeArray());
 	}
 </script>
 </body>

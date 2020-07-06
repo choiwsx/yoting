@@ -16,5 +16,5 @@ public class RecipeVO {
 	private String portion;
 	private String thumbnail;
 	private String title;
-	private String content; // 지호 수정
+	private String reContent; // 지호 수정
 }
