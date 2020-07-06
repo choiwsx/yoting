@@ -81,7 +81,7 @@ public class RecipeMapperTests {
 	{
 		RecipeVO recipe = new RecipeVO();
 		
-		recipe.setCookingTime(75);
+		recipe.setCookingTime(75L);
 		recipe.setDifficulty("4");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("https://www.fabriziorocca.it/guide/wp-content/uploads/2018/03/thumb_14400082930User.png");
@@ -97,7 +97,7 @@ public class RecipeMapperTests {
 	{
 		RecipeVO recipe = new RecipeVO();
 		
-		recipe.setCookingTime(45);
+		recipe.setCookingTime(45L);
 		recipe.setDifficulty("3");
 		recipe.setUserNo(1L);
 
@@ -140,7 +140,7 @@ public class RecipeMapperTests {
 		RecipeVO original = mapper.read(41L);
 		
 		recipe.setRno(41L);
-		recipe.setCookingTime(65);
+		recipe.setCookingTime(65L);
 		recipe.setDifficulty("4");
 		recipe.setRegDate(original.getRegDate());
 		recipe.setUserNo(6L);
