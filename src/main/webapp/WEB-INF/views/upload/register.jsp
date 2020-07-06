@@ -210,6 +210,7 @@
             if(!checkExtenstion(files[i].name, files[i].size)){
                return false;
             }
+            console.log("@@@file=="+files[i]);
             formData.append("uploadFile",files[i]);
 	         console.log(formData);
          }

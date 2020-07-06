@@ -174,8 +174,6 @@ public class UploadController {
 //		String uploadFolder = "C:\\upload";
 		String uploadFolderPath = getFolder();
 		//make folder
-		log.info(uploadFile.length);
-		log.info(uploadFile);
 		
 		String path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "resources\\upload";

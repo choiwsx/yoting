@@ -45,7 +45,7 @@
 	    <c:out value="${vs.count}" />번째 컨텐츠
 	        <div class="content_<c:out value='${vs.index}' />">
 	        
-        <div class='uploadResult${vs.index}'>
+        <div class='uploadResult'>
        	<ul>
        	</ul>
        	</div>
@@ -53,7 +53,7 @@
 	        <div class="field">
 	        <div class="label required"><form:label
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid">사진</form:label></div>
-			<input type="file" name='uploadFile${vs.index}"' class="testUpload" id="${vs.index}">
+			<input type="file" name='uploadFile${vs.index}' class="testUpload" id="${vs.index}">
 				
 	        <div class="input"><form:input
 	            path="contentList[${vs.index}].photoUrl" cssErrorClass="invalid " /><form:label
@@ -149,7 +149,7 @@
 		   return true;
 		}
 		
-		function showUploadedFile(uploadResultArr)
+		function showUploadedFile(uploadResultArr, idx)
 	      {
 	         var str = "";
 	         console.log(uploadResultArr);
@@ -171,7 +171,8 @@
 	            {
 	            }
 	         });
-	         uploadResult.append(str);
+	         uploadResult[idx].append(str);
+	         
 	      }
 		var ttt;
 		testArr.change(function(e){
@@ -181,10 +182,12 @@
 			var arrNum = e.currentTarget.id;
 			var formData = new FormData();
 	        var inputFile = $("input[name='uploadFile"+arrNum+"']");
-	        console.log("@@@@@"+inputFile[0].files);
 	        var files = event.target.files;
-	        var uploadFileName = "uploadFile"+arrNum;
-	        console.log("@@file=="+files);
+	        console.log("@@@@@"+files);
+	        var uploadFileName = "uploadFile";
+	        console.log("@@file=="+files[0]);
+	        formData.append(uploadFileName, files[0]);
+	        /*
 	        for(let i=0; i<e.target.files.length; i++)
 	        	{
 	        	 	if(!checkExtenstion(files[i].name, files[i].size)){
@@ -192,8 +195,7 @@
 	         		}	 		
 					formData.append(uploadFileName,files[i]);
 	        		console.log("appendFile : " + files[i].name);
-	        	}
-	        ttt=formData;
+	        	}*/
 	        console.log(formData);
 	         $.ajax({
 	            url : '/upload/uploadAjaxAction',
@@ -205,7 +207,7 @@
 	            success : function(result)
 	            {
 	               console.log("@@@@result@@@@:"+result);
-	               showUploadedFile(result);
+	               showUploadedFile(result, arrNum);
 	               //$(".uploadDiv").html(cloneObj.html());
 	            } 
 	        		
