@@ -2,6 +2,7 @@ package org.kitchen.service;
 
 import java.util.List;
 
+import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
@@ -17,7 +18,7 @@ public interface UserService {
 
 	Long getUserNoById(String userId) throws NoUserFoundException;
 
-	boolean isLegitNewUser(UserVO user) throws DuplicatedUserException;
+	boolean isLegitNewUser(UserVO user);
 
 	boolean isLegitUserId(String userId);
 
@@ -42,4 +43,6 @@ public interface UserService {
 	List<UserVO> getMailingnList() throws NoUserFoundException;
 
 	public List<UserVO> getProfile(String userId);
+	
+	List<RecipeVO> getUserRecipeList(Long userNo);
 }

@@ -52,7 +52,7 @@
 			<input type='hidden' name='userNo' value='1'>
 			<div class='content-group' id='data-content-1'>
 				<ul>
-					<input name='stepNo' value='1'><h3>1</h3></div>
+					<input type='hidden' name='stepNo' value='1'><h3>1</h3>
 					<input name='photoUrl' placeholder="사진">
 					<br>
 					<textarea rows="2" name='content' placeholder="요리 순서를 작성해보세요!"></textarea>
@@ -63,7 +63,6 @@
 		</div>
 	</form>
 	<button type="submit" >레시피 등록</button>
-	<input type="button" onclick='hii();' value='확인'>
 
 	<script
   src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -94,11 +93,13 @@
 		  }
 	      console.log(addbtns);
 
-	conChild = `<input type='hidden' name='userNo' value='1'>
+	conChild = `<form:form commandName="ContentVO" action="/recipe/register" method="post">
+	<input type='hidden' name='userNo' value='1'>
 			<div class='content-group' id='data-content-` +cnt+ `'>
-			<div name='stepNo' value='` +cnt+ `'><h3>` +cnt+ `</h3></div>
+			<input type='hidden' name='stepNo' value='` +cnt+ `'><h3>` +cnt+ `</h3>
 			<input name='photoUrl' placeholder='사진'><br>
 			<textarea rows='2' name='content' placeholder='요리 순서를 작성해보세요!'></textarea>
+			</form:form>
 			<input type='button' id='add' name='add' onclick='addCon();' value='+'>
 			<input type='button' id='del' name='del' onclick='delCon();' value='x' style='display:none'>
 			</div>`;
@@ -109,11 +110,6 @@
 
 	function delCon() {
 		// form 지우고 cnt 숫자 -1로 바꾸게 하기
-	}
-	
-	function hii() {
-			alert("하이");
-			console.log($('form').serializeArray());
 	}
 </script>
 </body>

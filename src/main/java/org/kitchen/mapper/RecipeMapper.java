@@ -51,4 +51,8 @@ public interface RecipeMapper {
 	public List<RecipeVO> getTotalTagCount(Criteria cri);
 
 	public List<RecipeVO> getCategoryCode(Long categoryNo);
+	
+	public List<RecipeVO> searchUserRecipeList(Criteria cri);
+	
+	public List<RecipeVO> getUserRecipeList(Long userNo);
 }

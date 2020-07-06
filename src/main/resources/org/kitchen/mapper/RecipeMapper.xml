@@ -306,4 +306,22 @@ where
 	c_code = #{categoryNo,jdbcType=INTEGER}
 </select>
 
+<select id="searchUserRecipeList" resultMap="recipe">
+	select *
+	from
+	tbl_recipe
+	where
+	u_num = #{userNo,jdbcType=INTEGER}
+	and
+	title like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+</select>
+
+<select id="getUserRecipeList" resultMap="recipe">
+	select *
+	from
+	tbl_recipe
+	where
+	u_num = #{userNo,jdbcType=INTEGER}
+</select>
+
 </mapper>

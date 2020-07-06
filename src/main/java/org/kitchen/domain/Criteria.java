@@ -18,6 +18,7 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	private String where;
+	private Long userNo;
 	
 	private List<Long> rnoList;
 	

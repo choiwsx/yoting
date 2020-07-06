@@ -4,13 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
+import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
 import org.kitchen.validation.VerificationEmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,11 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-
+	
+	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private RecipeMapper recipeMapper;
 
 	@Resource
 	private VerificationEmailSender verificationEmailSender;
@@ -68,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isLegitNewUser(UserVO user) throws DuplicatedUserException {
+	public boolean isLegitNewUser(UserVO user) {
 		// TODO Auto-generated method stub
 		return isLegitUserId(user.getUserId()) && isLegitUserEmail(user.getEmail());
 	}
@@ -76,13 +82,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isLegitUserId(String userId) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitId("Id");
+		if(userMapper.idExists(userId)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean isLegitUserEmail(String email) {
 		// TODO Auto-generated method stub
-		return userMapper.isLegitEmail("email");
+		if(userMapper.emailExists(email)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -106,7 +118,11 @@ public class UserServiceImpl implements UserService {
 	public void sendVerificationEmail(UserVO user) {
 		String key = VerificationEmailSender.generateString();
 		log.info("key:@@@@@@" + key);
+		if(userMapper.getVeriKey(user.getUserNo())==null) {
 		userMapper.insertVeriKey(user.getUserNo(), key);
+		} else {
+			userMapper.updateVeriKey(user.getUserNo(), key);
+		}
 		verificationEmailSender.send(user, key);
 	}
 
@@ -199,6 +215,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> getProfile(String userId) {
 		return userMapper.getProfile(userId);
+	}
+
+	@Override
+	public List<RecipeVO> getUserRecipeList(Long userNo) {
+		// TODO Auto-generated method stub
+		return recipeMapper.getUserRecipeList(userNo);
 	}
 
 }

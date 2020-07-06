@@ -98,14 +98,14 @@ public class UserMapperTests {
 	
 	//@Test
 	public void testIsLegitId() {
-		boolean f = mapper.isLegitId("new001");
+		boolean f = mapper.idExists("new001");
 		log.info("##############ISLEGITID"+f);
 		
 	}
 	
 	//@Test
 	public void testIsLegitEmail() {
-		boolean f = mapper.isLegitEmail("abc@ssss.com");
+		boolean f = mapper.emailExists("abc@ssss.com");
 		log.info("##############ISLEGITEMAIL"+f);
 	}
 	
