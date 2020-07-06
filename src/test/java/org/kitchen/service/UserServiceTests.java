@@ -23,45 +23,25 @@ public class UserServiceTests {
 	
 	//@Test
 	public void testGetUserNoById() {
-		try {
-			Long userNo = service.getUserNoById("user01");
-			log.info("@@@"+service.getUserById("user01").getStatus());
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Long userNo = service.getUserNoById("user01");
+		log.info("@@@"+service.getUserById("user01").getStatus());
 		
 	}
 	
 	//@Test
 	public void testGetuserById() {
-		try {
-			UserVO user = service.getUserById("user01");
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		UserVO user = service.getUserById("user01");
 	}
 	
 	//@Test
 	public void testGetUserByEmail() {
-		try {
-			UserVO user = service.getUserByEmail("a@a.a");
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		UserVO user = service.getUserByEmail("a@a.a");
 	}
 	
 	@Test
 	public void testGetUserByNo() {
-		try {
-			UserVO user = service.getUserByNo(3L);
-			log.info(user);
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		UserVO user = service.getUserByNo(3L);
+		log.info(user);
 	}
 	
 	//@Test
@@ -113,9 +93,6 @@ public class UserServiceTests {
 			if(service.modifyUser(user)) {
 				log.info("########유저#업뎃완료");
 			}			
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (UserMapperFailException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,9 +107,6 @@ public class UserServiceTests {
 			if(service.deleteUser(user)) {
 				log.info("########유저#삭제완료");
 			}			
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (UserMapperFailException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,22 +115,12 @@ public class UserServiceTests {
 	
 	@Test
 	public void testGetTotalList() {
-		try {
-			service.getTotalList().forEach(a->log.info(a));
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		service.getTotalList().forEach(a->log.info(a));
 	}
 	
 	//@Test
 	public void testGetMailingList() {
-		try {
-			service.getMailingnList().forEach(a->log.info("mail##########"+a.isEmailSub()));
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		service.getMailingnList().forEach(a->log.info("mail##########"+a.isEmailSub()));
 	}
 
 }

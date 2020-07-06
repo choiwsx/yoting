@@ -143,8 +143,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/login")
-	public void loginPage() {
-		
+	public String loginPage(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")!=null) {
+			log.info("로그인상태임");
+			model.addAttribute("result", "로그인 상태인데 또 로그인?");
+			return "/error";
+		}
+		return "/user/login";
 	}
 	
 	@PostMapping("/login")
@@ -153,6 +158,17 @@ public class UserController {
 		if(result == null) return "/user/login";
 		session.setAttribute("userNo", result.getUserNo());
 		return "/index";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")==null) {
+			model.addAttribute("result", "로그인도 안해놓고 로그아웃?");
+			return "/error";
+		}
+		session.removeAttribute("userNo");
+		model.addAttribute("result", "로그아웃 성공");
+		return "/good";
 	}
 	
 	@GetMapping("/sendEmail")
