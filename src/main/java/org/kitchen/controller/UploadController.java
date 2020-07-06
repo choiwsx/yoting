@@ -46,12 +46,13 @@ public class UploadController {
 		log.info("upload form");
 	}
 	
-	@GetMapping({"/upload/uploadAjax", "/upload/register"})
-	public void uploadAjax() {
-		log.info("upload ajax");
+	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration"})
+	public void uploadAjax(Model model) {
+		model.addAttribute("recipe", new RecipeVO());
+//		log.info("upload ajax");
 	}
 	
-	@PostMapping("/upload/register")
+	@PostMapping({"/upload/register","/uplaod/registration"})
 	public String register(RecipeVO recipe, RedirectAttributes rttr)
 	{
 		log.info("==================");
@@ -168,11 +169,13 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, HttpServletRequest request)
 	{
+		
 		List<AttachFileDTO> list = new ArrayList<>();
 //		String uploadFolder = "C:\\upload";
 		String uploadFolderPath = getFolder();
-		
 		//make folder
+		log.info(uploadFile.length);
+		log.info(uploadFile);
 		
 		String path = request.getSession().getServletContext().getRealPath("/");
 		String attach_path = "resources\\upload";
@@ -180,6 +183,7 @@ public class UploadController {
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		
 		log.info("@@@path@@@:"+path);
+
 		
 		if(uploadPath.exists() == false)
 		{
@@ -188,9 +192,8 @@ public class UploadController {
 		
 		for(MultipartFile multipartFile : uploadFile)
 		{
-
+				
 			AttachFileDTO attachDTO = new AttachFileDTO();
-						
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			attachDTO.setFileName(uploadFileName);

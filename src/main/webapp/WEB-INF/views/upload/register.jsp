@@ -69,7 +69,7 @@
          </select> <input class="form-control" name='title' placeholder="제목을 입력하세요">
       </div>
       <div class="form-group">
-         <textarea rows="4" name='content' placeholder="레시피를 소개해보세요!"></textarea>
+         <textarea rows="4" name='reContent' placeholder="레시피를 소개해보세요!"></textarea>
       </div>
       
       <div class="form-group">
@@ -204,12 +204,14 @@
          var formData = new FormData();
          var inputFile = $("input[name='uploadFile']");
          var files = inputFile[0].files;
+         console.log(inputFile[0].files);
          for(var i=0; i<files.length; i++)
          {
             if(!checkExtenstion(files[i].name, files[i].size)){
                return false;
             }
             formData.append("uploadFile",files[i]);
+	         console.log(formData);
          }
          $.ajax({
             url : '/upload/uploadAjaxAction',
