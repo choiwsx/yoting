@@ -45,4 +45,6 @@ public interface UserService {
 	public List<UserVO> getProfile(String userId);
 	
 	List<RecipeVO> getUserRecipeList(Long userNo);
+	
+	UserVO tempLogin(UserVO user);
 }
