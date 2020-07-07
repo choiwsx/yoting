@@ -12,6 +12,7 @@
 <h1>에러 페이지</h1>
 <h3>에러가 났습니다.</h3>
 <c:out value="${result }" />
+<a href="/">홈으로</a>
 
 </body>
 </html>

@@ -115,6 +115,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public String profile(Model model , String userId) {
+		log.info("get@@@@@@@@@@@@@@@");
 		UserVO user = userService.getUserById(userId);
 		if(user==null) {
 			model.addAttribute("result", "없는 유저입니다.");
@@ -122,7 +123,7 @@ public class UserController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		return "/user/profile?userId="+userId;
+		return "/user/profile";
 	}
 	
 	@GetMapping("/search")
@@ -171,7 +172,12 @@ public class UserController {
 		return "redirect:/good";
 	}
 	
-	@GetMapping("/sendEmail")
+	@GetMapping("/resendEmail")
+	public void resendEmail() {
+		
+	}
+	
+	@PostMapping("/sendEmail")
 	public String sendEmail(Model model, String email) {
 		if(email==null) {
 			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");

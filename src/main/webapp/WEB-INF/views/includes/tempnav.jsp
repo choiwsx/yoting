@@ -10,39 +10,40 @@ if(session!=null) {
 %>
 <ul>
 <li>
-  <h3><a href="/">인덱스</a></h3>
+  <h3><a href="/">메인</a></h3>
 </li>
 <li>
   <h3>유저</h3> 
 
-  <a href="/user/registration">가입하기</a>
+  <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %>
+ 
+  <%=userNo==null?"":"<a href="+"/user/myProfile"+">마이 페이지</a>" %>
+  
   <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
   
 </li>
 
 <li>
   <h3>레시피</h3>
+  <a href="/recipe/list"><img src="https://i.postimg.cc/kgHGnJbq/ALL.png" />전체</a>
 
-  <a href="/recipe/list">전체 리스트</a>
+  <a href="/recipe/list?categoryNo=11"><img
+         src="https://i.postimg.cc/26R5Z0Gt/BanChan.png" />주식</a>
+  
+  <a href="/recipe/list?categoryNo=22"><img
+         src="https://i.postimg.cc/Gps2tWFY/Desert.png" />디저트</a>
+  
+  <a href="/recipe/list?categoryNo=33"><img
+         src="https://i.postimg.cc/C1GxHb6x/Jusik.png" />반찬</a>
 
-  <a href="/recipe/category">카테고리 별</a>
-
-  <a href="/recipe/register">등록</a>
+  <%=userNo==null?"":"<a href="+"/recipe/registe"+">@레시피 등록</a>" %>
   
 </li>
 
-<li>
-  <h3>검색</h3>
 
-  <a href="/search/user">유저검색</a>
+<%=userNo=="1"?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
++"<a href="+"/admin/recipeList"+">@레시피 리스트</a></li>":"" %>
 
-</li>
-
-<li>
-	<h3>관리 페이지</h3>
-	
-	 <a href="/admin/userList">유저 리스트</a>
-</li>
 
 </ul>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
