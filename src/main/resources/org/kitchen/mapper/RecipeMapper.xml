@@ -51,14 +51,13 @@
    UPDATE tbl_recipe
    SET
    title = #{title},
-   content = #{r_content},
    thumbnail = #{thumbnail},
-   regdate = #{regDate},
    updatedate = sysdate,
    cookingtime = #{cookingTime},
    difficulty = #{difficulty},
-   u_num = #{userNo},
-   c_code = #{categoryNo}
+   c_code = #{categoryNo},
+   r_content = #{reContent},
+   portion = #{portion}
    WHERE r_num = #{rno}
 </update>
 
