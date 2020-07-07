@@ -126,6 +126,31 @@ public class UserController {
 		return "/user/profile";
 	}
 	
+	@GetMapping("/myProfile")
+	public String myProfile(Model model , String userNo) {
+		log.info("get@@@@@@@@@@@@@@@");
+//		UserVO user = userService.getUserById(userId);
+		log.info(userNo);
+		UserVO user = userService.getUserByNo(Long.valueOf(userNo));
+		try {
+			model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
+		}
+		catch(NumberFormatException e){
+			e.printStackTrace();
+			model.addAttribute("result", "잘못된 접근입니다.");
+			return "redirect:/error";
+		}
+//		if(user==null) {
+//			model.addAttribute("result", "없는 유저입니다.");
+//			return "redirect:/error";
+//		}
+		model.addAttribute("user", user);
+		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+		log.info("@@@user"+user);
+	
+		return "/user/myProfile";
+	}
+	
 	@GetMapping("/search")
 	public String profileSearch(Model model, String userNo, Criteria cri) {
 		
