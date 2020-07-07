@@ -43,7 +43,7 @@ public class AdminController {
 			return "/error";
 		}
 		model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
-		return "/admin/recipeList";
+		return "/admin/modiUser";
 	}
 	
 	@PostMapping("/modiUser")
@@ -56,8 +56,8 @@ public class AdminController {
 			model.addAttribute("result", "수정불가한 유저 혹은 항목입니다.");
 			return "/error";
 		}
-		model.addAttribute("user", user);
-		return "/admin/modiUser";
+		model.addAttribute("result","유저 정보가 수정되었습니다.");
+		return "/good";
 	}
 	
 	
@@ -103,7 +103,7 @@ public class AdminController {
 			return "/error";
 		}
 		recipeService.remove(rno);
-		return "/admin/recipeList";
+		return "redirect:/admin/recipeList";
 	}
 	
 

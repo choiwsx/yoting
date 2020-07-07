@@ -14,6 +14,7 @@ if(session!=null) {
 </li>
 <li>
   <h3>유저</h3> 
+  <%=userNo==null?"비회원님":"회원님" %> 안녕하세요
 
   <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %>
  
@@ -41,7 +42,7 @@ if(session!=null) {
 </li>
 
 
-<%=userNo=="1"?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
+<%=userNo!=null&&userNo.equals("1")?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
 +"<a href="+"/admin/recipeList"+">@레시피 리스트</a></li>":"" %>
 
 
