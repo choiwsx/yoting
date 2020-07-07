@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -29,9 +30,18 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 					width="300" height="300" /></a>
 			</div>
 			<div>
-				레시피:<c:out value="${recipeCount}" />
-				구독자:<c:out value="${followerCount}" />
-				구독중:<c:out value="${followingCount}" />
+				<c:if test="${keyword == null && empty recipeList}">
+				 	<b><c:out value="${user.nickName}" />님</b>은 아직 작성한 레시피가 없어요.
+				</c:if>
+				<c:if test="${keyword == null && !empty recipeList}">
+					<b><c:out value="${user.nickName}" />님</b>은  <c:out value="${fn:length(recipeList)}" />개의 레시피가 있습니다.
+				</c:if>
+				<c:if test="${keyword != null && empty recipeList}">
+					<b><c:out value="${user.nickName}" />님</b>의 레시피 중에서 <b><c:out value="${keyword}" /></b>로 검색한 결과는 없어요.
+				</c:if>
+				<c:if test="${keyword != null && !empty recipeList}">
+					<b><c:out value="${user.nickName}" />님</b>의 레시피 중에서 <b><c:out value="${keyword}" /></b>로 검색한 결과, <c:out value="${fn:length(recipeList)}" />개의 레시피가 있습니다.
+				</c:if>
 				<form action="/user/follow" method="post">
 					<input type="hidden" name="followee" value='<c:out value="${user.userNo}" />'>
 					<input type="hidden" name="follower" value='<c:out value="${loggedInUserNo}" />'>
@@ -53,11 +63,10 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 				<label>자기소개:</label>${user.bio}
 			</div>
 	</div>
-	<form action="/search/detail" method="get">
-		<input type="text" name="keyword">
+	<form action="/user/search" method="get">
+		<input type="text" name="keyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색' value='<c:out value="${keyword}" />'>
 		<input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
-
 		<button type="submit">검색</button>		
 	</form>
 	<c:forEach items="${recipeList}" var="recipe">

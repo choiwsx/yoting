@@ -109,7 +109,7 @@
 
 <select id="getTotalList" resultMap="user">
 	<![CDATA[
-	select * from tbl_user where u_num > 0
+	select * from tbl_user order by u_num asc
 	]]>
 </select>	
 

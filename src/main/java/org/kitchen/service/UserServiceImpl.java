@@ -34,43 +34,27 @@ public class UserServiceImpl implements UserService {
 	private VerificationEmailSender verificationEmailSender;
 
 	@Override
-	public Long getUserNoById(String userId) throws NoUserFoundException {
+	public Long getUserNoById(String userId) {
 		// TODO Auto-generated method stub
-		Long userNo = userMapper.getNoById(userId);
-		if (userNo == null) {
-			throw new NoUserFoundException();
-		}
-		return userNo;
+		return userMapper.getNoById(userId);
 	}
 
 	@Override
-	public UserVO getUserById(String userId) throws NoUserFoundException {
+	public UserVO getUserById(String userId) {
 		// TODO Auto-generated method stub
-		UserVO user = userMapper.selectById(userId);
-		if (user == null) {
-			throw new NoUserFoundException();
-		}
-		return user;
+		return userMapper.selectById(userId);
 	}
 
 	@Override
-	public UserVO getUserByEmail(String email) throws NoUserFoundException {
+	public UserVO getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		UserVO user = userMapper.selectByEmail(email);
-		if (user == null) {
-			throw new NoUserFoundException();
-		}
-		return user;
+		return userMapper.selectByEmail(email);
 	}
 
 	@Override
-	public UserVO getUserByNo(Long userNo) throws NoUserFoundException {
+	public UserVO getUserByNo(Long userNo) {
 		// TODO Auto-generated method stub
-		UserVO user = userMapper.selectByNo(userNo);
-		if (user == null) {
-			throw new NoUserFoundException();
-		}
-		return user;
+		return userMapper.selectByNo(userNo);
 	}
 
 	@Override
@@ -127,9 +111,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean verifyEmail(String userno, String paramKey) throws NoUserFoundException {
+	public boolean verifyEmail(String userno, String paramKey) {
 		if (paramKey == null) {
-			throw new NoUserFoundException();
+			return false;
 		}
 		String solidKey = userMapper.getVeriKey(Long.valueOf(userno));
 		if (solidKey.equals(paramKey))
@@ -138,22 +122,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean activateUser(Long userNo) throws NoUserFoundException {
+	public boolean activateUser(Long userNo) {
 		UserVO user = userMapper.selectByNo(userNo);
 		if (user == null) {
-			throw new NoUserFoundException();
+			return false;
 		}
 		user.setStatus(UserStatus.ACTIVE);
 		return userMapper.update(user) == 1;
 	}
 
 	@Override
-	public boolean modifyUser(UserVO user) throws NoUserFoundException, UserMapperFailException {
+	public boolean modifyUser(UserVO user) throws UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = userMapper.update(user);
 			if (i == 0) {
-				throw new NoUserFoundException();
+				return false;
 			}
 			return true;
 		} catch (DataIntegrityViolationException e) {
@@ -163,12 +147,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteUser(UserVO user) throws NoUserFoundException, UserMapperFailException {
+	public boolean deleteUser(UserVO user) throws UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = userMapper.delete(user);
 			if (i == 0) {
-				throw new NoUserFoundException();
+				return false;
 			}
 			return true;
 		} catch (DataIntegrityViolationException e) {
@@ -178,12 +162,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteUserByNo(Long userNo) throws NoUserFoundException, UserMapperFailException {
+	public boolean deleteUserByNo(Long userNo) throws UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
 			int i = userMapper.deleteByNo(userNo);
 			if (i == 0) {
-				throw new NoUserFoundException();
+				return false;
 			}
 			return true;
 		} catch (DataIntegrityViolationException e) {
@@ -193,23 +177,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserVO> getTotalList() throws NoUserFoundException {
+	public List<UserVO> getTotalList() {
 		// TODO Auto-generated method stub
-		List<UserVO> totalList = userMapper.getTotalList();
-		if (totalList.size() == 0) {
-			throw new NoUserFoundException();
-		}
-		return totalList;
+		return userMapper.getTotalList();
 	}
 
 	@Override
-	public List<UserVO> getMailingnList() throws NoUserFoundException {
+	public List<UserVO> getMailingnList() {
 		// TODO Auto-generated method stub
-		List<UserVO> mailingList = userMapper.getMailingList();
-		if (mailingList.size() == 0) {
-			throw new NoUserFoundException();
-		}
-		return mailingList;
+		return userMapper.getMailingList();
 	}
 
 	@Override
@@ -221,6 +197,20 @@ public class UserServiceImpl implements UserService {
 	public List<RecipeVO> getUserRecipeList(Long userNo) {
 		// TODO Auto-generated method stub
 		return recipeMapper.getUserRecipeList(userNo);
+	}
+
+	@Override
+	public UserVO tempLogin(UserVO user) {
+		// TODO Auto-generated method stub
+		if(user==null) {
+			return user;
+		}
+		UserVO userCompare = userMapper.selectById(user.getUserId());
+		if(userCompare==null) return null;
+		if(user.getUserPwd().equals(userCompare.getUserPwd())) {
+			return user=userCompare;
+		}
+		return null;
 	}
 
 }

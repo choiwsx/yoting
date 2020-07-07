@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% 
+String userNo = null;
+if(session!=null) {
+ Object tmp = session.getAttribute("userNo");
+ if(tmp!=null) {
+	 userNo = tmp.toString(); 
+ }
+}
+%>
 <ul>
 <li>
   <h3><a href="/">인덱스</a></h3>
 </li>
 <li>
-  <h3>유저</h3>  <a href="/user/list">리스트</a>
+  <h3>유저</h3> 
 
   <a href="/user/registration">가입하기</a>
+  <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
   
 </li>
 
@@ -28,6 +38,12 @@
 
 </li>
 
+<li>
+	<h3>관리 페이지</h3>
+	
+	 <a href="/admin/userList">유저 리스트</a>
+</li>
+
 </ul>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <form id='searchForm' action="/search/result" method='get'>
@@ -45,6 +61,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+	  console.log('<c:out value="${userNo}"/>');
      
      var result = '<c:out value="${result}"/>';
      

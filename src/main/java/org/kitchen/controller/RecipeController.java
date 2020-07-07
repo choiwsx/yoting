@@ -1,21 +1,15 @@
 package org.kitchen.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.kitchen.domain.ContentVO;
-import org.kitchen.domain.Criteria;
-import org.kitchen.domain.PageDTO;
 import org.kitchen.domain.RecipeVO;
-import org.kitchen.domain.UserVO;
-import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,6 +30,7 @@ public class RecipeController {
 	public void register() {
 
 	}
+		
 
 	@PostMapping("/register")
 	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
@@ -49,6 +44,18 @@ public class RecipeController {
 		rttr.addFlashAttribute("resultCon", content.getRno());
 
 		return "redirect:/recipe/list";
+	}
+	
+	@GetMapping("/registration")
+	public void register2form(Model model) {
+		model.addAttribute("recipe", new RecipeVO());
+	}
+	
+	@PostMapping("/registrationTest")
+	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+		//recipeService에 저장하기
+		recipeService.register(recipe);
+		return recipe;
 	}
 
 	@GetMapping("/get")
@@ -79,17 +86,7 @@ public class RecipeController {
 	@GetMapping("detail")
 	public void detail(Model model, Long rno) {
 		RecipeVO recipe = recipeService.get(rno);
-		try {
-			model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			UserVO author = new UserVO();
-			author.setNickName("정보 없음");
-			author.setUserId("#");
-			author.setBio("정보를 찾을 수 없는 유저");
-			model.addAttribute("author", author);
-		}
+		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));
 	}
