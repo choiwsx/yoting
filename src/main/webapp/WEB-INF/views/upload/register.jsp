@@ -134,6 +134,7 @@
 
    $(document).ready(function(e){
       var formObj = $("form[role='form']");
+	    console.log("@@formObj"+formObj);
       $("button[type='submit']").on("click", function(e){
          e.preventDefault();
          
@@ -210,6 +211,7 @@
             if(!checkExtenstion(files[i].name, files[i].size)){
                return false;
             }
+            console.log("@@@file=="+files[i]);
             formData.append("uploadFile",files[i]);
 	         console.log(formData);
          }
