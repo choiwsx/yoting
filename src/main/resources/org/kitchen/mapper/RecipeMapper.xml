@@ -7,7 +7,6 @@
 <resultMap id="recipe" type="org.kitchen.domain.RecipeVO">
    <result property="rno" column="r_num"/>
    <result property="userNo" column="u_num"/>
-   <result property="userNo" column="u_num"/>
    <result property="categoryNo" column="c_code"/>
    <result property="regDate" column="regdate"/>
    <result property="updateDate" column="updatedate"/>
@@ -16,6 +15,7 @@
    <result property="portion" column="portion"/>
    <result property="thumbnail" column="thumbnail"/>
    <result property="title" column="title"/>
+   <result property="reContent" column="r_content"/>
    
 </resultMap>
 
@@ -39,8 +39,8 @@
 		resultType="long">
 		SELECT r_seq.nextval from dual
 	</selectKey>
-	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title)
-	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title})
+	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
+	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{reContent})
 </insert>
 	
 <select id="read" resultMap="recipe">
@@ -52,12 +52,12 @@
    SET
    title = #{title},
    thumbnail = #{thumbnail},
-   regdate = #{regDate},
    updatedate = sysdate,
    cookingtime = #{cookingTime},
    difficulty = #{difficulty},
-   u_num = #{userNo},
-   c_code = #{categoryNo}
+   c_code = #{categoryNo},
+   r_content = #{reContent},
+   portion = #{portion}
    WHERE r_num = #{rno}
 </update>
 
@@ -303,6 +303,24 @@ where
 	tbl_recipe 
 	where 
 	c_code = #{categoryNo,jdbcType=INTEGER}
+</select>
+
+<select id="searchUserRecipeList" resultMap="recipe">
+	select *
+	from
+	tbl_recipe
+	where
+	u_num = #{userNo,jdbcType=INTEGER}
+	and
+	title like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+</select>
+
+<select id="getUserRecipeList" resultMap="recipe">
+	select *
+	from
+	tbl_recipe
+	where
+	u_num = #{userNo,jdbcType=INTEGER}
 </select>
 
 </mapper>

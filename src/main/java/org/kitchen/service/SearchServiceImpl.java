@@ -161,4 +161,18 @@ public class SearchServiceImpl implements SearchService {
 	public List<UserVO> getUserListById(Criteria cri) {
 		return userMapper.getInfobyId(cri);
 	}
+
+	@Override
+	public List<RecipeVO> searchUserRecipeList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return recipeMapper.searchUserRecipeList(cri);
+	}
+	
+	@Override
+	public List<RecipeVO> getUserRecipeList(Long userNo) {
+		// TODO Auto-generated method stub
+		return recipeMapper.getUserRecipeList(userNo);
+	}
+
+
 }

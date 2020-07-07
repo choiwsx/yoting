@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.kitchen.domain.AttachFileDTO;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.service.RecipeService;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,12 +47,20 @@ public class UploadController {
 		log.info("upload form");
 	}
 	
-	@GetMapping({"/upload/uploadAjax", "/upload/register"})
-	public void uploadAjax() {
-		log.info("upload ajax");
+	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration"})
+	public void uploadAjax(Model model) {
+		model.addAttribute("recipe", new RecipeVO());
+//		log.info("upload ajax");
 	}
 	
-	@PostMapping("/upload/register")
+	@PostMapping("/upload/registrationTest")
+	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+		//recipeService에 저장하기
+		service.register(recipe);
+		return recipe;
+	}
+	
+	@PostMapping({"/upload/register"})
 	public String register(RecipeVO recipe, RedirectAttributes rttr)
 	{
 		log.info("==================");
@@ -114,10 +125,12 @@ public class UploadController {
 	
 	@GetMapping("/display")
 	@ResponseBody
-	public ResponseEntity<byte[]> getFile(String fileName){
+	public ResponseEntity<byte[]> getFile(String fileName, HttpServletRequest request){
 		log.info("fileName : " + fileName);
-		
-		File file = new File("c:\\upload\\"+fileName);
+		String path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "resources\\upload\\";
+		String uploadFolder = path+attach_path;
+		File file = new File(uploadFolder+fileName);
 		
 		ResponseEntity<byte[]> result = null;
 		
@@ -137,11 +150,14 @@ public class UploadController {
 	
 	@PostMapping("/deleteFile")
 	@ResponseBody
-	public ResponseEntity<String> delteFile(String fileName, String type)
+	public ResponseEntity<String> delteFile(String fileName, String type, HttpServletRequest request)
 	{
 		 File file;
 		 try {
-			 file = new File("c:\\uplaod\\"+URLDecoder.decode(fileName, "UTF-8"));
+			 String path = request.getSession().getServletContext().getRealPath("/");
+			 String attach_path = "resources\\upload";
+			 String uploadFolder = path+attach_path;
+			 file = new File(uploadFolder+"\\"+URLDecoder.decode(fileName, "UTF-8"));
 			 log.info("deleteFile:" +file);
 			 file.delete();
 			 
@@ -151,7 +167,8 @@ public class UploadController {
 				 log.info("Large file:"+file);
 				 file.delete();
 			 }
-		 }catch(UnsupportedEncodingException e)
+		 }
+		 catch(UnsupportedEncodingException e)
 		 {
 			 e.printStackTrace();
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -162,14 +179,21 @@ public class UploadController {
 	
 	@PostMapping(value= "/upload/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile)
+	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, HttpServletRequest request)
 	{
-		List<AttachFileDTO> list = new ArrayList<>();
-		String uploadFolder = "C:\\upload";
-		String uploadFolderPath = getFolder();
 		
+		List<AttachFileDTO> list = new ArrayList<>();
+//		String uploadFolder = "C:\\upload";
+		String uploadFolderPath = getFolder();
 		//make folder
+		
+		String path = request.getSession().getServletContext().getRealPath("/");
+		String attach_path = "resources\\upload";
+		String uploadFolder = path+attach_path;
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		
+		log.info("@@@path@@@:"+path);
+
 		
 		if(uploadPath.exists() == false)
 		{
@@ -178,9 +202,8 @@ public class UploadController {
 		
 		for(MultipartFile multipartFile : uploadFile)
 		{
-
+				
 			AttachFileDTO attachDTO = new AttachFileDTO();
-						
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			attachDTO.setFileName(uploadFileName);

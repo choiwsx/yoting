@@ -14,15 +14,17 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<form id='searchForm' action="/search/user" method='get'>
 		<input type='text' name='keyword' id="keyword"
-			value='<c:out value="${cri.keyword}"/>'>
+			value='<c:out value="${cri.keyword}"/>' placeholder="유저 id">
 		<button class='btn btn-default'>Search</button>
 	</form>
 	<table>
 	<div> 총<c:out value="${fn:length(userSearch)} " />명있습니다.</div>
 		<c:forEach items="${userSearch}" var="user">
-			<a href='profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
+			<a href='/user/profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
 				<img src="<c:out value="${user.profilePhoto}"/>" width="140" height="120" />
-				<c:out value="${user.nickName}" /> </a>
+				id:<c:out value="${user.userId}" />
+				닉넴:<c:out value="${user.nickName}" /> </a>
+				<br>
 		</c:forEach>
 	</table>
 </body>

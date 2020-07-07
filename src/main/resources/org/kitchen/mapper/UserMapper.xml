@@ -47,6 +47,10 @@
 	select keyNo from tbl_user_key where userNo = #{userNo}
 </select>
 
+<update id="updateVeriKey">
+	update into tbl_user_key set keyNo = #{key} where userNo = #{userNo}
+</update>
+
 <select id="selectById" resultMap="user">
 	select * from tbl_user where u_id = #{userId}
 </select>
@@ -59,20 +63,20 @@
 	select * from tbl_user where u_num = #{userNo}
 </select>
 
-<select id="getNoById" resultType="Integer">
+<select id="getNoById" resultType="Long">
 	select u_num from tbl_user where u_id = #{userId}
 </select>
 
-<select id="isLegitId" resultType="Boolean">
-SELECT CASE WHEN MAX(u_id) IS NULL THEN '1' ELSE '0' END Legit_Id
-  FROM tbl_user
- WHERE u_id = #{userId}
+<select id="idExists" resultType="Boolean">
+<![CDATA[
+	select count(*) from tbl_user where u_id = #{userId} and rownum <= 1
+	]]>
 </select>
 
-<select id="isLegitEmail" resultType="Boolean">
-	SELECT CASE WHEN MAX(email) IS NULL THEN '1' ELSE '0' END Legit_Email
-	FROM tbl_user
-	WHERE email = #{email}
+<select id="emailExists" resultType="Boolean">
+<![CDATA[
+	select count(*) from tbl_user where email = #{email} and rownum <= 1
+	]]>
 </select>
 
 <select id="isPrivate" resultType="Boolean">
@@ -105,7 +109,7 @@ SELECT CASE WHEN MAX(u_id) IS NULL THEN '1' ELSE '0' END Legit_Id
 
 <select id="getTotalList" resultMap="user">
 	<![CDATA[
-	select * from tbl_user where u_num > 0
+	select * from tbl_user order by u_num asc
 	]]>
 </select>	
 
