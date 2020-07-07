@@ -18,7 +18,7 @@ if(session!=null) {
 
   <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %>
  
-  <%=userNo==null?"":"<a href="+"/user/myProfile"+">마이 페이지</a>" %>
+  <%=userNo==null?"":"<a href="+"/user/mykitchen"+">마이 페이지</a>" %>
   
   <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
   

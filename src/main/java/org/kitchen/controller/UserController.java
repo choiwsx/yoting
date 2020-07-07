@@ -142,29 +142,45 @@ public class UserController {
 		return "/user/profile";
 	}
 	
-	@GetMapping("/myProfile")
-	public String myProfile(Model model , String userNo) {
-		log.info("get@@@@@@@@@@@@@@@");
-//		UserVO user = userService.getUserById(userId);
-		log.info(userNo);
-		UserVO user = userService.getUserByNo(Long.valueOf(userNo));
-		try {
-			model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
+	@GetMapping("/mykitchen")
+	public String mykitchen(Model model, HttpSession session) {
+		if(session.getAttribute("userNo")==null)
+		{
+			return wrongAccess(model);
 		}
-		catch(NumberFormatException e){
-			e.printStackTrace();
+//		String userNoString = String.valueOf(session.getAttribute("userNo"));
+//		Long userNo = Long.valueOf(userNoString);
+		Long userNo = (Long)session.getAttribute("userNo");
+		UserVO user = userService.getUserByNo(userNo);
+		if(user==null)
+		{
 			model.addAttribute("result", "잘못된 접근입니다.");
-			return "redirect:/error";
+			return "redirect:/error";			
 		}
-//		if(user==null) {
-//			model.addAttribute("result", "없는 유저입니다.");
-//			return "redirect:/error";
-//		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		log.info("@@@user"+user);
-	
-		return "/user/myProfile";
+		log.info("@@@@user@@@@"+user);
+		return "/user/mykitchen";
+	}
+	@GetMapping("/testprofile")
+	public String testprofile(Model model, HttpSession session) {
+		if(session.getAttribute("userNo")==null)
+		{
+			return wrongAccess(model);
+		}
+//		String userNoString = String.valueOf(session.getAttribute("userNo"));
+//		Long userNo = Long.valueOf(userNoString);
+		Long userNo = (Long)session.getAttribute("userNo");
+		UserVO user = userService.getUserByNo(userNo);
+		if(user==null)
+		{
+			model.addAttribute("result", "잘못된 접근입니다.");
+			return "redirect:/error";			
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+		log.info("@@@@user@@@@"+user);
+		return "/user/testprofile";
 	}
 	
 	@GetMapping("/search")
