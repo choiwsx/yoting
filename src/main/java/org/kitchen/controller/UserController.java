@@ -162,17 +162,18 @@ public class UserController {
 	@GetMapping("/login")
 	public String loginPage(HttpSession session, Model model) {
 		if(session.getAttribute("userNo")!=null) {
-			log.info("로그인상태임");
-			model.addAttribute("result", "로그인 상태인데 또 로그인?");
-			return "redirect:/error";
+			return "/";
 		}
 		return "/user/login";
 	}
 	
 	@PostMapping("/login")
-	public String login(UserVO user, HttpSession session) {
+	public String login(Model model, UserVO user, HttpSession session) {
 		UserVO result = userService.tempLogin(user);
-		if(result == null) return "/user/login";
+		if(result == null) {
+			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
+			return "/user/login";
+		}
 		session.setAttribute("userNo", result.getUserNo());
 		return "/index";
 	}
@@ -212,6 +213,12 @@ public class UserController {
 	private String wrongAccess(Model model) {
 		// TODO Auto-generated method stub
 		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+	
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
 		return "/error";
 	}
 }

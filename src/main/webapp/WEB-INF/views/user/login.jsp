@@ -9,10 +9,8 @@
 <title>로그인</title>
 </head>
 <body>
-<h1>로그인 화면.</h1>
-<div>
-<label>result : </label><c:out value="${result}" />
-</div>
+<h1>로그인 화면</h1>
+
 <div>
 <form action="/user/login" method="POST" enctype="utf8">
     <label>아이디</label><input name="userId" type="text">
@@ -22,9 +20,13 @@
 </div>
 <div>
    <a href="/user/registration">회원가입</a>
-   <a>아이디/비번 찾기</a>
 </div>
+<br>
+<div> 
+회원 가입을 했는데 이메일이 안왔나요? 
 
+<a href="/user/resendEmail">인증 이메일 다시 보내기</a>
+</div>
 
 </body>
 </html>

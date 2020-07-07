@@ -10,9 +10,10 @@
 </head>
 <body>
 <h1>에러 페이지</h1>
-<h3>에러가 났습니다.</h3>
-<c:out value="${result }" />
-<a href="/">홈으로</a>
+<h3>에러:<c:out value="${result }" />
+</h3>
+<input type="button" value="홈으로" onclick="location.href='/'">
+
 <input type="button" value="뒤로가기" onclick="history.back(-1);">
 </body>
 </html>

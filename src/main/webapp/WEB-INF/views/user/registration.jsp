@@ -6,12 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유저 등록</title>
+<title>회원 가입</title>
 </head>
 <body>
-<div>
-<label>result : </label><c:out value="${result}" />
-</div>
+
 
 
 <h1>회원 가입 폼</h1>
