@@ -116,13 +116,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/deluser")
-	public String delUser(Model model, Long userno) {
+	public String delUser(Model model, String userNo) {
 		try {
-			userService.deleteUserByNo(userno);
+			userService.deleteUserByNo(Long.valueOf(userNo));
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제불가 유저에요");
 			return "redirect:/error";
+		} catch (NumberFormatException e) {
+			return wrongAccess(model);
 		}
 		return "redirect:/user/list";
 	}
