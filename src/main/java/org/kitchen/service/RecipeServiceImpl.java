@@ -1,10 +1,11 @@
 package org.kitchen.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.ContentMapper;
 import org.kitchen.mapper.RecipeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class RecipeServiceImpl implements RecipeService {
 	private RecipeMapper recipeMapper;
 	@Autowired
 	private ContentMapper contentMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 
 	@Override
 	public void register(RecipeVO recipe, ContentVO content) {
@@ -99,6 +102,11 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<RecipeVO> getCategoryCode(Long categoryNo) {
 		return recipeMapper.getCategoryCode(categoryNo);
 	}
+	
+	@Override
+	public List<CategoryVO> getCategoryNamebyPrevCode(Long categoryNo) {
+		return categoryMapper.getCategoryNamebyPrevCode(categoryNo);
+	}
 
 	@Override
 	public Long register(RecipeVO recipe) {
@@ -131,6 +139,8 @@ public class RecipeServiceImpl implements RecipeService {
 			contentMapper.insert(recipe.getContentList().get(i));
 		}
 	}
+
+
 
 
 }

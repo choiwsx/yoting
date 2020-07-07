@@ -3,15 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
-<%
-   request.setCharacterEncoding("UTF-8");
-String cno = request.getParameter("categoryNo");
 
-if(cno == null){
-   cno="";
-}
-
-%>
 <%@ include file="../includes/tempnav.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -26,7 +18,7 @@ a {
 </style>
 </head>
 <body>
-
+<%@ include file="../includes/category.jsp"%>
    <div>
       총
       <c:out value="${fn:length(list)}  " />

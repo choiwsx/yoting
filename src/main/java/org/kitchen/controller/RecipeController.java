@@ -1,7 +1,12 @@
 package org.kitchen.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
+import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
@@ -20,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/recipe/*")
 public class RecipeController {
-	
+
 	@Autowired
 	private RecipeService recipeService;
 	@Autowired
@@ -30,7 +35,6 @@ public class RecipeController {
 	public void register() {
 
 	}
-		
 
 	@PostMapping("/register")
 	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
@@ -45,15 +49,15 @@ public class RecipeController {
 
 		return "redirect:/recipe/list";
 	}
-	
+
 	@GetMapping("/registration")
 	public void register2form(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}
-	
+
 	@PostMapping("/registrationTest")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-		//recipeService에 저장하기
+		// recipeService에 저장하기
 		recipeService.register(recipe);
 		return recipe;
 	}
@@ -77,12 +81,19 @@ public class RecipeController {
 	}
 
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Long categoryNo,Model model) {
 		log.info("list");
 		model.hashCode();
-		model.addAttribute("list", recipeService.getList());
+		if(categoryNo==null) {
+			model.addAttribute("list", recipeService.getList());
+		}else {
+//			List<CategoryVO> categoryList = recipeService.getCategoryNamebyPrevCode(categoryNo);
+			model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNo));
+			model.addAttribute("list",recipeService.getCategoryCode(categoryNo));
+		}
 	}
-	
+//		model.addAttribute("2ndCategory", recipeService.getCategoryNamebyPrevCode(categoryNo));
+
 	@GetMapping("detail")
 	public void detail(Model model, Long rno) {
 		RecipeVO recipe = recipeService.get(rno);
@@ -90,25 +101,25 @@ public class RecipeController {
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));
 	}
-	
+
 	@GetMapping("del")
 	public String delelete(HttpServletRequest request, Model model, Long rno) {
-		if(recipeService.remove(rno)) {
+		if (recipeService.remove(rno)) {
 			model.addAttribute("result", "success");
 		} else {
 			model.addAttribute("result", "fail");
 		}
 		String referer = request.getHeader("Referer");
-	    return "redirect:"+ referer;
+		return "redirect:" + referer;
 	}
-	
-	@GetMapping("/category")
-	public void list(Long categoryNo, Model model) {
-		if (categoryNo == null) {
-			model.addAttribute("list", recipeService.getList());
-		} else {
-			model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
-		}
-	}
+
+//	@GetMapping("/category")
+//	public void list(Long categoryNo, Model model) {
+//		if (categoryNo == null) {
+//			model.addAttribute("list", recipeService.getList());
+//		} else {
+//			model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
+//		}
+//	}
 
 }

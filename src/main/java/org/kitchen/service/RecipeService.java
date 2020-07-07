@@ -2,6 +2,7 @@ package org.kitchen.service;
 
 import java.util.List;
 
+import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
 
@@ -34,4 +35,6 @@ public interface RecipeService {
 	public List<RecipeVO> getCategoryCode(Long categoryNo);
 	
 	public void register_w(RecipeVO recipe);
+
+	public List<CategoryVO> getCategoryNamebyPrevCode(Long categoryNo);
 }

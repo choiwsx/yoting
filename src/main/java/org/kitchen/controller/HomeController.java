@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
+import org.kitchen.service.RecipeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private RecipeService recipeService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -42,22 +47,23 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
+		model.addAttribute("list", recipeService.getList());
 
 		return "index";
 	}
 
 	@GetMapping("/index")
 	public void search(Criteria cri, Model model) {
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		HttpSession session = attr.getRequest().getSession();
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
+		model.addAttribute("list", recipeService.getList());
+
 	}
-	
+
 	@GetMapping("/good")
 	public void good(String result, Model model) {
 		model.addAttribute("result", result);
 	}
-	
+
 	@GetMapping("/error")
 	public void error(String result, Model model) {
 		model.addAttribute("result", result);

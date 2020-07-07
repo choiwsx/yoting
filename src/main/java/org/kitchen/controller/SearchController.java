@@ -28,6 +28,7 @@ public class SearchController {
 		String type = cri.getType();
 		String more = cri.getWhere();
 		System.out.println("more@@@" + more);
+		model.addAttribute("category", service.read());
 		switch (type) {
 		case "T":
 			model.addAttribute("list", service.getRecipeList(cri));
