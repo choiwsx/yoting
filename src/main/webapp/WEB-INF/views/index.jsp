@@ -10,12 +10,7 @@
 <head>
    <meta charset="utf-8">
 <title>Index</title>
-<style>
-   img {
-      width: 95vw;
-   }
 
-</style>
 </head>
 <body>
 <h1>먹스타그램</h1>

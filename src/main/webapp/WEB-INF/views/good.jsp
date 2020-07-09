@@ -12,6 +12,7 @@
 <h1>결과</h1>
 <h3>실행되었습니다.</h3>
 <c:out value="${result }" />
-
+<a href="/">홈으로</a>
+<input type="button" value="뒤로가기" onclick="history.back(-1);">
 </body>
 </html>

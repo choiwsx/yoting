@@ -6,12 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유저 등록</title>
+<title>회원 가입</title>
 </head>
 <body>
-<div>
-<label>result : </label><c:out value="${result}" />
-</div>
+
 
 
 <h1>회원 가입 폼</h1>
@@ -38,8 +36,10 @@
     </div>
     <button type="submit">submit</button>
 </form>
- 
+<div> 
+회원 가입을 했는데 이메일이 안왔나요? 
 
-
+<a href="/user/resendEmail">인증 이메일 다시 보내기</a>
+</div>
 </body>
 </html>

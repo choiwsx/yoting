@@ -36,11 +36,18 @@ public class UserController {
 	
 //	User Account Registration process
 	@GetMapping("/registration")
-	public void registrationForm() {
+	public String registrationForm(Model model, HttpSession session) {
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}
+		return "/user/registration";
 	}
 	
 	@PostMapping("/registration")
-	public String validateuser(UserVO user, Model model) {
+	public String validateuser(UserVO user, Model model, HttpSession session) {
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}
 		log.info("#############"+userService.isLegitNewUser(user)+user);		
 		if(userService.isLegitNewUser(user)) {
 			model.addAttribute("user", user);
@@ -52,19 +59,25 @@ public class UserController {
 	}
 	
 	@GetMapping("/newprofile")
-	public String newProfileForm(Model model) {
+	public String newProfileForm(Model model, HttpSession session) {
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}
 		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
-	public String registeruser(@ModelAttribute("user") UserVO user, Model model, SessionStatus sessionStatus) {		
+	public String registeruser(@ModelAttribute("user") UserVO user, Model model, SessionStatus sessionStatus, HttpSession session) {
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}	
 		try {
 			if(userService.isLegitNewUser(user)) {
 				log.info("@@@@@@@@"+user);
 				userService.registerNewUser(user);
 				user.setUserPwd(null);
 				model.addAttribute("user", user);
-				return "/user/welcome";
+				return "redirect:/user/welcome";
 			}
 		} catch (DuplicatedUserException e) {
 			// TODO Auto-generated catch block
@@ -82,7 +95,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/welcome")
-	public void welcomePage() {
+	public void welcomePage(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
 	}
 	
 	@GetMapping("/verify")
@@ -102,19 +116,22 @@ public class UserController {
 	}
 	
 	@GetMapping("/deluser")
-	public String delUser(Model model, Long userno) {
+	public String delUser(Model model, String userNo) {
 		try {
-			userService.deleteUserByNo(userno);
+			userService.deleteUserByNo(Long.valueOf(userNo));
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제불가 유저에요");
 			return "redirect:/error";
+		} catch (NumberFormatException e) {
+			return wrongAccess(model);
 		}
 		return "redirect:/user/list";
 	}
 
 	@GetMapping("/profile")
 	public String profile(Model model , String userId) {
+		log.info("get@@@@@@@@@@@@@@@");
 		UserVO user = userService.getUserById(userId);
 		if(user==null) {
 			model.addAttribute("result", "없는 유저입니다.");
@@ -122,7 +139,7 @@ public class UserController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		return "/user/profile?userId="+userId;
+		return "/user/profile";
 	}
 	
 	@GetMapping("/search")
@@ -145,17 +162,18 @@ public class UserController {
 	@GetMapping("/login")
 	public String loginPage(HttpSession session, Model model) {
 		if(session.getAttribute("userNo")!=null) {
-			log.info("로그인상태임");
-			model.addAttribute("result", "로그인 상태인데 또 로그인?");
-			return "redirect:/error";
+			return "/";
 		}
 		return "/user/login";
 	}
 	
 	@PostMapping("/login")
-	public String login(UserVO user, HttpSession session) {
+	public String login(Model model, UserVO user, HttpSession session) {
 		UserVO result = userService.tempLogin(user);
-		if(result == null) return "/user/login";
+		if(result == null) {
+			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
+			return "/user/login";
+		}
 		session.setAttribute("userNo", result.getUserNo());
 		return "/index";
 	}
@@ -171,7 +189,12 @@ public class UserController {
 		return "redirect:/good";
 	}
 	
-	@GetMapping("/sendEmail")
+	@GetMapping("/resendEmail")
+	public void resendEmail() {
+		
+	}
+	
+	@PostMapping("/sendEmail")
 	public String sendEmail(Model model, String email) {
 		if(email==null) {
 			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
@@ -185,5 +208,17 @@ public class UserController {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+	}
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+	
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
 	}
 }
