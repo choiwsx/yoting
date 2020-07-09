@@ -28,6 +28,21 @@ public class RecipeServiceImpl implements RecipeService {
 		content.setRno(rno);
 		registerCon(content);
 	}
+	
+	
+	@Transactional
+	@Override
+	public void register_w(RecipeVO recipe)
+	{
+		Long rno = register(recipe);
+		log.info("@@@rno"+rno);
+		
+		for(int i=0; i<recipe.getContentList().size(); i++)
+		{
+			recipe.getContentList().get(i).setRno(rno);
+			contentMapper.insert(recipe.getContentList().get(i));
+		}
+	}
 
 	@Override
 	public void register(RecipeVO recipe, List<ContentVO> contents) {
