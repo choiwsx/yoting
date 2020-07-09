@@ -26,10 +26,11 @@ public class RecipeVO {
 	
 	public RecipeVO() {
 		contentList = new ArrayList<>(10);
-		for(int i = 0; i<10; i++) {
-//			ContentVO content = new ContentVO();
-//			content.setStepNo(i);
-			contentList.add(new ContentVO());
+		for(int i = 0; i<10; i++)
+		{
+			ContentVO tmp = new ContentVO();
+			tmp.setStepNo(i);
+			contentList.add(tmp);
 		}
 	}
 }

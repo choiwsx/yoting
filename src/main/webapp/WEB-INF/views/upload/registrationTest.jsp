@@ -14,8 +14,8 @@
 <fieldset><legend>College Information</legend>
 레시피타이틀:<c:out value="${recipe.title }" />
 레시피섬ㄴㅔ일:<c:out value="${recipe.thumbnail }" />
-레시피유저넘버"<c:out value="${recipe.userNo }" />
-레시피요리시간"<c:out value="${recipe.cookingTime }" />
+레시피유저넘버<c:out value="${recipe.userNo }" />
+레시피요리시간<c:out value="${recipe.cookingTime }" />
 레시피난이도:<c:out value="${recipe.difficulty }" />
 레시피분량:<c:out value="${recipe.portion }" />
 레시피카테고리번호:<c:out value="${recipe.categoryNo }" />
