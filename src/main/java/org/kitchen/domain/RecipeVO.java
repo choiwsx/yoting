@@ -27,9 +27,9 @@ public class RecipeVO {
 	public RecipeVO() {
 		contentList = new ArrayList<>(10);
 		for(int i = 0; i<10; i++) {
-		contentList.add(new ContentVO());
+//			ContentVO content = new ContentVO();
+//			content.setStepNo(i);
+			contentList.add(new ContentVO());
 		}
 	}
-
-	
 }

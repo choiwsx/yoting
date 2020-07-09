@@ -2,13 +2,13 @@ package org.kitchen.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
-import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
-import org.kitchen.service.RecipeService;
 import org.kitchen.service.SearchService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.log4j.Log4j;
 
@@ -41,48 +40,45 @@ public class UserController {
 	}
 	
 	@PostMapping("/registration")
-	public ModelAndView validateuser(UserVO user) {
-		ModelAndView modelAndView = new ModelAndView();
+	public String validateuser(UserVO user, Model model) {
 		log.info("#############"+userService.isLegitNewUser(user)+user);		
 		if(userService.isLegitNewUser(user)) {
-			modelAndView.setViewName("user/newprofile");
-			modelAndView.addObject("user", user);
+			model.addAttribute("user", user);
+			return "/user/newprofile";
 		} else {
-		modelAndView.addObject("result", "중복유저");
-		modelAndView.setViewName("/user/registration");
+			model.addAttribute("result", "중복된 유저 아이디 혹은 이메일입니다.");
 		}
-		return modelAndView;
+		return "/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
-	public String newProfileForm() {
-		return "user/registration";
+	public String newProfileForm(Model model) {
+		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
-	public ModelAndView registeruser(@ModelAttribute("user") UserVO user, ModelAndView modelAndView, SessionStatus sessionStatus) {		
+	public String registeruser(@ModelAttribute("user") UserVO user, Model model, SessionStatus sessionStatus) {		
 		try {
 			if(userService.isLegitNewUser(user)) {
 				log.info("@@@@@@@@"+user);
 				userService.registerNewUser(user);
 				user.setUserPwd(null);
-				modelAndView.addObject("user", user);
-				modelAndView.setViewName("redirect:/user/welcome"); 
-				return modelAndView;
+				model.addAttribute("user", user);
+				return "/user/welcome";
 			}
 		} catch (DuplicatedUserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			modelAndView.addObject("result", "중복 유저");
+			model.addAttribute("result", "중복 유저");
 			sessionStatus.setComplete();
 		} catch (UserMapperFailException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			modelAndView.addObject("result", "저장 불가한 유저");
+			model.addAttribute("result", "저장 불가한 유저");
 			sessionStatus.setComplete();
 		}
-		modelAndView.setViewName("redirect:/user/registration");
-		return modelAndView;
+		return "/error";
+
 	}
 	
 	@GetMapping("/welcome")
@@ -90,58 +86,43 @@ public class UserController {
 	}
 	
 	@GetMapping("/verify")
-	public String verify(String key, String userno) {
-		try {
-			if(userService.verifyEmail(userno, key)) {
-				userService.activateUser(Long.valueOf(userno));
-				return "/user/good";
-			}
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "/user/fail";
+	public String verify(String key, String userno, Model model) {
+		if(userService.verifyEmail(userno, key)) {
+			userService.activateUser(Long.valueOf(userno));
+			model.addAttribute("result", "인증되었습니다.");
+			return "redirect:/good";
+		}		
+		model.addAttribute("result", "인증 실패. 잘못된 인증 링크입니다.");
+		return "redirect:/error";
 	}
 	
 	@GetMapping("/list")
-	public ModelAndView showList(Model model) {
-		ModelAndView modelAndView = new ModelAndView("/user/list");
-		try {
-			modelAndView.addObject("list", userService.getTotalList());
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			model.addAttribute("result", "유저가 없어요");
-		}
-		return modelAndView;
+	public void showList(Model model) {
+		model.addAttribute("list", userService.getTotalList());
 	}
 	
 	@GetMapping("/deluser")
 	public String delUser(Model model, Long userno) {
 		try {
 			userService.deleteUserByNo(userno);
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			model.addAttribute("result", "유저가 없어요");
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제불가 유저에요");
+			return "redirect:/error";
 		}
 		return "redirect:/user/list";
 	}
 
 	@GetMapping("/profile")
-	public void profile(Model model , String userId) {
-		try {
-			UserVO user = userService.getUserById(userId);
-			model.addAttribute("user", user);
-			model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			model.addAttribute("result", "없는 유저");
+	public String profile(Model model , String userId) {
+		UserVO user = userService.getUserById(userId);
+		if(user==null) {
+			model.addAttribute("result", "없는 유저입니다.");
+			return "redirect:/error";
 		}
+		model.addAttribute("user", user);
+		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+		return "/user/profile?userId="+userId;
 	}
 	
 	@GetMapping("/search")
@@ -149,42 +130,60 @@ public class UserController {
 		
 		try {
 			model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
-		} catch (NumberFormatException | NoUserFoundException e) {
+		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "redirect:/";
+			model.addAttribute("result", "잘못된 접근입니다.");
+			return "redirect:/error";
 		}
 		List<RecipeVO> list =searchService.searchUserRecipeList(cri);
 		model.addAttribute("recipeList", list);
 		model.addAttribute("keyword", cri.getKeyword());
-		return "/user/profile";
+		return "redirect:/user/profile";
 	}
 	
 	@GetMapping("/login")
-	public void loginPage() {
-		
+	public String loginPage(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")!=null) {
+			log.info("로그인상태임");
+			model.addAttribute("result", "로그인 상태인데 또 로그인?");
+			return "redirect:/error";
+		}
+		return "/user/login";
 	}
 	
 	@PostMapping("/login")
-	public void login(UserVO user) {
-		
+	public String login(UserVO user, HttpSession session) {
+		UserVO result = userService.tempLogin(user);
+		if(result == null) return "/user/login";
+		session.setAttribute("userNo", result.getUserNo());
+		return "/index";
 	}
 	
-	@GetMapping("/sendemail")
-	public String sendEmail(Model model, String userNo) {
-		if(userNo==null) {
-			model.addAttribute("result", "잘못된 접근");
-			return "/user/welcome"; 
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		if(session.getAttribute("userNo")==null) {
+			model.addAttribute("result", "로그인도 안해놓고 로그아웃?");
+			return "redirect:/error";
 		}
-		try {
-			userService.sendVerificationEmail(userService.getUserByNo(Long.valueOf(userNo)));
-			model.addAttribute("result", "이멜 전송 완료");
-			return "/user/welcome";
-		} catch (NoUserFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			model.addAttribute("result", "잘못된 유저");
-			return "/user/welcome";
+		session.removeAttribute("userNo");
+		model.addAttribute("result", "로그아웃 성공");
+		return "redirect:/good";
+	}
+	
+	@GetMapping("/sendEmail")
+	public String sendEmail(Model model, String email) {
+		if(email==null) {
+			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
+			return "redirect:/error"; 
 		}
+		UserVO user = userService.getUserByEmail(email);
+		if(user==null) {
+			model.addAttribute("result", "이메일 주소로 등록된 사용자가 없습니다.");
+			return "redirect:/error"; 
+		}
+		userService.sendVerificationEmail(user);
+		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
+		return "redirect:/good";
 	}
 }

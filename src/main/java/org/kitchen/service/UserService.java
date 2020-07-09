@@ -10,13 +10,13 @@ import org.kitchen.exception.UserMapperFailException;
 
 public interface UserService {
 	
-	UserVO getUserById(String userId) throws NoUserFoundException;
+	UserVO getUserById(String userId);
 
-	UserVO getUserByEmail(String email) throws NoUserFoundException;
+	UserVO getUserByEmail(String email);
 
-	UserVO getUserByNo(Long userNo) throws NoUserFoundException;
+	UserVO getUserByNo(Long userNo);
 
-	Long getUserNoById(String userId) throws NoUserFoundException;
+	Long getUserNoById(String userId);
 
 	boolean isLegitNewUser(UserVO user);
 
@@ -28,21 +28,23 @@ public interface UserService {
 
 	void sendVerificationEmail(UserVO user);
 
-	boolean verifyEmail(String userno, String key) throws NoUserFoundException;
+	boolean verifyEmail(String userno, String key);
 
-	boolean activateUser(Long userNo) throws NoUserFoundException;
+	boolean activateUser(Long userNo);
 
-	boolean modifyUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
+	boolean modifyUser(UserVO user) throws UserMapperFailException;
 
-	boolean deleteUser(UserVO user) throws NoUserFoundException, UserMapperFailException;
+	boolean deleteUser(UserVO user) throws UserMapperFailException;
 
-	boolean deleteUserByNo(Long userNo) throws NoUserFoundException, UserMapperFailException;
+	boolean deleteUserByNo(Long userNo) throws UserMapperFailException;
 
-	List<UserVO> getTotalList() throws NoUserFoundException;
+	List<UserVO> getTotalList();
 
-	List<UserVO> getMailingnList() throws NoUserFoundException;
+	List<UserVO> getMailingnList();
 
 	public List<UserVO> getProfile(String userId);
 	
 	List<RecipeVO> getUserRecipeList(Long userNo);
+	
+	UserVO tempLogin(UserVO user);
 }

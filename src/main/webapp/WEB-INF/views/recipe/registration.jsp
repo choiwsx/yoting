@@ -40,13 +40,14 @@
 		    <div class="content-group">
 	        <ul>
 	        <div class='content' id="data-content-1">
+	        <form:hidden path="userNo" value="1" />
 	   		<h3>1번</h3>
-	        <div class="label required">
-	        <form:label path="contentList[0].photoUrl">사진</form:label></div>
+//	        <div class="label required">
+//	        <form:label path="contentList[0].photoUrl">사진</form:label></div>
 	
 	        <div class="input">
 	        <form:input path="contentList[0].photoUrl"/>
-	        <form:errors path="contentList[0].photoUrl" /></div>
+	        </div>
 	
 	        <div class="field">
 	        <div class="label required"><form:label path="contentList[0].content" >내용</form:label></div>
@@ -98,12 +99,13 @@ function addCon() {
 		  // cnt : stepNo 쓰는거
 		  // index : 배열에 값 넣을때 이미 0은 넣으니까 1번부터해야돼서
 		  conChild = `<div class='content' id='data-content-` +cnt+ `'>
+		  <input type='hidden' id='contentList`+index+`.rno' name='contentList[` +index+ `].rno' value='1' />
 		  <h3>`+cnt+`번</h3>
-          <div class='label required'>
-          <label for='contentList`+index+`.photoUrl'>사진</label></div>
+//          <div class='label required'>
+//          <label for='contentList`+index+`.photoUrl'>사진</label></div>
           <div class="input">
           <input id='contentList`+index+`.photoUrl' name='contentList[` +index+ `].photoUrl'/>
-          <errors name='contentList.` +index+ `.photoUrl'/></div>
+          </div>
           <div class='field'>
           <div class='label required'><label for='contentList` +index+ `.content' >내용</label></div>
           <div class='input'><textarea id='contentList` +index+ `.content' name='contentList[`+index+`].content'></textarea>
