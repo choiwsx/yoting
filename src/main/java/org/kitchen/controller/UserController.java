@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
+import org.kitchen.domain.ProfileDTO;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
@@ -130,7 +131,7 @@ public class UserController {
 	}
 
 	@GetMapping("/profile")
-	public String profile(Model model , String userId) {
+	public String profile(Model model , String userId, HttpSession session) {
 		log.info("get@@@@@@@@@@@@@@@");
 		UserVO user = userService.getUserById(userId);
 		if(user==null) {
@@ -139,6 +140,13 @@ public class UserController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
+		profile.setFollowers(userService.countFollower(user.getUserNo()));
+		if(session.getAttribute("userNo")!=null) {
+			Long followerNo = (Long)session.getAttribute("userNo");
+			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
+		}
+		model.addAttribute("profile",profile);
 		return "/user/profile";
 	}
 	
@@ -208,6 +216,26 @@ public class UserController {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+	}
+	
+	@PostMapping("/follow")
+	public String follow(Long followeeNo, Long followerNo, Model model) {
+		log.info("follow########"+followeeNo+"@@@@@"+followerNo);
+		if(userService.follow(followeeNo, followerNo)) {
+		model.addAttribute("result", "팔로우 완료.");
+		return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
+		} 
+		return wrongAccess(model, "팔로우 실패");
+	}
+	
+	@PostMapping("/unfollow")
+	public String unfollow(Long followeeNo, Long followerNo, Model model) {
+		log.info("unfollow########"+followeeNo+"@@@@@"+followerNo);
+		if(userService.unfollow(followeeNo, followerNo)) {
+			model.addAttribute("result", "언팔로우 완료.");
+			return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
+		}
+		return wrongAccess(model, "언팔로우 실패");
 	}
 	
 	private String wrongAccess(Model model) {

@@ -47,6 +47,11 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/registration")
+	public void registerform(Model model) {
+		model.addAttribute("recipe", new RecipeVO());
+	}
+	
+	@GetMapping("/registration2")
 	public void register2form(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}
@@ -54,7 +59,7 @@ public class RecipeController {
 	@PostMapping("/registrationTest")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
 		//recipeService에 저장하기
-		recipeService.register(recipe);
+		//recipeService.register(recipe);
 		return recipe;
 	}
 

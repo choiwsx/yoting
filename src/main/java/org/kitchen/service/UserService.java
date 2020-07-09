@@ -47,4 +47,13 @@ public interface UserService {
 	List<RecipeVO> getUserRecipeList(Long userNo);
 	
 	UserVO tempLogin(UserVO user);
+	
+	boolean follow(Long followeeNo, Long followerNo);
+	
+	boolean unfollow(Long followeeNo, Long followerNo);
+	
+	int countFollower(Long followeeNo);
+	
+	int countFollower(Long followeeNo, Long followerNo);
+	
 }
