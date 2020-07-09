@@ -8,46 +8,37 @@ if(session!=null) {
  }
 }
 %>
-<ul>
-<li>
-  <h3><a href="/">메인</a></h3>
-</li>
-<li>
-  <h3>유저</h3> 
-  <%=userNo==null?"비회원님":"회원님" %> 안녕하세요
 
-  <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %>
- 
-  <%=userNo==null?"":"<a href="+"/user/mykitchen"+">마이 페이지</a>" %>
-  
+<nav>
+<div style="
+display: inline-block; position: relative;
+    width: -webkit-fill-available;">
+<h3 style="
+    float: left;
+    background-color: darkseagreen;
+"><a href="/">먹스타그램</a></h3>
+<div style="
+position: relative;
+    margin-top: 20px;
+    margin-left: 150px;">
+<%=userNo==null?"회원으로 가입하고 레시피를 올려주세요.":"회원님 어서요세요." %> &nbsp&nbsp&nbsp
+  <b>회원 메뉴 : </b> 
+  <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %> 
+  <%=userNo==null?"":"<a href="+"/user/myProfile"+">마이 페이지</a>" %>  
   <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
-  
-</li>
-
-<li>
-  <h3>레시피</h3>
-  <a href="/recipe/list"><img src="https://i.postimg.cc/kgHGnJbq/ALL.png" />전체</a>
-
-  <a href="/recipe/list?categoryNo=11"><img
-         src="https://i.postimg.cc/26R5Z0Gt/BanChan.png" />주식</a>
-  
-  <a href="/recipe/list?categoryNo=22"><img
-         src="https://i.postimg.cc/Gps2tWFY/Desert.png" />디저트</a>
-  
-  <a href="/recipe/list?categoryNo=33"><img
-         src="https://i.postimg.cc/C1GxHb6x/Jusik.png" />반찬</a>
-
+  <b>레시피 메뉴 : </b>
+  <a href="/recipe/list">전체</a>
+  <a href="/recipe/list?categoryNo=11">주식</a>
+  <a href="/recipe/list?categoryNo=22">디저트</a>
+  <a href="/recipe/list?categoryNo=33">반찬</a>
   <%=userNo==null?"":"<a href="+"/recipe/registe"+">@레시피 등록</a>" %>
-  
-</li>
-
-
 <%=userNo!=null&&userNo.equals("1")?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
 +"<a href="+"/admin/recipeList"+">@레시피 리스트</a></li>":"" %>
+</div>
+</div>
+</nav>
 
-
-</ul>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div style="text-align: center;">
 <form id='searchForm' action="/search/result" method='get'>
 	<select name='type'>
 		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
@@ -56,10 +47,13 @@ if(session!=null) {
 		<option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
 	</select>
 			
-	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
+	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 70vw;'>
 	<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 	<button class='btn btn-default'>Search</button>
 </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
