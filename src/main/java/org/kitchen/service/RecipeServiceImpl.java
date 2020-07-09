@@ -32,6 +32,7 @@ public class RecipeServiceImpl implements RecipeService {
 		registerCon(content);
 	}
 
+
 	@Override
 	public void register(RecipeVO recipe, List<ContentVO> contents) {
 		// TODO Auto-generated method stub
@@ -141,6 +142,11 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 
+	@Override
+	public Long isMyRecipe(Long rno) {
+		// TODO Auto-generated method stub
+		return recipeMapper.getUserNoByRno(rno);
+	}
 
 
 }
