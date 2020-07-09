@@ -17,16 +17,26 @@
 
 	<insert id="insert">
 		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
-		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
+		VALUES (#{stepNo}, #{rno}, #{photoUrl,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
 	</insert>
+	 
+	 <select id="read" resultMap="content">
+	 SELECT * FROM tbl_recipecontent WHERE r_num = #{rno}
+	 </select>
+	 
+	 <delete id="delete">
+	 DELETE FROM tbl_recipecontent WHERE r_num = #{rno}
+	 </delete>
 
-	<insert id="insertSelectkey">
-		<selectKey keyProperty="r_num" order="BEFORE"
-			resultType="long">
-			SELECT #{r_num} FROM tbl_recipecontent
-		</selectKey>
-		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
-		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
-	</insert>
+	 <update id="update">
+	 UPDATE tbl_recipecontent
+	 SET
+	 rc_stepnum = #{stepNo},
+	 photo = #{photoUrl},
+	 rc_content = #{content}
+	 WHERE
+	 r_num = #{rno}
+	 </update>
+	 
 
 </mapper>

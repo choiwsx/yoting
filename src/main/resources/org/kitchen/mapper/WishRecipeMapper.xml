@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kitchen.mapper.WishRecipeMapper">
+ 
+<select id="getRnoByUno" resultType="Long">
+select r_num
+from tbl_wishrecipe
+where
+u_num = #{uno}
+</select>	
+
+<insert id="insertRecipeRno">
+insert into tbl_wishrecipe
+values (#{uno}, #{rno})
+</insert>
+
+<delete id="deleteRecipeRno">
+delete from tbl_wishrecipe where u_num = #{uno} and r_num = #{rno}
+</delete>
+
+<update id="updateRecipeRno">
+update tbl_wishrecipe set r_num = #{afterRno}  where u_num = #{uno} and r_num = #{beforeRno}
+</update>
+
+</mapper>
