@@ -128,16 +128,31 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Transactional
 	@Override
-	public void register_w(RecipeVO recipe)
+	public Long register_w(RecipeVO recipe)
 	{
 		Long rno = register(recipe);
 		log.info("@@@rno"+rno);
 		
+		recipeMapper.insert(recipe);
+		log.info("#####################################################");
+		for(int i = 0; i<10; i++) {
+			if(recipe.getContentList().get(i).getContent()=="") {
+				log.info("^^"+i);
+				recipe.setContentList(recipe.getContentList().subList(0, i));
+				break;
+			}
+		}
 		for(int i=0; i<recipe.getContentList().size(); i++)
 		{
 			recipe.getContentList().get(i).setRno(rno);
 			contentMapper.insert(recipe.getContentList().get(i));
 		}
+		
+		
+		recipe.getContentList().forEach(a -> log.info("#list#"+a));
+		recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
+		recipe.getContentList().forEach(a ->registerCon(a));
+		return recipe.getRno();
 	}
 
 

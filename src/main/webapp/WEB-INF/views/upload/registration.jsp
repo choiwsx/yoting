@@ -54,7 +54,7 @@
          <input type="file" name='uploadFile0' class="testUpload" id="0"  onChange="upload(this)">
            <div class='field'>
            <div class="label required"><label>내용</label></div>
-           <div class="input"><form:textarea path="contentList[0].content" placeholder='레시피 내용' value=""/>
+           <div class="input"><form:textarea path="contentList[0].content" placeholder='레시피 내용'/>
            <button type="button" id="add" name='add' onclick='addCon();'/>+
          <button type="button" id="del" name='del' onclick='delCon(0);' style='display:none'/>x
            </div>

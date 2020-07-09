@@ -20,11 +20,10 @@
        
       <form:hidden path="userNo" value="1" />
    
-        <form:label
-            path="categoryNo" cssErrorClass="invalid">카테고리</form:label>
+        <label>카테고리</label>
         
         <form:select
-            path="categoryNo" cssErrorClass="invalid ">
+            path="categoryNo">
             <form:option value="11">주식</form:option>
             <form:option value="22">디저트</form:option>
             <form:option value="33">반찬</form:option>
@@ -55,12 +54,12 @@
          <input type="file" name='uploadFile0' class="testUpload" id="0"  onChange="upload(this)">
            <div class='field'>
            <div class="label required"><label>내용</label></div>
-           <div class="input"><form:textarea path="contentList[0].content" placeholder='레시피 내용'/>
+           <div class="input"><form:textarea path="contentList[0].content" placeholder='레시피 내용' value=""/>
            <button type="button" id="add" name='add' onclick='addCon();'/>+
          <button type="button" id="del" name='del' onclick='delCon(0);' style='display:none'/>x
            </div>
            <hr/>
-           <form:hidden path="contentList[0].stepNo" value="1"/>
+           <!--<form:hidden path="contentList[0].stepNo" value="1"/>-->
            </div>
            </ul>
        </div>
@@ -90,13 +89,13 @@ let stepNo = 0;
 let form = document.getElementById('data-content-'+cnt);
 var uploadResult = $(".uploadResult");
 let testArr = $(".testUpload");
-      
+
 function addCon() {
         stepNo = ++cnt;
         
         if(flag){ //삭제버튼 누르면 
-           --stepNo;
-        --index;
+        	--stepNo;
+        	--index;
         }
         
         let addbtns = document.getElementsByName('add');
@@ -127,13 +126,12 @@ function addCon() {
         <input type="file" name='uploadFile`+index+`' class="testUpload" id="`+index+`" onChange="upload(this)">
           <div class='field'>
           <div class='label required'><label>내용</label></div>
-          <div class='input'><input type='textarea' id='contentList` +index+ `.content' name='contentList[`+index+`].content'></textarea>
+          <div class='input'><input type='textarea' id='contentList` +index+ `.content' name='contentList[`+index+`].content' value=""></textarea>
           <button type='button' id='add' name='add' onclick='addCon();'/>+</button>
           <button type='button' id='del' name='del' onclick='delCon(`+index+`);' style='display:none'/>x</button>
           </div>
           <hr/>
-          </div><input type='hidden' id="contentList`+index+`.stepNo" value="`+cnt+`"/><div>`;
-          
+          </div>`;
           testArr = $(".testUpload");
 
           conGroup.append(conChild);
@@ -148,30 +146,28 @@ function addCon() {
 var contents = document.getElementsByClassName('content');
 
 function delCon(delNum) {
-   flag = true; // 삭제 버튼 누르면 true;
-   contents[delNum].remove();
-   
-   contents = document.getElementsByClassName('content');
-   let length = contents.length;
-   cnt = length;
-   console.log('cnt>>' + cnt);
-   
-   for(var i=delNum; i<cnt; i++) {
-      contents[i].setAttribute('id', 'data-content-'+ (++i));
-      --i;
-      contents[i].children[0].innerText = ++i + '번';
-      --i;
-      contents[i].children[2].children[0].setAttribute('for','contentList'+i+'.photoUrl');
-      contents[i].children[3].setAttribute('name', 'uploadFile'+i);
-      contents[i].children[3].setAttribute('id', i);
-      contents[i].children[4].children[1].children[0].setAttribute('id','contentList'+i+'.content');
-      contents[i].children[4].children[1].children[0].setAttribute('name','contentList['+i+'].content');
-      contents[i].children[4].children[1].children[2].setAttribute('onclick','delCon('+(++i)+');');
-      --i;
-      contents[i].children[5].setAttribute('id', 'contentList'+i+'.stepNo');
-      contents[i].children[5].setAttribute('value', ++i);
-      --i;
-   }
+	flag = true; // 삭제 버튼 누르면 true;
+	contents[delNum].remove();
+	
+	contents = document.getElementsByClassName('content');
+	let length = contents.length;
+	cnt = length;
+	
+	for(var i=delNum; i<cnt; i++) {
+		contents[i].setAttribute('id', 'data-content-'+ (++i));
+		--i;
+		contents[i].children[0].innerText = ++i + '번';
+		--i;
+		contents[i].children[2].children[0].setAttribute('for','contentList'+i+'.photoUrl');
+		contents[i].children[3].setAttribute('name', 'uploadFile'+i);
+		contents[i].children[3].setAttribute('id', i);
+		contents[i].children[4].children[1].children[0].setAttribute('id','contentList'+i+'.content');
+		contents[i].children[4].children[1].children[0].setAttribute('name','contentList['+i+'].content');
+		contents[i].children[4].children[1].children[2].setAttribute('onclick','delCon('+(++i)+');');
+		--i;
+		contents[i].children[4].children[3].setAttribute('value', ++i);
+		--i;
+	}
 }
       // 지호 추가 마지막
       
@@ -202,7 +198,7 @@ function delCon(delNum) {
       
       
       $(document).ready(function(e){
-         
+    	  
           var formObj = $("form[role='form']");
           console.log("@@formObj"+formObj);
           $("input[type='submit']").on("click", function(e){
@@ -215,12 +211,11 @@ function delCon(delNum) {
                var jobj = $(obj);
                 var thumbUrl = "..\\..\\..\\resources\\upload\\"+jobj.data("path")+"\\s_"+jobj.data("uuid")+"_"+jobj.data("filename");
                 str += "<input type='hidden' name='thumbnail' value='"+thumbUrl+"'>";
-                   
+                //str += "<input type='hidden' name='contentList[0].stepNo' value='1'>";
              });
              
-               str += "<input type='hidden' name='contentList[0].content' value='111'>";
              $(".uploadResult ul li").each(function(i, obj){
-                console.log('여기 들어오나?');
+            	 console.log('여기 들어오나?');
                 
                 var jobj = $(obj);
                 
@@ -229,14 +224,17 @@ function delCon(delNum) {
                 var thumbUrl = "..\\..\\..\\resources\\upload\\"+jobj.data("path")+"\\s_"+jobj.data("uuid")+"_"+jobj.data("filename");
                 console.log("PhotoUrl"+photoUrl);   
                 //str += "<input type='hidden' name='thumbnail' value='"+thumbUrl+"'>";
-                str += "<input type='hidden' name='contentList["+i+"].stepNo' value='"+(i+1)+"'>";
+                var j = i;
+                //str += "<input type='hidden' name='contentList["+(++j)+"].stepNo' value='"+(++j)+"'>";
+                console.log(str);
+                
                 str += "<input type='hidden' name='contentList["+i+"].photoUrl' value='"+photoUrl+"'>";
                 //contents[0].children[i].children[5].children[1].children[0].value
 
                 //str += "<input type='hidden' name='contentList["+i+"].fileType' value='"+jobj.data("type")+"'>";
                // str += "<input type='hidden' name='contentList["+i+"].content' value='"+content[i].value+"'>";
              });
-             console.log(str);
+         
              formObj.append(str).submit();
           });
       });
