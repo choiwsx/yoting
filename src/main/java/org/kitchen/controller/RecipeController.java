@@ -54,6 +54,11 @@ public class RecipeController {
 	}
 
 	@GetMapping("/registration")
+	public void registerform(Model model) {
+		model.addAttribute("recipe", new RecipeVO());
+	}
+	
+	@GetMapping("/registration2")
 	public void register2form(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}

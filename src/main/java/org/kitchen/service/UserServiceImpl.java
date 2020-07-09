@@ -218,4 +218,31 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public boolean follow(Long followeeNo, Long followerNo) {
+		// TODO Auto-generated method stub
+		userMapper.follow(followeeNo, followerNo);
+		if(userMapper.countFollower(followeeNo, followerNo)==1) return true;
+		return false;
+	}
+
+	@Override
+	public boolean unfollow(Long followeeNo, Long followerNo) {
+		// TODO Auto-generated method stub
+		return userMapper.unfollow(followeeNo, followerNo)==1;
+	}
+
+	@Override
+	public int countFollower(Long followeeNo) {
+		// TODO Auto-generated method stub
+		return userMapper.countFollower(followeeNo, null);
+	}
+
+	@Override
+	public int countFollower(Long followeeNo, Long followerNo) {
+		// TODO Auto-generated method stub
+		return userMapper.countFollower(followeeNo, followerNo);
+	}
+
+	
 }

@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
-String userNo = null;
+Long userNo = null;
+boolean loggedIn = false;
 if(session!=null) {
  Object tmp = session.getAttribute("userNo");
  if(tmp!=null) {
-	 userNo = tmp.toString(); 
+	 userNo = (Long)tmp; 
+	 loggedIn = true;
  }
 }
 %>
@@ -21,18 +23,20 @@ display: inline-block; position: relative;
 position: relative;
     margin-top: 20px;
     margin-left: 150px;">
-<%=userNo==null?"회원으로 가입하고 레시피를 올려주세요.":"회원님 어서요세요." %> &nbsp&nbsp&nbsp
+<%=loggedIn?"회원님 어서요세요.":"회원으로 가입하고 레시피를 올려주세요." %> &nbsp&nbsp&nbsp
   <b>회원 메뉴 : </b> 
-  <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %> 
-  <%=userNo==null?"":"<a href="+"/user/mkitchen"+">마이 페이지</a>" %>  
-  <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
+  <%=loggedIn?"":"<a href="+"/user/registration"+">가입하기</a>" %> 
+  <%=loggedIn?"<a href="+"/user/myProfile"+">마이 페이지</a>":"" %>  
+  <%=loggedIn?"<a href="+"/user/logout"+">로그아웃</a>":"<a href="+"/user/login"+">로그인</a>" %>
   <b>레시피 메뉴 : </b>
   <a href="/recipe/list">전체</a>
   <a href="/recipe/list?categoryNo=11">주식</a>
   <a href="/recipe/list?categoryNo=22">디저트</a>
   <a href="/recipe/list?categoryNo=33">반찬</a>
-  <%=userNo==null?"":"<a href="+"/recipe/registe"+">@레시피 등록</a>" %>
-<%=userNo!=null&&userNo.equals("1")?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
+  &nbsp
+  <a href="/recipe/hotkitchen">인기 주방장</a>
+  <%=loggedIn?"<a href="+"/recipe/registration"+"><b>@레시피 등록</b></a>":"" %>
+<%=loggedIn&&userNo.equals(1L)?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
 +"<a href="+"/admin/recipeList"+">@레시피 리스트</a></li>":"" %>
 </div>
 </div>

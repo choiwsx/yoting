@@ -34,7 +34,12 @@ public interface UserMapper {
 	public List<UserVO> getTotalList();
 	
 	public List<UserVO> getInfobyId(Criteria cri);
-	public List<UserVO> getProfile(String userId);
+	public List<UserVO> getProfile(String userId); 
+	
+	public void follow(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
+	public int unfollow(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
+	public int countFollower(@Param("followeeNo") Long followeeNo);
+	public int countFollower(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
 
 	public List<UserVO> getIdAutocomplete(String userId); 
 

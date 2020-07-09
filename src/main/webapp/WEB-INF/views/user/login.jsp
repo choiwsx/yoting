@@ -11,6 +11,8 @@
 <body>
 <h1>로그인 화면</h1>
 
+<c:if test="${result ne null }">
+</c:if>
 <div>
 <form action="/user/login" method="POST" enctype="utf8">
     <label>아이디</label><input name="userId" type="text">
