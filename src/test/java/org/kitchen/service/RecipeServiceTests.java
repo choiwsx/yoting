@@ -40,7 +40,7 @@ public class RecipeServiceTests {
 		ContentVO content = new ContentVO();
 		
 		// 1. �Խù� ����
-		recipe.setCookingTime(45);
+		recipe.setCookingTime(45L);
 		recipe.setDifficulty("3");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("������ ����");
@@ -112,7 +112,7 @@ public class RecipeServiceTests {
 		
 		recipe.setTitle("����3 ����");
 		recipe.setRegDate(recipe.getRegDate());
-		recipe.setCookingTime(25);
+		recipe.setCookingTime(25L);
 		recipe.setDifficulty("4");
 		recipe.setUserNo(5L);
 		recipe.setThumbnail("������ URL");
