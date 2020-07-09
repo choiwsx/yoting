@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.log4j.Category;
+import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
+import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class SearchServiceImpl implements SearchService {
 	private UserMapper userMapper;
 	@Autowired
 	private RecipeMapper recipeMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 
 //	REcipeSERACHMethods
 
@@ -172,6 +177,11 @@ public class SearchServiceImpl implements SearchService {
 	public List<RecipeVO> getUserRecipeList(Long userNo) {
 		// TODO Auto-generated method stub
 		return recipeMapper.getUserRecipeList(userNo);
+	}
+
+	@Override
+	public List<CategoryVO> read() {
+		return categoryMapper.read();
 	}
 
 

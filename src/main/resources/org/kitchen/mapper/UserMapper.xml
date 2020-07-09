@@ -125,4 +125,9 @@
 	where u_id = #{userId}
 </select>
 
+<select id="getIdAutocomplete" parameterType="String" resultMap="user">
+	select u_id from tbl_user where u_id like concat('%',concat(UPPER(#{userId}),'%')) or 
+								u_id like concat('%',concat(LOWER(#{userId}),'%'))
+</select>
+
 </mapper>

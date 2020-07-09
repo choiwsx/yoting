@@ -128,11 +128,11 @@
 
 <select id="getListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, regdate
+select r_num, title, u_num, c_code , thumbnail, regdate
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num ,title, u_num, regdate
+		rownum rn, r_num ,title, c_code, thumbnail, u_num, regdate
 	
  	from
  		tbl_recipe
@@ -141,7 +141,7 @@ from
  	<include refid="criteria"></include>
 	
 	<![CDATA[ 	
-	 	rownum<= 5
+	 	rownum<= 8
 	 	)
 	where rn> 0
 	]]>
@@ -149,11 +149,11 @@ from
 
 <select id="getRecipeListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, regdate
+select r_num, title, u_num, regdate , thumbnail
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num ,title, u_num, regdate
+		rownum rn, r_num ,title, u_num, regdate , thumbnail
 	
  	from
  		tbl_recipe
@@ -170,18 +170,18 @@ from
 
 <select id="getUserList" resultMap="user">
 <![CDATA[
-select u_num, u_id, nickname
+select u_num, u_id, nickname ,u_photo
 from
 (
 	select /*+INDEX_DESC(tbl_user)*/
-		rownum rn, u_num, u_id, nickname
+		rownum rn, u_num, u_id, nickname,u_photo
 	from
 		tbl_user
 	where
 ]]>
 	<include refid="criteria_user"></include> 
 	<![CDATA[
-		rownum<=5 
+		rownum<=6
 	)
 	where rn>0
 ]]>
@@ -189,11 +189,11 @@ from
 
 <select id="getUserListWithPaging" resultMap="user">
 <![CDATA[
-select u_num, u_id, nickname
+select u_num, u_id, nickname , u_photo
 from
 (
 	select /*+INDEX_DESC(tbl_user)*/
-		rownum rn, u_num, u_id, nickname
+		rownum rn, u_num, u_id, nickname , u_photo
 	from
 		tbl_user
 	where
@@ -241,11 +241,11 @@ where
 <select id="getRecipeByRno" resultMap="recipe">
 <![CDATA[
 select 
- 	r_num, title, u_num, regdate
+ 	r_num, title, u_num, regdate ,thumbnail
 from 
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num, title, u_num, regdate
+		rownum rn, r_num, title, u_num, regdate , thumbnail
 	from
 		tbl_recipe
 	where 
@@ -256,7 +256,7 @@ from
    </foreach>
    	<![CDATA[
    	and
-   		rownum<=5
+   		rownum<=3
    		)
 	where rn>0
 ]]>
@@ -265,11 +265,11 @@ from
 <select id="getRecipeByRnoWithPaging" resultMap="recipe">
 <![CDATA[
 select 
- 	r_num, title, u_num, regdate
+ 	r_num, title, u_num, regdate ,thumbnail
 from 
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num, title, u_num, regdate
+		rownum rn, r_num, title, u_num, regdate , thumbnail
 	from
 		tbl_recipe
 	where 
@@ -299,11 +299,12 @@ where
 </select>
 
 <select id="getCategoryCode" resultMap="recipe">
-	select * 
+    select *
 	from 
-	tbl_recipe 
+	tbl_recipe a inner join tbl_category b on a.c_code= b.prev_c_code
 	where 
-	c_code = #{categoryNo,jdbcType=INTEGER}
+	a.c_code= #{categoryNo,jdbcType=INTEGER} or 
+    b.c_code = #{categoryNo,jdbcType=INTEGER}
 </select>
 
 <select id="searchUserRecipeList" resultMap="recipe">

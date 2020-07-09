@@ -34,6 +34,8 @@ public interface UserMapper {
 	public List<UserVO> getTotalList();
 	
 	public List<UserVO> getInfobyId(Criteria cri);
-	public List<UserVO> getProfile(String userId); 
+	public List<UserVO> getProfile(String userId);
+
+	public List<UserVO> getIdAutocomplete(String userId); 
 
 }

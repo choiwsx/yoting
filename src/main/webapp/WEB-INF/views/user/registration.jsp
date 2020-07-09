@@ -38,8 +38,10 @@
     </div>
     <button type="submit">submit</button>
 </form>
- 
+<div> 
+회원 가입을 했는데 이메일이 안왔나요? 
 
-
+<a href="/user/resendEmail">인증 이메일 다시 보내기</a>
+</div>
 </body>
 </html>

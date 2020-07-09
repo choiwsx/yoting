@@ -1,7 +1,12 @@
 package org.kitchen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
@@ -18,10 +23,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONArray;
 
 @Controller
 @Log4j
@@ -115,6 +122,7 @@ public class UserController {
 
 	@GetMapping("/profile")
 	public String profile(Model model , String userId) {
+		log.info("get@@@@@@@@@@@@@@@");
 		UserVO user = userService.getUserById(userId);
 		if(user==null) {
 			model.addAttribute("result", "없는 유저입니다.");
@@ -122,7 +130,7 @@ public class UserController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		return "/user/profile?userId="+userId;
+		return "/user/profile";
 	}
 	
 	@GetMapping("/search")
@@ -171,7 +179,12 @@ public class UserController {
 		return "redirect:/good";
 	}
 	
-	@GetMapping("/sendEmail")
+	@GetMapping("/resendEmail")
+	public void resendEmail() {
+		
+	}
+	
+	@PostMapping("/sendEmail")
 	public String sendEmail(Model model, String email) {
 		if(email==null) {
 			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
@@ -185,5 +198,21 @@ public class UserController {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+	}
+	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
+	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
+			HttpServletResponse resp,UserVO user) throws IOException {
+		
+		String result = request.getParameter("term");
+	
+		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < list.size(); i++) {
+			ja.add(list.get(i).getUserId());
+		}
+		PrintWriter out = resp.getWriter();
+
+		out.print(ja.toString());
 	}
 }

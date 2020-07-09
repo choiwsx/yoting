@@ -28,6 +28,7 @@ public class SearchController {
 		String type = cri.getType();
 		String more = cri.getWhere();
 		System.out.println("more@@@" + more);
+		model.addAttribute("category", service.read());
 		switch (type) {
 		case "T":
 			model.addAttribute("list", service.getRecipeList(cri));
@@ -64,6 +65,7 @@ public class SearchController {
 			total = service.getTotalRecipeCount(cri);
 			break;
 		case "user":
+			cri.setAmount(6);
 			model.addAttribute("moreList_u", service.moreUserList(cri));
 			total = service.getTotalUserCount(cri);
 			break;

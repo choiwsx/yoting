@@ -2,12 +2,13 @@ package org.kitchen.service;
 
 import java.util.List;
 
+import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 
 public interface SearchService {
-
+	
 	public int getTotalUserCount(Criteria cri);
 
 	public int getTotalTagCount(Criteria cri);
@@ -31,5 +32,7 @@ public interface SearchService {
 	public List<RecipeVO> searchUserRecipeList(Criteria cri);
 	
 	public List<RecipeVO> getUserRecipeList(Long userNo);
+
+	public List<CategoryVO> read();
 
 }
