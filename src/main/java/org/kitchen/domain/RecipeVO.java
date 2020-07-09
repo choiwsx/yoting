@@ -15,7 +15,7 @@ public class RecipeVO {
 	private int categoryNo;
 	private Date regDate;
 	private Date updateDate;
-	private int cookingTime;
+	private Long cookingTime; // 여기서 int형이면 registration jsp에서 기본값이 0으로 되서 Long을 바꿈
 	private String difficulty;
 	private String portion;
 	private String thumbnail;
@@ -26,10 +26,13 @@ public class RecipeVO {
 	
 	public RecipeVO() {
 		contentList = new ArrayList<>(10);
-		for(int i = 0; i<10; i++) {
-		contentList.add(new ContentVO());
+		int j=1;
+		for(int i = 0; i<10; i++)
+		{
+			ContentVO tmp = new ContentVO();
+			tmp.setStepNo(j);
+			contentList.add(tmp);
+			j++;
 		}
 	}
-
-	
 }

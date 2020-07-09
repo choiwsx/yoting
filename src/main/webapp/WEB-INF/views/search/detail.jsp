@@ -17,67 +17,71 @@
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<form id='searchForm' action="/search/result" method='get'>
-	<select name='type'>
-		<option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
-		<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
-		<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
-		<option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
-	</select>
-			
-	<input type='text' name='keyword' id="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
-	<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-	<button class='btn btn-default'>Search</button>
-</form>
-<c:if test="${moreList.size()>0}">
-<table>
-	<tr>
-		<c:if test="${pageMaker.cri.where eq 'recipe'}">
-			<th>#번호</th><th>제목</th><th>작성자</th><th>작성일</th>
-		</c:if>
-		<c:if test="${pageMaker.cri.where eq 'user'}">
-			<th>#유저번호</th><th>유저이름</th><th>닉네임</th>
-		</c:if>
 
-	</tr>
-	<c:forEach items="${moreList}" var="recipe">
-	<tr>
-		<td><c:out value="${recipe.rno}"/></td>
-		<td><a href='/recipe/detail?rno=<c:out value="${recipe.rno}"/>'><c:out value="${recipe.title}"/></a></td>
-		<td><c:out value="${recipe.userNo}"/></td>
-		<td><c:out value="${recipe.regDate}"/></td>
-	</tr>
-	</c:forEach>
-	<tr>
-	<td>
-		<c:if test="${list_w.size()>=5 and where==null}">
-			<a class="more_button" href="${where}recipe">더보기</a>
+<c:if test="${moreList.size()>0}">
+
+	<c:if test="${pageMaker.cri.where eq 'recipe'}">
+	<hr>
+	<h3>레시피 리스트</h3>
 		</c:if>
-	</td>
-	</tr>
-</table>
+<c:if test="${pageMaker.cri.where eq 'tag'}">
+	<hr>
+	<h3>태그 포함 레시피 리스트</h3>
+		</c:if>
+<div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
+			<c:forEach items="${moreList}" var="recipe">
+		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
+					<div
+						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
+						<div>
+							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
+								height=280px>
+						</div>
+						<div style="margin-top: 10px;">
+							<c:out value="${recipe.title }" />
+						</div>
+						<div>
+							by
+							<c:out value="${recipe.userNo }" />
+						</div>
+						카테고리코드:
+						<c:out value="${recipe.categoryNo }" />
+						<div>
+							<fmt:formatDate pattern="yyyy-MM-dd"
+								value="${recipe.updateDate }" />
+						</div>
+					</div>
+				</a>
+		</div>
+			</c:forEach>
+		</div>
 </c:if>
 
+<c:if test="${pageMaker.cri.where eq 'user'}">
+		<hr>
+	<h3>유저 리스트</h3>
+		
+<div style="text-align: center; width: auto;  max-width: 645px; height: 150px; border: 1px solid gray; margin-left: 13%; margin-right: 13%;">
+	<c:if test="${empty moreList_u}">
+				<label>
+			 	검색 값이 없습니다.
+				</label>
+			 	</c:if>
+			 	</c:if>
+
 <c:if test="${moreList_u.size()>0}">
-<table>
-	<tr>
-		<th>#유저번호</th><th>유저ID</th><th>닉네임</th>
-	</tr>
-	<c:forEach items="${moreList_u}" var="recipe">
-	<tr>
-		<td><c:out value="${recipe.userNo}"/></td>
-		<td><a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><c:out value="${recipe.userId}"/></a></td>
-		<td><c:out value="${recipe.nickName}"/></td>
-	</tr>
-	</c:forEach>
-		<tr>
-	<td>
-		<c:if test="${list_user.size()>=5}">
-			<a class="more_button" href="${where}user">더보기</a>
-		</c:if>
-	</td>
-	</tr>
-</table>
+			<c:forEach items="${moreList_u}" var="recipe">
+				<div style="border: 1px solid; margin: 10px; float: left;">
+					 <div>
+					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
+					height=85px>
+					<br><c:out value="${recipe.userId}"/>
+					<br><c:out value="${recipe.nickName}"/>
+					</a></div>
+					</div>
+			</c:forEach>
+					</div>
 </c:if>
 
 <form id='actionForm' action="/search/detail" method='get'>

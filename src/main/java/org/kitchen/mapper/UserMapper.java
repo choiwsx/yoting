@@ -41,4 +41,6 @@ public interface UserMapper {
 	public int countFollower(@Param("followeeNo") Long followeeNo);
 	public int countFollower(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
 
+	public List<UserVO> getIdAutocomplete(String userId); 
+
 }

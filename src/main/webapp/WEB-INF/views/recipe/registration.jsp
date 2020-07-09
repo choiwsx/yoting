@@ -24,7 +24,7 @@
             path="categoryNo" cssErrorClass="invalid">카테고리</form:label>
         
         <form:select
-            path="categoryNo">
+            path="categoryNo" cssErrorClass="invalid ">
             <form:option value="11">주식</form:option>
             <form:option value="22">디저트</form:option>
             <form:option value="33">반찬</form:option>
@@ -34,7 +34,6 @@
           <ul>
           </ul>
           </div>
-          <!--<form:input path="thumbnail" class="thumbnail" placeholder="섬네일"/>-->
           <input type="file" class="thumbFile" name='thumbFile'/>
       <form:input path="title" placeholder="제목"/>
       <form:input path="cookingTime" placeholder="소요시간"/>
@@ -43,30 +42,24 @@
       <form:input path="reContent" placeholder="레시피소개"/>
 
        <div class="content-group">
-                  
+       <ul class='contentul'>
        <div class='content' id='data-content-1'>
-       <ul class='content'>
        <h3>1번</h3>
        
         <div class='uploadResult'>
           <ul>
           </ul>
           </div>
-          
-           <div class="field">
-           <div class="label required">
+          <div class="label required">
            <form:label path="contentList[0].photoUrl">사진</form:label></div>
-         <input type="file" name='uploadFile0' class="testUpload" id="0">
-           <div class="field">
-           <div class="label required"><form:label path="contentList[0].content" >내용</form:label></div>
-           <div class="input"><form:textarea path="contentList[0].content"/>
+         <input type="file" name='uploadFile0' class="testUpload" id="0"  onChange="upload(this)">
+           <div class='field'>
+           <div class="label required"><label>내용</label></div>
+           <div class="input"><form:textarea path="contentList[0].content" placeholder='레시피 내용'/>
            <button type="button" id="add" name='add' onclick='addCon();'/>+
          <button type="button" id="del" name='del' onclick='delCon(0);' style='display:none'/>x
-           <form:errors path="contentList[0].content" /></div>
            </div>
            <hr/>
-   
-           </div>
            <form:hidden path="contentList[0].stepNo" value="1"/>
            </div>
            </ul>
@@ -74,12 +67,12 @@
    
        <div class="field">
        <div class="input"><input type="submit" value="레시피등록" /></div>
-       <div class="input"><button onclick=''>확인</button></div>
        </div>
    
        </fieldset>
    
    </form:form>
+
 
 <script
   src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -89,21 +82,26 @@
 <script>   
       // 지호 추가 시작
       
-      let cnt = 1;
-let index = 1;
-let conGroup = $(".content-group ul.content");
+var cnt = 1;
+var flag = false; // 삭제 후 cnt 바꿔주려고
+var index = 1;
+var conGroup = $(".content-group ul.contentul");
 let stepNo = 0;
 let form = document.getElementById('data-content-'+cnt);
 var uploadResult = $(".uploadResult");
-
-      let testArr = $(".testUpload");
-      console.log(testArr.length);
+let testArr = $(".testUpload");
+      
 function addCon() {
-         stepNo = ++cnt;
+        stepNo = ++cnt;
+        
+        if(flag){ //삭제버튼 누르면 
+           --stepNo;
+        --index;
+        }
+        
         let addbtns = document.getElementsByName('add');
         let delbtns = document.getElementsByName('del');
         let conChild = "";
-        
          if(stepNo>10) {
             alert("더 이상 순서를 추가할 수 없습니다.");
             addbtns[9].style.display = 'none';
@@ -111,7 +109,7 @@ function addCon() {
             return;
          }
          
-        for(i=0; i<addbtns.length; i++){
+        for(let i=0; i<addbtns.length; i++){
            addbtns[i].style.display = 'none';
            delbtns[i].style.display = '';
         }
@@ -119,7 +117,6 @@ function addCon() {
         // index : 배열에 값 넣을때 이미 0은 넣으니까 1번부터해야돼서
         
         conChild = `<div class='content' id='data-content-` +cnt+ `'>
-        <input type='hidden' id='contentList`+index+`.rno' name='contentList[` +index+ `].rno' value='1' />
         <h3>`+cnt+`번</h3>
            <div class='uploadResult'>
              <ul>
@@ -129,21 +126,53 @@ function addCon() {
          <label for='contentList` +index+ `.photoUrl'>사진</label></div>
         <input type="file" name='uploadFile`+index+`' class="testUpload" id="`+index+`" onChange="upload(this)">
           <div class='field'>
-          <div class='label required'><label for='contentList` +index+ `.content' >내용</label></div>
-          <div class='input'><textarea id='contentList` +index+ `.content' name='contentList[`+index+`].content'></textarea>
+          <div class='label required'><label>내용</label></div>
+          <div class='input'><input type='textarea' id='contentList` +index+ `.content' name='contentList[`+index+`].content'></textarea>
           <button type='button' id='add' name='add' onclick='addCon();'/>+</button>
           <button type='button' id='del' name='del' onclick='delCon(`+index+`);' style='display:none'/>x</button>
-          <errors name='contentList,`+index+`.content' /></div>
-          </div><type='hidden' id="contentList`+index+`.stepNo" value="`+cnt+`"/>`;
+          </div>
+          <hr/>
+          </div><input type='hidden' id="contentList`+index+`.stepNo" value="`+cnt+`"/><div>`;
+          
           testArr = $(".testUpload");
 
           conGroup.append(conChild);
-          console.log("????"+testArr.length);
           index++;
+          
           uploadResult = $(".uploadResult");
+          
+          flag= false;
 
 }
       
+var contents = document.getElementsByClassName('content');
+
+function delCon(delNum) {
+   flag = true; // 삭제 버튼 누르면 true;
+   contents[delNum].remove();
+   
+   contents = document.getElementsByClassName('content');
+   let length = contents.length;
+   cnt = length;
+   console.log('cnt>>' + cnt);
+   
+   for(var i=delNum; i<cnt; i++) {
+      contents[i].setAttribute('id', 'data-content-'+ (++i));
+      --i;
+      contents[i].children[0].innerText = ++i + '번';
+      --i;
+      contents[i].children[2].children[0].setAttribute('for','contentList'+i+'.photoUrl');
+      contents[i].children[3].setAttribute('name', 'uploadFile'+i);
+      contents[i].children[3].setAttribute('id', i);
+      contents[i].children[4].children[1].children[0].setAttribute('id','contentList'+i+'.content');
+      contents[i].children[4].children[1].children[0].setAttribute('name','contentList['+i+'].content');
+      contents[i].children[4].children[1].children[2].setAttribute('onclick','delCon('+(++i)+');');
+      --i;
+      contents[i].children[5].setAttribute('id', 'contentList'+i+'.stepNo');
+      contents[i].children[5].setAttribute('value', ++i);
+      --i;
+   }
+}
       // 지호 추가 마지막
       
       var thumb = $(".thumbFile");
@@ -173,6 +202,7 @@ function addCon() {
       
       
       $(document).ready(function(e){
+         
           var formObj = $("form[role='form']");
           console.log("@@formObj"+formObj);
           $("input[type='submit']").on("click", function(e){
@@ -188,8 +218,9 @@ function addCon() {
                    
              });
              
-             
+               str += "<input type='hidden' name='contentList[0].content' value='111'>";
              $(".uploadResult ul li").each(function(i, obj){
+                console.log('여기 들어오나?');
                 
                 var jobj = $(obj);
                 
@@ -198,8 +229,10 @@ function addCon() {
                 var thumbUrl = "..\\..\\..\\resources\\upload\\"+jobj.data("path")+"\\s_"+jobj.data("uuid")+"_"+jobj.data("filename");
                 console.log("PhotoUrl"+photoUrl);   
                 //str += "<input type='hidden' name='thumbnail' value='"+thumbUrl+"'>";
-                str += "<input type='hidden' name='coWntentList["+i+"].stepNo' value='"+(i+1)+"'>";
+                str += "<input type='hidden' name='contentList["+i+"].stepNo' value='"+(i+1)+"'>";
                 str += "<input type='hidden' name='contentList["+i+"].photoUrl' value='"+photoUrl+"'>";
+                //contents[0].children[i].children[5].children[1].children[0].value
+
                 //str += "<input type='hidden' name='contentList["+i+"].fileType' value='"+jobj.data("type")+"'>";
                // str += "<input type='hidden' name='contentList["+i+"].content' value='"+content[i].value+"'>";
              });

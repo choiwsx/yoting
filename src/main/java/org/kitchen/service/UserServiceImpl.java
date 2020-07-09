@@ -198,6 +198,11 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return recipeMapper.getUserRecipeList(userNo);
 	}
+	
+	@Override
+	public List<UserVO> getIdAutocomplete(String userId){
+		return userMapper.getIdAutocomplete(userId);
+	}
 
 	@Override
 	public UserVO tempLogin(UserVO user) {

@@ -54,7 +54,11 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
     <c:out value="${author.bio}" />
     </a>
 </div>
-
+<div>
+	<c:if test="${canModify eq 'true'}">  
+	<a href="/recipe/modiRecipe?rno=${recipe.rno}">수정</a>
+	</c:if>
+</div>
 </body>
 
 <script type="text/javascript">

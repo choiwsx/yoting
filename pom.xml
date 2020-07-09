@@ -145,6 +145,16 @@
   <artifactId>spring-security-taglibs</artifactId>
   <version>${org.springframework-version}</version>
 </dependency>
+
+
+<!-- json 객체 -->
+<dependency>
+     <groupId>net.sf.json-lib</groupId>
+     <artifactId>json-lib</artifactId>
+      <version>2.4</version>
+        <classifier>jdk15</classifier>   
+</dependency> 
+   
  
       <!-- 우리가 추가하는 마지막-->
    
