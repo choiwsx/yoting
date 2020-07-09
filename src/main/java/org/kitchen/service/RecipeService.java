@@ -34,4 +34,6 @@ public interface RecipeService {
 	public List<RecipeVO> getCategoryCode(Long categoryNo);
 	
 	public void register_w(RecipeVO recipe);
+
+	public Long isMyRecipe(Long rno);
 }

@@ -24,7 +24,7 @@ position: relative;
 <%=userNo==null?"회원으로 가입하고 레시피를 올려주세요.":"회원님 어서요세요." %> &nbsp&nbsp&nbsp
   <b>회원 메뉴 : </b> 
   <%=userNo==null?"<a href="+"/user/registration"+">가입하기</a>":"" %> 
-  <%=userNo==null?"":"<a href="+"/user/myProfile"+">마이 페이지</a>" %>  
+  <%=userNo==null?"":"<a href="+"/user/mkitchen"+">마이 페이지</a>" %>  
   <%=userNo==null?"<a href="+"/user/login"+">로그인</a>":"<a href="+"/user/logout"+">로그아웃</a>" %>
   <b>레시피 메뉴 : </b>
   <a href="/recipe/list">전체</a>

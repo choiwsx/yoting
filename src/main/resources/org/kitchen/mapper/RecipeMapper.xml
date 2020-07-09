@@ -323,4 +323,10 @@ where
 	u_num = #{userNo,jdbcType=INTEGER}
 </select>
 
+<select id="getUserNoByRno" resultType="Long">
+	select u_num
+	from tbl_recipe
+	where r_num = #{rno}
+</select>
+
 </mapper>

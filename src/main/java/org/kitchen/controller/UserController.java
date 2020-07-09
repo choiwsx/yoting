@@ -142,8 +142,8 @@ public class UserController {
 		return "/user/profile";
 	}
 	
-	@GetMapping("/mykitchen")
-	public String mykitchen(Model model, HttpSession session) {
+	@GetMapping("/mkitchen")
+	public String mkitchen(Model model, HttpSession session) {
 		if(session.getAttribute("userNo")==null)
 		{
 			return wrongAccess(model);
@@ -160,7 +160,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
 		log.info("@@@@user@@@@"+user);
-		return "/user/mykitchen";
+		return "/user/mkitchen";
 	}
 	@GetMapping("/testprofile")
 	public String testprofile(Model model, HttpSession session) {

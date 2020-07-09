@@ -1,8 +1,11 @@
 package org.kitchen.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +78,44 @@ public class RecipeController {
 		}
 		return "redirect:/recipe/modify";
 	}
+	
+	@GetMapping("/modiRecipe")
+	public String modiRecipe(Model model, String rno, HttpSession session,RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(rno==null) return wrongAccess(model);
+		try {
+			RecipeVO recipe = recipeService.get(Long.valueOf(rno));
+			if(recipe==null) {
+				model.addAttribute("result", "수정할 레시피가 없어요");
+				return "/error";
+			}
+			model.addAttribute("recipe", recipe);
+			String referer = request.getHeader("Referer");
+			model.addAttribute("prevPage", referer);
+			return "/recipe/modiRecipe";
+		} catch (NumberFormatException e) {
+			return wrongAccess(model);
+		}		
+	}
+	
+	@PostMapping("/modiRecipe")
+	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+		Long userNo = recipe.getUserNo();
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(recipe==null) return wrongAccess(model);
+		if(recipeService.get(recipe.getRno())==null) {
+			model.addAttribute("result", "수정할 레시피가 없어요");
+			return "/error";
+		}
+		recipeService.modify(recipe);
+		return "redirect:/recipe/detail?rno="+recipe.getRno();
+	}
+	
 
 	@GetMapping("/list")
 	public void list(Model model) {
@@ -84,11 +125,16 @@ public class RecipeController {
 	}
 	
 	@GetMapping("detail")
-	public void detail(Model model, Long rno) {
+	public void detail(Model model, Long rno, HttpSession session) {
 		RecipeVO recipe = recipeService.get(rno);
 		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));
+		Long loginUno = (Long)session.getAttribute("userNo");
+		if(recipe.getUserNo().equals(loginUno))
+		{
+			model.addAttribute("canModify", "true");
+		}
 	}
 	
 	@GetMapping("del")
@@ -110,5 +156,12 @@ public class RecipeController {
 			model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
 		}
 	}
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+	
 
 }
