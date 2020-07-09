@@ -24,7 +24,7 @@ public class Criteria {
 	private List<Long> rnoList;
 	
 	public Criteria() {
-		this(1,2);
+		this(1,8);
 	}
 	
 	public Criteria(int pageNum, int amount)

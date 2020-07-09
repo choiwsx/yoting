@@ -65,6 +65,7 @@ public class SearchController {
 			total = service.getTotalRecipeCount(cri);
 			break;
 		case "user":
+			cri.setAmount(6);
 			model.addAttribute("moreList_u", service.moreUserList(cri));
 			total = service.getTotalUserCount(cri);
 			break;

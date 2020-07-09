@@ -47,4 +47,6 @@ public interface UserService {
 	List<RecipeVO> getUserRecipeList(Long userNo);
 	
 	UserVO tempLogin(UserVO user);
+
+	List<UserVO> getIdAutocomplete(String result);
 }

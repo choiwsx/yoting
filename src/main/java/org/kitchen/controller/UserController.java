@@ -1,7 +1,12 @@
 package org.kitchen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
@@ -18,10 +23,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONArray;
 
 @Controller
 @Log4j
@@ -191,5 +198,21 @@ public class UserController {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+	}
+	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
+	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
+			HttpServletResponse resp,UserVO user) throws IOException {
+		
+		String result = request.getParameter("term");
+	
+		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
+
+		JSONArray ja = new JSONArray();
+		for (int i = 0; i < list.size(); i++) {
+			ja.add(list.get(i).getUserId());
+		}
+		PrintWriter out = resp.getWriter();
+
+		out.print(ja.toString());
 	}
 }

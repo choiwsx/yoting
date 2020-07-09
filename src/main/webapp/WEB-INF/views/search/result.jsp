@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>검색결과</title>
 <style>
 a {
 	text-decoration: none;
@@ -23,121 +23,112 @@ a {
 <body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-	<table>
-		<tr>
-			<td><c:if test="${empty list}">
+	<c:if test="${where == user or where==null}">
+	<div class="userlist">
+	<hr>
+	<h3>유저 리스트</h3>
+	<div style="text-align: center; width: auto;  max-width: 700px; height: 150px; border: 1px solid gray; margin-left: 13%; margin-right: 13%;">
+	<c:if test="${empty list_user}">
+				<label>
 			 	검색 값이 없습니다.
-			</c:if></td>
-		</tr>
+				</label>
+			 	</c:if>
+			<c:forEach items="${list_user}" var="recipe">
+				<div style="border: 1px solid; margin: 10px; float: left;">
+					 <div>
+					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
+					height=85px>
+					<br><c:out value="${recipe.userId}"/>
+					<br><c:out value="${recipe.nickName}"/>
+					</a></div>
+					</div>
+			</c:forEach>
+
+
+			<br><c:if test="${list_user.size()>=6}">
+						<a class="more_button" href="user">더보기</a>
+					</c:if>
+	</div>
+	</c:if>
+	</div>
+	<div class="recipelist">
+	<hr>
+	<h3>레시피 리스트</h3>
 		<label>
 			총
 			<c:out value="${fn:length(list)}  " />
 			개있습니다.
-		</label><br>
+		</label>
+		<c:if test="${list.size()>=5 and where==null}">
+					<a class="more_button" href="recipe">더보기</a>
+				</c:if>
+		<br>
+		
 		<c:forEach items="${category}" var="category">
-			<tr>
-				<a class="categoryCheck" id=<c:out value="${category.categoryNo}" />
+				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
-						value="${category.categoryName}" /></a>
+						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
-			</tr>
-				<a class="init" href="#"> [초기화]</a>
-
+				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5> <br><br><br>
+				
+<div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
+		<tr>
+			<td><c:if test="${empty list}">
+			 	검색 값이 없습니다.
+			</c:if></td>
+				
 			<c:forEach items="${list}" var="recipe">
-		<div class="code<c:out value="${recipe.categoryNo }" />" style="margin-left: 10%; margin-right: 10%;">
+		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
-					<span
+					<div
 						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
-						<span>
+						<div>
 							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
 								height=280px>
-						</span>
-						<span style="margin-top: 10px;">
+						</div>
+						<div style="margin-top: 10px;">
 							<c:out value="${recipe.title }" />
-						</span>
-						<span>
+						</div>
+						<div>
 							by
 							<c:out value="${recipe.userNo }" />
-						</span>
+						</div>
 						카테고리코드:
 						<c:out value="${recipe.categoryNo }" />
-						<span>
+						<div>
 							<fmt:formatDate pattern="yyyy-MM-dd"
 								value="${recipe.updateDate }" />
-						</span>
-					</span>
+						</div>
+					</div>
 				</a>
 		</div>
 			</c:forEach>
-		<tr>
-			<td><c:if test="${list.size()>=5 and where==null}">
-					<a class="more_button" href="recipe">더보기</a>
-				</c:if></td>
-		</tr>
-	</table>
+		</div>
+</div>
 
-
-
-
-	<c:if test="${where == user or where==null}">
-		<table>
-			<tr>
-				<th>#유저번호</th>
-				<th>유저ID</th>
-				<th>닉네임</th>
-			</tr>
-			<tr>
-				<td><c:if test="${empty list_user}">
-			 	검색 값이 없습니다.
-			</c:if></td>
-			</tr>
-			<c:forEach items="${list_user}" var="recipe">
-				<tr>
-					<td><c:out value="${recipe.userNo}" /></td>
-					<td><a
-						href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><c:out
-								value="${recipe.userId}" /></a></td>
-					<td><c:out value="${recipe.nickName}" /></td>
-				</tr>
-			</c:forEach>
-			<tr>
-				<td><c:if test="${list_user.size()>=5}">
-						<a class="more_button" href="user">더보기</a>
-					</c:if></td>
-			</tr>
-		</table>
-	</c:if>
-
-
+<div class="taglist">
 	<c:if test="${where == tag or where==null}">
-		<table>
-			<tr>
-				<th>게시물번호</th>
-			</tr>
-			<tr>
-				<td><c:if test="${empty list_tag}">
+	<hr>
+<h3>태그 포함 리스트</h3>
+		<c:if test="${empty list_tag}">
 			 	검색 값이 없습니다.
-			</c:if></td>
-			</tr>
+			</c:if>
 			<c:if test="${not empty list_tag}">
 				<c:forEach items="${list_tag}" var="recipe">
-					<tr>
-						<td><c:out value="${recipe.rno}" /></td>
-						<td><c:out value="${recipe.title}" /></td>
-						<td><c:out value="${recipe.userNo}" /></td>
-						<td><c:out value="${recipe.regDate}" /></td>
-					</tr>
+			<div style="border: 1px solid; width: 330px; height: 200px; padding: 15px; margin: 33px; float: left;">
+	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
+					width="200" height="200" /></a></div>
+						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
+						<div><c:out value="${recipe.userNo}" /></div>
+						</div>
 				</c:forEach>
-				<tr>
-					<td><c:if test="${list_tag.size()>=5}">
+					<c:if test="${list_tag.size()>=3}">
 							<a class="more_button" href="tag">더보기</a>
-						</c:if></td>
-				</tr>
+						</c:if>
 			</c:if>
-		</table>
+			
 	</c:if>
-
+</div>
 	<form id='actionForm' action="/search/result" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
@@ -159,21 +150,42 @@ a {
 			type='hidden' name='where' value=''>
 	</form>
 </body>
-
 <script type="text/javascript">
 	$(document).ready(function() {
+		var typeV = $('input[name=type]').val();
+		console.log(typeV);
+		if(typeV=='W'){
+			$(".recipelist").hide();	
+			$(".taglist").hide();	
+		}else if(typeV=='T'){
+			$(".userlist").hide();
+			$(".taglist").hide();	
+		}else if(typeV=='Tag'){
+			$(".userlist").hide();
+			$(".recipelist").hide();	
+		}
+		let category = document.querySelectorAll("[data-category]");
+		
 		$('.init').on("click",function(e){
 			e.preventDefault();
-			 $("div").css('display','block');
+			 for(i=0;i<category.length;i++){
+				 category[i].style.display='block';
+			 }
 		});
 		
-		$('.categoryCheck').on("click", function(e) {
+		$('.categorySelect').on("click", function(e) {
 			e.preventDefault();
 			var categoryNo = $(this).attr("id");
-			console.log(categoryNo);
-				 $("div").css('display','none');
-				var pick = document.getElementsByClassName("code"+categoryNo);
-				 jQuery(pick).show();  
+			
+			for(i=0;i<category.length;i++){
+				category[i].style.display='none';
+			var a = category[i].getAttribute("data-category");
+			if(a==categoryNo){
+				category[i].style.display='block';
+			}
+		}
+				
+			
 		});
 
 		var result = '<c:out value="${result}"/>';
