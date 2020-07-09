@@ -125,6 +125,21 @@
 	where u_id = #{userId}
 </select>
 
+<insert id="follow">
+	insert into tbl_follow (u_num, fw_num) values(#{followeeNo}, #{followerNo})
+</insert>
+
+<delete id="unfollow">
+	delete from tbl_follow where u_num=#{followeeNo} and fw_num=#{followerNo}
+</delete>
+
+<select id="countFollower" resultType="int">
+	select count(*) from tbl_follow where u_num=#{followeeNo}
+	<if test="followerNo!=null">
+		and fw_num=#{followerNo}
+	</if>
+</select>
+
 <select id="getIdAutocomplete" parameterType="String" resultMap="user">
 	select u_id from tbl_user where u_id like concat('%',concat(UPPER(#{userId}),'%')) or 
 								u_id like concat('%',concat(LOWER(#{userId}),'%'))

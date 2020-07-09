@@ -1,5 +1,7 @@
 package org.kitchen.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.UserMapperFailException;
@@ -22,17 +24,32 @@ public class AdminController {
 	RecipeService recipeService;
 	
 	@GetMapping("/userList")
-	public void userList(Model model) {
+	public String userList(Model model, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
 		model.addAttribute("list", userService.getTotalList());
+		return "/admin/userList";
 	}
 	
 	@GetMapping("/recipeList")
-	public void recipeList(Model model) {
+	public String recipeList(Model model, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) {
+			return wrongAccess(model);
+		}
 		model.addAttribute("list", recipeService.getList());
+		return "/admin/recipeList";
 	}
 	
 	@GetMapping("modiUser")
-	public String modiUser(Model model, String userNo) {
+	public String modiUser(Model model, String userNo, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(userNo==null) return wrongAccess(model);
 		try {
 			if(userService.getUserByNo(Long.valueOf(userNo))==null) {
 				model.addAttribute("result", "수정할 유저가 없어요");
@@ -43,11 +60,16 @@ public class AdminController {
 			return "/error";
 		}
 		model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
-		return "/admin/recipeList";
+		return "/admin/modiUser";
 	}
 	
+
 	@PostMapping("/modiUser")
-	public String modiList(Model model, UserVO user) {
+	public String modiList(Model model, UserVO user, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(user==null) return wrongAccess(model);
 		try {
 			userService.modifyUser(user);
 		} catch (UserMapperFailException e) {
@@ -56,37 +78,55 @@ public class AdminController {
 			model.addAttribute("result", "수정불가한 유저 혹은 항목입니다.");
 			return "/error";
 		}
-		model.addAttribute("user", user);
-		return "/admin/modiUser";
+		model.addAttribute("result","유저 정보가 수정되었습니다.");
+		return "/good";
 	}
 	
 	
 	@GetMapping("/delUser")
-	public String delUser(Model model, Long userno) {
+	public String delUser(Model model, String userNo, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(userNo==null) return wrongAccess(model);
 		try {
-			userService.deleteUserByNo(userno);
+			userService.deleteUserByNo(Long.valueOf(userNo));
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제 불가 유저에요");
 			return "/error";
+		} catch (NumberFormatException e) {
+			return wrongAccess(model);
 		}
 		return "/admin/userList";
 	}
 	
 	
 	@GetMapping("/modiRecipe")
-	public String modiRecipe(Model model, Long rno) {
-		RecipeVO recipe = recipeService.get(rno);
-		if(recipe==null) {
-			model.addAttribute("result", "수정할 레시피가 없어요");
-			return "/error";
+	public String modiRecipe(Model model, String rno, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
 		}
-		recipeService.remove(rno);
-		return "/admin/modiRecipe";
+		if(rno==null) return wrongAccess(model);
+		try {
+			RecipeVO recipe = recipeService.get(Long.valueOf(rno));
+			if(recipe==null) {
+				model.addAttribute("result", "수정할 레시피가 없어요");
+				return "/error";
+			}
+			model.addAttribute("recipe", recipe);
+			return "/admin/modiRecipe";
+		} catch (NumberFormatException e) {
+			return wrongAccess(model);
+		}		
 	}
 	
 	@PostMapping("modiRecipe")
-	public String modiRecipe(Model model, RecipeVO recipe) {
+	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(recipe==null) return wrongAccess(model);
 		if(recipeService.get(recipe.getRno())==null) {
 			model.addAttribute("result", "수정할 레시피가 없어요");
 			return "/error";
@@ -96,15 +136,24 @@ public class AdminController {
 	}
 	
 	@GetMapping("/delRecipe")
-	public String delRecipe(Model model, Long rno) {
-		RecipeVO recipe = recipeService.get(rno);
+	public String delRecipe(Model model, String rno, HttpSession session) {
+		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
+			return wrongAccess(model);
+		}
+		if(rno==null) return wrongAccess(model);
+		RecipeVO recipe = recipeService.get(Long.valueOf(rno));
 		if(recipe==null) {
 			model.addAttribute("result", "삭제할 레시피가 없어요");
 			return "/error";
 		}
-		recipeService.remove(rno);
-		return "/admin/recipeList";
+		recipeService.remove(Long.valueOf(rno));
+		return "redirect:/admin/recipeList";
 	}
 	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
 
 }
