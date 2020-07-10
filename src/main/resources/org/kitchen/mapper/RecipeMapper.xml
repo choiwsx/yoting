@@ -34,6 +34,11 @@
    <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" />
 </resultMap>
 
+<resultMap id="tag"  type="org.kitchen.domain.TagVO">
+<result property="tagNo" column="t_num"/>
+<result property="tagName" column="t_content"/>
+</resultMap>
+
 <insert id="insert">
 	<selectKey keyProperty="rno" order="BEFORE"
 		resultType="long">
@@ -328,6 +333,17 @@ where
 	select u_num
 	from tbl_recipe
 	where r_num = #{rno}
+</select>
+
+<select id="getTagNameList" resultMap="tag">
+<![CDATA[
+select *
+from (select * 
+from tbl_tag
+where t_num>0
+order by dbms_random.value)
+where rownum <=4
+]]>
 </select>
 
 </mapper>

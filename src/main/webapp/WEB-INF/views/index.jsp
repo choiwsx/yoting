@@ -21,6 +21,7 @@ a {
 </style>
 </head>
 <body>
+            
    <h1>먹스타그램</h1>
 
    <div>

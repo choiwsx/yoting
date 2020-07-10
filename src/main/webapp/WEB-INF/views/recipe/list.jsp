@@ -19,11 +19,8 @@ a {
 </head>
 <body>
 <%@ include file="../includes/category.jsp"%>
-   <div>
-      총
-      <c:out value="${fn:length(list)}  " />
-      개있습니다.
-   </div>
+<br><br>
+
 
    <div style="margin-left: 10%; margin-right: 10%;">
       <c:forEach items="${list}" var="recipe">

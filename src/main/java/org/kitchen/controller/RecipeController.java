@@ -100,6 +100,7 @@ public class RecipeController {
 	public void list(Long categoryNo,Model model) {
 		log.info("list");
 		model.hashCode();
+		model.addAttribute("tag",recipeService.getTagNameList());
 		if(categoryNo==null) {
 			model.addAttribute("list", recipeService.getList());
 		}else {
@@ -113,6 +114,7 @@ public class RecipeController {
 	@GetMapping("detail")
 	public void detail(Model model, Long rno, HttpSession session) {
 		RecipeVO recipe = recipeService.get(rno);
+		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));

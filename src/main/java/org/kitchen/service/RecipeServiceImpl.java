@@ -5,6 +5,7 @@ import java.util.List;
 import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.TagVO;
 import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.ContentMapper;
 import org.kitchen.mapper.RecipeMapper;
@@ -147,6 +148,12 @@ public class RecipeServiceImpl implements RecipeService {
       // TODO Auto-generated method stub
       return recipeMapper.getUserNoByRno(rno);
    }
+
+
+@Override
+public List<TagVO> getTagNameList() {
+	return recipeMapper.getTagNameList();
+}
 
 
 }

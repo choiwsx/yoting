@@ -5,6 +5,7 @@ import java.util.List;
 import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.TagVO;
 
 public interface RecipeService {
 	
@@ -38,4 +39,6 @@ public interface RecipeService {
 
 	public List<CategoryVO> getCategoryNamebyPrevCode(Long categoryNo);
 	public Long isMyRecipe(Long rno);
+	
+	public List<TagVO> getTagNameList();
 }

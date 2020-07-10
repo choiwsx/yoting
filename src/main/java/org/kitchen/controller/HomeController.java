@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
 import org.kitchen.service.RecipeService;
+import org.kitchen.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class HomeController {
 	
 	@Autowired
 	private RecipeService recipeService;
+	
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -54,6 +58,7 @@ public class HomeController {
 
 	@GetMapping("/index")
 	public void search(Criteria cri, Model model) {
+		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
 		model.addAttribute("list", recipeService.getList());
 
