@@ -24,25 +24,22 @@
 
 			<div>
 				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
-					width="300" height="300" /></a>
+					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
-				<c:if test="${keyword == null && empty recipeList}">
+				<c:if test="${empty profile.recipes}">
 				 	<b><c:out value="${profile.user.nickName}" />님</b>은 아직 작성한 레시피가 없어요.
 				</c:if>
-				<c:if test="${keyword == null && !empty recipeList}">
-					<b><c:out value="${profile.user.nickName}" />님</b>은  <c:out value="${fn:length(recipeList)}" />개의 레시피가 있습니다.
+				<c:if test="${not empty empty profile.recipes}">
+					<b><c:out value="${profile.user.nickName}" />님</b>은  <c:out value="${fn:length(profile.recipes)}" />개의 레시피가 있습니다.
 				</c:if>
-				<c:if test="${keyword != null && empty recipeList}">
-					<b><c:out value="${profile.user.nickName}" />님</b>의 레시피 중에서 <b><c:out value="${keyword}" /></b>로 검색한 결과는 없어요.
-				</c:if>
-				<c:if test="${keyword != null && !empty recipeList}">
-					<b><c:out value="${profile.user.nickName}" />님</b>의 레시피 중에서 <b><c:out value="${keyword}" /></b>로 검색한 결과, <c:out value="${fn:length(recipeList)}" />개의 레시피가 있습니다.
-				</c:if>
+				
 				<form id="followForm" method="post">
 					<input type="hidden" name="followeeNo" value='<c:out value="${profile.user.userNo}" />'>
 					<input type="hidden" name="followerNo" value='<c:out value="${userNo}" />'>
-					<%=loggedIn? (profile.isFollowing()?"<div><button type='button' id='unfollow'>구독 취소하기</button></div>":"<div><button type='button' id='follow'>구독하기</button></div>"):"" %>
+					<c:if test="${profile.following eq true}"><c:out value="<div><button type='button' id='unfollow'>구독 취소하기</button></div>" escapeXml="false" /></c:if>
+					<c:if test="${profile.following eq false}"><c:out value="<div><button type='button' id='follow'>구독하기</button></div>" escapeXml="false" /></c:if>
+					
 				</form>
 			</div>
 			<div>
@@ -64,24 +61,50 @@
 				<label>자기소개:</label>${profile.user.bio}
 			</div>
 	</div>
-	<form id="searchForm" method="post">
-		<input type="text" name="keyword" placeholder='<c:out value="${profile.user.nickName}" />님의 레시피 검색' value='<c:out value="${keyword}" />'>
+		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}" />님의 레시피 검색'>
 		<input type="hidden" name="userNo" value='<c:out value="${profile.user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
-		<button type="submit">검색</button>		
-	</form>
+		<button id="searchBtn">검색</button>		
+		<button id="initBtn">초기화</button>	<br>
 	<c:forEach items="${profile.recipes}" var="recipe">
-			<a href='/recipe/detail?rno=<c:out value="${recipe.rno} " />' class="rno" >
-			<img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" />
-			<c:out value="${recipe.title}" /> </a>
-			<a href='recipe/del?rno=<c:out value="${recipe.rno} " />'></a>
+	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 200px; height: 100px; padding: 15px; margin: 33px; float: left;">
+	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
+					width="100" height="100" /></a></div>
+						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
+						<div><c:out value="${recipe.userNo}" /></div>
+						</div>
 	</c:forEach>
-
 
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+$(document).ready(function(){
+	let title = document.querySelectorAll("[data-title]");
+$("#searchBtn").on("click", function(e){
+	e.preventDefault();
+	var keyword = $("input[name=recipeKeyword]").val();
+    if(keyword==''){
+       alert("키워드를 입력하세요.");
+       return false;
+    }
+	for(i=0;i<title.length;i++){
+		title[i].style.display='none';
+	var titleVal = title[i].getAttribute("data-title");
+	if(!(titleVal.search(keyword)==-1)){
+		title[i].style.display='block';
+		}
+	}
+    
+});
+
+$("#initBtn").on("click",function(e){
+	e.preventDefault();
+	 for(i=0;i<title.length;i++){
+		 title[i].style.display='block';
+	 }
+});
+
 	$("#follow").on("click", function() {
 		$("#followForm").attr("action", "/user/follow").submit();
 	});
@@ -89,6 +112,7 @@
 	$("#unfollow").on("click", function() {
 		$("#followForm").attr("action", "/user/unfollow").submit();
 	});
+});
 </script>
 
 </html>

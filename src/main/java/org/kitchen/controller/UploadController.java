@@ -47,7 +47,7 @@ public class UploadController {
 		log.info("upload form");
 	}
 	
-	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration"})
+	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration", "/upload/test"})
 	public void uploadAjax(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 //		log.info("upload ajax");
@@ -223,7 +223,7 @@ public class UploadController {
 				{
 					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 350, 350);
 					thumbnail.close();
 				}
 				list.add(attachDTO);

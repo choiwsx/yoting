@@ -1,16 +1,10 @@
 package org.kitchen.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.kitchen.domain.CategoryVO;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.ContentVO;
-import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
-import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -34,36 +29,12 @@ public class RecipeController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/register")
-	public void register() {
-
-	}
-
-	@PostMapping("/register")
-	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
-		log.info("register : " + recipe);
-
-//		recipeService.register(recipe);
-//		recipeService.registerCon(content);
-		recipeService.register(recipe, content);
-
-		rttr.addFlashAttribute("result", recipe.getRno());
-		rttr.addFlashAttribute("resultCon", content.getRno());
-
-		return "redirect:/recipe/list";
-	}
-
 	@GetMapping("/registration")
 	public void registerform(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}
-	
-	@GetMapping("/registration2")
-	public void register2form(Model model) {
-		model.addAttribute("recipe", new RecipeVO());
-	}
 
-	@PostMapping("/registrationTest")
+	@PostMapping("/result")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
 		// recipeService에 저장하기
 		recipeService.register(recipe);
@@ -82,14 +53,14 @@ public class RecipeController {
 		log.info("modify: " + recipe);
 		log.info("modify: " + content);
 
-		if (recipeService.modify(recipe) && recipeService.ModifyCon(content)) {
+		if (recipeService.modify(recipe)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/recipe/modify";
+		return "redirect:/recipe/detail?rno"+recipe.getRno();
 	}
 	
 	@GetMapping("/modiRecipe")
-	public String modiRecipe(Model model, String rno, HttpSession session,RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String modiRecipe(Model model, String rno, HttpSession session) {
 		Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
 			return wrongAccess(model);
@@ -101,9 +72,8 @@ public class RecipeController {
 				model.addAttribute("result", "수정할 레시피가 없어요");
 				return "/error";
 			}
+			log.info("@@@get Rno@@@@"+recipe.getRno());
 			model.addAttribute("recipe", recipe);
-			String referer = request.getHeader("Referer");
-			model.addAttribute("prevPage", referer);
 			return "/recipe/modiRecipe";
 		} catch (NumberFormatException e) {
 			return wrongAccess(model);
@@ -112,6 +82,7 @@ public class RecipeController {
 	
 	@PostMapping("/modiRecipe")
 	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+		log.info("!!recipe!!!"+recipe.getRno());
 		Long userNo = recipe.getUserNo();
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
 			return wrongAccess(model);
@@ -130,6 +101,7 @@ public class RecipeController {
 	public void list(Long categoryNo,Model model) {
 		log.info("list");
 		model.hashCode();
+		model.addAttribute("tag",recipeService.getTagNameList());
 		if(categoryNo==null) {
 			model.addAttribute("list", recipeService.getList());
 		}else {
@@ -143,6 +115,7 @@ public class RecipeController {
 	@GetMapping("detail")
 	public void detail(Model model, Long rno, HttpSession session) {
 		RecipeVO recipe = recipeService.get(rno);
+		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));
@@ -154,14 +127,15 @@ public class RecipeController {
 	}
 
 	@GetMapping("del")
-	public String delelete(HttpServletRequest request, Model model, Long rno) {
+	public String delelete(HttpServletRequest request, Model model, @RequestParam("rno") Long rno) {
+		log.info("@@@@@rrrrrrrrnnnnnnnnnnooooooooo@@@@"+rno);
 		if (recipeService.remove(rno)) {
-			model.addAttribute("result", "success");
+			//model.addAttribute("result", "success");
 		} else {
-			model.addAttribute("result", "fail");
+			//model.addAttribute("result", "fail");
 		}
 		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
+		return "redirect:/user/mkitchen";
 	}
 	
 	private String wrongAccess(Model model) {
