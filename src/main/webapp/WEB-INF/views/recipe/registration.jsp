@@ -12,13 +12,13 @@
 <title>Recipe Register</title>
 </head>
 <body>
-	<form:form modelAttribute="recipe" action="/recipe/result" method="post" id="form-id">
+	<form:form modelAttribute="recipe" method="post" id="form-id">
 	   
 	
 	    <fieldset><legend>레시피 내용</legend>
 	
 	    
-		<form:hidden path="userNo" value="1" />
+		<form:hidden path="userNo" value="<%=userNo%>" />
 	
         <form:label
             path="categoryNo" >카테고리</form:label>
