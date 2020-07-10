@@ -38,7 +38,7 @@ public class UserServiceTests {
 		UserVO user = service.getUserByEmail("a@a.a");
 	}
 	
-	@Test
+	//@Test
 	public void testGetUserByNo() {
 		UserVO user = service.getUserByNo(3L);
 		log.info(user);
@@ -113,7 +113,7 @@ public class UserServiceTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void testGetTotalList() {
 		service.getTotalList().forEach(a->log.info(a));
 	}
@@ -121,6 +121,11 @@ public class UserServiceTests {
 	//@Test
 	public void testGetMailingList() {
 		service.getMailingnList().forEach(a->log.info("mail##########"+a.isEmailSub()));
+	}
+	
+	@Test
+	public void set() {
+		service.activateUser(1L);
 	}
 
 }

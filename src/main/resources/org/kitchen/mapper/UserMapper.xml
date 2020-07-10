@@ -19,6 +19,15 @@
    <result property="status" column="status" typeHandler="org.kitchen.handler.CodeEnumTypeHandler" javaType="org.kitchen.enums.UserStatus" />
 </resultMap>
 
+<resultMap id="longList" type="java.lang.Long" >
+<id property="userNo" column="u_num"/>
+<collection property="ids" ofType="Long">
+    <result column="id"/>
+</collection>
+
+</resultMap>
+
+
 <insert id="test">
 	insert into tbl_test values(#{test})
 </insert>
@@ -140,9 +149,19 @@
 	</if>
 </select>
 
+<select id="countFollowing" resultType="int">
+	select count(*) from tbl_follow where fw_num=#{followerNo}
+</select>
+
 <select id="getIdAutocomplete" parameterType="String" resultMap="user">
 	select u_id from tbl_user where u_id like concat('%',concat(UPPER(#{userId}),'%')) or 
 								u_id like concat('%',concat(LOWER(#{userId}),'%'))
 </select>
+
+<select id="getHotUserList" resultType="Long">
+    	select u_num from tbl_follow group by u_num order by count(fw_num) desc                    
+</select>
+
+
 
 </mapper>

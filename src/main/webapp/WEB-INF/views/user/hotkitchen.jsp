@@ -25,27 +25,26 @@ a {
    <div>
       총
       <c:out value="${fn:length(list)}  " />
-      개있습니다.
+      명의 인기 주방장 리스트
    </div>
 
    <div style="margin-left: 10%; margin-right: 10%;">
-      <c:forEach items="${list}" var="recipe">
-         <a class="content" href="/recipe/detail?rno=${recipe.rno}">
+      <c:forEach items="${list}" var="simpleProfile">
+         <a class="content" href="/user/profile?userId=${simpleProfile.userId}">
             <div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
                <div>
-                  <img src="<c:out value='${recipe.thumbnail }'/>" width=280px
+                  <img src="<c:out value='${simpleProfile.photoPhoto }'/>" width=280px
                      height=280px>
                </div>
+               <div>구독자:<c:out value="${simpleProfile.followers }" /> 구독중:<c:out value="${simpleProfile.followings }" />
+               </div>
                <div style="margin-top: 10px;">
-                  <c:out value="${recipe.title }" />
+                  <c:out value="${simpleProfile.userId }" />
                </div>
-               <div>
-                  by
-                  <c:out value="${recipe.userNo }" />
+               <div style="margin-top: 10px;">
+                  <c:out value="${simpleProfile.nickName }" />
                </div>
-               <div>
-                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.updateDate }" />
-               </div>
+               
             </div>
             </a>
       </c:forEach>      
