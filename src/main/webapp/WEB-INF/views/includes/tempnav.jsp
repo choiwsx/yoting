@@ -65,6 +65,35 @@ if(session!=null) {
     .content_wrapper {
         height: 1650px;
     }
+<nav>
+<div style="
+display: inline-block; position: relative;
+    width: -webkit-fill-available;">
+<h3 style="
+    float: left;
+    background-color: darkseagreen;
+"><a href="/">먹스타그램</a></h3>
+<div style="
+position: relative;
+    margin-top: 20px;
+    margin-left: 150px;">
+<%=loggedIn?"회원님 어서요세요.":"회원으로 가입하고 레시피를 올려주세요." %> &nbsp&nbsp&nbsp
+  <b>회원 메뉴 : </b> 
+  <%=loggedIn?"":"<a href="+"/user/registration"+">가입하기</a>" %> 
+  <%=loggedIn?"<a href="+"/user/mkitchen"+">마이 페이지</a>":"" %>  
+  <%=loggedIn?"<a href="+"/user/logout"+">로그아웃</a>":"<a href="+"/user/login"+">로그인</a>" %>
+  <b>레시피 메뉴 : </b>
+  <a href="/recipe/list">전체</a>
+  <a href="/recipe/list?categoryNo=11">주식</a>
+  <a href="/recipe/list?categoryNo=22">디저트</a>
+  <a href="/recipe/list?categoryNo=33">반찬</a>
+  &nbsp
+  <%=loggedIn?"<a href="+"/recipe/registration"+"><b>@레시피 등록</b></a>":"" %>
+<%=loggedIn&&userNo.equals(1L)?"<h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
++"<a href="+"/admin/recipeList"+">@레시피 리스트</a>":"" %>
+</div>
+</div>
+</nav>
 
     .header_innerBottom {
         margin-right: 20px;

@@ -24,7 +24,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 		
 			<div>
                 <h1>레시피<c:out value="${recipe.title}" /></h1>
-                <img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" />
+                <img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" onerror="imgError(this);" />
                
 			</div>
 			<div>
@@ -37,7 +37,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <c:forEach items="${contentList}" var="content">
                 <div>
                     순서:<c:out value="${content.stepNo}" />         
-                    <img src="<c:out value="${content.photoUrl}"/>" width="140" height="120" />
+                    <img src="<c:out value="${content.photoUrl}"/>" width="140" height="120" onerror="imgError(this);" />
                     <c:out value="${content.content}" />
                 </div>
             </c:forEach>
@@ -49,7 +49,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 <div>
     레시피 만든이
     <a href="/user/profile?userId=<c:out value="${author.userId}" />">
-    <img src="<c:out value="${author.profilePhoto}" />" width="140" height="120" />
+    <img src="<c:out value="${author.profilePhoto}" />" width="140" height="120" onerror="imgError(this);" />
     <c:out value="${author.nickName}" />
     <c:out value="${author.bio}" />
     </a>

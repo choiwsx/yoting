@@ -244,5 +244,11 @@ public class UserServiceImpl implements UserService {
 		return userMapper.countFollower(followeeNo, followerNo);
 	}
 
+	@Override
+	public int countFollowing(Long followerNo) {
+		// TODO Auto-generated method stub
+		return userMapper.countFollowing(followerNo);
+	}
+
 	
 }

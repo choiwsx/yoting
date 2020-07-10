@@ -14,10 +14,11 @@ public class ProfileDTO {
 	List<RecipeVO> recipes;
 
 	public ProfileDTO() {
-		
+		following = false;
 	}
 	
 	public ProfileDTO(UserVO user) {
+		this();
 		setUser(user);
 	}
 	

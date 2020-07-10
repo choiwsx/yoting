@@ -49,15 +49,15 @@
 </insert>
 
 <insert id="insertVeriKey">
-	insert into tbl_user_key (userNo, keyNo) values(#{userNo}, #{key})
+	insert into tbl_user_key (u_num, key) values(#{userNo}, #{key})
 </insert>
 
 <select id="getVeriKey" resultType="String">
-	select keyNo from tbl_user_key where userNo = #{userNo}
+	select key from tbl_user_key where u_num = #{userNo}
 </select>
 
 <update id="updateVeriKey">
-	update into tbl_user_key set keyNo = #{key} where userNo = #{userNo}
+	update into tbl_user_key set key = #{key} where u_num = #{userNo}
 </update>
 
 <select id="selectById" resultMap="user">
