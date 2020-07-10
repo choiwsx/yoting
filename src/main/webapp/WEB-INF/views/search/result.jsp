@@ -37,7 +37,7 @@ a {
 				<div style="border: 1px solid; margin: 10px; float: left;">
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
-					height=85px>
+					height=85px onerror="imgError(this);">
 					<br><c:out value="${recipe.userId}"/>
 					<br><c:out value="${recipe.nickName}"/>
 					</a></div>

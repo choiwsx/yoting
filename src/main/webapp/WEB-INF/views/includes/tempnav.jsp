@@ -87,7 +87,7 @@ position: relative;
   
   function imgError(image) {
 	    image.onerror = "";
-	    image.src = "/images/noimage.gif";
+	    image.src = "../../../resources/upload/default.jpg";
 	    return true;
 	}
   </script>
