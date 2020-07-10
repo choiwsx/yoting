@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -100,6 +101,7 @@ public class RecipeController {
 	public void list(Long categoryNo,Model model) {
 		log.info("list");
 		model.hashCode();
+		model.addAttribute("tag",recipeService.getTagNameList());
 		if(categoryNo==null) {
 			model.addAttribute("list", recipeService.getList());
 		}else {
@@ -113,6 +115,7 @@ public class RecipeController {
 	@GetMapping("detail")
 	public void detail(Model model, Long rno, HttpSession session) {
 		RecipeVO recipe = recipeService.get(rno);
+		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("contentList", recipeService.getCon(rno));
@@ -124,14 +127,15 @@ public class RecipeController {
 	}
 
 	@GetMapping("del")
-	public String delelete(HttpServletRequest request, Model model, Long rno) {
+	public String delelete(HttpServletRequest request, Model model, @RequestParam("rno") Long rno) {
+		log.info("@@@@@rrrrrrrrnnnnnnnnnnooooooooo@@@@"+rno);
 		if (recipeService.remove(rno)) {
-			model.addAttribute("result", "success");
+			//model.addAttribute("result", "success");
 		} else {
-			model.addAttribute("result", "fail");
+			//model.addAttribute("result", "fail");
 		}
 		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
+		return "redirect:/user/mkitchen";
 	}
 	
 	private String wrongAccess(Model model) {

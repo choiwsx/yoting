@@ -134,7 +134,7 @@ if(session!=null) {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 20px;
+  font-size: 12px;
 }
 
 </style>
@@ -175,7 +175,7 @@ if(session!=null) {
 </form>
 </div>
                 <div class="search_keyword"
-						style="display: inline; font-size: 17px;">
+						style="display: inline; font-size: 15px;">
 						<ul id="keywordDiv_1" style="text-align: left;">
 							<c:forEach items="${tag}" var="tag" end="3">
 								<li><a
@@ -208,6 +208,7 @@ if(session!=null) {
 					</div>
                 </div>
             </div>
+            </div>
            <div class="header_innerRight" data-group="mid">
 				<ul>
 					<li><a href="#"> <img
@@ -219,7 +220,6 @@ if(session!=null) {
 							style="width: 60px; height: 60px;" alt="레시피등록"></a></li>
 				</ul>
 			</div>
-            </div>
         </div>
 
         <div class="header_innerBottom" data-group="main">
@@ -285,10 +285,4 @@ if(session!=null) {
         searchForm.submit();
      });
   });
-  
-  function imgError(image) {
-      image.onerror = "";
-      image.src = "/display?fileName=2020%5C07%5C10%2Fs_8d0bb1c3-d571-4c45-9046-4d9ba7aa1a6b_default.jpg";
-      return true;
-  }
   </script>
