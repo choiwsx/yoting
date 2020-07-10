@@ -34,15 +34,16 @@
    <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" />
 </resultMap>
 
+
 <insert id="insert">
-	<selectKey keyProperty="rno" order="BEFORE"
-		resultType="long">
-		SELECT r_seq.nextval from dual
-	</selectKey>
-	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
-	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{reContent})
+   <selectKey keyProperty="rno" order="BEFORE"
+      resultType="long">
+      SELECT r_seq.nextval from dual
+   </selectKey>
+   INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
+   VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{reContent})
 </insert>
-	
+
 <select id="read" resultMap="recipe">
    SELECT * FROM tbl_recipe WHERE r_num = #{rno}
 </select>
