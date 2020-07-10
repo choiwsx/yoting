@@ -133,7 +133,7 @@ public class RecipeServiceTests {
 		content.setContent("����1 ����");
 		log.info(content);
 		
-		log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
+		//log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
 		
 	}
 }

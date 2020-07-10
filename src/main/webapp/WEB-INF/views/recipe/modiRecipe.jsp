@@ -16,7 +16,7 @@
 	<form:form modelAttribute="recipe" action="/recipe/result" method="post">
 	   <img src='<c:if test="${empty recipe.thumbnail }"><c:out value="/display?filename=default.jpg" /></c:if>
     	<c:if test="${not empty recipe.thumbnail }"><c:out value="${recipe.thumbnail}" /></c:if>' 
-    	width="140" height="120" />
+    	width="140" height="120" onerror="imgError(this);" />
 	
 	    <fieldset><legend>레시피 내용</legend>
 	
@@ -59,7 +59,7 @@
 	        <div class="photo <c:out value='${vs.count}' />">
 	        <img <c:if test="${empty content.photoUrl }"><c:out value="src='/display?filename=default.jpg'" /></c:if>
     	<c:if test="${not empty content.photoUrl }"><c:out value="src='${content.photoUrl}'" /></c:if>
-    	width="140" height="120" />
+    	width="140" height="120" onerror="imgError(this);" />
 	        </div>
 	        <div>
 	        <input type="file" class="fileUploader" id="<c:out value='${vs.count}' />" />
