@@ -342,7 +342,7 @@ from (select *
 from tbl_tag
 where t_num>0
 order by dbms_random.value)
-where rownum <=4
+where rownum <=12
 ]]>
 </select>
 
