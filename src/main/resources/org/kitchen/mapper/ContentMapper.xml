@@ -31,10 +31,10 @@
 	 <update id="update">
 	 UPDATE tbl_recipecontent
 	 SET
-	 rc_stepnum = #{stepNo},
 	 photo = #{photoUrl},
 	 rc_content = #{content}
 	 WHERE
+	 rc_stepnum = #{stepNo} and
 	 r_num = #{rno}
 	 </update>
 	 

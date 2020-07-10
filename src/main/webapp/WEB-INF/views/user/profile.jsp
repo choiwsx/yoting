@@ -24,7 +24,7 @@
 
 			<div>
 				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
-					width="300" height="300" /></a>
+					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
 				<c:if test="${empty profile.recipes}">

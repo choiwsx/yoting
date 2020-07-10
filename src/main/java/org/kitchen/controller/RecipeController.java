@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
@@ -59,7 +60,7 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/modiRecipe")
-	public String modiRecipe(Model model, String rno, HttpSession session,RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String modiRecipe(Model model, String rno, HttpSession session) {
 		Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
 			return wrongAccess(model);
@@ -71,9 +72,8 @@ public class RecipeController {
 				model.addAttribute("result", "수정할 레시피가 없어요");
 				return "/error";
 			}
+			log.info("@@@get Rno@@@@"+recipe.getRno());
 			model.addAttribute("recipe", recipe);
-			String referer = request.getHeader("Referer");
-			model.addAttribute("prevPage", referer);
 			return "/recipe/modiRecipe";
 		} catch (NumberFormatException e) {
 			return wrongAccess(model);
@@ -82,6 +82,7 @@ public class RecipeController {
 	
 	@PostMapping("/modiRecipe")
 	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+		log.info("!!recipe!!!"+recipe.getRno());
 		Long userNo = recipe.getUserNo();
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
 			return wrongAccess(model);
@@ -126,14 +127,15 @@ public class RecipeController {
 	}
 
 	@GetMapping("del")
-	public String delelete(HttpServletRequest request, Model model, Long rno) {
+	public String delelete(HttpServletRequest request, Model model, @RequestParam("rno") Long rno) {
+		log.info("@@@@@rrrrrrrrnnnnnnnnnnooooooooo@@@@"+rno);
 		if (recipeService.remove(rno)) {
-			model.addAttribute("result", "success");
+			//model.addAttribute("result", "success");
 		} else {
-			model.addAttribute("result", "fail");
+			//model.addAttribute("result", "fail");
 		}
 		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
+		return "redirect:/user/mkitchen";
 	}
 	
 	private String wrongAccess(Model model) {
