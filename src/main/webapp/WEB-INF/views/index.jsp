@@ -35,7 +35,7 @@ a {
                style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
                <div>
                   <img src="<c:out value='${recipe.thumbnail }'/>" width=280px
-                     height=280px>
+                     height=280px onerror="imgError(this);" >
                </div>
                <div style="margin-top: 10px;">
                   <c:out value="${recipe.title }" />

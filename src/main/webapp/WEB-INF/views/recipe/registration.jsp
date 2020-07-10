@@ -41,7 +41,7 @@
           <ul>
           </ul>
         </div>
-        <img class="OpenImgUpload" id="0" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer">
+        <img class="OpenImgUpload" id="0" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 		<input type="file" class="fileUploader" id="0" style="display:none"/>
 		<form:input path="thumbnail" id="thumbnail0" style="display:none" />
 		<br>
@@ -62,7 +62,7 @@
 	        <div class="photo <c:out value='${vs.count}' />">
 	        </div>
 	        <div>
-	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer">
+	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="<c:out value='${vs.count}' />" />
 	        <form:input
 	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
