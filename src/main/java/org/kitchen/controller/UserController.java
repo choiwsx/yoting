@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.ProfileDTO;
+import org.kitchen.domain.ProfileDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
@@ -146,15 +147,26 @@ public class UserController {
 			model.addAttribute("result", "없는 유저입니다.");
 			return "redirect:/error";
 		}
-		model.addAttribute("user", user);
-		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
-		profile.setFollowers(userService.countFollower(user.getUserNo()));
-		if(session.getAttribute("userNo")!=null) {
-			Long followerNo = (Long)session.getAttribute("userNo");
-			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
+//		model.addAttribute("user", user);
+//		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+//		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
+//		profile.setFollowers(userService.countFollower(user.getUserNo()));
+//		if(session.getAttribute("userNo")!=null) {
+//			Long followerNo = (Long)session.getAttribute("userNo");
+//			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
+//		}
+//		model.addAttribute("profile",profile);
+		Long userNo = (Long)session.getAttribute("userNo");
+		log.info("@@@@@@@@@@@@@@@"+userNo+"@"+user.getUserNo()+"@");
+		if(userNo!=null) {
+			if(userNo.equals(user.getUserNo())) {
+				log.info("자기페이지");
+				return "redirect:/user/mkitchen";
+			}
+			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, (Long)session.getAttribute("userNo")));
+		} else {
+			model.addAttribute("profile", ProfileDTOFactory.getProfile(user));
 		}
-		model.addAttribute("profile",profile);
 		return "/user/profile";
 	}
 	
@@ -290,7 +302,6 @@ public class UserController {
 	public String follow(Long followeeNo, Long followerNo, Model model) {
 		log.info("follow########"+followeeNo+"@@@@@"+followerNo);
 		if(userService.follow(followeeNo, followerNo)) {
-		model.addAttribute("result", "팔로우 완료.");
 		return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
 		} 
 		return wrongAccess(model, "팔로우 실패");
@@ -300,7 +311,6 @@ public class UserController {
 	public String unfollow(Long followeeNo, Long followerNo, Model model) {
 		log.info("unfollow########"+followeeNo+"@@@@@"+followerNo);
 		if(userService.unfollow(followeeNo, followerNo)) {
-			model.addAttribute("result", "언팔로우 완료.");
 			return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
 		}
 		return wrongAccess(model, "언팔로우 실패");

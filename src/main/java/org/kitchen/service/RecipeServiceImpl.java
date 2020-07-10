@@ -24,21 +24,13 @@ public class RecipeServiceImpl implements RecipeService {
    private ContentMapper contentMapper;
    @Autowired
    private CategoryMapper categoryMapper;
-
+   
    @Override
-   public void register(RecipeVO recipe, ContentVO content) {
-      Long rno = register(recipe);
-      content.setRno(rno);
-      registerCon(content);
-   }
-
-
-   @Override
-   public void register(RecipeVO recipe, List<ContentVO> contents) {
-      // TODO Auto-generated method stub
-      
-      //contents.forEach(a -> a.setRno(rno));
-      //contents.forEach(a -> registerCon(a));
+   public Long register(RecipeVO recipe) {
+      recipeMapper.insert(recipe);
+      recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
+      recipe.getContentList().forEach(a ->registerCon(a));
+      return recipe.getRno();
    }
 
    @Override
@@ -49,11 +41,13 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public boolean modify(RecipeVO recipe) {
       log.info("modify.........." + recipe);
-      return recipeMapper.update(recipe) == 1;
+      boolean result = recipeMapper.update(recipe) == 1;
+      recipe.getContentList().forEach(a -> modifyCon(a));
+      return result;
    }
 
    @Override
-   public boolean ModifyCon(ContentVO content) {
+   public boolean modifyCon(ContentVO content) {
       log.info("modifyCon........" + content);
       return contentMapper.update(content) == 1;
    }
@@ -78,7 +72,9 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public RecipeVO get(Long rno) {
       log.info("get.........." + rno);
-      return recipeMapper.read(rno);
+      RecipeVO recipe = recipeMapper.read(rno);
+      recipe.setContentList(getCon(rno));
+      return recipe;
    }
 
    @Override
@@ -90,7 +86,9 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public List<RecipeVO> getList() {
       log.info("getList..........");
-      return recipeMapper.getList();
+      List<RecipeVO> list = recipeMapper.getList();
+      list.forEach(a->a.setContentList(getCon(a.getRno())));
+      return list;
    }
 
    @Override
@@ -101,7 +99,10 @@ public class RecipeServiceImpl implements RecipeService {
 
    @Override
    public List<RecipeVO> getCategoryCode(Long categoryNo) {
-      return recipeMapper.getCategoryCode(categoryNo);
+	   log.info("getList..........");
+	      List<RecipeVO> list = recipeMapper.getCategoryCode(categoryNo);
+	      list.forEach(a->a.setContentList(getCon(a.getRno())));
+      return list;
    }
    
    @Override
@@ -109,22 +110,7 @@ public class RecipeServiceImpl implements RecipeService {
       return categoryMapper.getCategoryNamebyPrevCode(categoryNo);
    }
 
-   @Override
-   public Long register(RecipeVO recipe) {
-      recipeMapper.insert(recipe);
-      log.info("#####################################################");
-      for(int i = 0; i<10; i++) {
-         if(recipe.getContentList().get(i).getContent()=="") {
-            log.info("^^"+i);
-            recipe.setContentList(recipe.getContentList().subList(0, i));
-            break;
-         }
-      }
-      recipe.getContentList().forEach(a -> log.info("#list#"+a));
-      recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
-      recipe.getContentList().forEach(a ->registerCon(a));
-      return recipe.getRno();
-   }
+
    
 
    @Transactional

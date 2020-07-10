@@ -8,7 +8,7 @@ import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.SimpleProfileDTO;
-import org.kitchen.domain.SimpleProfileDTOFactory;
+import org.kitchen.domain.ProfileDTOFactory;
 import org.kitchen.domain.UserVO;
 import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.RecipeMapper;
@@ -193,7 +193,7 @@ public class SearchServiceImpl implements SearchService {
 		userNoList.forEach(a -> log.info(a));
 		List<SimpleProfileDTO> result = new ArrayList<>();
 		for(int i = 0; i<userNoList.size(); i++) {
-			result.add(SimpleProfileDTOFactory.getSimpleProfile(userMapper.selectByNo(userNoList.get(i))));
+			result.add(ProfileDTOFactory.getSimpleProfile(userMapper.selectByNo(userNoList.get(i))));
 		}
 		//유저 찾아서 준다.
 		return result;

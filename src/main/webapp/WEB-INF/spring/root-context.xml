@@ -20,6 +20,9 @@
 
 	<context:component-scan
 		base-package="org.kitchen.service" />
+		
+	<context:component-scan
+		base-package="org.kitchen.domain" />
 
 	<!-- Gmail -->
 	<bean id="mailSender"
@@ -44,7 +47,7 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1522:XE"></property>
+			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
 		<property name="username" value="kitchen_dba"></property>
 		<property name="password" value="1234"></property>
 	</bean>
