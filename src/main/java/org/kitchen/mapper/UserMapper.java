@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.kitchen.domain.Criteria;
+import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -40,7 +41,10 @@ public interface UserMapper {
 	public int unfollow(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
 	public int countFollower(@Param("followeeNo") Long followeeNo);
 	public int countFollower(@Param("followeeNo") Long followeeNo, @Param("followerNo") Long followerNo);
+	public int countFollowing(Long followerNo);
+
 
 	public List<UserVO> getIdAutocomplete(String userId); 
 
+	public List<Long> getHotUserList(int length);
 }

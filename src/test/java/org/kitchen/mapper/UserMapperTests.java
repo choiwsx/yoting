@@ -87,13 +87,17 @@ public class UserMapperTests {
 		log.info("12: "+user3);
 	}
 	
-	//@Test
+	
+	@Test
 	public void testGetNoById() {
-		Long a = mapper.getNoById("new4");
+		Long a = mapper.getNoById("user02");
 		log.info(a);
-		Long b = mapper.getNoById("new6");
+		Long b = mapper.getNoById("user03");
 		log.info("######"+b);
-		log.info(mapper.getNoById("user01"));
+		log.info(mapper.getNoById("mn"));
+		log.info("############"+mapper.getHotUserList(3).size());
+		
+		mapper.getHotUserList(10).forEach(aa->log.info(aa));
 	}
 	
 	//@Test
