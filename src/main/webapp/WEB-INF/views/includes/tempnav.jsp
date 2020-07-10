@@ -70,7 +70,7 @@ if(session!=null) {
 
     .navBottom {
         padding-top: 15px;
-        padding-left: 200px;
+        padding-left: 270px;
         padding-right: 150px;
         display:inline-flex;
     }
@@ -145,7 +145,7 @@ if(session!=null) {
     <div class="gnb_header">
         <div class="header_innerTop">
             <ul id="header_inner">
-            	<li><a href="user/registration"><button class='button'>가입하기</button></a></li>
+               <li><a href="user/registration"><button class='button'>가입하기</button></a></li>
                 <li><button onclick="location.href='/user/login'"class='button'>로그인</button></li>
                 <li><button class='button'>서비스 목록</button></li>
             </ul>
@@ -153,7 +153,7 @@ if(session!=null) {
         <div id="header_mid"  data-group="main">
         <!--로고-->
         <div class="header_innerLeft" data-group="mid">
-            <div id="mid_logo"><a href="/user/index">
+            <div id="mid_logo"><a href="/index">
                 <img src="https://i.ibb.co/dQT4pVx/cook-logo.png" style="width: 240px; height: 60px; margin-left: 60px;"></a>
             </div>
         </div>
@@ -174,41 +174,51 @@ if(session!=null) {
    <button class='btn btn-default'>검색</button>
 </form>
 </div>
-                <div class="search_keyword" style="display: inline; font-size: 12px; ">
-                    <ul id="keywordDiv_1" style="text-align:left;">
-                    <c:forEach items="${tag}" var="tag">
-               <li>
-                  <a href="list?categoryNo=<c:out value="${tag.tagNo}" />" >
-                  <c:out value="${tag.tagName}" /></a>
-               </li>
-             </c:forEach>
-                    </ul>
-                    <ul id="keywordDiv_2" style="display:none; text-align:left;">
-                        <li><a href="#">찌개</a></li>
-                        <li><a href="#">감자</a></li>
-                        <li><a href="#">손님초대</a></li>
-                        <li><a href="#">닭</a></li>
-                        <li><a href="#">오이</a></li>
-                    </ul>                        
-                    <div class="keyword_btn">
-                        <a href="#" onclick=""><img src="https://recipe1.ezmember.co.kr/img/btn_arrow2_l.gif" alt="이전"></a>
-                        <a href="#" onclick=""><img src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif" alt="다음"></a>
-                    </div>
+                <div class="search_keyword"
+                  style="display: inline; font-size: 17px;">
+                  <ul id="keywordDiv_1" style="text-align: left;">
+                     <c:forEach items="${tag}" var="tag" end="3">
+                        <li><a
+                           href="http://localhost:8085/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+                  <ul id="keywordDiv_2" style="display: none; text-align: left;">
+                     <c:forEach items="${tag}" var="tag" begin="4" end="7">
+                        <li><a
+                           href="http://localhost:8085/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+                  <ul id="keywordDiv_3" style="display: none; text-align: left;">
+                     <c:forEach items="${tag}" var="tag" begin="8" end="11">
+                        <li><a
+                           href="http://localhost:8080/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+               </div>                     
+                   <div class="keyword_btn">
+                  <a href="#" class="tagBtnNext"><img
+                     src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif"
+                     alt="다음"></a>
+               </div>
                 </div>
             </div>
-            </div>
-            <div class="header_innerRight" data-group="mid">
-                <ul >
-                    <li>
-                        <a href="#">
-                            <img src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg" style="width: 60px; height: 60px;" alt="찜목록">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" >
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU" style="width: 60px; height: 60px;" alt="레시피등록"></a>
-                    </li>
-                </ul>
+           <div class="header_innerRight" data-group="mid">
+            <ul>
+               <li><a href="#"> <img
+                     src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
+                     style="width: 60px; height: 60px;" alt="찜목록">
+               </a></li>
+               <li><a href="/upload/registration"> <img
+                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
+                     style="width: 60px; height: 60px;" alt="레시피등록"></a></li>
+            </ul>
+         </div>
             </div>
         </div>
 
@@ -234,6 +244,28 @@ if(session!=null) {
      var result = '<c:out value="${result}"/>';
      
      history.replaceState({},null,null);
+     
+     let tagTable = document.querySelectorAll("[data-value]");
+      var cnt = 1;
+      $(".tagBtnNext").on("click", function(e) {
+         cnt++;
+         switch (cnt) {
+         case 2:
+            $("#keywordDiv_1").hide();
+            $("#keywordDiv_2").show();
+            break;
+         case 3:
+            $("#keywordDiv_2").hide();
+            $("#keywordDiv_3").show();
+            break;
+         case 4:
+            $("#keywordDiv_3").hide();
+            $("#keywordDiv_1").show();
+            cnt = 1;
+            break;
+         }
+
+      });
      
      var searchForm = $("#searchForm");
      $("#searchForm button").on("click", function(e){

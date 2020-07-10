@@ -70,9 +70,6 @@
 
     </style>
 <body>
-   <div style="margin-left:470px">
-      총 <c:out value=${fn: length(list) } /> 개의 레시피가 있습니다.
-   </div>
 
 <!--메인 화면-->
     <div class="content_wrapper" data-group="main">
@@ -95,6 +92,7 @@
             </div>
         </div>
     </div>
+
 
         <div id="side_banner" style="grid-area: b;">
             <h3 style="text-align: center;">매주 갱신 추천특집!</h3>
@@ -234,7 +232,7 @@
             <div class="info_inner">
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
-                        <a href="/info/CookstagramInfo.jsp" target="_blank">회사소개</a><span>|</span>
+                        <a href="/cook" target="_blank">회사소개</a><span>|</span>
                         <a href="#" target="_blank">광고문의</a><span>|</span>
                         <a href="#" target="_blank">개인정보처리방침</a><span>|</span>
                         <a href="#" target="_blank">이용약관 </a><span>|</span>
