@@ -90,7 +90,7 @@
 
 	$(document).ready(function(){
 
-	  $(.options).each(function(){
+	  $(".options").each(function(){
 
 	    if($(this).val()=="<c:out value="${recipe.categoryNo }"/>"){
 

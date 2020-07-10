@@ -68,7 +68,7 @@
 	
 	    
 	<a class="add_item icon plus" href="#">add</a></div>
-	    <form:button>저장</form:button>
+	    <form:button type="button">저장</form:button>
 	    
 	
 	    </fieldset>

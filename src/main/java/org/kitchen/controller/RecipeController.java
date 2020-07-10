@@ -52,10 +52,10 @@ public class RecipeController {
 		log.info("modify: " + recipe);
 		log.info("modify: " + content);
 
-		if (recipeService.modify(recipe) && recipeService.ModifyCon(content)) {
+		if (recipeService.modify(recipe)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/recipe/modify";
+		return "redirect:/recipe/detail?rno"+recipe.getRno();
 	}
 	
 	@GetMapping("/modiRecipe")
