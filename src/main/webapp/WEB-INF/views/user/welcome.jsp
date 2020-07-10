@@ -11,7 +11,6 @@
 <body>
 <h1>회원 가입을 축하합니다.</h1>
 <div>
-<label>result : </label><c:out value="${result}" />
 </div>
 <div>
 <h1>새회원 정보</h1>

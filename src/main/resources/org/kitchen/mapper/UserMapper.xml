@@ -57,7 +57,7 @@
 </select>
 
 <update id="updateVeriKey">
-	update into tbl_user_key set key = #{key} where u_num = #{userNo}
+	update tbl_user_key set key = #{key} where u_num = #{userNo}
 </update>
 
 <select id="selectById" resultMap="user">

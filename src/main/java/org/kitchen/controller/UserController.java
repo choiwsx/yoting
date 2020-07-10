@@ -63,17 +63,18 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/newprofile";
 		} else {
+			model.addAttribute("user", user);
 			model.addAttribute("result", "중복된 유저 아이디 혹은 이메일입니다.");
 		}
 		return "/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
-	public String newProfileForm(Model model, HttpSession session) {
-		if( session.getAttribute("userNo")!=null ) {
-			return wrongAccess(model);
-		}
-		return "redirect:/user/registration";
+	public void newProfileForm(Model model, HttpSession session) {
+//		if( session.getAttribute("userNo")!=null ) {
+//			return wrongAccess(model);
+//		}
+//		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
@@ -105,8 +106,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/welcome")
-	public void welcomePage(SessionStatus sessionStatus) {
+	public String welcomePage(HttpSession session, SessionStatus sessionStatus, Model model) {
+		if(session.getAttribute("user")==null) {
+			return wrongAccess(model);
+		}
 		sessionStatus.setComplete();
+		return "/user/welcome";
 	}
 	
 	@GetMapping("/verify")
@@ -266,20 +271,23 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/sendEmail")
-	public String sendEmail(Model model, String email) {
-		if(email==null) {
-			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
-			return "redirect:/error"; 
+	@PostMapping("/resendEmail")
+	public String resendEmail(Model model, String email) {
+		if(email.equals("")||email==null) {
+			return wrongAccess(model, "이메일 주소가 잘못입력되었습니다.");
 		}
 		UserVO user = userService.getUserByEmail(email);
 		if(user==null) {
-			model.addAttribute("result", "이메일 주소로 등록된 사용자가 없습니다.");
-			return "redirect:/error"; 
+			return wrongAccess(model, "이메일 주소로 등록된 사용자가 없습니다.");
 		}
+		if(user.getStatus().equals(UserStatus.PENDING)) {
 		userService.sendVerificationEmail(user);
-		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
+		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
+			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
+		}
+		return wrongAccess(model, "유효하지 않은 회원입니다.");
 	}
 	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
 	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
