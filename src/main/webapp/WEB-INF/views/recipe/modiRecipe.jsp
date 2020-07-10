@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../includes/tempnav.jsp" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +41,7 @@
 		<li>          
 	   <img src='<c:if test="${empty recipe.thumbnail }"><c:out value="/display?filename=default.jpg" /></c:if>
     	<c:if test="${not empty recipe.thumbnail }"><c:out value="${recipe.thumbnail}" /></c:if>' 
-    	width="140" height="120" onerror="imgError(this);" />
+    	width="350" height="350" onerror="imgError(this);" />
 		</li>
           </ul>
         </div>
@@ -66,9 +65,10 @@
 	    <div>
 	    <c:out value="${vs.count}" />번째 컨텐츠
 	        <div class="photo <c:out value='${vs.count}' />">
-	        <img <c:if test="${empty content.photoUrl}"><c:out value="src='/display?filename=default.jpg'" /></c:if>
-    	<c:if test="${not empty content.photoUrl }"><c:out value="src='${content.photoUrl}'" /></c:if>
-    	width="140" height="120" onerror="imgError(this);" />
+	        
+	        <img 
+	        src="${content.photoUrl}"
+	    	width="350" height="350" onerror="imgError(this);" />
 	        </div>
 	        <div>
 	      	 <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >

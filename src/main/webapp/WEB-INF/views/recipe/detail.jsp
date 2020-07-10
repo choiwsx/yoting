@@ -24,7 +24,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 		
 			<div>
                 <h1>레시피<c:out value="${recipe.title}" /></h1>
-                <img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" onerror="imgError(this);" />
+                <img src="<c:out value="${recipe.thumbnail}"/>" width="350" height="350" onerror="imgError(this);" />
                
 			</div>
 			<div>
@@ -37,7 +37,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <c:forEach items="${contentList}" var="content">
                 <div>
                     순서:<c:out value="${content.stepNo}" />         
-                    <img src="<c:out value="${content.photoUrl}"/>" width="140" height="120" onerror="imgError(this);" />
+                    <img src="<c:out value="${content.photoUrl}"/>" width="200" height="200" onerror="imgError(this);" />
                     <c:out value="${content.content}" />
                 </div>
             </c:forEach>
@@ -57,12 +57,12 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 <div>
 	<c:if test="${canModify eq 'true'}">  
 	<a href="/recipe/modiRecipe?rno=${recipe.rno}">수정</a>
+	<a href="/recipe/del?rno=${recipe.rno}">삭제</a>
 	</c:if>
 </div>
 </body>
 
 <script type="text/javascript">
-
 </script>
 
 </html>
