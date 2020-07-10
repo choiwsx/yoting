@@ -86,8 +86,8 @@ position: relative;
   });
   
   function imgError(image) {
-	    image.onerror = "";
-	    image.src = "../../../resources/upload/default.jpg";
-	    return true;
-	}
+      image.onerror = "";
+      image.src = "/display?fileName=2020%5C07%5C10%2Fs_8d0bb1c3-d571-4c45-9046-4d9ba7aa1a6b_default.jpg";
+      return true;
+  }
   </script>
