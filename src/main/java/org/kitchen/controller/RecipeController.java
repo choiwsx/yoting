@@ -59,7 +59,7 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/modiRecipe")
-	public String modiRecipe(Model model, String rno, HttpSession session,RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String modiRecipe(Model model, String rno, HttpSession session) {
 		Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
 			return wrongAccess(model);
@@ -71,9 +71,8 @@ public class RecipeController {
 				model.addAttribute("result", "수정할 레시피가 없어요");
 				return "/error";
 			}
+			log.info("@@@get Rno@@@@"+recipe.getRno());
 			model.addAttribute("recipe", recipe);
-			String referer = request.getHeader("Referer");
-			model.addAttribute("prevPage", referer);
 			return "/recipe/modiRecipe";
 		} catch (NumberFormatException e) {
 			return wrongAccess(model);
@@ -82,6 +81,7 @@ public class RecipeController {
 	
 	@PostMapping("/modiRecipe")
 	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+		log.info("!!recipe!!!"+recipe.getRno());
 		Long userNo = recipe.getUserNo();
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
 			return wrongAccess(model);
