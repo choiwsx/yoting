@@ -1,16 +1,10 @@
 package org.kitchen.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.kitchen.domain.CategoryVO;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.ContentVO;
-import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
-import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,36 +28,12 @@ public class RecipeController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/register")
-	public void register() {
-
-	}
-
-	@PostMapping("/register")
-	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
-		log.info("register : " + recipe);
-
-//		recipeService.register(recipe);
-//		recipeService.registerCon(content);
-		recipeService.register(recipe, content);
-
-		rttr.addFlashAttribute("result", recipe.getRno());
-		rttr.addFlashAttribute("resultCon", content.getRno());
-
-		return "redirect:/recipe/list";
-	}
-
 	@GetMapping("/registration")
 	public void registerform(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}
-	
-	@GetMapping("/registration2")
-	public void register2form(Model model) {
-		model.addAttribute("recipe", new RecipeVO());
-	}
 
-	@PostMapping("/registrationTest")
+	@PostMapping("/result")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
 		// recipeService에 저장하기
 		recipeService.register(recipe);

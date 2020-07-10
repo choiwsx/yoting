@@ -34,7 +34,6 @@ position: relative;
   <a href="/recipe/list?categoryNo=22">디저트</a>
   <a href="/recipe/list?categoryNo=33">반찬</a>
   &nbsp
-  <a href="/recipe/hotkitchen">인기 주방장</a>
   <%=loggedIn?"<a href="+"/recipe/registration"+"><b>@레시피 등록</b></a>":"" %>
 <%=loggedIn&&userNo.equals(1L)?"<li><h3>관리 페이지</h3><a href="+"/admin/userList"+">@유저 리스트</a>"
 +"<a href="+"/admin/recipeList"+">@레시피 리스트</a></li>":"" %>

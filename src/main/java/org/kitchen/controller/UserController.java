@@ -13,6 +13,7 @@ import org.kitchen.domain.Criteria;
 import org.kitchen.domain.ProfileDTO;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
+import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.UserMapperFailException;
 import org.kitchen.service.SearchService;
@@ -230,8 +231,11 @@ public class UserController {
 			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
 			return "/user/login";
 		}
-		session.setAttribute("userNo", result.getUserNo());
-		return "/index";
+		if(result.getStatus().equals(UserStatus.ACTIVE)) {
+			session.setAttribute("userNo", result.getUserNo());
+			return "redirect:/index";
+		}
+		return wrongAccess(model, "이메일 인증을 해주세요.");
 	}
 	
 	@GetMapping("/logout")
@@ -300,6 +304,12 @@ public class UserController {
 			return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
 		}
 		return wrongAccess(model, "언팔로우 실패");
+	}
+	
+	@GetMapping("/hotkitchen")
+	public void rank(Model model) {
+		model.addAttribute("list", searchService.getHotUserList(10));
+		
 	}
 	
 	private String wrongAccess(Model model) {
