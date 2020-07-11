@@ -139,7 +139,6 @@ if(session!=null) {
 
 </style>
 
-    
 <body>
     <!--헤더-->
     <div class="gnb_header">
@@ -214,7 +213,7 @@ if(session!=null) {
 							src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
 							style="width: 60px; height: 60px;" alt="찜목록">
 					</a></li>
-					<li><a href="/upload/registration"> <img
+					<li><a href="/recipe/registration"> <img
 							src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
 							style="width: 60px; height: 60px;" alt="레시피등록"></a></li>
 				</ul>

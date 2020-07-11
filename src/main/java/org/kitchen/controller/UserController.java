@@ -250,7 +250,7 @@ public class UserController {
 		}
 		if(result.getStatus().equals(UserStatus.ACTIVE)) {
 			session.setAttribute("userNo", result.getUserNo());
-			return "redirect:/index";
+			return "redirect:/";
 		}
 		return wrongAccess(model, "이메일 인증을 해주세요.");
 	}
@@ -268,6 +268,16 @@ public class UserController {
 	
 	@GetMapping("/resendEmail")
 	public void resendEmail() {
+		
+	}
+	
+	@PostMapping("/good")
+	public void postGood() {
+		
+	}
+	
+	@GetMapping("/good")
+	public void getGood() {
 		
 	}
 	

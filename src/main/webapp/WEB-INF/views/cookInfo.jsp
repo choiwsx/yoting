@@ -10,6 +10,6 @@
 </head>
 <body>
 <h1>안녕하세요~! 저희가 만들었어요~!</h1>
-<img src="/resource/upload/CookPeople.jpg">
+<img src="/resources/upload/CookPeople.jpg">
 </body>
 </html>

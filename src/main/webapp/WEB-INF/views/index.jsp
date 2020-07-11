@@ -86,8 +86,8 @@
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
                 <a href="/recipe/detail?rno=<c:out value='${last.rno }'/>"><p><c:out value="${last.title}"/></p></a>
-                <a href="/user/profile?userId=<c:out value='${lastUser.userNo }'/>">
-                <p><c:out value="${last.userNo}"/><span><img src="<c:out value="${lastUser.profilePhoto}"/>" style="width: 19px; height: 18px;"></span></p>
+                <a href="/user/profile?userId=<c:out value='${lastUser.userId }'/>">
+                <p><c:out value="${lastUser.userNo}"/><span><img src="<c:out value="${lastUser.profilePhoto}"/>" style="width: 19px; height: 18px;"></span></p>
                 </a>
             </div>
         </div>
@@ -232,7 +232,7 @@
             <div class="info_inner">
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
-                        <a href="/cook" target="_blank">회사소개</a><span>|</span>
+                        <a href="/cookInfo" target="_blank">회사소개</a><span>|</span>
                         <a href="#" target="_blank">광고문의</a><span>|</span>
                         <a href="#" target="_blank">개인정보처리방침</a><span>|</span>
                         <a href="#" target="_blank">이용약관 </a><span>|</span>
