@@ -136,10 +136,18 @@ public class RecipeServiceImpl implements RecipeService {
    }
 
 
-@Override
-public List<TagVO> getTagNameList() {
-	return recipeMapper.getTagNameList();
-}
+	@Override
+	public List<TagVO> getTagNameList() {
+		return recipeMapper.getTagNameList();
+	}
+	
+	@Override
+	public RecipeVO getLatestRecipe() {
+		// TODO Auto-generated method stub
+		Long rno = recipeMapper.getLatestRno();
+		if(rno==null) return null;
+		return recipeMapper.read(rno);
+	}
 
 
 }

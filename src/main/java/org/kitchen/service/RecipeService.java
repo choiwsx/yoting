@@ -37,4 +37,6 @@ public interface RecipeService {
 	public Long isMyRecipe(Long rno);
 	
 	public List<TagVO> getTagNameList();
+	
+	public RecipeVO getLatestRecipe();
 }
