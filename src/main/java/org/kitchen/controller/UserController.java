@@ -393,7 +393,6 @@ public class UserController {
 	@GetMapping("/hotkitchen")
 	public void rank(Model model) {
 		model.addAttribute("list", searchService.getHotUserList(10));
-		
 	}
 
 	
