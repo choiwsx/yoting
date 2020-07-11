@@ -52,6 +52,8 @@
 
 <a href="/user/resendEmail">인증 이메일 다시 보내기</a>
 </div>
+<br>
+<br>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
    var form = $("form[name='form']");
