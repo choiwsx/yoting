@@ -158,7 +158,7 @@ if(session!=null) {
          <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            <h4 class="modal-title" id="myModalLabel">안내</h4>
          </div>
          <div class="modal-body">처리가 완료되었습니다.</div>
          <div class="modal-footer">
@@ -276,67 +276,77 @@ if(session!=null) {
 
 <script type="text/javascript">
   $(document).ready(function(){
-     console.log('<c:out value="${userNo}"/>');
-     
+	  
      var result = '<c:out value="${result}"/>';
-     
-     history.replaceState({},null,null);
-     
-     let tagTable = document.querySelectorAll("[data-value]");
-      var cnt = 1;
-      $(".tagBtnNext").on("click", function(e) {
-         cnt++;
-         switch (cnt) {
-         case 2:
-            $("#keywordDiv_1").hide();
-            $("#keywordDiv_2").show();
-            break;
-         case 3:
-            $("#keywordDiv_2").hide();
-            $("#keywordDiv_3").show();
-            break;
-         case 4:
-            $("#keywordDiv_3").hide();
-            $("#keywordDiv_1").show();
-            cnt = 1;
-            break;
-         }
+     var rno = '<c:out value="${rno}"/>';
 
-      });
-     
-     var searchForm = $("#searchForm");
-     $("#searchForm button").on("click", function(e){
-        if(!searchForm.find("option:selected").val()){
-           alert("검색종류를 선택하세요.");
-           return false;
-        }
-        
-        if(!searchForm.find("input[name='keyword']").val())
-        {
-           alert("키워드를 입력하세요.");
-           return false;
-        }
-        
-        searchForm.find("input[name='pageNum']").val("1");
-        e.preventDefault();
-        searchForm.submit();
-     });
-    checkModal(result);
+     console.log('<c:out value="${userNo}"/>');
+	 checkModal(result, rno);
+     history.replaceState({},null,null);
+	  
       
-      function checkModal(result){
-         if(result===''){
-            return;
-         }
-         if(parseInt(result)>0){
-            $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
-         }
-         $("#myModal").modal("show");
-      }
   });
+  
+  function checkModal(result, rno){
+
+      if(result==''&&rno==''){
+         return;
+      }
+      if(result!=='') {
+    	  $(".modal-body").html(result);
+      }
+      if(rno!==''){
+         $(".modal-body").html("게시글 " + parseInt(rno)+ "번이 등록 되었습니다.");
+      }
+      $("#myModal").modal("show");
+   }
+  
+  var searchForm = $("#searchForm");
+  
+  $("#searchForm button").on("click", function(e){
+     if(!searchForm.find("option:selected").val()){
+        alert("검색종류를 선택하세요.");
+        return false;
+     }
+     
+     if(!searchForm.find("input[name='keyword']").val())
+     {
+        alert("키워드를 입력하세요.");
+        return false;
+     }
+     
+     searchForm.find("input[name='pageNum']").val("1");
+     e.preventDefault();
+     searchForm.submit();
+  });
+  
   
   function imgError(image) {
       image.onerror = "";
       image.src = "https://img.buzzfeed.com/buzzfeed-static/static/2020-03/5/23/enhanced/25a67c968a0a/enhanced-262-1583449224-1.png?downsize=600:*&output-format=auto&output-quality=auto";
       return true;
   }
+  
+  
+  var cnt = 1;
+  $(".tagBtnNext").on("click", function(e) {
+     cnt++;
+     switch (cnt) {
+     case 2:
+        $("#keywordDiv_1").hide();
+        $("#keywordDiv_2").show();
+        break;
+     case 3:
+        $("#keywordDiv_2").hide();
+        $("#keywordDiv_3").show();
+        break;
+     case 4:
+        $("#keywordDiv_3").hide();
+        $("#keywordDiv_1").show();
+        cnt = 1;
+        break;
+     }
+
+  });
+  
   </script>

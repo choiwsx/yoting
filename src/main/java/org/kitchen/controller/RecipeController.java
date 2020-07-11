@@ -78,32 +78,18 @@ public class RecipeController {
    
    @GetMapping("/modiRecipe")
    public String modiRecipe(Model model, String rno, HttpSession session) {
-      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
-      if(rno==null  || rno.equals("") || !isNumeric(rno)) {
+      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
+      if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
          return wrongAccess(model);
       }
-      try {
-         Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
-         if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
-            return wrongAccess(model);
-         }
-      } catch (NumberFormatException e) {
-         return wrongAccess(model);
-      }   
-      
-      try {
-         RecipeVO recipe = recipeService.get(Long.valueOf(rno));
-         if(recipe==null) {
-            model.addAttribute("result", "수정할 레시피가 없어요");
-            //@@@엠키친 리턴?
-            return "/error";
-         }
-         log.info("@@@get Rno@@@@"+recipe.getRno());
-         model.addAttribute("recipe", recipe);
-         return "/recipe/modiRecipe";
-      } catch (NumberFormatException e) {
-         return wrongAccess(model);
-      }      
+      //로그인 한 사람===수정하려는 글 게시자 이면 ㅇㅋ
+      if(recipeService.isMyRecipe(Long.parseLong(rno), (Long)session.getAttribute("userNo"))) {
+          model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
+      } else {
+    	  //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
+          return wrongAccess(model);
+      }
+      return "/recipe/modiRecipe";   
    }
    
    @PostMapping("/modiRecipe")
