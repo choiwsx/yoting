@@ -40,7 +40,7 @@
     .left-col {
         text-align: left;
         margin-left: 30px;
-        margin-bottom: 20px;
+        margin-bottom: 14px;
     }
 
     </style>
@@ -57,14 +57,14 @@
                 <img src="<c:out value='${latestRecipe.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                 </a>
             </div>
-        <div id="today_info" style="margin-left: 40px; background-color:lightgoldenrodyellow; width:554px">
+        <div id="today_info" style="margin-left: 50px; background-color:lightgoldenrodyellow; width:535px">
             <div id="today_date" style="float: left; width: 150px; height: 80px; " >
-                <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
+                <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${latestRecipe.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
                 <a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>"><p><c:out value="${latestRecipe.title}"/></p></a>
                 <a href="/user/profile?userId=<c:out value='${author.userId }'/>">
-                <p><c:out value="${lastUser.userId}"/><span><img src="<c:out value="${author.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span></p>
+                <p><c:out value="${author.userId}"/><span><img src="<c:out value="${author.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span></p>
                 </a>
             </div>
         </div>
@@ -74,12 +74,11 @@
                <img src="http://t1.daumcdn.net/cafeattach/1kt/67dd4a02ede4cdf345d3f45fd8c82a37756bbea9" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                
                </c:if>
-   
 
 
-            <c:if test="${!empty list }">
+        <div id="side_banner" style="grid-area: b; background-color:white">
+        <c:if test="${!empty list }">
             <h3 style="text-align: center;">매주 갱신 추천특집!</h3>
-        <div id="side_banner" style="grid-area: b;">
              <c:forEach items="${list}" var="recipe">
             <div class="tieup_list">
                 <div class="tieup_list_holder" data-ad-slot="pc-tieup-text" data-ad-capacity="15" data-ad-displayed="1" >
@@ -100,7 +99,6 @@
                 </div>
                 </div>
         </c:if>
-
         </div>
 
 
