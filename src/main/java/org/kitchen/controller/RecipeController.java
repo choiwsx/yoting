@@ -28,16 +28,16 @@ public class RecipeController {
    private UserService userService;
 
 	
-	@PostMapping("/registration")
-	public String register(RecipeVO recipe, RedirectAttributes rttr) {
-		recipeService.register(recipe);
-		rttr.addFlashAttribute("result", recipe.getRno());
-		return "redirect:/user/mkitchen";
-	}
    @GetMapping("/registration")
    public void registerform(Model model) {
       //입력 폼에 레시피 VO만들어서 주기
       model.addAttribute("recipe", new RecipeVO());
+   }
+   @PostMapping("/registration")
+   public String register(RecipeVO recipe, RedirectAttributes rttr) {
+	   recipeService.register(recipe);
+	   rttr.addFlashAttribute("resultV", recipe.getRno());
+	   return "redirect:/user/mkitchen";
    }
    
    @GetMapping("/result")

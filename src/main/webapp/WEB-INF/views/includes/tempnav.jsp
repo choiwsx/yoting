@@ -239,14 +239,12 @@ if(session!=null) {
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
- 					<c:if test ="${not empty userNo}">
-               			<a href="#"><img
-                     	src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
-                     	style="width: 60px; height: 60px;" alt="찜목록"></a>
-                  		<a href="/recipe/registration"> <img
-                     	src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
-                     	style="width: 60px; height: 60px;" alt="레시피등록"></a>
-                    </c:if>
+               <a href="#"><img
+                     src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
+                     style="width: 60px; height: 60px;" alt="찜목록"></a>
+                  <a href="/recipe/registration"> <img
+                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
+                     style="width: 60px; height: 60px;" alt="레시피등록"></a>
          </div>
             </div>
         </div>
@@ -273,10 +271,19 @@ if(session!=null) {
   $(document).ready(function(){
      console.log('<c:out value="${userNo}"/>');
      
-     var result = '<c:out value="${result}"/>';
+     var result = '<c:out value="${resultV}"/>';
      
      history.replaceState({},null,null);
-     
+     checkModal(result);
+     function checkModal(result){
+        if(result===''){
+           return;
+        }
+        if(parseInt(result)>0){
+           $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
+        }
+        $("#myModal").modal("show");
+     }
      let tagTable = document.querySelectorAll("[data-value]");
       var cnt = 1;
       $(".tagBtnNext").on("click", function(e) {
@@ -316,22 +323,12 @@ if(session!=null) {
         e.preventDefault();
         searchForm.submit();
      });
-    checkModal(result);
-      
-      function checkModal(result){
-         if(result===''){
-            return;
-         }
-         if(parseInt(result)>0){
-            $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
-         }
-         $("#myModal").modal("show");
-      }
+   
   });
   
   function imgError(image) {
       image.onerror = "";
-      image.src = "https://img.buzzfeed.com/buzzfeed-static/static/2020-03/5/23/enhanced/25a67c968a0a/enhanced-262-1583449224-1.png?downsize=600:*&output-format=auto&output-quality=auto";
+      image.src = "/display?fileName=2020%5C07%5C10%2Fs_8d0bb1c3-d571-4c45-9046-4d9ba7aa1a6b_default.jpg";
       return true;
   }
   </script>
