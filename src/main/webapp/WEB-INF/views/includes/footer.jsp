@@ -55,6 +55,7 @@
 <!-- 
                     <p class="info_link">Copyright <b>©Cookstagram</b> Inc. All Rights Reserved</p>
                 </div>
+<!-- 
                 <div class="info_banner" style="padding-left:140px">
                     <textarea id="customerSend" name="board_txt" class="form-control" rows="8" cols="40" placeholder="불편사항이나 제안사항  이 있으신가요?      쿡스타그램에 전하고 싶은 의견을 남겨주세요."></textarea>
                     <button class="form_control" >의견제출</button>

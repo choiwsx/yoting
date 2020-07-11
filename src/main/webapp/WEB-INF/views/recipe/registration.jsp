@@ -23,7 +23,7 @@
             path="categoryNo" >카테고리</form:label>
         
         <form:select
-            path="categoryNo" >
+            path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
             <form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
@@ -71,7 +71,7 @@
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
-	        <hr />
+	        <hr/>
 	
 	        </div>
 	        <form:hidden path="contentList[${vs.index}].stepNo" value="${vs.count }"/>
@@ -161,7 +161,23 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
  
 var filePath=$('input[type=file');
 var photoList=$(".photo");
- 
+
+$(".photo").on("click", "i", function(e){
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	console.log(targetFile);
+	
+	$.ajax({
+		url: '/deleteFile',
+		data: {fileName: targetFile, type:type},
+		dataType : 'text',
+		type: 'Post',
+		success:function(result){
+			alert(result);
+		}
+	
+	});
+});
 function upload(e) {
     var arrNum = e.id;
     var formData = new FormData();

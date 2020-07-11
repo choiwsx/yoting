@@ -35,12 +35,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 public class UploadController {
 	
 	@Autowired
-	private RecipeService service;
+	private RecipeService recipeService;
 
 	@GetMapping("/upload/uploadForm")
 	public void uploadForm() {
@@ -50,6 +51,7 @@ public class UploadController {
 	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration", "/upload/test"})
 	public void uploadAjax(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
+//		log.info("upload ajax");
 	}
 	
 //	@PostMapping("/upload/registrationTest")

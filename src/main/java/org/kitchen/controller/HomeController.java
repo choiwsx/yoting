@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Handles requests for the application home page.
  */
+//지호: null값 유효성체크 0711
 @Controller
 public class HomeController {
 
@@ -47,6 +48,8 @@ public class HomeController {
       String formattedDate = dateFormat.format(date);
       RecipeVO latestRecipe = recipeService.getLatestRecipe();
       UserVO author = new UserVO();
+      if(recipeService.getList() == null) return wrongAccess(model);
+      if(latestRecipe == null) return wrongAccess(model);
       if(latestRecipe!=null) {
     	  author = userService.getUserByNo(latestRecipe.getUserNo());
       }
@@ -79,5 +82,26 @@ public class HomeController {
    public void getError() {
       
    }
+   
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
+	}
+
+	private boolean isNumeric(String no) {
+		try {
+			double d = Double.parseDouble(no);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 }
 
