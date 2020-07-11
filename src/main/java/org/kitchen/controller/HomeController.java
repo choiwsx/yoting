@@ -43,16 +43,13 @@ public class HomeController {
    public String home(Locale locale, Model model, Criteria cri) {
       logger.info("Welcome home! The client locale is {}.", locale);
       logger.info("YO! Welcome home! The client locale is {}.", locale);
-      Date date = new Date();
-      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-      String formattedDate = dateFormat.format(date);
+      //Date date = new Date();
+      //DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+      //String formattedDate = dateFormat.format(date);
       RecipeVO latestRecipe = recipeService.getLatestRecipe();
-      UserVO author = new UserVO();
       if(recipeService.getList() == null) return wrongAccess(model);
       if(latestRecipe == null) return wrongAccess(model);
-      if(latestRecipe!=null) {
-    	  author = userService.getUserByNo(latestRecipe.getUserNo());
-      }
+      UserVO author = userService.getUserByNo(latestRecipe.getUserNo());
       model.addAttribute("latestRecipe", latestRecipe);
       model.addAttribute("author", author);
 //      model.addAttribute("tag",recipeService.getTagNameList());

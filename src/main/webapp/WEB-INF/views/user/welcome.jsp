@@ -16,14 +16,13 @@
 <h1>새회원 정보</h1>
 <label>userNo</label> <c:out value="${user.userNo}" /><br>
 <label>userId</label> <c:out value="${user.userId}" /><br>
-<label>userPwd</label> <c:out value="${user.userPwd}" /><br>
+<label>userNickName</label> <c:out value="${user.nickName}" /><br>
 <label>userEmail</label> <c:out value="${user.email}" /><br>
 <label>userEmailAuth</label> <c:out value="${user.emailAuth}" /><br>
-<label>userProfilePhoto</label> <c:out value="${user.profilePhoto}" /><br>
+<label>userProfilePhoto</label> <img src='<c:out value="${user.profilePhoto}" />' onerror="imgError(this);" ><br>
 <label>userWeb</label> <c:out value="${user.webUrl}" /><br>
 <label>userBio</label> <c:out value="${user.bio}" /><br>
 <label>userEmailSub</label> <c:out value="${user.emailSub}" /><br>
-<label>userPrivacy</label> <c:out value="${user.privacy}" /><br>
 <label>userStatus</label> <c:out value="${user.status}" /><br>
 </div>
 

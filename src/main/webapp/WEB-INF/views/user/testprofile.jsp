@@ -27,7 +27,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 		</div>
 			<div>
 				<a href="1"><img src="<c:out value="${user.profilePhoto}"/>"
-					width="300" height="300" /></a>
+					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
 				<c:if test="${keyword == null && empty recipeList}">
@@ -71,7 +71,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 	</form>
 	<c:forEach items="${recipeList}" var="recipe">
 			<a href='/recipe/detail?rno=<c:out value="${recipe.rno} " />' class="rno" >
-			<img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" />
+			<img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" onerror="imgError(this);" />
 			<c:out value="${recipe.title}" /> </a>
 			<a href='recipe/del?rno=<c:out value="${recipe.rno} " />'></a>
 	</c:forEach>

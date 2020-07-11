@@ -183,6 +183,7 @@ public class SearchServiceImpl implements SearchService {
 		return categoryMapper.read();
 	}
 
+	//실패.안됑
 	@Override
 	public List<SimpleProfileDTO> getHotUserList(int length) {
 		// TODO Auto-generated method stub

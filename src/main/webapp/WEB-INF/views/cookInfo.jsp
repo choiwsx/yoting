@@ -13,8 +13,8 @@
 <div style="margin-left :50px">
 <h1>안녕하세요~! 저희가 만들었어요~!</h1>
 <div style="display: inline-flex;">
-<img src="/resources/upload/CookPeople.jpg" style="width:700px; height:500px;">
-<img src="/resources/upload/CookPeople2.jpg" style="width:700px; height:500px;">
+<img src="/resources/upload/CookPeople.jpg" style="width:700px; height:500px;" onerror="imgError(this);" >
+<img src="/resources/upload/CookPeople2.jpg" style="width:700px; height:500px;" onerror="imgError(this);" >
 </div>
 </div>
 </body>

@@ -37,8 +37,8 @@
             <div class="info_inner">
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
-                        <a href="/cookInfo" target="_blank">회사소개</a><span>|</span>
-                        <!-- 
+                        <a href="/cookInfo" target="_blank">회사소개</a>
+                        <!-- <span>|</span>
                            광고문의<span>|</span>
                            개인정보처리방침<span>|</span>
                            이용약관 <span>|</span>
@@ -61,11 +61,13 @@
                     <button class="form_control" >의견제출</button>
                     <p class="noti">개별회신을 원하시면 <a href="#" style="text-decoration:underline; color:#666;">여기</a>에 문의하세요.</p>
                 </div>
+                -->
             </div>
         </div>
-         -->
+         
         <div class="footer" id="name_footer">
             <p style="padding-top: 17px;">Cookstagram Since 2020</p>
+        </div>
         </div>
     </footer>
 </div>

@@ -69,7 +69,7 @@
 	<c:forEach items="${profile.recipes}" var="recipe">
 	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 200px; height: 100px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
-					width="100" height="100" /></a></div>
+					width="100" height="100"  onerror="imgError(this);"  /></a></div>
 						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>

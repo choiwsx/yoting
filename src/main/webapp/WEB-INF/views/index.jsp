@@ -76,9 +76,9 @@
                </c:if>
 
 
-        <div id="side_banner" style="grid-area: b; background-color:white">
         <c:if test="${!empty list }">
-            <h3 style="text-align: center;">매주 갱신 추천특집!</h3>
+                <div id="side_banner" style="grid-area: b; background-color:white">
+            <h3 style="text-align: center;">다양한 레시피!</h3>
              <c:forEach items="${list}" var="recipe">
             <div class="tieup_list">
                 <div class="tieup_list_holder" data-ad-slot="pc-tieup-text" data-ad-capacity="15" data-ad-displayed="1" >
