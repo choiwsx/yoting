@@ -15,14 +15,14 @@
 <h1>회원 가입</h1>
 
 <div id="message" style="height: 70px;">
-<c:if test="${result ne null }"><c:out value="${result }" /> </c:if>
+<c:out value="${result }" default="" /> 
 </div>
 <div class="form">
 <form name="form" action="/user/registration" method="POST" enctype="utf8">
 <div>모두 필수 입력 항목입니다.</div>
     <div>
         <label>아이디</label>
-        <input type="text" name="userId" autocomplete="on" <c:if test="${empty user }"><c:out value='value="${user.userId }" escapeXml="false"'  /> </c:if> />
+        <input type="text" name="userId" autocomplete="on" value="<c:out value="${user.userId }" default=""  />"  />
         <label>※영문 알파벳과 숫자를 조합해 3~12자로 구성. 대,소문자 구분 없음.</label>
     </div>
     <div>
@@ -36,7 +36,7 @@
     </div>
     <div>
         <label>이메일</label>
-        <input type="text" name="email" autocomplete="on"/>
+        <input type="text" name="email" autocomplete="on" value="<c:out value="${user.email }" default=""  />" />
         <label>※이메일 인증을 위해 정확한 메일 주소를 입력해 주세요.</label>
     </div>
     <div>

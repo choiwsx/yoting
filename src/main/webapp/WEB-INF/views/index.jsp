@@ -96,7 +96,6 @@
         <div id="ranking_recipe" style="grid-area: c; background-color: orange;">
         </div>
         <div id="hot_recipe" style="grid-area: e; background-color: khaki;"></div>
-    </div>
 
 <%@ include file="includes/footer.jsp"%>
 </body>

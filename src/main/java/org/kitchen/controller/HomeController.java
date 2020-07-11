@@ -19,21 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-import lombok.extern.log4j.Log4j;
-
-
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	private RecipeService recipeService;
-	@Autowired
-	private UserService userService;
+   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+   
+   @Autowired
+   private RecipeService recipeService;
+   @Autowired
+   private UserService userService;
 
 
    /**
@@ -85,5 +82,4 @@ public class HomeController {
 		
 	}
 }
-
 
