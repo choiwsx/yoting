@@ -77,7 +77,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
    </c:forEach>
 
 
-
+<%@ include file="../includes/footer.jsp"%>
 </body>
 
 <script type="text/javascript">

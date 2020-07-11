@@ -54,53 +54,54 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-	var form = $("form[name='form']");
-	
-	function button() {
-		var str = "";
-		if(!validateId()) {
-			str += `아이디가 형식에 맞지 않습니다.\n`;			
-		}
-		if(!validatePassword()) {
-			str += `비밀 번호가 형식에 맞지 않습니다.\n`;
-		} else if(!validateSecondPassword()) {
-			str += `비밀 번호가 서로 일치하지 않습니다.\n`;
-		}	
-		if(!validateEmail()) {
-			str += `이메일 형식을 올바르게 입력해주세요.\n`;
-		}
-		if(str==="") {
-			form.submit();
-			return;
-		}
-		$("#message").html(str).wrap('<pre />');		
-	}
-	
-	function validateId() {
-		var id = $("input[name='userId']").val();
-		const re = /^[a-zA-Z0-9]{3,12}$/;
-		return re.test(id);
-	}
-	
-	function validatePassword() {
-		var pwd = $("input[name='userPwd']").val();
-		const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{8,16}$/;
-		return re.test(pwd);
-	}
+   var form = $("form[name='form']");
+   
+   function button() {
+      var str = "";
+      if(!validateId()) {
+         str += `아이디가 형식에 맞지 않습니다.\n`;         
+      }
+      if(!validatePassword()) {
+         str += `비밀 번호가 형식에 맞지 않습니다.\n`;
+      } else if(!validateSecondPassword()) {
+         str += `비밀 번호가 서로 일치하지 않습니다.\n`;
+      }   
+      if(!validateEmail()) {
+         str += `이메일 형식을 올바르게 입력해주세요.\n`;
+      }
+      if(str==="") {
+         form.submit();
+         return;
+      }
+      $("#message").html(str).wrap('<pre />');      
+   }
+   
+   function validateId() {
+      var id = $("input[name='userId']").val();
+      const re = /^[a-zA-Z0-9]{3,12}$/;
+      return re.test(id);
+   }
+   
+   function validatePassword() {
+      var pwd = $("input[name='userPwd']").val();
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{8,16}$/;
+      return re.test(pwd);
+   }
 
-	function validateSecondPassword() {
-		var pwd = $("input[name='userPwd']").val();
-		var pwd2 = $("input[name='pwd2']").val();
-		return pwd===pwd2;
-	}
-	
-	function validateEmail() {
-		var email = $("input[name='email']").val();
-	  const re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-	  return re.test(email);
-	}
-	
+   function validateSecondPassword() {
+      var pwd = $("input[name='userPwd']").val();
+      var pwd2 = $("input[name='pwd2']").val();
+      return pwd===pwd2;
+   }
+   
+   function validateEmail() {
+      var email = $("input[name='email']").val();
+     const re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+     return re.test(email);
+   }
+   
 
 </script>
+<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

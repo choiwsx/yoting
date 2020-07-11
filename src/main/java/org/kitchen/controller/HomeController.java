@@ -57,10 +57,11 @@ public class HomeController {
 		model.addAttribute("list", recipeService.getList());
 		
 		model.addAttribute("serverTime", formattedDate);
+		
 		model.addAttribute("list", recipeService.getList());
 		model.addAttribute("last", recipeService.get(rno));
 		model.addAttribute("lastUser", userService.getUserByNo(user));
-		
+		model.addAttribute("getList", recipeService.getList().subList(0, 12));
 		return "index";
 	}
 	
