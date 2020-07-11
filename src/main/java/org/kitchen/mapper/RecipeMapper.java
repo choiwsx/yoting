@@ -60,4 +60,6 @@ public interface RecipeMapper {
 	public Long getUserNoByRno(Long rno);
 
 	public List<TagVO> getTagNameList();
+	
+	public Long getLatestRno();
 }
