@@ -49,7 +49,7 @@ public class UserController {
 	public String registrationForm(Model model, HttpSession session) {
 		//로그인 상태면 가입 막기
 		if( session.getAttribute("userNo")!=null ) {
-			return wrongAccess(model);
+			return "redirect:/";
 		}
 		return "/user/registration";
 	}
@@ -269,7 +269,7 @@ public class UserController {
 		//로그인 확인
 		UserVO result = userService.tempLogin(user);
 		if(result == null) {
-			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
+			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.2222");
 			return "/user/login";
 		}
 		//회원 상태 확인
