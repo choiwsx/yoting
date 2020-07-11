@@ -55,7 +55,7 @@
                 <img src="<c:out value='${last.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                 </a>
             </div>
-        <div id="today_info" style="margin-left: 40px;">
+        <div id="today_info" style="margin-left: 40px; ">
             <div id="today_date" style="float: left; width: 120px; height: 80px;" >
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
