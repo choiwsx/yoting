@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 @RequestMapping("/recipe/*")
@@ -30,6 +31,7 @@ public class RecipeController {
 
 	@PostMapping("/registration")
 	public String register(RecipeVO recipe, RedirectAttributes rttr) {
+		if(recipe == null) return "/error";
 		recipeService.register(recipe);
 		rttr.addFlashAttribute("result", recipe.getRno());
 		return "redirect:/user/mkitchen";
@@ -90,6 +92,7 @@ public class RecipeController {
    
    @GetMapping("/modiRecipe")
    public String modiRecipe(Model model, String rno, HttpSession session) {
+	  if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
       if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
          return wrongAccess(model);
@@ -106,12 +109,12 @@ public class RecipeController {
    
    @PostMapping("/modiRecipe")
    public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
+	  if(recipe==null) return wrongAccess(model);
       log.info("!!recipe!!!"+recipe.getRno());
       Long userNo = recipe.getUserNo();
       if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
          return wrongAccess(model);
       }
-      if(recipe==null) return wrongAccess(model);
       if(recipeService.get(recipe.getRno())==null) {
          model.addAttribute("result", "수정할 레시피가 없어요");
          return "/error";
@@ -142,12 +145,14 @@ public class RecipeController {
 
    @GetMapping("detail")
    public String detail(Model model, String rno, HttpSession session) {
+	  if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
       }
       Long rnoLong = Long.parseLong(rno);
       RecipeVO recipe = recipeService.get(rnoLong);
+      if(recipe == null) return wrongAccess(model);
       model.addAttribute("tag",recipeService.getTagNameList());
       model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
       model.addAttribute("recipe", recipe);
@@ -162,6 +167,7 @@ public class RecipeController {
 
    @GetMapping("del")
    public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr ) {
+	  if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);

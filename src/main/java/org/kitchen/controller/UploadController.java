@@ -35,12 +35,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 public class UploadController {
 	
 	@Autowired
-	private RecipeService service;
+	private RecipeService recipeService;
 
 	@GetMapping("/upload/uploadForm")
 	public void uploadForm() {
@@ -256,6 +257,27 @@ public class UploadController {
 		// TODO Auto-generated method stub
 		model.addAttribute("result", "잘못된 접근입니다.");
 		return "/error";
+	}
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
+	}
+
+	private boolean isNumeric(String no) {
+		try {
+			double d = Double.parseDouble(no);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 	
 }                                                       

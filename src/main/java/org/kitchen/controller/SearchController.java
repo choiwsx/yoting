@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 @RequestMapping("/search/*")
@@ -25,8 +26,9 @@ public class SearchController {
 	@Autowired
 	RecipeService recipeService; 
 	@GetMapping("/result")
-	public void searchList(Criteria cri, Model model) {
+	public String searchList(Criteria cri, Model model) {
 		
+		if(cri == null) { return wrongAccess(model); }
 		String type = cri.getType();
 		String more = cri.getWhere();
 		System.out.println("more@@@" + more);
@@ -50,6 +52,7 @@ public class SearchController {
 		}
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
 		log.info("list : " + cri);
+		return "/search/result";
 	}
 
 	@GetMapping("/user")
@@ -58,7 +61,8 @@ public class SearchController {
 	}
 
 	@GetMapping("/detail")
-	public void getMoreList(Criteria cri, Model model) {
+	public String getMoreList(Criteria cri, Model model) {
+		if(cri == null) { return wrongAccess(model); }
 		log.info("list : " + cri);
 		String more = cri.getWhere();
 		int total = 0;
@@ -80,10 +84,34 @@ public class SearchController {
 			break;
 		case "profile":
 			List<RecipeVO> list = searchService.searchUserRecipeList(cri);
+			if(list == null) { return wrongAccess(model); }
 			model.addAttribute("moreList", list);
 			total = list.size();
 		}
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		return "/search/detail";
+	}
+	
+
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
+	}
+
+	private boolean isNumeric(String no) {
+		try {
+			double d = Double.parseDouble(no);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 }
