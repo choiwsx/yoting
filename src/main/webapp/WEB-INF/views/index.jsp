@@ -57,9 +57,9 @@
             </div>
         <div id="today_info" style="margin-left: 40px; width: 554px; background-color:lightgoldenrodyellow">
             <div id="today_date" style="float: left; width: 120px; height: 80px;" >
-                <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
+                <p style="width:150px"><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
-            <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
+            <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left; margin-left:160px">
                 <a href="/recipe/detail?rno=<c:out value='${last.rno }'/>"><p><c:out value="${last.title}"/></p></a>
                 <a href="/user/profile?userId=<c:out value='${lastUser.userId }'/>">
                 <p><c:out value="${lastUser.userId}"/><span><img src="<c:out value="${lastUser.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span></p>
