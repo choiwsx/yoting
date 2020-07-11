@@ -160,7 +160,7 @@ if(session!=null) {
 	  
      var result = '<c:out value="${result}"/>';
      var rno = '<c:out value="${rno}"/>';
-
+	console.log("result@@@"+result);
      console.log('<c:out value="${userNo}"/>');
 	 checkModal(result, rno);
      history.replaceState({},null,null);

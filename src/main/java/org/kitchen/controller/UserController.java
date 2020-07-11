@@ -283,58 +283,58 @@ public class UserController {
 		} else {
 			return wrongAccess(model, "유효하지 않은 유저입니다.");
 
-      }
-   }
-   
-   @GetMapping("/logout")
-   public String logout(HttpSession session, Model model) {
-      //로그인 체크
-      if(session.getAttribute("userNo")==null) {
-         return wrongAccess(model, "로그인 상태가 아닙니다.");
-      }
-      session.removeAttribute("userNo");
-      model.addAttribute("result", "로그아웃 성공");
-      return "redirect:/";
-   }
-   
-   @GetMapping("/resendEmail")
-   public String resendEmail(HttpSession session, Model model) {
-      //로그인 상태면 인증 메일 보내는 페이지 막기
-      if( session.getAttribute("userNo")!=null ) {
-         return wrongAccess(model);
-      }
-      return "/user/resendEmail";
-   }
-   
-   @PostMapping("/resendEmail")
-   public String resendEmail(Model model, String email) {
-      //이메일 주소 유효성 검사
-      if(email.equals("")||email==null) {
-         return wrongAccess(model, "이메일 주소가 잘못입력되었습니다.");
-      }
-      //이메일이 등록된 회원것인지 검사
-      UserVO user = userService.getUserByEmail(email);
-      if(user==null) {
-         return wrongAccess(model, "이메일 주소로 등록된 사용자가 없습니다.");
-      }
-      //이메일 인증을 기다리는 회원인지 검사
-      if(user.getStatus().equals(UserStatus.PENDING)) {
-      userService.sendVerificationEmail(user);
-      model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
-      return "redirect:/";
-      } else if(user.getStatus().equals(UserStatus.ACTIVE)) {
-         return wrongAccess(model, "이미 인증을 마친 회원입니다.");
-      }
-      return wrongAccess(model, "유효하지 않은 회원입니다.");
-   }
-   
-   @RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
-   public void AutoTest(Locale locale, Model model, HttpServletRequest request,
-         HttpServletResponse resp,UserVO user) throws IOException {
-      
-      String result = request.getParameter("term");
-   
-      List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
+		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		//로그인 체크
+		if(session.getAttribute("userNo")==null) {
+			return wrongAccess(model, "로그인 상태가 아닙니다.");
+		}
+		session.removeAttribute("userNo");
+		model.addAttribute("result", "로그아웃 성공");
+		return "redirect:/";
+	}
+	
+	@GetMapping("/resendEmail")
+	public String resendEmail(HttpSession session, Model model) {
+		//로그인 상태면 인증 메일 보내는 페이지 막기
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}
+		return "/user/resendEmail";
+	}
+	
+	@PostMapping("/resendEmail")
+	public String resendEmail(Model model, String email) {
+		//이메일 주소 유효성 검사
+		if(email.equals("")||email==null) {
+			return wrongAccess(model, "이메일 주소가 잘못입력되었습니다.");
+		}
+		//이메일이 등록된 회원것인지 검사
+		UserVO user = userService.getUserByEmail(email);
+		if(user==null) {
+			return wrongAccess(model, "이메일 주소로 등록된 사용자가 없습니다.");
+		}
+		//이메일 인증을 기다리는 회원인지 검사
+		if(user.getStatus().equals(UserStatus.PENDING)) {
+		userService.sendVerificationEmail(user);
+		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
+		return "redirect:/";
+		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
+			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
+		}
+		return wrongAccess(model, "유효하지 않은 회원입니다.");
+	}
+	
+	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
+	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
+			HttpServletResponse resp,UserVO user) throws IOException {
+		
+		String result = request.getParameter("term");
+	
+		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
 
       JSONArray ja = new JSONArray();
       for (int i = 0; i < list.size(); i++) {
@@ -342,72 +342,72 @@ public class UserController {
       }
       PrintWriter out = resp.getWriter();
 
-      out.print(ja.toString());
-   }
-   
-   @GetMapping("/follow")
-   public String follow(Model model) {
-      //겟 막기
-      return wrongAccess(model);
-   }
-   
-   @PostMapping("/follow")
-   public String follow(Long followeeNo, Long followerNo, Model model) {
-      //유효성 체크
-      if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
-         return wrongAccess(model, "유효하지 않은 유저 팔로우");
-      }
-      log.info("follow########"+followeeNo+"@@@@@"+followerNo);
-      if(userService.follow(followeeNo, followerNo)) {
-      return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
-      } 
-      return wrongAccess(model, "팔로우 실패");
-   }
-   
-   @GetMapping("/unfollow")
-   public String unfollow(Model model) {
-      //겟 막기
-      return wrongAccess(model);
-   }
-   
-   @PostMapping("/unfollow")
-   public String unfollow(Long followeeNo, Long followerNo, Model model) {
-      //유효성 체크
-      if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
-         return wrongAccess(model, "유효하지 않은 유저 팔로우");
-      }
-      log.info("unfollow########"+followeeNo+"@@@@@"+followerNo);
-      if(userService.unfollow(followeeNo, followerNo)) {
-         return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
-      }
-      return wrongAccess(model, "언팔로우 실패");
-   }
-   
-   @GetMapping("/hotkitchen")
-   public void rank(Model model) {
-      model.addAttribute("list", searchService.getHotUserList(10));
-      
-   }
+		out.print(ja.toString());
+	}
+	
+	@GetMapping("/follow")
+	public String follow(Model model) {
+		//겟 막기
+		return wrongAccess(model);
+	}
+	
+	@PostMapping("/follow")
+	public String follow(Long followeeNo, Long followerNo, Model model) {
+		//유효성 체크
+		if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
+			return wrongAccess(model, "유효하지 않은 유저 팔로우");
+		}
+		log.info("follow########"+followeeNo+"@@@@@"+followerNo);
+		if(userService.follow(followeeNo, followerNo)) {
+		return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
+		} 
+		return wrongAccess(model, "팔로우 실패");
+	}
+	
+	@GetMapping("/unfollow")
+	public String unfollow(Model model) {
+		//겟 막기
+		return wrongAccess(model);
+	}
+	
+	@PostMapping("/unfollow")
+	public String unfollow(Long followeeNo, Long followerNo, Model model) {
+		//유효성 체크
+		if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
+			return wrongAccess(model, "유효하지 않은 유저 팔로우");
+		}
+		log.info("unfollow########"+followeeNo+"@@@@@"+followerNo);
+		if(userService.unfollow(followeeNo, followerNo)) {
+			return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
+		}
+		return wrongAccess(model, "언팔로우 실패");
+	}
+	
+	@GetMapping("/hotkitchen")
+	public void rank(Model model) {
+		model.addAttribute("list", searchService.getHotUserList(10));
+		
+	}
 
-   
-   private String wrongAccess(Model model) {
-      // TODO Auto-generated method stub
-      model.addAttribute("result", "잘못된 접근입니다.");
-      return "/error";
-   }
-   
-   private String wrongAccess(Model model, String string) {
-      // TODO Auto-generated method stub
-      model.addAttribute("result", string);
-      return "/error";
-   }
-   
-   private boolean isNumeric(String no) {
-      try {
-           double d = Double.parseDouble(no);
-       } catch (NumberFormatException nfe) {
-           return false;
-       }
-      return true;
-   }
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+	
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
+	}
+	
+	private boolean isNumeric(String no) {
+		try {
+	        double d = Double.parseDouble(no);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+		return true;
+	}
 }

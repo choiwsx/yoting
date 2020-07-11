@@ -105,7 +105,7 @@ public class RecipeController {
    }
    
    @PostMapping("/modiRecipe")
-   public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
+   public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
       log.info("!!recipe!!!"+recipe.getRno());
       Long userNo = recipe.getUserNo();
       if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
@@ -117,6 +117,7 @@ public class RecipeController {
          return "/error";
       }
       recipeService.modify(recipe);
+      rttr.addFlashAttribute("result", "게시물을 수정하였습니다.");
       return "redirect:/recipe/detail?rno="+recipe.getRno();
    }
 
