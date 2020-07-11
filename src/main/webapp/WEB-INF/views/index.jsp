@@ -52,7 +52,7 @@
             <h3>방금 업데이트 된 따끈따끈한 요리!</h3>
             <div id="today_photo">
                 <a href="/recipe/detail?rno=<c:out value='${last.rno }'/>">
-                <img src="<c:out value='${last.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;">
+                <img src="<c:out value='${last.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                 </a>
             </div>
         <div id="today_info" style="margin-left: 40px;">
@@ -62,7 +62,7 @@
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
                 <a href="/recipe/detail?rno=<c:out value='${last.rno }'/>"><p><c:out value="${last.title}"/></p></a>
                 <a href="/user/profile?userId=<c:out value='${lastUser.userId }'/>">
-                <p><c:out value="${lastUser.userId}"/><span><img src="<c:out value="${lastUser.profilePhoto}"/>" style="width: 19px; height: 18px;"></span></p>
+                <p><c:out value="${lastUser.userId}"/><span><img src="<c:out value="${lastUser.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span></p>
                 </a>
             </div>
         </div>
