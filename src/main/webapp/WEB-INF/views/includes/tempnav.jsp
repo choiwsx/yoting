@@ -206,6 +206,7 @@ if(session!=null) {
    <button class='btn btn-default'>검색</button>
 </form>
 </div>
+<!-- 
                 <div class="search_keyword"
                   style="display: inline; font-size: 17px;">
                   <ul id="keywordDiv_1" style="text-align: left;">
@@ -240,6 +241,7 @@ if(session!=null) {
         
 
                </div>
+               -->
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
