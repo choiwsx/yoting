@@ -336,11 +336,11 @@ public class UserController {
 	
 		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
 
-		JSONArray ja = new JSONArray();
-		for (int i = 0; i < list.size(); i++) {
-			ja.add(list.get(i).getUserId());
-		}
-		PrintWriter out = resp.getWriter();
+      JSONArray ja = new JSONArray();
+      for (int i = 0; i < list.size(); i++) {
+         ja.add(list.get(i).getUserId());
+      }
+      PrintWriter out = resp.getWriter();
 
 		out.print(ja.toString());
 	}
