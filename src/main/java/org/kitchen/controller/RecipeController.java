@@ -90,13 +90,8 @@ public class RecipeController {
 
 	@GetMapping("/modiRecipe")
 	public String modiRecipe(Model model, String rno, HttpSession session) {
-<<<<<<< HEAD
-		// 게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
-		if (rno == null || rno.equals("") || !isNumeric(rno)) {
-=======
 		//게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
 		if(rno==null  || rno.equals("") || !isNumeric(rno)) {
->>>>>>> ba603f2d1ec0ee7230c1d28adb073088361dec9b
 			return wrongAccess(model);
 		}
 		try {
@@ -143,22 +138,6 @@ public class RecipeController {
 
 	@GetMapping("/list")
 	public String list(String categoryNo, Model model) {
-<<<<<<< HEAD
-		// 카테고리 없으면 그냥 전체 리스트
-		if (categoryNo == null) {
-			model.addAttribute("list", recipeService.getList());
-		} else {
-			// 카테고리 넘버 공백||숫자 유효성 체크
-			if (categoryNo.equals("") || !isNumeric(categoryNo)) {
-				return wrongAccess(model);
-			}
-			// 카테고리 있으면 카테고리 리스트
-			Long categoryNoLong = Long.parseLong(categoryNo);
-			model.addAttribute("category", recipeService.getCategoryNamebyPrevCode(categoryNoLong));
-			model.addAttribute("list", recipeService.getCategoryCode(categoryNoLong));
-		}
-		model.addAttribute("tag", recipeService.getTagNameList());
-=======
 		//카테고리 없으면 그냥 전체 리스트
 		if( categoryNo==null ) {
 			model.addAttribute("list", recipeService.getList());
@@ -173,7 +152,6 @@ public class RecipeController {
 			model.addAttribute("list",recipeService.getCategoryCode(categoryNoLong));
 		}
 		model.addAttribute("tag",recipeService.getTagNameList());		
->>>>>>> ba603f2d1ec0ee7230c1d28adb073088361dec9b
 		return "/recipe/list";
 	}
 

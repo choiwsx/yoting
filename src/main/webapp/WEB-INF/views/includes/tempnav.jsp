@@ -176,14 +176,8 @@ if(session!=null) {
                 <li><button onclick="location.href='/user/registration'"class='button'>가입하기</button></li>
                 </c:if>
                  <c:if test ="${not empty userNo}"><li><button onclick="location.href='/user/logout'"class='button'>로그아웃</button></li></c:if>
-<<<<<<< HEAD
               <!--   <li><button class='button'>서비스 목록</button></li> -->
                 
-=======
-                 <!--
-                <li><button class='button'>서비스 목록</button></li>
-                 -->
->>>>>>> ba603f2d1ec0ee7230c1d28adb073088361dec9b
             </ul>
         </div>
         <div id="header_mid"  data-group="main"> 
