@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+// 지호 : null값 유효성체크 0711
 @RequestMapping("/admin/*")
 @Controller
 public class AdminController {
@@ -28,6 +29,11 @@ public class AdminController {
 		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) ) {
 			return wrongAccess(model);
 		}
+		
+		if(userService.getTotalList() == null)
+		{
+			return "/error";
+		}
 		model.addAttribute("list", userService.getTotalList());
 		return "/admin/userList";
 	}
@@ -39,6 +45,11 @@ public class AdminController {
 		}
 		if(! ( ((Long)session.getAttribute("userNo")).equals(1L) ) ) {
 			return wrongAccess(model);
+		}
+		
+		if(userService.getTotalList() == null)
+		{
+			return "/error";
 		}
 		model.addAttribute("list", recipeService.getList());
 		return "/admin/recipeList";
@@ -57,6 +68,11 @@ public class AdminController {
 			}
 		} catch (NumberFormatException e) {
 			model.addAttribute("result", "잘못된 접근입니다.");
+			return "/error";
+		}
+		
+		if(userService.getUserByNo(Long.valueOf(userNo)) == null)
+		{
 			return "/error";
 		}
 		model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
@@ -91,6 +107,7 @@ public class AdminController {
 		if(userNo==null) return wrongAccess(model);
 		try {
 			userService.deleteUserByNo(Long.valueOf(userNo));
+			
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
 			model.addAttribute("result", "삭제 불가 유저에요");

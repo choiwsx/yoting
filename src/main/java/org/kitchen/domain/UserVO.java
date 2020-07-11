@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
@@ -29,4 +28,102 @@ public class UserVO {
 		this.privacy = privacy;
 		return this;
 	}
+
+	public Long getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(Long userNo) {
+		this.userNo = userNo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId.toUpperCase();
+	}
+
+	public String getUserPwd() {
+		return userPwd;
+	}
+
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email.toUpperCase();
+	}
+
+	public boolean isEmailAuth() {
+		return emailAuth;
+	}
+
+	public void setEmailAuth(boolean emailAuth) {
+		this.emailAuth = emailAuth;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+
+	public String getWebUrl() {
+		return webUrl;
+	}
+
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
+	}
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
+	public boolean isEmailSub() {
+		return emailSub;
+	}
+
+	public void setEmailSub(boolean emailSub) {
+		this.emailSub = emailSub;
+	}
+
+	public boolean isPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(boolean privacy) {
+		this.privacy = privacy;
+	}
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+	
+	
 }
