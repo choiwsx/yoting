@@ -57,9 +57,9 @@
                 <img src="<c:out value='${latestRecipe.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                 </a>
             </div>
-        <div id="today_info" style="margin-left: 40px;">
-            <div id="today_date" style="float: left; width: 120px; height: 80px;" >
-                <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${latestRecipe.regDate}"/></p>
+        <div id="today_info" style="margin-left: 40px; background-color:lightgoldenrodyellow; width:554px">
+            <div id="today_date" style="float: left; width: 120px; height: 80px; " >
+                <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
                 <a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>"><p><c:out value="${latestRecipe.title}"/></p></a>
