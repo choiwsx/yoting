@@ -105,7 +105,6 @@ public class RecipeController {
 		if(categoryNo==null) {
 			model.addAttribute("list", recipeService.getList());
 		}else {
-//			List<CategoryVO> categoryList = recipeService.getCategoryNamebyPrevCode(categoryNo);
 			model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNo));
 			model.addAttribute("list",recipeService.getCategoryCode(categoryNo));
 		}

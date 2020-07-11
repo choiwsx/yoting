@@ -28,7 +28,7 @@ public interface UserService {
 
 	void sendVerificationEmail(UserVO user);
 
-	boolean verifyEmail(String userno, String key);
+	boolean verifyEmail(Long userNo, String key);
 
 	boolean activateUser(Long userNo);
 

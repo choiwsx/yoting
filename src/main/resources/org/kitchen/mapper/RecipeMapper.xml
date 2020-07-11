@@ -34,13 +34,10 @@
    <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" />
 </resultMap>
 
-<<<<<<< HEAD
-=======
 <resultMap id="tag"  type="org.kitchen.domain.TagVO">
 <result property="tagNo" column="t_num"/>
 <result property="tagName" column="t_content"/>
 </resultMap>
->>>>>>> 6d7bc81339cf538a7bdb2fc526712c6bf9d194f4
 
 <insert id="insert">
    <selectKey keyProperty="rno" order="BEFORE"
@@ -306,12 +303,14 @@ where
 </select>
 
 <select id="getCategoryCode" resultMap="recipe">
+
     select *
 	from 
-	tbl_recipe a inner join tbl_category b on a.c_code= b.prev_c_code
-	where 
-	a.c_code= #{categoryNo,jdbcType=INTEGER} or 
-    b.c_code = #{categoryNo,jdbcType=INTEGER}
+	 tbl_recipe
+    where c_code in 
+    (select c_code from tbl_category
+    where c_code = #{categoryNo,jdbcType=INTEGER} or prev_c_code = #{categoryNo,jdbcType=INTEGER})
+
 </select>
 
 <select id="searchUserRecipeList" resultMap="recipe">
