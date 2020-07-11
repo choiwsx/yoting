@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
 public class UserVO {
 	private Long userNo;
 	private String userId;
@@ -42,7 +41,7 @@ public class UserVO {
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId.toUpperCase();
+		this.userId = userId.toLowerCase();
 	}
 
 	public String getUserPwd() {
@@ -58,7 +57,7 @@ public class UserVO {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.toUpperCase();
+		this.email = email.toLowerCase();
 	}
 
 	public boolean isEmailAuth() {
@@ -122,6 +121,23 @@ public class UserVO {
 	}
 
 	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+
+	public UserVO(Long userNo, String userId, String userPwd, String email, boolean emailAuth, String nickName,
+			String profilePhoto, String webUrl, String bio, boolean emailSub, boolean privacy, UserStatus status) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId.toLowerCase();
+		this.userPwd = userPwd;
+		this.email = email.toLowerCase();
+		this.emailAuth = emailAuth;
+		this.nickName = nickName;
+		this.profilePhoto = profilePhoto;
+		this.webUrl = webUrl;
+		this.bio = bio;
+		this.emailSub = emailSub;
+		this.privacy = privacy;
 		this.status = status;
 	}
 	

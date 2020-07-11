@@ -30,8 +30,7 @@ public class SearchController {
 		
 		if(cri == null) { return wrongAccess(model); }
 		String type = cri.getType();
-		String more = cri.getWhere();
-		System.out.println("more@@@" + more);
+		//String more = cri.getWhere();
 		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("category", searchService.read());
 		switch (type) {
@@ -78,9 +77,7 @@ public class SearchController {
 			break;
 		case "tag":
 			model.addAttribute("moreList", searchService.moreTagList(cri));
-			System.out.println("cri=" + cri);
 			total = (int) searchService.getTotalTagCount(cri);
-			System.out.println("totalcount=" + total);
 			break;
 		case "profile":
 			List<RecipeVO> list = searchService.searchUserRecipeList(cri);

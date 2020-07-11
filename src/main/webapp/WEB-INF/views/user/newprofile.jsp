@@ -19,7 +19,7 @@
     <div>
         <label>닉네임</label>
         <input type="text" name="nickName" />
-        <label>필수. 최대 80바이트.</label>
+        <label>최대 20바이트.</label>
     </div>
     <div>
         <label>프사</label>
@@ -32,10 +32,12 @@
     <div>
         <label>개인홈피주소</label>
         <input type="text" name="webUrl" />
+        <label>최대 200바이트.</label>
     </div>
     <div>
         <label>소개글</label>
         <input type="text" name="bio" />
+        <label>최대 500바이트.</label>
     </div>
     <div>
         <label>프로필공개여부</label>
@@ -46,24 +48,29 @@
 <button type="button" onclick="button();">프로필 생성하고 가입 완료</button>
 </form>
  
-
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  
  <script>
  
 	function button() {
 		var str = "";
 		var nickName = $("input[name='nickName']").val();
-		if(nickName==="") {
-			str += `닉네임은 필수입니다.\n`;	
-		} else if(getTextLength(nickName)>80) {
-			str += `닉네임이 80바이트를 초과했습니다.\n`;			
+		var webUrl = $("input[name='webUrl']").val();
+		var bio = $("input[name='bio']").val();
+		if(uniLen(nickName)>20) {
+			str += `닉네임이 20바이트를 초과했습니다. (`+uniLen(nickName)+`/20 바이트)\n`;			
 		}
+		if(uniLen(webUrl)>200) {
+			str += `닉네임이 200바이트를 초과했습니다. (`+uniLen(webUrl)+`/200 바이트)\n`;			
+		}
+		if(uniLen(bio)>500) {
+			str += `닉네임이 500바이트를 초과했습니다. (`+uniLen(bio)+`/500 바이트)\n`;			
+		}
+		
 		if(str==="") {
 			$("#form").submit();
 			return;
 		}
-		$("#message").html(str).wrap('<pre />');		
+		$("#message").html(str);		
 	}
  
  var regex = new RegExp("(.*?)\.(jpg|png|img)$");
@@ -135,17 +142,10 @@
 	    return true;
 	 }
 	
-	function getTextLength(str) {
-        var len = 0;
-        for (var i = 0; i < str.length; i++) {
-            if (escape(str.charAt(i)).length == 6) {
-                len++;
-            }
-            len++;
-        }
-        return len;
-    }
 
+	function uniLen(s) {
+	    return [...s].length
+	}
 	
  </script>
 </body>

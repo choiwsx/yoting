@@ -140,9 +140,7 @@ public class SearchServiceImpl implements SearchService {
 				String stringToConvert = String.valueOf(arr[i]);
 				Long convertedLong = Long.parseLong(stringToConvert);
 				rnoList.add(convertedLong);
-//			recipeList = recipeMapper.getRecipeByRno(listArr);
 			}
-			System.out.println("@@@@@@@@@" + rnoList);
 			if (rnoList.size() > 0)
 				return recipeMapper.getRecipeByRno(rnoList);
 		}

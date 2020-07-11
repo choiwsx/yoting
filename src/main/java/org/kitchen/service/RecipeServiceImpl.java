@@ -28,6 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
    
    @Override
    public Long register(RecipeVO recipe) {
+	   
       recipeMapper.insert(recipe);
       recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
       recipe.getContentList().forEach(a ->registerCon(a));
@@ -119,7 +120,6 @@ public class RecipeServiceImpl implements RecipeService {
    public void register_w(RecipeVO recipe)
    {
       Long rno = register(recipe);
-      log.info("@@@rno"+rno);
       
       for(int i=0; i<recipe.getContentList().size(); i++)
       {
@@ -150,6 +150,8 @@ public class RecipeServiceImpl implements RecipeService {
 		// TODO Auto-generated method stub
 		Long rno = recipeMapper.getLatestRno();
 		if(rno==null) return null;
+		RecipeVO tmpRecipe = recipeMapper.read(rno);
+		if(tmpRecipe==null) return null;
 		return recipeMapper.read(rno);
 	}
 
