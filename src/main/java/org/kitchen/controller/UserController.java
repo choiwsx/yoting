@@ -33,6 +33,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import lombok.extern.log4j.Log4j;
 import net.sf.json.JSONArray;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 @RequestMapping("/user/*")
@@ -56,6 +57,7 @@ public class UserController {
 	
 	@PostMapping("/registration")
 	public String validateuser(UserVO user, Model model, HttpSession session) {
+		if(user == null) return wrongAccess(model);
 		//로그인 상태면 가입 막기
 		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
@@ -95,6 +97,7 @@ public class UserController {
 	
 	@PostMapping("/newprofile")
 	public String registeruser(@ModelAttribute("user") UserVO user, Model model, SessionStatus sessionStatus, HttpSession session) {
+		if(user == null) return wrongAccess(model);
 		//로그인 상태면 가입 막기
 		if( session.getAttribute("userNo")!=null ) {
 			return wrongAccess(model);
@@ -240,8 +243,8 @@ public class UserController {
 	
 	@GetMapping("/search")
 	public String profileSearch(Model model, String userNo, Criteria cri) {	
-		//유저 넘버 잘못됐으면 . 공백||널||숫자 체크
-		if(userNo==null || userNo.equals("") || !isNumeric(userNo)) {
+		//유저 넘버 잘못됐으면 . 공백||널||숫자 체크, cri 널값 체크
+		if(userNo==null || cri == null || userNo.equals("") || !isNumeric(userNo)) {
 			return wrongAccess(model);
 		}
 		model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
@@ -273,6 +276,7 @@ public class UserController {
 			return "/user/login";
 		}
 		//회원 상태 확인
+		if(result.getStatus() == null) return wrongAccess(model);
 		if(result.getStatus().equals(UserStatus.ACTIVE)) {
 			//유효 회원이면
 			session.setAttribute("userNo", result.getUserNo());
@@ -317,6 +321,7 @@ public class UserController {
 			return wrongAccess(model, "이메일 주소로 등록된 사용자가 없습니다.");
 		}
 		//이메일 인증을 기다리는 회원인지 검사
+		if(user.getStatus() == null) return wrongAccess(model);
 		if(user.getStatus().equals(UserStatus.PENDING)) {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
@@ -335,20 +340,24 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
-	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
+	public String AutoTest(Locale locale, Model model, HttpServletRequest request,
 			HttpServletResponse resp,UserVO user) throws IOException {
 		
 		String result = request.getParameter("term");
 	
 		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
+		if(list == null) return wrongAccess(model);
 
       JSONArray ja = new JSONArray();
+      if(ja == null) return wrongAccess(model);
       for (int i = 0; i < list.size(); i++) {
          ja.add(list.get(i).getUserId());
       }
+      if(resp == null) return wrongAccess(model);
       PrintWriter out = resp.getWriter();
 
 		out.print(ja.toString());
+		return "/user/autocomplete";
 	}
 	
 	@GetMapping("/follow")
@@ -359,6 +368,7 @@ public class UserController {
 	
 	@PostMapping("/follow")
 	public String follow(Long followeeNo, Long followerNo, Model model) {
+		if(userService.getUserByNo(followeeNo) == null) return wrongAccess(model);
 		//유효성 체크
 		if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
 			return wrongAccess(model, "유효하지 않은 유저 팔로우");
@@ -378,6 +388,7 @@ public class UserController {
 	
 	@PostMapping("/unfollow")
 	public String unfollow(Long followeeNo, Long followerNo, Model model) {
+		if(userService.getUserByNo(followeeNo) == null) return wrongAccess(model);
 		//유효성 체크
 		if(!userService.isValidUser(followerNo) || !userService.isValidUser(followeeNo)) {
 			return wrongAccess(model, "유효하지 않은 유저 팔로우");

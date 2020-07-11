@@ -51,6 +51,7 @@ public class UploadController {
 	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration", "/upload/test"})
 	public void uploadAjax(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
+//		log.info("upload ajax");
 	}
 	
 //	@PostMapping("/upload/registrationTest")
@@ -252,26 +253,10 @@ public class UploadController {
 	}
 	
 	
-	
 	private String wrongAccess(Model model) {
 		// TODO Auto-generated method stub
 		model.addAttribute("result", "잘못된 접근입니다.");
 		return "/error";
-	}
-
-	private String wrongAccess(Model model, String string) {
-		// TODO Auto-generated method stub
-		model.addAttribute("result", string);
-		return "/error";
-	}
-
-	private boolean isNumeric(String no) {
-		try {
-			double d = Double.parseDouble(no);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
 	}
 	
 }                                                       
