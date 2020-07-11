@@ -130,9 +130,13 @@ public class RecipeServiceImpl implements RecipeService {
 
 
    @Override
-   public Long isMyRecipe(Long rno) {
+   public boolean isMyRecipe(Long rno, Long userNo) {
       // TODO Auto-generated method stub
-      return recipeMapper.getUserNoByRno(rno);
+	  Long authorNo = recipeMapper.getUserNoByRno(rno);
+	  if(authorNo!=null) {
+		  return authorNo.equals(userNo);
+	  }
+	  return false;
    }
 
 

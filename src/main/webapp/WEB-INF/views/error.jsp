@@ -14,7 +14,7 @@
 
 </h3>
 <c:if test ="${empty userNo}">
-<input type="button" value="로그인" onclick="location.href='/'">
+<input type="button" value="로그인" onclick="location.href='/user/login'">
 </c:if>
 <input type="button" value="홈으로" onclick="location.href='/'">
 <input type="button" value="뒤로가기" onclick="history.back(-1);">

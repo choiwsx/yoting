@@ -96,6 +96,12 @@ $("#searchBtn").on("click", function(e){
 		title[i].style.display='block';
 		}
 	}
+	$("#initBtn").on("click",function(e){
+		e.preventDefault();
+		 for(i=0;i<title.length;i++){
+			 title[i].style.display='block';
+		 }
+	});
 });
 });
 </script>
