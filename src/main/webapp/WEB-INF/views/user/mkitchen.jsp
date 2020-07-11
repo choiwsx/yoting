@@ -73,24 +73,43 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
          <div>
             <label>자기소개:</label>${user.bio}
          </div>
-   </div>
-   <form action="/user/search" method="get">
-      <input type="text" name="keyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색' value='<c:out value="${keyword}" />'>
-      <input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
-      <input type="hidden" name="where" value="profile">
-      <button type="submit">검색</button>      
-   </form>
-   <c:forEach items="${recipeList}" var="recipe">
-         <a href='/recipe/detail?rno=<c:out value="${recipe.rno} " />' class="rno" >
-         <img src="<c:out value="${recipe.thumbnail}"/>" width="140" height="120" onerror="imgError(this);"  />
-         <c:out value="${recipe.title}" /> </a>
-         <a href='recipe/del?rno=<c:out value="${recipe.rno} " />'></a>
-   </c:forEach>
-	
-            
-</body>
+   </div> 
+   
+    <input type="text" name="recipeKeyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색'>
+		<input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
+		<input type="hidden" name="where" value="profile">
+		<button id="searchBtn">검색</button>		
+		<button id="initBtn">초기화</button>	<br>
+	<c:forEach items="${recipeList}" var="recipe">
+	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 200px; height: 100px; padding: 15px; margin: 33px; float: left;">
+	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
+					width="100" height="100" /></a></div>
+						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
+						<div><c:out value="${recipe.userNo}" /></div>
+						</div>
+	</c:forEach>
 
+<%@ include file="../includes/footer.jsp"%>
+</body>
 <script type="text/javascript">
+$(document).ready(function(){
+	let title = document.querySelectorAll("[data-title]");
+$("#searchBtn").on("click", function(e){
+	e.preventDefault();
+	var keyword = $("input[name=recipeKeyword]").val();
+    if(keyword==''){
+       alert("키워드를 입력하세요.");
+       return false;
+    }
+	for(i=0;i<title.length;i++){
+		title[i].style.display='none';
+	var titleVal = title[i].getAttribute("data-title");
+	if(!(titleVal.search(keyword)==-1)){
+		title[i].style.display='block';
+		}
+	}
+});
+});
 </script>
 
 </html>

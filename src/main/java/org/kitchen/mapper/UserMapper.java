@@ -22,6 +22,7 @@ public interface UserMapper {
 	
 	public boolean idExists(String userId);
 	public boolean emailExists(String email);
+	public boolean userExists(Long userNo);
 	
 	public boolean isPrivate(String userId);
 	

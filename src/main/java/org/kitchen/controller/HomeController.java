@@ -14,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-import lombok.extern.log4j.Log4j;
 
 
 /**
@@ -27,12 +25,12 @@ import lombok.extern.log4j.Log4j;
 @Controller
 public class HomeController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	private RecipeService recipeService;
-	@Autowired
-	private UserService userService;
+   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+   
+   @Autowired
+   private RecipeService recipeService;
+   @Autowired
+   private UserService userService;
 
 
    /**
@@ -56,15 +54,32 @@ public class HomeController {
 		model.addAttribute("list", recipeService.getList());
 		
 		model.addAttribute("serverTime", formattedDate);
+		
 		model.addAttribute("list", recipeService.getList());
 		model.addAttribute("last", recipeService.get(rno));
 		model.addAttribute("lastUser", userService.getUserByNo(user));
-		
+		model.addAttribute("getList", recipeService.getList().subList(0, 12));
 		return "index";
 	}
 	
+	@GetMapping("/cookInfo")
+	public void cookInfo() {
+		
+	}
+	
+	@GetMapping("/good")
+	public void getGood() {
+		
+	}
 
-
+	@PostMapping("/good")
+	public void postGood() {
+		
+	}
+	
+	@GetMapping("/error")
+	public void getError() {
+		
+	}
 }
-
 
