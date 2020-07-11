@@ -61,6 +61,7 @@
 	    button();
 	  };
 	});
+	
    var form = $("form[name='form']");
    
    function button() {
@@ -112,6 +113,5 @@
 	}
 
 </script>
-<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

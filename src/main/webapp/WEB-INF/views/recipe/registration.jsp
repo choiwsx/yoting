@@ -23,7 +23,7 @@
             path="categoryNo" >카테고리</form:label>
         
         <form:select
-            path="categoryNo" >
+            path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
             <form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
@@ -71,7 +71,7 @@
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
-	        <hr />
+	        <hr/>
 	
 	        </div>
 	        <form:hidden path="contentList[${vs.index}].stepNo" value="${vs.count }"/>
