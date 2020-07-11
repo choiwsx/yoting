@@ -156,6 +156,7 @@ if(session!=null) {
      <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+
   $(document).ready(function(){
 	  
      var result = '<c:out value="${result}"/>';
@@ -164,9 +165,9 @@ if(session!=null) {
      //console.log('<c:out value="${userNo}"/>');
 	 checkModal(result, rno);
      history.replaceState({},null,null);
-	  
       
   });
+  
   
   function checkModal(result, rno){
 
@@ -177,30 +178,11 @@ if(session!=null) {
     	  $(".modal-body").html(result);
       }
       if(rno!==''){
-         $(".modal-body").html("게시글 " + parseInt(rno)+ "번이 등록 되었습니다.");
+         $(".modal-body").html("레시피가 등록 되었습니다.");
       }
       $("#myModal").modal("show");
    }
-  
-  var searchForm = $("#searchForm");
-  
-  $("#searchForm button").on("click", function(e){
-     if(!searchForm.find("option:selected").val()){
-        alert("검색종류를 선택하세요.");
-        return false;
-     }
-     
-     if(!searchForm.find("input[name='keyword']").val())
-     {
-        alert("키워드를 입력하세요.");
-        return false;
-     }
-     
-     searchForm.find("input[name='pageNum']").val("1");
-     e.preventDefault();
-     searchForm.submit();
-  });
-  
+    
   
   function imgError(image) {
       image.onerror = "";
@@ -267,6 +249,7 @@ if(session!=null) {
             </div>
         </div>
         <div class="header_innerMid"  data-group="mid">
+        
             <!--검색창-->
             <div class="mid_search_wrapper">
             <div id="searchBar">
@@ -282,7 +265,7 @@ if(session!=null) {
    <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-   <button class='btn btn-default'>검색</button>
+   <button type="button" class='btn btn-default'>검색</button>
 </form>
 </div>
               <!--   <div class="search_keyword"
@@ -349,3 +332,35 @@ if(session!=null) {
         </div>
 
    
+   <script>
+   
+   var searchForm = $("#searchForm");
+   
+   $("#searchForm button").on("click", function() {
+	   button();
+   });
+   
+	$('input[type="text"]').keydown(function() {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    button();
+		  };
+		});
+	
+	function button(){
+	     if(!searchForm.find("option:selected").val()){
+	        alert("검색종류를 선택하세요.");
+	        return false;
+	     }
+	     
+	     if(!searchForm.find("input[name='keyword']").val())
+	     {
+	        alert("키워드를 입력하세요.");
+	        return false;
+	     }
+	     
+	     searchForm.find("input[name='pageNum']").val("1");
+	     searchForm.submit();
+	  };
+	
+   </script>

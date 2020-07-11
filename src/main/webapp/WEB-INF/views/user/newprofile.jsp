@@ -51,6 +51,13 @@
  
  <script>
  
+	$('input[type="text"]').keydown(function() {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    button();
+		  };
+		});
+	
 	function button() {
 		var str = "";
 		var nickName = $("input[name='nickName']").val();

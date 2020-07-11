@@ -61,6 +61,7 @@
 	    button();
 	  };
 	});
+	
    var form = $("form[name='form']");
    
    function button() {
