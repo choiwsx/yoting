@@ -109,9 +109,31 @@
 
 </ul>
 </div>
+<div class ='bigPictureWrapper'>
+	<div class='bigPicture'>
+	</div>
+</div>
+
 </body>
 
 <script type="text/javascript">
+function showImage(fileCallPath)
+{
+	//alert(fileCallPath);
+	$(".bigPictureWrapper").css("display", "flex").show();
+	$(".bigPicture")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
+	.animate({width:'100%', height:'100%'}, 500);
+}
+
+$(".bigPictureWrapper").on("click",function(e){
+	$(".bigPicture").animate({width:'0%', height:'0%'},500);
+	setTimeout(()=>{
+		$(this).hide();
+	},500);
+});
+
+
 $(document).ready(function(){
 	
 	var result = '<c:out value="${result}"/>';
