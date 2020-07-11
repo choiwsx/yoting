@@ -34,7 +34,10 @@ public interface RecipeService {
 	public void register_w(RecipeVO recipe);
 
 	public List<CategoryVO> getCategoryNamebyPrevCode(Long categoryNo);
-	public Long isMyRecipe(Long rno);
+	
+	public boolean isMyRecipe(Long rno, Long userNo);
 	
 	public List<TagVO> getTagNameList();
+	
+	public RecipeVO getLatestRecipe();
 }

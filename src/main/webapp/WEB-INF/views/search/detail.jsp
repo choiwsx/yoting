@@ -29,6 +29,7 @@
 	<h3>태그 포함 레시피 리스트</h3>
 		</c:if>
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
+			
 			<c:forEach items="${moreList}" var="recipe">
 		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
@@ -112,6 +113,23 @@
 </body>
 
 <script type="text/javascript">
+function showImage(fileCallPath)
+{
+	//alert(fileCallPath);
+	$(".bigPictureWrapper").css("display", "flex").show();
+	$(".bigPicture")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
+	.animate({width:'100%', height:'100%'}, 500);
+}
+
+$(".bigPictureWrapper").on("click",function(e){
+	$(".bigPicture").animate({width:'0%', height:'0%'},500);
+	setTimeout(()=>{
+		$(this).hide();
+	},500);
+});
+
+
 $(document).ready(function(){
 	
 	var result = '<c:out value="${result}"/>';

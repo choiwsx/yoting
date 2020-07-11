@@ -12,7 +12,7 @@
 <title>Recipe Register</title>
 </head>
 <body>
-	<form:form modelAttribute="recipe" action="result" method="post" id="form-id">
+	<form:form modelAttribute="recipe" action="registration" method="post" id="form-id">
 	   
 	
 	    <fieldset><legend>레시피 내용</legend>
@@ -120,6 +120,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
   	
+
   	if($("#categoryNo option:selected").val() == 0)
   	{
   		alert("카테고리를 선택해주세요!");
