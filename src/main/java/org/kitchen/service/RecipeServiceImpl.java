@@ -29,6 +29,7 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public Long register(RecipeVO recipe) {
 	   
+      recipeMapper.insert(recipe);
       recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
       recipe.getContentList().forEach(a ->registerCon(a));
       return recipe.getRno();

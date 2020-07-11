@@ -19,7 +19,6 @@
 	
 	    
 		<form:hidden path="userNo" value="<%=userNo%>" />
-	
         <form:label
             path="categoryNo" >카테고리</form:label>
         
@@ -68,7 +67,7 @@
 	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
 	        
 	        <form:textarea
-	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;"/>
+	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
