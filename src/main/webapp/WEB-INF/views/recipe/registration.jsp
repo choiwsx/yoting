@@ -120,6 +120,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
   	
+
   	if($("#categoryNo option:selected").val() == 0)
   	{
   		alert("카테고리를 선택해주세요!");

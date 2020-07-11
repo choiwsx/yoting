@@ -3,6 +3,7 @@ package org.kitchen.controller;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/recipe/*")
 public class RecipeController {
 
-   @Autowired
-   private RecipeService recipeService;
-   @Autowired
-   private UserService userService;
+	@Autowired
+	private RecipeService recipeService;
+	@Autowired
+	private UserService userService;
 
 	@PostMapping("/registration")
 	public String register(RecipeVO recipe, RedirectAttributes rttr) {
@@ -33,24 +34,35 @@ public class RecipeController {
 		rttr.addFlashAttribute("result", recipe.getRno());
 		return "redirect:/user/mkitchen";
 	}
-   @GetMapping("/registration")
-   public void registerform(Model model) {
-      //입력 폼에 레시피 VO만들어서 주기
-      model.addAttribute("recipe", new RecipeVO());
-   }
-   
-   @GetMapping("/result")
-   public String result(Model model) {
-      //등록 결과를 겟하려하면 오류주기
-      return wrongAccess(model);
-   }
 
-   @PostMapping("/result")
-   public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-      //레시피 등록하러 오면 recipeService에 저장하기
-      recipeService.register(recipe);
-      return recipe;
-   }
+	@GetMapping("/registration")
+	public String registerform(Model model, HttpSession session) {
+		// 입력 폼에 레시피 VO만들어서 주기
+		if ((Long) session.getAttribute("userNo") == null) {
+			return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+		}
+		Long userNo = (Long) session.getAttribute("userNo");
+		UserVO user = userService.getUserByNo(userNo);
+		if (user == null) {
+			return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+		}else
+		model.addAttribute("recipe", new RecipeVO());
+
+		return "/recipe/registration";
+	}
+
+	@GetMapping("/result")
+	public String result(Model model) {
+		// 등록 결과를 겟하려하면 오류주기
+		return wrongAccess(model);
+	}
+
+	@PostMapping("/result")
+	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+		// 레시피 등록하러 오면 recipeService에 저장하기
+		recipeService.register(recipe);
+		return recipe;
+	}
 
 //   @GetMapping("/get")
 //   public void get(Long rno, Model model) {
@@ -161,26 +173,29 @@ public class RecipeController {
          //model.addAttribute("result", "fail");
       }
 //      String referer = request.getHeader("Referer");
-      return "redirect:/user/mkitchen";
-   }
-   
-   private String wrongAccess(Model model) {
-      // TODO Auto-generated method stub
-      model.addAttribute("result", "잘못된 접근입니다.");
-      return "/error";
-   }
-   
-   private boolean isNumeric(String no) {
-      try {
-           double d = Double.parseDouble(no);
-       } catch (NumberFormatException nfe) {
-           return false;
-       }
-      return true;
-   }
-   
+		return "redirect:/user/mkitchen";
+	}
 
-   
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
+	}
+
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
+	}
+
+	private boolean isNumeric(String no) {
+		try {
+			double d = Double.parseDouble(no);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 
 //   @GetMapping("/category")
 //   public void list(Long categoryNo, Model model) {
