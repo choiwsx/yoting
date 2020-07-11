@@ -115,7 +115,11 @@ public class UserServiceImpl implements UserService {
 		if (paramKey == null) {
 			return false;
 		}
+<<<<<<< HEAD
 		String solidKey = userMapper.getVeriKey(Long.valueOf(userNo));
+=======
+		String solidKey = userMapper.getVeriKey(userNo);
+>>>>>>> 1969d2f2374f490a28c1ff463771a5617514382b
 		if (solidKey.equals(paramKey))
 			return true;
 		return false;
@@ -250,7 +254,15 @@ public class UserServiceImpl implements UserService {
 		return userMapper.countFollowing(followerNo);
 	}
 
+<<<<<<< HEAD
 
+=======
+	@Override
+	public boolean isValidUser(Long userNo) {
+		// TODO Auto-generated method stub
+		return userMapper.userExists(userNo);
+	}
+>>>>>>> 1969d2f2374f490a28c1ff463771a5617514382b
 
 	
 }

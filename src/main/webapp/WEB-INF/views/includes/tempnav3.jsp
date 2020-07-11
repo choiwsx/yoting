@@ -139,8 +139,34 @@ if(session!=null) {
 
 </style>
 
+     <!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
     
 <body>
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+         </div>
+         <div class="modal-body">처리가 완료되었습니다.</div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+         </div>
+      </div>
+   </div>
+   </div>
     <!--헤더-->
     <div class="gnb_header">
         <div class="header_innerTop">
@@ -213,14 +239,12 @@ if(session!=null) {
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
-                <c:if test ="${not empty userNo}">
                <a href="#"><img
                      src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
                      style="width: 60px; height: 60px;" alt="찜목록"></a>
                   <a href="/recipe/registration"> <img
                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
                      style="width: 60px; height: 60px;" alt="레시피등록"></a>
-                     </c:if>
          </div>
             </div>
         </div>
@@ -238,6 +262,10 @@ if(session!=null) {
             </ul>
         </div>
             </div>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -287,11 +315,22 @@ if(session!=null) {
         e.preventDefault();
         searchForm.submit();
      });
+    checkModal(result);
+      
+      function checkModal(result){
+         if(result===''){
+            return;
+         }
+         if(parseInt(result)>0){
+            $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
+         }
+         $("#myModal").modal("show");
+      }
   });
   
   function imgError(image) {
       image.onerror = "";
-      image.src = "https://img.buzzfeed.com/buzzfeed-static/static/2020-03/5/23/enhanced/25a67c968a0a/enhanced-262-1583449224-1.png?downsize=600:*&output-format=auto&output-quality=auto";
+      image.src = "/display?fileName=2020%5C07%5C10%2Fs_8d0bb1c3-d571-4c45-9046-4d9ba7aa1a6b_default.jpg";
       return true;
   }
   </script>

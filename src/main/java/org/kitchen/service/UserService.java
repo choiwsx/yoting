@@ -23,6 +23,8 @@ public interface UserService {
 	boolean isLegitUserId(String userId);
 
 	boolean isLegitUserEmail(String email);
+	
+	boolean isValidUser(Long userNo);
 
 	void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException;
 

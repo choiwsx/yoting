@@ -88,6 +88,12 @@
 	]]>
 </select>
 
+<select id="userExists" resultType="Boolean">
+<![CDATA[
+	select count(*) from tbl_user where u_num = #{userNo} and rownum <= 1
+	]]>
+</select>
+
 <select id="isPrivate" resultType="Boolean">
 	select u_public from tbl_user where u_id = #{userId}
 </select>
