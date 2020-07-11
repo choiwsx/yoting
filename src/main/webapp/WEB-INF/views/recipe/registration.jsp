@@ -161,7 +161,23 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
  
 var filePath=$('input[type=file');
 var photoList=$(".photo");
- 
+
+$(".photo").on("click", "i", function(e){
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	console.log(targetFile);
+	
+	$.ajax({
+		url: '/deleteFile',
+		data: {fileName: targetFile, type:type},
+		dataType : 'text',
+		type: 'Post',
+		success:function(result){
+			alert(result);
+		}
+	
+	});
+});
 function upload(e) {
     var arrNum = e.id;
     var formData = new FormData();
