@@ -344,9 +344,8 @@ if(session!=null) {
                 <!--                 
                 <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
                  -->
-                <li><a href="/user/mkitchen" id="nav">내 주방</a></li>
+               <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav">내 주방</a></li></c:if>
             </ul>
         </div>
-            </div>
 
    
