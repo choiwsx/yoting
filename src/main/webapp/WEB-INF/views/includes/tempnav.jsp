@@ -150,12 +150,17 @@ if(session!=null) {
 
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
   $(document).ready(function(){
 	  
      var result = '<c:out value="${result}"/>';
      var rno = '<c:out value="${rno}"/>';
-
+	console.log("result@@@"+result);
      console.log('<c:out value="${userNo}"/>');
 	 checkModal(result, rno);
      history.replaceState({},null,null);
@@ -226,7 +231,6 @@ if(session!=null) {
   });
   
   </script>
-    
 <body>
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -281,7 +285,7 @@ if(session!=null) {
    <button class='btn btn-default'>검색</button>
 </form>
 </div>
-                <div class="search_keyword"
+              <!--   <div class="search_keyword"
                   style="display: inline; font-size: 17px;">
                   <ul id="keywordDiv_1" style="text-align: left;">
                      <c:forEach items="${tag}" var="tag" end="3">
@@ -315,6 +319,7 @@ if(session!=null) {
         
 
                </div>
+                -->
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
@@ -344,7 +349,4 @@ if(session!=null) {
         </div>
             </div>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
+   

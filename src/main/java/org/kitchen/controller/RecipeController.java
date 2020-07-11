@@ -117,7 +117,6 @@ public class RecipeController {
          return "/error";
       }
       recipeService.modify(recipe);
-//      model.addAttribute("result", "게시물을 수정하였습니다")
       rttr.addFlashAttribute("result", "게시물을 수정하였습니다.");
       return "redirect:/recipe/detail?rno="+recipe.getRno();
    }
