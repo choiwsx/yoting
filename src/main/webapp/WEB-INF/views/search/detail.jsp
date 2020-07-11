@@ -108,6 +108,7 @@
 
 </ul>
 </div>
+<%@ include file="../includes/footer.jsp"%>
 </body>
 
 <script type="text/javascript">

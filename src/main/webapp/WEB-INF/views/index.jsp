@@ -56,7 +56,7 @@
                 </a>
             </div>
         <div id="today_info" style="margin-left: 40px; background-color:lightgoldenrodyellow; width:554px">
-            <div id="today_date" style="float: left; width: 120px; height: 80px; " >
+            <div id="today_date" style="float: left; width: 150px; height: 80px; " >
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
@@ -83,8 +83,8 @@
                             </li>
                           </ul>
                     </div>
-            </div>
-         </div>
+				</div>
+			</div>
 </c:forEach>
                 <div class="link_to_event" style="text-align: right; margin-right: 30px;">
                 <a href="/recipe/list">더보기</a>
@@ -96,7 +96,6 @@
         <div id="ranking_recipe" style="grid-area: c; background-color: orange;">
         </div>
         <div id="hot_recipe" style="grid-area: e; background-color: khaki;"></div>
-    </div>
 
 <%@ include file="includes/footer.jsp"%>
 </body>

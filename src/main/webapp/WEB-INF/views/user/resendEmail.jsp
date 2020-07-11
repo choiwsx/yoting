@@ -16,6 +16,6 @@
 <input type="text" name="email" placeholder="가입 시 등록한 이메일을 입력해주세요.">
 <button type="submit">인증 메일 다시 보내기</button>
 </form>
-
+<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>
