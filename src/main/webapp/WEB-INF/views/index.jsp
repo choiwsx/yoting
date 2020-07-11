@@ -58,7 +58,7 @@
                 </a>
             </div>
         <div id="today_info" style="margin-left: 40px; background-color:lightgoldenrodyellow; width:554px">
-            <div id="today_date" style="float: left; width: 120px; height: 80px; " >
+            <div id="today_date" style="float: left; width: 150px; height: 80px; " >
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
