@@ -195,7 +195,7 @@ if(session!=null) {
                   <ul id="keywordDiv_2" style="display: none; text-align: left;">
                      <c:forEach items="${tag}" var="tag" begin="4" end="7">
                         <li><a
-                           href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                           href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">d
                               #<c:out value="${tag.tagName}" />
                         </a></li>
                      </c:forEach>
