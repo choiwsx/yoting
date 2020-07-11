@@ -150,8 +150,9 @@ if(session!=null) {
                 <li><button onclick="location.href='/user/registration'"class='button'>가입하기</button></li>
                 </c:if>
                  <c:if test ="${not empty userNo}"><li><button onclick="location.href='/user/logout'"class='button'>로그아웃</button></li></c:if>
+                 <!--
                 <li><button class='button'>서비스 목록</button></li>
-                
+                 -->
             </ul>
         </div>
         <div id="header_mid"  data-group="main"> 
@@ -170,7 +171,9 @@ if(session!=null) {
       <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
       <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
       <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
+      <!-- 
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
+       -->
    </select>
    <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
@@ -178,6 +181,7 @@ if(session!=null) {
    <button class='btn btn-default'>검색</button>
 </form>
 </div>
+<!-- 
                 <div class="search_keyword"
                   style="display: inline; font-size: 17px;">
                   <ul id="keywordDiv_1" style="text-align: left;">
@@ -210,6 +214,7 @@ if(session!=null) {
                      src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif"
                      alt="다음"></a>
                </div>
+               -->
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
