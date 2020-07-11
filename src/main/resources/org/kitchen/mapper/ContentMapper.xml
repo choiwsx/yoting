@@ -15,20 +15,9 @@
 <![CDATA[SELECT * FROM tbl_recipecontent WHERE r_num>0 AND rc_stepnum>0]]>
 	</select>
 
-	<!--
 	<insert id="insert">
-		INSERT INTO tbl_recipecontent (rc_stepnum, r_num ,photo, rc_content)
-		VALUES (#{stepNo}, #{rno} ,#{photoUrl}, #{content})
-	</insert>
-	 -->
-
-	<insert id="insert">
-		<selectKey keyProperty="r_num" order="BEFORE"
-			resultType="long">
-			SELECT r_seq.nextval FROM dual
-		</selectKey>
 		INSERT INTO tbl_recipecontent (rc_stepnum, r_num, photo, rc_content)
-		VALUES (#{rc_stepnum}, #{r_num}, #{photo}, #{rc_content})
+		VALUES (#{stepNo}, #{rno}, #{photoUrl,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
 	</insert>
 	 
 	 <select id="read" resultMap="content">
@@ -42,10 +31,10 @@
 	 <update id="update">
 	 UPDATE tbl_recipecontent
 	 SET
-	 rc_stepnum = #{stepNo},
 	 photo = #{photoUrl},
 	 rc_content = #{content}
 	 WHERE
+	 rc_stepnum = #{stepNo} and
 	 r_num = #{rno}
 	 </update>
 	 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kitchen.mapper.UserMapper">
 
 <resultMap id="user" type="org.kitchen.domain.UserVO">
@@ -15,90 +15,159 @@
    <result property="webUrl" column="u_url"/>
    <result property="bio" column="info"/>
    <result property="emailSub" column="email_news"/>
-   <result property="privacy" column="u_privacy"/>
-   <result property="status" column="status"  typeHandler="org.kitchen.handlers.CodeEnumTypeHandler" />
+   <result property="privacy" column="u_public"/>
+   <result property="status" column="status" typeHandler="org.kitchen.handler.CodeEnumTypeHandler" javaType="org.kitchen.enums.UserStatus" />
 </resultMap>
 
+<resultMap id="longList" type="java.lang.Long" >
+<id property="userNo" column="u_num"/>
+<collection property="ids" ofType="Long">
+    <result column="id"/>
+</collection>
+
+</resultMap>
+
+
 <insert id="test">
-insert into tbl_test values(#{test})
+   insert into tbl_test values(#{test})
 </insert>
 
 <select id="testcheck" resultType="Boolean">
-select * from tbl_test
+   select * from tbl_test
 </select> 
 
 <insert id="insert">
-	<selectKey keyProperty="userNo" order="BEFORE" resultType="Long">
-	select u_seq.nextval from dual
-	</selectKey>
-	insert into tbl_user 
-	(u_num, u_id, u_pwd, email, email_auth, email_news, u_photo, 
-	u_url, u_privacy, status, info, nickname)
-	values(#{userNo}, #{userId}, #{userPwd}, #{email}, #{emailAuth},  
-	#{emailSub}, #{profilePhoto}, #{webUrl}, #{privacy}, 
-	#{status.code}, #{bio}, #{nickName})
+   <selectKey keyProperty="userNo" order="BEFORE" resultType="Long">
+      select u_seq.nextval from dual
+   </selectKey>
+   insert into tbl_user 
+   (u_num, u_id, u_pwd, email, email_auth, email_news, u_photo, 
+   u_url, u_public, status, info, nickname)
+   values(#{userNo}, #{userId}, #{userPwd}, #{email}, #{emailAuth},  
+   #{emailSub}, #{profilePhoto,jdbcType=VARCHAR}, #{webUrl,jdbcType=VARCHAR}, #{privacy}, 
+   #{status,typeHandler=org.kitchen.handler.CodeEnumTypeHandler}, #{bio}, #{nickName})
 </insert>
 
+<insert id="insertVeriKey">
+   insert into tbl_user_key (u_num, key) values(#{userNo}, #{key})
+</insert>
+
+<select id="getVeriKey" resultType="String">
+   select key from tbl_user_key where u_num = #{userNo}
+</select>
+
+<update id="updateVeriKey">
+   update tbl_user_key set key = #{key} where u_num = #{userNo}
+</update>
+
 <select id="selectById" resultMap="user">
-select * from tbl_user where u_id = #{userId}
+   select * from tbl_user where u_id = #{userId}
 </select>
 
 <select id="selectByEmail" resultMap="user">
-select * from tbl_user where email = #{email}
+   select * from tbl_user where email = #{email}
 </select>
 
 <select id="selectByNo" resultMap="user">
-select * from tbl_user where u_num = #{userNo}
+   select * from tbl_user where u_num = #{userNo}
 </select>
 
-<select id="getNoById" resultType="Integer">
-select u_num from tbl_user where u_id = #{userId}
+<select id="getNoById" resultType="Long">
+   select u_num from tbl_user where u_id = #{userId}
 </select>
 
-<select id="isLegitId" resultType="Boolean">
-SELECT CASE WHEN MAX(u_id) IS NULL THEN '1' ELSE '0' END User_exists
-  FROM tbl_user
- WHERE u_id = #{userId}
+<select id="idExists" resultType="Boolean">
+<![CDATA[
+   select count(*) from tbl_user where u_id = #{userId} and rownum <= 1
+   ]]>
 </select>
 
-<select id="isLegitEmail" resultType="Boolean">
-SELECT CASE WHEN MAX(email) IS NULL THEN '1' ELSE '0' END User_exists
-  FROM tbl_user
- WHERE email = #{email}
+<select id="emailExists" resultType="Boolean">
+<![CDATA[
+   select count(*) from tbl_user where email = #{email} and rownum <= 1
+   ]]>
+</select>
+
+<select id="userExists" resultType="Boolean">
+<![CDATA[
+   select count(*) from tbl_user where u_num = #{userNo} and rownum <= 1
+   ]]>
 </select>
 
 <select id="isPrivate" resultType="Boolean">
-select u_privacy from tbl_user where u_id = #{userId}
+   select u_public from tbl_user where u_id = #{userId}
 </select>
 
 <update id="update" parameterType="org.kitchen.domain.UserVO">
-update tbl_user set u_id=#{userId}, u_pwd=#{userPwd}, email=#{email}, email_auth=#{emailAuth}, email_news=#{emailSub}, 
-u_photo=#{profilePhoto}, u_url=#{webUrl}, u_privacy=#{privacy}, status=#{status}, info=#{bio}, nickname=#{nickName}
-where u_num = #{userNo}
+   update tbl_user set u_id=#{userId}, u_pwd=#{userPwd}, email=#{email}, email_auth=#{emailAuth}, email_news=#{emailSub}, 
+   u_photo=#{profilePhoto}, u_url=#{webUrl}, u_public=#{privacy}, status=#{status, typeHandler=org.kitchen.handler.CodeEnumTypeHandler}, info=#{bio}, nickname=#{nickName}
+   where u_num = #{userNo}
 </update>
 
 <delete id="delete" parameterType="org.kitchen.domain.UserVO">
-delete from tbl_user where u_num = #{userNo}
+   delete from tbl_user where u_num = #{userNo}
 </delete>
 
 <delete id="deleteByNo">
-delete from tbl_user where u_num = #{userNo}
+   delete from tbl_user where u_num = #{userNo}
 </delete>
 
 <delete id="deleteById">
-delete from tbl_user where u_id = #{userId}
+   delete from tbl_user where u_id = #{userId}
 </delete>
 
 <select id="getMailingList" resultMap="user">
-<![CDATA[
-select * from tbl_user where email_news > 0
-]]>
-</select>	
+   <![CDATA[
+   select * from tbl_user where email_news > 0
+   ]]>
+</select>   
 
 <select id="getTotalList" resultMap="user">
-<![CDATA[
-select * from tbl_user where u_num > 0
-]]>
-</select>	
-	
+   <![CDATA[
+   select * from tbl_user order by u_num asc
+   ]]>
+</select>   
+
+<select id="getInfobyId" resultMap="user">
+   select u_photo,nickname,u_id
+   from tbl_user
+   where u_id like '%'||#{keyword,jdbcType=VARCHAR}||'%'
+</select>   
+
+<select id="getProfile" resultMap="user">
+   select u_photo,nickname,u_url,u_id,email
+   from tbl_user
+   where u_id = #{userId}
+</select>
+
+<insert id="follow">
+   insert into tbl_follow (u_num, fw_num) values(#{followeeNo}, #{followerNo})
+</insert>
+
+<delete id="unfollow">
+   delete from tbl_follow where u_num=#{followeeNo} and fw_num=#{followerNo}
+</delete>
+
+<select id="countFollower" resultType="int">
+   select count(*) from tbl_follow where u_num=#{followeeNo}
+   <if test="followerNo!=null">
+      and fw_num=#{followerNo}
+   </if>
+</select>
+
+<select id="countFollowing" resultType="int">
+   select count(*) from tbl_follow where fw_num=#{followerNo}
+</select>
+
+<select id="getIdAutocomplete" parameterType="String" resultMap="user">
+   select u_id from tbl_user where u_id like concat('%',concat(UPPER(#{userId}),'%')) or 
+                        u_id like concat('%',concat(LOWER(#{userId}),'%'))
+</select>
+
+<select id="getHotUserList" resultType="Long">
+       select u_num from tbl_follow group by u_num order by count(fw_num) desc                    
+</select>
+
+
+
 </mapper>
