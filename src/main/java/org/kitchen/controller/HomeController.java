@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
+import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.slf4j.Logger;
@@ -42,6 +44,7 @@ public class HomeController {
       logger.info("YO! Welcome home! The client locale is {}.", locale);
       Date date = new Date();
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+<<<<<<< HEAD
 		String formattedDate = dateFormat.format(date);
 
 		
@@ -71,6 +74,33 @@ public class HomeController {
 	public void getGood() {
 		
 	}
+=======
+      String formattedDate = dateFormat.format(date);
+      RecipeVO latestRecipe = recipeService.getLatestRecipe();
+      UserVO author = new UserVO();
+      if(latestRecipe!=null) {
+    	  author = userService.getUserByNo(latestRecipe.getUserNo());
+      }
+      model.addAttribute("latestRecipe", latestRecipe);
+      model.addAttribute("author", author);
+//      model.addAttribute("tag",recipeService.getTagNameList());
+//      model.addAttribute("pageMaker", new PageDTO(cri, 100));
+//      model.addAttribute("list", recipeService.getList());
+      model.addAttribute("list", recipeService.getList().subList(0, 12));
+
+      return "index";
+   }
+   
+   @GetMapping("/cookInfo")
+   public void cookInfo() {
+      
+   }
+   
+   @GetMapping("/good")
+   public void getGood() {
+      
+   }
+>>>>>>> ba603f2d1ec0ee7230c1d28adb073088361dec9b
 
 	@PostMapping("/good")
 	public void postGood() {
