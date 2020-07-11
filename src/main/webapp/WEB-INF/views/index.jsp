@@ -48,15 +48,15 @@
 
 <!--메인 화면-->
     <div class="content_wrapper" data-group="main">
-        <div class="today_recipe"  style="grid-area: a; text-align: center;">
+        <div class="today_recipe"  style="grid-area: a; text-align: center; background-color:white; ">
             <h3>방금 업데이트 된 따끈따끈한 요리!</h3>
             <div id="today_photo">
                 <a href="/recipe/detail?rno=<c:out value='${last.rno }'/>">
                 <img src="<c:out value='${last.thumbnail}'/>" style="width: 550px; height: 440px; padding-left: 15px; padding-top: 13px;" onerror="imgError(this);">
                 </a>
             </div>
-        <div id="today_info" style="margin-left: 40px;">
-            <div id="today_date" style="float: left; width: 120px; height: 80px;" >
+        <div id="today_info" style="margin-left: 40px; background-color:lightgoldenrodyellow; width:554px">
+            <div id="today_date" style="float: left; width: 120px; height: 80px; " >
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${last.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
@@ -69,7 +69,7 @@
     </div>
 
 
-        <div id="side_banner" style="grid-area: b;">
+        <div id="side_banner" style="grid-area: b; background-color:white;">
             <h3 style="text-align: center;">매주 갱신 추천특집!</h3>
              <c:forEach items="${getList}" var="recipe">
             <div class="tieup_list">
