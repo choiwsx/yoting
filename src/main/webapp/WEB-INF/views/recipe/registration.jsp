@@ -24,7 +24,7 @@
             path="categoryNo" >카테고리</form:label>
         
         <form:select
-            path="categoryNo" >
+            path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
             <form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
@@ -119,6 +119,12 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
 	e.preventDefault();
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
+  	
+  	if( ("#categoryNo option:selected").val() == 0 )
+  	{
+  		alert("카테고리를 선택해주세요!");
+  		return;
+  	}
   	
   	if(mainTitle[0].value=="")
   	{
