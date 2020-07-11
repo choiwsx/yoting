@@ -33,6 +33,13 @@ public class RecipeController {
 	public void registerform(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 	}
+	
+	@PostMapping("/registration")
+	public String register(RecipeVO recipe, RedirectAttributes rttr) {
+		recipeService.register(recipe);
+		rttr.addFlashAttribute("result", recipe.getRno());
+		return "redirect:/user/mkitchen";
+	}
 
 	@PostMapping("/result")
 	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {

@@ -34,12 +34,20 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             </div>
             <div>
                 <h3>요리 순서</h3>
+                <c:set var="doneLoop" value="false" />
             <c:forEach items="${contentList}" var="content">
+				<c:if test="${empty content.photoUrl  && empty content.content }">
+					<c:set var="doneLoop" value="true" />	
+				</c:if>
+				
+				<c:if test="${not doneLoop}">
                 <div>
                     순서:<c:out value="${content.stepNo}" />         
                     <img src="<c:out value="${content.photoUrl}"/>" width="200" height="200" onerror="imgError(this);" />
                     <c:out value="${content.content}" />
                 </div>
+                </c:if>
+                
             </c:forEach>
 			</div>
             작성일:<c:out value="${recipe.regDate}" />

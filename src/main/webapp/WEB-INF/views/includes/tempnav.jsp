@@ -139,18 +139,48 @@ if(session!=null) {
 
 </style>
 
+     <!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
     
 <body>
+   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+         </div>
+         <div class="modal-body">처리가 완료되었습니다.</div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+         </div>
+      </div>
+   </div>
+   </div>
     <!--헤더-->
     <div class="gnb_header">
         <div class="header_innerTop">
             <ul id="header_inner">
-               <li><a href="user/registration"><button class='button'>가입하기</button></a></li>
+                <c:if test ="${empty userNo}">
                 <li><button onclick="location.href='/user/login'"class='button'>로그인</button></li>
+                <li><button onclick="location.href='/user/registration'"class='button'>가입하기</button></li>
+                </c:if>
+                 <c:if test ="${not empty userNo}"><li><button onclick="location.href='/user/logout'"class='button'>로그아웃</button></li></c:if>
                 <li><button class='button'>서비스 목록</button></li>
+                
             </ul>
         </div>
-        <div id="header_mid"  data-group="main">
+        <div id="header_mid"  data-group="main"> 
         <!--로고-->
         <div class="header_innerLeft" data-group="mid">
             <div id="mid_logo"><a href="/">
@@ -175,50 +205,47 @@ if(session!=null) {
 </form>
 </div>
                 <div class="search_keyword"
-						style="display: inline; font-size: 17px;">
-						<ul id="keywordDiv_1" style="text-align: left;">
-							<c:forEach items="${tag}" var="tag" end="3">
-								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
-										#<c:out value="${tag.tagName}" />
-								</a></li>
-							</c:forEach>
-						</ul>
-						<ul id="keywordDiv_2" style="display: none; text-align: left;">
-							<c:forEach items="${tag}" var="tag" begin="4" end="7">
-								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
-										#<c:out value="${tag.tagName}" />
-								</a></li>
-							</c:forEach>
-						</ul>
-						<ul id="keywordDiv_3" style="display: none; text-align: left;">
-							<c:forEach items="${tag}" var="tag" begin="8" end="11">
-								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
-										#<c:out value="${tag.tagName}" />
-								</a></li>
-							</c:forEach>
-						</ul>
-					</div>                     
+                  style="display: inline; font-size: 17px;">
+                  <ul id="keywordDiv_1" style="text-align: left;">
+                     <c:forEach items="${tag}" var="tag" end="3">
+                        <li><a
+                           href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+                  <ul id="keywordDiv_2" style="display: none; text-align: left;">
+                     <c:forEach items="${tag}" var="tag" begin="4" end="7">
+                        <li><a
+                           href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+                  <ul id="keywordDiv_3" style="display: none; text-align: left;">
+                     <c:forEach items="${tag}" var="tag" begin="8" end="11">
+                        <li><a
+                           href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+                              #<c:out value="${tag.tagName}" />
+                        </a></li>
+                     </c:forEach>
+                  </ul>
+               </div>                     
                    <div class="keyword_btn">
-						<a href="#" class="tagBtnNext"><img
-							src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif"
-							alt="다음"></a>
-					</div>
+                  <a href="#" class="tagBtnNext"><img
+                     src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif"
+                     alt="다음"></a>
+               </div>
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
-				<ul>
-					<li><a href="#"> <img
-							src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
-							style="width: 60px; height: 60px;" alt="찜목록">
-					</a></li>
-					<li><a href="/upload/registration"> <img
-							src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
-							style="width: 60px; height: 60px;" alt="레시피등록"></a></li>
-				</ul>
-			</div>
+               <a href="#"><img
+                     src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
+                     style="width: 60px; height: 60px;" alt="찜목록"></a>
+                  <a href="/recipe/registration"> <img
+                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
+                     style="width: 60px; height: 60px;" alt="레시피등록"></a>
+         </div>
             </div>
         </div>
 
@@ -236,7 +263,10 @@ if(session!=null) {
         </div>
             </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
   $(document).ready(function(){
      console.log('<c:out value="${userNo}"/>');
@@ -246,26 +276,26 @@ if(session!=null) {
      history.replaceState({},null,null);
      
      let tagTable = document.querySelectorAll("[data-value]");
-		var cnt = 1;
-		$(".tagBtnNext").on("click", function(e) {
-			cnt++;
-			switch (cnt) {
-			case 2:
-				$("#keywordDiv_1").hide();
-				$("#keywordDiv_2").show();
-				break;
-			case 3:
-				$("#keywordDiv_2").hide();
-				$("#keywordDiv_3").show();
-				break;
-			case 4:
-				$("#keywordDiv_3").hide();
-				$("#keywordDiv_1").show();
-				cnt = 1;
-				break;
-			}
+      var cnt = 1;
+      $(".tagBtnNext").on("click", function(e) {
+         cnt++;
+         switch (cnt) {
+         case 2:
+            $("#keywordDiv_1").hide();
+            $("#keywordDiv_2").show();
+            break;
+         case 3:
+            $("#keywordDiv_2").hide();
+            $("#keywordDiv_3").show();
+            break;
+         case 4:
+            $("#keywordDiv_3").hide();
+            $("#keywordDiv_1").show();
+            cnt = 1;
+            break;
+         }
 
-		});
+      });
      
      var searchForm = $("#searchForm");
      $("#searchForm button").on("click", function(e){
@@ -284,6 +314,17 @@ if(session!=null) {
         e.preventDefault();
         searchForm.submit();
      });
+    checkModal(result);
+      
+      function checkModal(result){
+         if(result===''){
+            return;
+         }
+         if(parseInt(result)>0){
+            $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
+         }
+         $("#myModal").modal("show");
+      }
   });
   
   function imgError(image) {

@@ -16,6 +16,18 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 <head>
    <meta charset="UTF-8">
 <title>profile</title>
+ <!-- Bootstrap Core CSS -->
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
    <script
@@ -23,7 +35,6 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 
    <div style="text-align: center;">
       <div>
-         result: <c:out value="${result}" />
       </div>
          <div>
             <a href="1"><img src="<c:out value="${user.profilePhoto}"/>"
@@ -75,13 +86,11 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
          <c:out value="${recipe.title}" /> </a>
          <a href='recipe/del?rno=<c:out value="${recipe.rno} " />'></a>
    </c:forEach>
-
-
-
+	
+            
 </body>
 
 <script type="text/javascript">
-
 </script>
 
 </html>

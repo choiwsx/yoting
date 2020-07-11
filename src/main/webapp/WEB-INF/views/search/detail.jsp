@@ -29,6 +29,7 @@
 	<h3>태그 포함 레시피 리스트</h3>
 		</c:if>
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
+			
 			<c:forEach items="${moreList}" var="recipe">
 		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
