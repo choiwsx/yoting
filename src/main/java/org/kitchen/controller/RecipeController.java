@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,6 +27,12 @@ public class RecipeController {
    @Autowired
    private UserService userService;
 
+	@PostMapping("/registration")
+	public String register(RecipeVO recipe, RedirectAttributes rttr) {
+		recipeService.register(recipe);
+		rttr.addFlashAttribute("result", recipe.getRno());
+		return "redirect:/user/mkitchen";
+	}
    @GetMapping("/registration")
    public void registerform(Model model) {
       //입력 폼에 레시피 VO만들어서 주기

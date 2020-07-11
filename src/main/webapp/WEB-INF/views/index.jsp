@@ -83,8 +83,8 @@
                             </li>
                           </ul>
                     </div>
-            </div>
-         </div>
+				</div>
+			</div>
 </c:forEach>
                 <div class="link_to_event" style="text-align: right; margin-right: 30px;">
                 <a href="/recipe/list">더보기</a>
@@ -96,7 +96,6 @@
         <div id="ranking_recipe" style="grid-area: c; background-color: orange;">
         </div>
         <div id="hot_recipe" style="grid-area: e; background-color: khaki;"></div>
-    </div>
 
 <%@ include file="includes/footer.jsp"%>
 </body>

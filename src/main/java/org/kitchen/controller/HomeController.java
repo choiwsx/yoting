@@ -42,44 +42,44 @@ public class HomeController {
       logger.info("YO! Welcome home! The client locale is {}.", locale);
       Date date = new Date();
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-      String formattedDate = dateFormat.format(date);
+		String formattedDate = dateFormat.format(date);
 
-      
-      int size = recipeService.getList().size();
-      Long rno = new Long(size);
-      Long user = recipeService.isMyRecipe(rno);
-      
-      model.addAttribute("tag",recipeService.getTagNameList());
-      model.addAttribute("pageMaker", new PageDTO(cri, 100));
-      model.addAttribute("list", recipeService.getList());
-      
-      model.addAttribute("serverTime", formattedDate);
-      
-      model.addAttribute("list", recipeService.getList());
-      model.addAttribute("last", recipeService.get(rno));
-      model.addAttribute("lastUser", userService.getUserByNo(user));
-      model.addAttribute("getList", recipeService.getList().subList(0, 12));
-      return "index";
-   }
-   
-   @GetMapping("/cookInfo")
-   public void cookInfo() {
-      
-   }
-   
-   @GetMapping("/good")
-   public void getGood() {
-      
-   }
+		
+		int size = recipeService.getList().size();
+		Long rno = new Long(size);
+		Long user = recipeService.isMyRecipe(rno);
+		
+		model.addAttribute("tag",recipeService.getTagNameList());
+		model.addAttribute("pageMaker", new PageDTO(cri, 100));
+		model.addAttribute("list", recipeService.getList());
+		
+		model.addAttribute("serverTime", formattedDate);
+		
+		model.addAttribute("list", recipeService.getList());
+		model.addAttribute("last", recipeService.get(rno));
+		model.addAttribute("lastUser", userService.getUserByNo(user));
+		model.addAttribute("getList", recipeService.getList().subList(0, 12));
+		return "index";
+	}
+	
+	@GetMapping("/cookInfo")
+	public void cookInfo() {
+		
+	}
+	
+	@GetMapping("/good")
+	public void getGood() {
+		
+	}
 
-   @PostMapping("/good")
-   public void postGood() {
-      
-   }
-   
-   @GetMapping("/error")
-   public void getError() {
-      
-   }
+	@PostMapping("/good")
+	public void postGood() {
+		
+	}
+	
+	@GetMapping("/error")
+	public void getError() {
+		
+	}
 }
 

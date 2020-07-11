@@ -12,7 +12,7 @@
 <title>Recipe Register</title>
 </head>
 <body>
-	<form:form modelAttribute="recipe" action="result" method="post" id="form-id">
+	<form:form modelAttribute="recipe" action="registration" method="post" id="form-id">
 	   
 	
 	    <fieldset><legend>레시피 내용</legend>
