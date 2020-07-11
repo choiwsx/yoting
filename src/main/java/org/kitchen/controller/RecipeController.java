@@ -29,7 +29,10 @@ public class RecipeController {
 	private UserService userService;
 
 	@PostMapping("/registration")
-	public String register(RecipeVO recipe, RedirectAttributes rttr) {
+	public String register(RecipeVO recipe, RedirectAttributes rttr, Model model) {
+		if(recipe==null) {
+			return wrongAccess(model);
+		}
 		recipeService.register(recipe);
 		rttr.addFlashAttribute("result", recipe.getRno());
 		return "redirect:/user/mkitchen";
@@ -167,11 +170,10 @@ public class RecipeController {
          return wrongAccess(model);
       }
       Long rnoLong = Long.parseLong(rno);
-      log.info("@@@@@rrrrrrrrnnnnnnnnnnooooooooo@@@@"+rno);
       if (recipeService.remove(rnoLong)) {
          //model.addAttribute("result", "success");
       } else {
-         //model.addAttribute("result", "fail");
+         return wrongAccess(model, "게시물 삭제에 실패하였습니다.");
       }
 //      String referer = request.getHeader("Referer");
       	rttr.addFlashAttribute("result", "게시물을 삭제하였습니다.");

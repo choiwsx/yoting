@@ -50,7 +50,6 @@ public class UploadController {
 	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration", "/upload/test"})
 	public void uploadAjax(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
-//		log.info("upload ajax");
 	}
 	
 //	@PostMapping("/upload/registrationTest")
