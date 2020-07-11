@@ -111,11 +111,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean verifyEmail(String userno, String paramKey) {
+	public boolean verifyEmail(Long userNo, String paramKey) {
 		if (paramKey == null) {
 			return false;
 		}
-		String solidKey = userMapper.getVeriKey(Long.valueOf(userno));
+		String solidKey = userMapper.getVeriKey(Long.valueOf(userNo));
 		if (solidKey.equals(paramKey))
 			return true;
 		return false;
@@ -249,6 +249,8 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userMapper.countFollowing(followerNo);
 	}
+
+
 
 	
 }
