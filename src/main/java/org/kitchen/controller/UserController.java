@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.ProfileDTO;
+import org.kitchen.domain.ProfileDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
@@ -62,17 +63,18 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/newprofile";
 		} else {
+			model.addAttribute("user", user);
 			model.addAttribute("result", "중복된 유저 아이디 혹은 이메일입니다.");
 		}
 		return "/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
-	public String newProfileForm(Model model, HttpSession session) {
-		if( session.getAttribute("userNo")!=null ) {
-			return wrongAccess(model);
-		}
-		return "redirect:/user/registration";
+	public void newProfileForm(Model model, HttpSession session) {
+//		if( session.getAttribute("userNo")!=null ) {
+//			return wrongAccess(model);
+//		}
+//		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
@@ -104,8 +106,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/welcome")
-	public void welcomePage(SessionStatus sessionStatus) {
+	public String welcomePage(HttpSession session, SessionStatus sessionStatus, Model model) {
+		if(session.getAttribute("user")==null) {
+			return wrongAccess(model);
+		}
 		sessionStatus.setComplete();
+		return "/user/welcome";
 	}
 	
 	@GetMapping("/verify")
@@ -146,15 +152,26 @@ public class UserController {
 			model.addAttribute("result", "없는 유저입니다.");
 			return "redirect:/error";
 		}
-		model.addAttribute("user", user);
-		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
-		profile.setFollowers(userService.countFollower(user.getUserNo()));
-		if(session.getAttribute("userNo")!=null) {
-			Long followerNo = (Long)session.getAttribute("userNo");
-			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
+//		model.addAttribute("user", user);
+//		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
+//		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
+//		profile.setFollowers(userService.countFollower(user.getUserNo()));
+//		if(session.getAttribute("userNo")!=null) {
+//			Long followerNo = (Long)session.getAttribute("userNo");
+//			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
+//		}
+//		model.addAttribute("profile",profile);
+		Long userNo = (Long)session.getAttribute("userNo");
+		log.info("@@@@@@@@@@@@@@@"+userNo+"@"+user.getUserNo()+"@");
+		if(userNo!=null) {
+			if(userNo.equals(user.getUserNo())) {
+				log.info("자기페이지");
+				return "redirect:/user/mkitchen";
+			}
+			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, (Long)session.getAttribute("userNo")));
+		} else {
+			model.addAttribute("profile", ProfileDTOFactory.getProfile(user));
 		}
-		model.addAttribute("profile",profile);
 		return "/user/profile";
 	}
 	
@@ -254,20 +271,23 @@ public class UserController {
 		
 	}
 	
-	@PostMapping("/sendEmail")
-	public String sendEmail(Model model, String email) {
-		if(email==null) {
-			model.addAttribute("result", "이메일 주소가 잘못됐습니다.");
-			return "redirect:/error"; 
+	@PostMapping("/resendEmail")
+	public String resendEmail(Model model, String email) {
+		if(email.equals("")||email==null) {
+			return wrongAccess(model, "이메일 주소가 잘못입력되었습니다.");
 		}
 		UserVO user = userService.getUserByEmail(email);
 		if(user==null) {
-			model.addAttribute("result", "이메일 주소로 등록된 사용자가 없습니다.");
-			return "redirect:/error"; 
+			return wrongAccess(model, "이메일 주소로 등록된 사용자가 없습니다.");
 		}
+		if(user.getStatus().equals(UserStatus.PENDING)) {
 		userService.sendVerificationEmail(user);
-		model.addAttribute("result", "이멜 전송 완료, 메일함을 확인해주세요.");
+		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
 		return "redirect:/good";
+		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
+			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
+		}
+		return wrongAccess(model, "유효하지 않은 회원입니다.");
 	}
 	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
 	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
@@ -290,7 +310,6 @@ public class UserController {
 	public String follow(Long followeeNo, Long followerNo, Model model) {
 		log.info("follow########"+followeeNo+"@@@@@"+followerNo);
 		if(userService.follow(followeeNo, followerNo)) {
-		model.addAttribute("result", "팔로우 완료.");
 		return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
 		} 
 		return wrongAccess(model, "팔로우 실패");
@@ -300,7 +319,6 @@ public class UserController {
 	public String unfollow(Long followeeNo, Long followerNo, Model model) {
 		log.info("unfollow########"+followeeNo+"@@@@@"+followerNo);
 		if(userService.unfollow(followeeNo, followerNo)) {
-			model.addAttribute("result", "언팔로우 완료.");
 			return "redirect:/user/profile?userId="+userService.getUserByNo(followeeNo).getUserId();
 		}
 		return wrongAccess(model, "언팔로우 실패");

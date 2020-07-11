@@ -5,7 +5,7 @@ import java.util.List;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
 import org.kitchen.domain.RecipeVO;
-import org.kitchen.domain.UserVO;
+import org.kitchen.service.RecipeService;
 import org.kitchen.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,28 +21,31 @@ import lombok.extern.log4j.Log4j;
 public class SearchController {
 	
 	@Autowired
-	SearchService service;
-
+	SearchService searchService;
+	@Autowired
+	RecipeService recipeService; 
 	@GetMapping("/result")
 	public void searchList(Criteria cri, Model model) {
+		
 		String type = cri.getType();
 		String more = cri.getWhere();
 		System.out.println("more@@@" + more);
-		model.addAttribute("category", service.read());
+		model.addAttribute("tag",recipeService.getTagNameList());
+		model.addAttribute("category", searchService.read());
 		switch (type) {
 		case "T":
-			model.addAttribute("list", service.getRecipeList(cri));
+			model.addAttribute("list", searchService.getRecipeList(cri));
 			break;
 		case "W":
-			model.addAttribute("list_user", service.getUserList(cri));
+			model.addAttribute("list_user", searchService.getUserList(cri));
 			break;
 		case "Tag":
-			model.addAttribute("list_tag", service.getTagNum(cri));
+			model.addAttribute("list_tag", searchService.getTagNum(cri));
 			break;
 		case "A":
-			model.addAttribute("list", service.getRecipeList(cri));
-			model.addAttribute("list_user", service.getUserList(cri));
-			model.addAttribute("list_tag", service.getTagNum(cri));
+			model.addAttribute("list", searchService.getRecipeList(cri));
+			model.addAttribute("list_user", searchService.getUserList(cri));
+			model.addAttribute("list_tag", searchService.getTagNum(cri));
 			break;
 		}
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
@@ -51,7 +54,7 @@ public class SearchController {
 
 	@GetMapping("/user")
 	public void userList(Criteria cri, Model model) {
-		model.addAttribute("userSearch", service.getUserListById(cri));
+		model.addAttribute("userSearch", searchService.getUserListById(cri));
 	}
 
 	@GetMapping("/detail")
@@ -61,22 +64,22 @@ public class SearchController {
 		int total = 0;
 		switch (more) {
 		case "recipe":
-			model.addAttribute("moreList", service.moreRecipeList(cri));
-			total = service.getTotalRecipeCount(cri);
+			model.addAttribute("moreList", searchService.moreRecipeList(cri));
+			total = searchService.getTotalRecipeCount(cri);
 			break;
 		case "user":
 			cri.setAmount(6);
-			model.addAttribute("moreList_u", service.moreUserList(cri));
-			total = service.getTotalUserCount(cri);
+			model.addAttribute("moreList_u", searchService.moreUserList(cri));
+			total = searchService.getTotalUserCount(cri);
 			break;
 		case "tag":
-			model.addAttribute("moreList", service.moreTagList(cri));
+			model.addAttribute("moreList", searchService.moreTagList(cri));
 			System.out.println("cri=" + cri);
-			total = (int) service.getTotalTagCount(cri);
+			total = (int) searchService.getTotalTagCount(cri);
 			System.out.println("totalcount=" + total);
 			break;
 		case "profile":
-			List<RecipeVO> list = service.searchUserRecipeList(cri);
+			List<RecipeVO> list = searchService.searchUserRecipeList(cri);
 			model.addAttribute("moreList", list);
 			total = list.size();
 		}

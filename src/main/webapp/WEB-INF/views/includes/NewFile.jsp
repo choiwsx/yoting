@@ -70,7 +70,7 @@ if(session!=null) {
 
     .navBottom {
         padding-top: 15px;
-        padding-left: 270px;
+        padding-left: 200px;
         padding-right: 150px;
         display:inline-flex;
     }
@@ -153,7 +153,7 @@ if(session!=null) {
         <div id="header_mid"  data-group="main">
         <!--로고-->
         <div class="header_innerLeft" data-group="mid">
-            <div id="mid_logo"><a href="/">
+            <div id="mid_logo"><a href="/user/index">
                 <img src="https://i.ibb.co/dQT4pVx/cook-logo.png" style="width: 240px; height: 60px; margin-left: 60px;"></a>
             </div>
         </div>
@@ -175,11 +175,11 @@ if(session!=null) {
 </form>
 </div>
                 <div class="search_keyword"
-						style="display: inline; font-size: 17px;">
+						style="display: inline; font-size: 15px;">
 						<ul id="keywordDiv_1" style="text-align: left;">
 							<c:forEach items="${tag}" var="tag" end="3">
 								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+									href="http://localhost:8080/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
 										#<c:out value="${tag.tagName}" />
 								</a></li>
 							</c:forEach>
@@ -187,7 +187,7 @@ if(session!=null) {
 						<ul id="keywordDiv_2" style="display: none; text-align: left;">
 							<c:forEach items="${tag}" var="tag" begin="4" end="7">
 								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+									href="http://localhost:8080/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
 										#<c:out value="${tag.tagName}" />
 								</a></li>
 							</c:forEach>
@@ -195,7 +195,7 @@ if(session!=null) {
 						<ul id="keywordDiv_3" style="display: none; text-align: left;">
 							<c:forEach items="${tag}" var="tag" begin="8" end="11">
 								<li><a
-									href="/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
+									href="http://localhost:8080/search/result?type=Tag&keyword=<c:out value="${tag.tagName}" />&pageNum=1">
 										#<c:out value="${tag.tagName}" />
 								</a></li>
 							</c:forEach>
@@ -208,6 +208,7 @@ if(session!=null) {
 					</div>
                 </div>
             </div>
+            </div>
            <div class="header_innerRight" data-group="mid">
 				<ul>
 					<li><a href="#"> <img
@@ -219,12 +220,11 @@ if(session!=null) {
 							style="width: 60px; height: 60px;" alt="레시피등록"></a></li>
 				</ul>
 			</div>
-            </div>
         </div>
 
         <div class="header_innerBottom" data-group="main">
             <ul class="navBottom">
-                <li><a href="/" id="nav">홈</a></li>
+                <li><a href="/index" id="nav">홈</a></li>
                 <li><a href="/recipe/list?categoryNo=11" id="nav">주식</a></li>
                 <li><a href="/recipe/list?categoryNo=22" id="nav">디저트</a></li>
                 <li><a href="/recipe/list?categoryNo=33" id="nav">반찬</a></li>
@@ -285,10 +285,4 @@ if(session!=null) {
         searchForm.submit();
      });
   });
-  
-  function imgError(image) {
-      image.onerror = "";
-      image.src = "/display?fileName=2020%5C07%5C10%2Fs_8d0bb1c3-d571-4c45-9046-4d9ba7aa1a6b_default.jpg";
-      return true;
-  }
   </script>

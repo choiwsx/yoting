@@ -29,7 +29,7 @@
 				<td><a class='move' href='<c:out value="${recipe.rno }"/>'>
 						<c:out value="${recipe.title }" />
 				</a></td>
-				<td><img src="<c:out value='${recipe.thumbnail }'/>" width=30px height=30px></td>
+				<td><img src="<c:out value='${recipe.thumbnail }'/>" width=30px height=30px onerror="imgError(this);" ></td>
 				<td><c:out value="${recipe.userNo }" /></td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd"
 						value="${recipe.regDate }" /></td>

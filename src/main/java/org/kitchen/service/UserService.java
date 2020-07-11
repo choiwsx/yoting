@@ -58,4 +58,6 @@ public interface UserService {
 	
 
 	List<UserVO> getIdAutocomplete(String result);
+
+	int countFollowing(Long userNo);
 }

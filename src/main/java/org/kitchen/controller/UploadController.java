@@ -223,7 +223,7 @@ public class UploadController {
 				{
 					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 350, 350);
 					thumbnail.close();
 				}
 				list.add(attachDTO);
