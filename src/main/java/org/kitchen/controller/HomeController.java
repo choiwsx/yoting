@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
+import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.slf4j.Logger;
@@ -42,35 +44,31 @@ public class HomeController {
       logger.info("YO! Welcome home! The client locale is {}.", locale);
       Date date = new Date();
       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
+      String formattedDate = dateFormat.format(date);
+      RecipeVO latestRecipe = recipeService.getLatestRecipe();
+      UserVO author = new UserVO();
+      if(latestRecipe!=null) {
+    	  author = userService.getUserByNo(latestRecipe.getUserNo());
+      }
+      model.addAttribute("latestRecipe", latestRecipe);
+      model.addAttribute("author", author);
+//      model.addAttribute("tag",recipeService.getTagNameList());
+//      model.addAttribute("pageMaker", new PageDTO(cri, 100));
+//      model.addAttribute("list", recipeService.getList());
+      model.addAttribute("list", recipeService.getList().subList(0, 12));
 
-		
-		int size = recipeService.getList().size();
-		Long rno = new Long(size);
-		Long user = recipeService.isMyRecipe(rno);
-		
-		model.addAttribute("tag",recipeService.getTagNameList());
-		model.addAttribute("pageMaker", new PageDTO(cri, 100));
-		model.addAttribute("list", recipeService.getList());
-		
-		model.addAttribute("serverTime", formattedDate);
-		
-		model.addAttribute("list", recipeService.getList());
-		model.addAttribute("last", recipeService.get(rno));
-		model.addAttribute("lastUser", userService.getUserByNo(user));
-		model.addAttribute("getList", recipeService.getList().subList(0, 12));
-		return "index";
-	}
-	
-	@GetMapping("/cookInfo")
-	public void cookInfo() {
-		
-	}
-	
-	@GetMapping("/good")
-	public void getGood() {
-		
-	}
+      return "index";
+   }
+   
+   @GetMapping("/cookInfo")
+   public void cookInfo() {
+      
+   }
+   
+   @GetMapping("/good")
+   public void getGood() {
+      
+   }
 
 	@PostMapping("/good")
 	public void postGood() {
