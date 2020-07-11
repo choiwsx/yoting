@@ -19,8 +19,6 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 
 </head>
 <body>
-   <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
    <div style="text-align: center;">
       <div>
