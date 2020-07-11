@@ -328,6 +328,13 @@ public class UserController {
 		return wrongAccess(model, "유효하지 않은 회원입니다.");
 	}
 	
+	
+	@GetMapping("/user/autocomplete")
+	public String AutoTest(Model model) {
+		//겟 막기
+		return wrongAccess(model);
+	}
+	
 	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
 	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
 			HttpServletResponse resp,UserVO user) throws IOException {
