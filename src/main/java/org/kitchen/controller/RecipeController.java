@@ -161,7 +161,7 @@ public class RecipeController {
    }
 
    @GetMapping("del")
-   public String delelete(Model model, @RequestParam("rno") String rno) {
+   public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr ) {
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
@@ -174,6 +174,7 @@ public class RecipeController {
          //model.addAttribute("result", "fail");
       }
 //      String referer = request.getHeader("Referer");
+      	rttr.addFlashAttribute("result", "게시물을 삭제하였습니다.");
 		return "redirect:/user/mkitchen";
 	}
 
