@@ -293,7 +293,6 @@ public class UserController {
 			return wrongAccess(model, "로그인 상태가 아닙니다.");
 		}
 		session.removeAttribute("userNo");
-		model.addAttribute("result", "로그아웃 성공");
 		return "redirect:/";
 	}
 	
