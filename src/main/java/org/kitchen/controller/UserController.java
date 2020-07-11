@@ -57,7 +57,7 @@ public class UserController {
 	@PostMapping("/registration")
 	public String validateuser(UserVO user, Model model, HttpSession session) {
 		//로그인 상태면 가입 막기
-		if( session.getAttribute("userNo")!=null ) {
+		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
 		}
 		log.info("#############"+userService.isLegitNewUser(user)+user);
@@ -136,7 +136,7 @@ public class UserController {
 	@GetMapping("/verify")
 	public String verify(String key, String userno, Model model) {
 		//유저 넘버 잘못됐으면 . 공백||널||숫자 체크
-		if(userno.equals("") || userno==null || !isNumeric(userno)) {
+		if(userno==null || userno.equals("") || !isNumeric(userno)) {
 			return wrongAccess(model);
 		}
 		Long userNo = Long.parseLong(userno);
@@ -241,7 +241,7 @@ public class UserController {
 	@GetMapping("/search")
 	public String profileSearch(Model model, String userNo, Criteria cri) {	
 		//유저 넘버 잘못됐으면 . 공백||널||숫자 체크
-		if(userNo.equals("") || userNo==null || !isNumeric(userNo)) {
+		if(userNo==null || userNo.equals("") || !isNumeric(userNo)) {
 			return wrongAccess(model);
 		}
 		model.addAttribute("user", userService.getUserByNo(Long.valueOf(userNo)));
