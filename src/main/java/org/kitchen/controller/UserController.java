@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
-import org.kitchen.domain.ProfileDTO;
 import org.kitchen.domain.ProfileDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
@@ -70,11 +69,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/newprofile")
-	public void newProfileForm(Model model, HttpSession session) {
-//		if( session.getAttribute("userNo")!=null ) {
-//			return wrongAccess(model);
-//		}
-//		return "redirect:/user/registration";
+	public String newProfileForm(Model model, HttpSession session) {
+		if( session.getAttribute("userNo")!=null ) {
+			return wrongAccess(model);
+		}
+		return "redirect:/user/registration";
 	}
 	
 	@PostMapping("/newprofile")
@@ -136,7 +135,7 @@ public class UserController {
 			userService.deleteUserByNo(Long.valueOf(userNo));
 		} catch (UserMapperFailException e) {
 			e.printStackTrace();
-			model.addAttribute("result", "삭제불가 유저에요");
+			model.addAttribute("result", "삭제 불가 유저에요");
 			return "redirect:/error";
 		} catch (NumberFormatException e) {
 			return wrongAccess(model);
@@ -152,15 +151,6 @@ public class UserController {
 			model.addAttribute("result", "없는 유저입니다.");
 			return "redirect:/error";
 		}
-//		model.addAttribute("user", user);
-//		model.addAttribute("recipeList", userService.getUserRecipeList(user.getUserNo()));
-//		ProfileDTO profile = new ProfileDTO(user, userService.getUserRecipeList(user.getUserNo()));
-//		profile.setFollowers(userService.countFollower(user.getUserNo()));
-//		if(session.getAttribute("userNo")!=null) {
-//			Long followerNo = (Long)session.getAttribute("userNo");
-//			profile.setFollowing(userService.countFollower(user.getUserNo(), followerNo)==1);
-//		}
-//		model.addAttribute("profile",profile);
 		Long userNo = (Long)session.getAttribute("userNo");
 		log.info("@@@@@@@@@@@@@@@"+userNo+"@"+user.getUserNo()+"@");
 		if(userNo!=null) {
@@ -168,7 +158,7 @@ public class UserController {
 				log.info("자기페이지");
 				return "redirect:/user/mkitchen";
 			}
-			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, (Long)session.getAttribute("userNo")));
+			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, userNo));
 		} else {
 			model.addAttribute("profile", ProfileDTOFactory.getProfile(user));
 		}
@@ -195,6 +185,7 @@ public class UserController {
 		log.info("@@@@user@@@@"+user);
 		return "/user/mkitchen";
 	}
+	
 	@GetMapping("/testprofile")
 	public String testprofile(Model model, HttpSession session) {
 		if(session.getAttribute("userNo")==null)
@@ -236,7 +227,7 @@ public class UserController {
 	@GetMapping("/login")
 	public String loginPage(HttpSession session, Model model) {
 		if(session.getAttribute("userNo")!=null) {
-			return "/";
+			return "redirect:/";
 		}
 		return "/user/login";
 	}
@@ -250,7 +241,7 @@ public class UserController {
 		}
 		if(result.getStatus().equals(UserStatus.ACTIVE)) {
 			session.setAttribute("userNo", result.getUserNo());
-			return "redirect:/index";
+			return "index";
 		}
 		return wrongAccess(model, "이메일 인증을 해주세요.");
 	}
@@ -289,6 +280,7 @@ public class UserController {
 		}
 		return wrongAccess(model, "유효하지 않은 회원입니다.");
 	}
+	
 	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
 	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
 			HttpServletResponse resp,UserVO user) throws IOException {
