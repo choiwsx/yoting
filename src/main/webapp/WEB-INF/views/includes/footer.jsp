@@ -38,10 +38,12 @@
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
                         <a href="/cookInfo" target="_blank">회사소개</a><span>|</span>
-                        	광고문의<span>|</span>
-                        	개인정보처리방침<span>|</span>
-                        	이용약관 <span>|</span>
-                        	고객센터
+                        <!-- 
+                           광고문의<span>|</span>
+                           개인정보처리방침<span>|</span>
+                           이용약관 <span>|</span>
+                           고객센터
+                            -->
                     </p>
                     
                     <p class="info_link">대표 : 최원석 / E : help@Cookstagram.com<br>
@@ -50,7 +52,7 @@
                         쇼핑문의(쿡스타그램) : 02-1234-1234<br>
                         서비스 이용문의 : 070-1234-1234
                     </p>
-
+<!-- 
                     <p class="info_link">Copyright <b>©Cookstagram</b> Inc. All Rights Reserved</p>
                 </div>
                 <div class="info_banner" style="padding-left:140px">
@@ -60,6 +62,7 @@
                 </div>
             </div>
         </div>
+         -->
         <div class="footer" id="name_footer">
             <p style="padding-top: 17px;">Cookstagram Since 2020</p>
         </div>

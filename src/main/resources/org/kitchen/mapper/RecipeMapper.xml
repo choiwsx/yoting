@@ -348,4 +348,8 @@ where rownum <=12
 ]]>
 </select>
 
+<select id="getLatestRno" resultType="Long">
+SELECT MAX(r_num) FROM tbl_recipe 
+</select>
+
 </mapper>
