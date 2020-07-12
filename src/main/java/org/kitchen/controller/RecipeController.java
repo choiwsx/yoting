@@ -151,6 +151,7 @@ public class RecipeController {
 
    @GetMapping("detail")
    public String detail(Model model, String rno, HttpSession session) {
+	   log.info("@@@@@@해리누나@@@@");
 	  if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
@@ -158,6 +159,10 @@ public class RecipeController {
       }
       Long rnoLong = Long.parseLong(rno);
       RecipeVO recipe = recipeService.get(rnoLong);
+      if(recipeService.get(rnoLong)==null)
+      {
+    	  return wrongAccess(model);
+      }
       if(recipe == null) return wrongAccess(model);
       model.addAttribute("tag",recipeService.getTagNameList());
       model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
