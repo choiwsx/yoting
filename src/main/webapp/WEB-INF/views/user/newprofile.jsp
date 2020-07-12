@@ -154,6 +154,7 @@ $('input[type="file"]').change(function(e){
  
  function validateURL() {
     var url = $("input[name='webUrl']").val();
+    if(url=="") return true;
     const re = /[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/;
     return re.test(url);
  }
