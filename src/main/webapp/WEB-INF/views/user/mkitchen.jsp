@@ -21,6 +21,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 <body>
 
    <div style="text-align: center;">
+   <h1>내 주방</h1>
       <div>
       </div>
          <div>
@@ -61,7 +62,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <label>자기소개:</label>${user.bio}
          </div>
    </div> 
-   
+   <c:if test="${not empty recipeList }">
     <input type="text" name="recipeKeyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색'>
 		<input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
@@ -75,7 +76,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
 	</c:forEach>
-
+	</c:if>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){

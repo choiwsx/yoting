@@ -3,6 +3,7 @@ package org.kitchen.service;
 import java.util.List;
 
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
@@ -48,6 +49,8 @@ public interface UserService {
 	
 	List<RecipeVO> getUserRecipeList(Long userNo);
 	
+	int countUserRecipeList(Long userNo);
+	
 	UserVO tempLogin(UserVO user);
 	
 	boolean follow(Long followeeNo, Long followerNo);
@@ -62,4 +65,7 @@ public interface UserService {
 	List<UserVO> getIdAutocomplete(String result);
 
 	int countFollowing(Long userNo);
+	
+	List<SimpleProfileDTO> getSimpleProfileList();
+	
 }

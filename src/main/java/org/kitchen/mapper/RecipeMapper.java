@@ -56,6 +56,8 @@ public interface RecipeMapper {
 	public List<RecipeVO> searchUserRecipeList(Criteria cri);
 	
 	public List<RecipeVO> getUserRecipeList(Long userNo);
+	
+	public int countUserRecipeList(Long userNo);
 
 	public Long getUserNoByRno(Long rno);
 

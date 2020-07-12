@@ -152,10 +152,10 @@ public class UserController {
 		return wrongAccess(model, "이메일 인증 실패. 잘못된 인증 링크입니다.");
 	}
 	
-//	@GetMapping("/list")
-//	public void showList(Model model) {
-//		model.addAttribute("list", userService.getTotalList());
-//	}
+	@GetMapping("/list")
+	public void showList(Model model) {
+		model.addAttribute("simpleProfileList", userService.getSimpleProfileList());
+	}
 	
 //	@GetMapping("/deluser")
 //	public String delUser(Model model, String userNo) {

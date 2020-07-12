@@ -13,6 +13,7 @@ public class SimpleProfileDTO {
 	private String profilePhoto;
 	private int followers;
 	private int followings;
+	private int recipeCount;
 	
 	public SimpleProfileDTO(UserVO user) {
 		userNo = user.getUserNo();

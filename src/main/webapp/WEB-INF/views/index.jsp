@@ -62,9 +62,9 @@
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${latestRecipe.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
-                <a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>"><p><c:out value="${latestRecipe.title}"/></p></a>
-                <a href="/user/profile?userId=<c:out value='${author.userId }'/>">
-                <p><c:out value="${author.userId}"/><span><img src="<c:out value="${author.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span></p>
+                제목:<a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>"><c:out value="${latestRecipe.title}"/></a><br>
+                주방장:<a href="/user/profile?userId=<c:out value='${author.userId }'/>">
+                <c:out value="${author.userId}"/><span><img src="<c:out value="${author.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span>
                 </a>
             </div>
         </div>
@@ -78,7 +78,7 @@
 
         <c:if test="${!empty list }">
                 <div id="side_banner" style="grid-area: b; background-color:white">
-            <h3 style="text-align: center;">다양한 레시피!</h3>
+            <h3 style="text-align: center;">그 외 다양한 레시피!</h3>
              <c:forEach items="${list}" var="recipe">
             <div class="tieup_list">
                 <div class="tieup_list_holder" data-ad-slot="pc-tieup-text" data-ad-capacity="15" data-ad-displayed="1" >
@@ -95,7 +95,7 @@
 			</div>
 </c:forEach>
                 <div class="link_to_event" style="text-align: right; margin-right: 30px;">
-                <a href="/recipe/list">더보기</a>
+                <a href="/recipe/list">더 보기</a>
                 </div>
                 </div>
         </c:if>

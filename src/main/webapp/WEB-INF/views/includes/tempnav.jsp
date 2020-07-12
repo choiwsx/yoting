@@ -70,8 +70,8 @@ if(session!=null) {
 
     .navBottom {
         padding-top: 15px;
-        padding-left: 270px;
-        padding-right: 150px;
+        padding-left: 220px;
+        padding-right: 110px;
         display:inline-flex;
     }
 
@@ -323,6 +323,7 @@ if(session!=null) {
                 <li><a href="/recipe/list?categoryNo=11" id="nav">주식</a></li>
                 <li><a href="/recipe/list?categoryNo=22" id="nav">디저트</a></li>
                 <li><a href="/recipe/list?categoryNo=33" id="nav">반찬</a></li>
+                <li><a href="/user/list" id="nav">주방장들</a></li>
                 <!--                 
                 <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
                  -->
@@ -339,7 +340,7 @@ if(session!=null) {
 	   button();
    });
    
-	$('input[type="text"]').keydown(function() {
+	$('#keyword').keydown(function() {
 		  if (event.keyCode === 13) {
 		    event.preventDefault();
 		    button();
