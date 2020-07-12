@@ -69,7 +69,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <label>이메일:</label>${user.email}
          </div>
          <div>
-            <label>자기소개:</label>${user.bio}
+            <c:out value="자기소개:${user.bio}"/>
          </div>
    </div> 
    <c:if test="${not empty recipeList }">
@@ -98,8 +98,14 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 						  <c:otherwise>
 						     ${recipe.reContent}
 						  </c:otherwise>
-						</c:choose></div>
+						</c:choose>
+						<br>
+						<a href="/recipe/modiRecipe?rno=${recipe.rno}">수정</a>
+	<a href="/recipe/del?rno=${recipe.rno}">삭제</a>
 						</div>
+						
+						</div>
+						
 	</c:forEach>
 	</c:if>
 </body>

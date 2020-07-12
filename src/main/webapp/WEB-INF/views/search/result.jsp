@@ -21,8 +21,7 @@ a {
 </style>
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<c:if test="${where == user or where==null}">
 	<div class="userlist">
 	<hr>
@@ -38,8 +37,24 @@ a {
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
 					height=85px onerror="imgError(this);">
-					<br><c:out value="${recipe.userId}"/>
-					<br><c:out value="${recipe.nickName}"/>
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.userId) > 9}">
+						      ${fn:substring(recipe.userId,0,8)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.userId}
+						  </c:otherwise>
+						</c:choose>
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.nickName) > 10}">
+						      ${fn:substring(recipe.nickName,0,9)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.nickName}
+						  </c:otherwise>
+						</c:choose>
 					</a></div>
 					</div>
 			</c:forEach>
@@ -54,23 +69,24 @@ a {
 	<div class="recipelist">
 	<hr>
 	<h3>레시피 리스트</h3>
-		<label>
+		<!-- <label>
 			총
 			<c:out value="${fn:length(list)}  " />
 			개있습니다.
 		</label>
+		 -->
 		<c:if test="${list.size()>=5 and where==null}">
 					<a class="more_button" href="recipe">더보기</a>
 				</c:if>
 		<br>
-		
+		<!-- 
 		<c:forEach items="${category}" var="category">
 				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
 						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
 				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5> <br><br><br>
-				
+				 -->
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
 		<tr>
 			<td><c:if test="${empty list}">
