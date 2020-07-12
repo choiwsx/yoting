@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
-import org.kitchen.domain.ProfileDTOFactory;
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
@@ -37,7 +37,6 @@ import net.sf.json.JSONArray;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
-@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -62,6 +61,7 @@ public class UserController {
 		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
 		}
+		model.addAttribute("user", user);
 		log.info("#############"+userService.isLegitNewUser(user)+user);
 		//아이디, 이메일 중복 확인
 		String message = "";
@@ -75,7 +75,6 @@ public class UserController {
 			model.addAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
-			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
 		return "redirect:/user/registration";
@@ -188,10 +187,10 @@ public class UserController {
 				log.info("자기페이지");
 				return "redirect:/user/mkitchen";
 			}
-			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, userNo));
+			model.addAttribute("profile", ModelDTOFactory.getProfile(user, userNo));
 		} else {
 			//로그인 중이지 않으면
-			model.addAttribute("profile", ProfileDTOFactory.getProfile(user));
+			model.addAttribute("profile", ModelDTOFactory.getProfile(user));
 		}
 		return "/user/profile";
 	}
@@ -387,10 +386,15 @@ public class UserController {
 		return wrongAccess(model, "언팔로우 실패");
 	}
 	
-	@GetMapping("/hotkitchen")
-	public void rank(Model model) {
-		model.addAttribute("list", searchService.getHotUserList(10));
-	}
+//	@GetMapping("/hotkitchen")
+//	public void rank(Model model) {
+//		model.addAttribute("list", searchService.getHotUserList(10));
+//	}
+	
+	   @GetMapping("/cookInfo")
+	   public void cookInfo() {
+	      
+	   }
 
 	
 	private String wrongAccess(Model model) {

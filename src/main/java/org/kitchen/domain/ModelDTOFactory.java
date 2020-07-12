@@ -1,18 +1,25 @@
 package org.kitchen.domain;
 
+import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProfileDTOFactory {
+public class ModelDTOFactory {
 
 	
 	static UserService userService;
+	static RecipeService recipeService;
 	
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	
+	@Autowired
+	public void setRecipeService(RecipeService recipeService) {
+		this.recipeService = recipeService;
 	}
 	
 	public static SimpleProfileDTO getSimpleProfile(UserVO user) {
@@ -37,6 +44,12 @@ public class ProfileDTOFactory {
 		profile.setFollowing(userService.countFollower(user.getUserNo(), visitorNo)==1);
 		System.out.println("@@@@@@"+profile.following);
 		return profile;
+	}
+	
+	public static SimpleRecipeDTO getSimpleRecipe(RecipeVO recipe) {
+		if(recipe==null||recipeService.get(recipe.getRno())==null) return null;
+		SimpleRecipeDTO simpleRecipe = new SimpleRecipeDTO(recipe, userService.getNickNameByNo(recipe.getUserNo()));
+		return simpleRecipe;
 	}
 
 }

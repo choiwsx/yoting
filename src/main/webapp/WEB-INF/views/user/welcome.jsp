@@ -9,7 +9,7 @@
 <title>회원 가입 완료</title>
 </head>
 <body>
-<h1>회원 가입을 축하합니다.</h1>
+<h1>쿡스타그램 회원 가입을 축하합니다.</h1>
 <div>
 </div>
 <div>
@@ -23,17 +23,16 @@
 <label>userWeb</label> <c:out value="${user.webUrl}" /><br>
 <label>userBio</label> <c:out value="${user.bio}" /><br>
 <label>userEmailSub</label> <c:out value="${user.emailSub}" /><br>
-<label>userStatus</label> <c:out value="${user.status}" /><br>
 </div>
 
 <div>
-이메일 인증만 하면 회원가입이 최종 완료됩니다. 이메일을 확인해주세요.
+이메일 인증만 완료하면 회원 가입이 완료됩니다. 이메일을 확인해주세요.
 
+<br>
+<br>                        
+인증 이메일이 안왔나요? 
 
-                        
-이메일이 안왔나요? 
-
-<a href="/user/resendEmail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
+<a href="/user/resendEmail?userNo=<c:out value="${user.userNo}" />">인증 이메일 다시 보내기</a>
 </div>
 
 

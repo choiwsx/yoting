@@ -9,7 +9,7 @@
 <title>로그인</title>
 </head>
 <body>
-<h1>로그인 화면</h1>
+<h1>로그인</h1>
 
 <c:if test="${result ne null }">
 </c:if>
@@ -25,7 +25,7 @@
 </div>
 <br>
 <div> 
-회원 가입을 했는데 이메일이 안왔나요? 
+회원 가입을 했는데 인증 이메일이 안왔나요? 
 
 <a href="/user/resendEmail">인증 이메일 다시 보내기</a>
 </div>

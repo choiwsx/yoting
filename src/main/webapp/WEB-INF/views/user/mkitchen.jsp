@@ -53,7 +53,17 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <label>닉네임:</label><c:out value="${user.nickName}" />
          </div>
          <div>
-            <label>웹사이트:</label><a href="<c:out value="${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
+            <label>웹사이트:</label>
+            <c:set var = "tmpurl" value="${user.webUrl}"/>
+            <c:set var = "webUrl" value="${fn:substring(tmpurl,0,7)}"/>
+            <c:choose>
+            	<c:when test="${webUrl eq 'http://'}">
+			            <a href="<c:out value="${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
+            	</c:when>
+            	<c:otherwise>
+			            <a href="<c:out value="http://${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
+            	</c:otherwise>
+			</c:choose>
          </div>
          <div>
             <label>이메일:</label>${user.email}
@@ -63,7 +73,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
          </div>
    </div> 
    <c:if test="${not empty recipeList }">
-    <input type="text" name="recipeKeyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색'>
+    <input type="text" name="recipeKeyword" placeholder='나의 레시피 검색' style='width: 300px'>
 		<input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
 		<button id="searchBtn">검색</button>		
@@ -82,8 +92,8 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 						  </c:otherwise>
 						</c:choose></div>
 						<div><c:choose>
-						   <c:when test="${fn:length(recipe.reContent) > 40}">
-						      ${fn:substring(recipe.reContent,0,39)}...
+						   <c:when test="${fn:length(recipe.reContent) > 15}">
+						      ${fn:substring(recipe.reContent,0,15)}...
 						   </c:when>
 						  <c:otherwise>
 						     ${recipe.reContent}

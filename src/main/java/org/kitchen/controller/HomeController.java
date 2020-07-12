@@ -67,11 +67,6 @@ public class HomeController {
       return "index";
    }
    
-   @GetMapping("/cookInfo")
-   public void cookInfo() {
-      
-   }
-   
    @GetMapping("/good")
    public void getGood() {
       
