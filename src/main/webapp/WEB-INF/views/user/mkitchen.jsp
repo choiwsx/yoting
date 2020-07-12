@@ -53,7 +53,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <label>닉네임:</label><c:out value="${user.nickName}" />
          </div>
          <div>
-            <label>웹사이트:</label><a href="<c:out value="${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
+            <label>웹사이트:</label><a href="<c:out value="http://www.${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
          </div>
          <div>
             <label>이메일:</label>${user.email}
