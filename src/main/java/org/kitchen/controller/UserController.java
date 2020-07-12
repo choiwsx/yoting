@@ -37,7 +37,6 @@ import net.sf.json.JSONArray;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
-@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -62,6 +61,7 @@ public class UserController {
 		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
 		}
+		model.addAttribute("user", user);
 		log.info("#############"+userService.isLegitNewUser(user)+user);
 		//아이디, 이메일 중복 확인
 		String message = "";
@@ -75,7 +75,6 @@ public class UserController {
 			model.addAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
-			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
 		return "redirect:/user/registration";
