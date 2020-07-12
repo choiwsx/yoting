@@ -16,7 +16,6 @@
 <title>검색:더보기</title>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <c:if test="${moreList.size()>0}">
 
