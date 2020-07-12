@@ -6,6 +6,7 @@ import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.SimpleProfileDTO;
+import org.kitchen.domain.SimpleRecipeDTO;
 import org.kitchen.domain.UserVO;
 
 public interface SearchService {
@@ -37,5 +38,7 @@ public interface SearchService {
 	public List<CategoryVO> read();
 	
 	public List<SimpleProfileDTO> getHotUserList(int length);
+	
+	public List<SimpleRecipeDTO> getSimpleRecipeList(Criteria cri);
 
 }
