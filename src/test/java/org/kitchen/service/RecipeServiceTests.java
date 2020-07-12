@@ -7,7 +7,9 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.ContentVO;
+import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.mapper.RecipeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,13 +22,17 @@ import lombok.extern.log4j.Log4j;
 public class RecipeServiceTests {
 	@Autowired
 	private RecipeService service;
+	@Autowired
+	private SearchService searchService;
+	@Autowired
+	private RecipeMapper recipeMapper;
 
-	@Test
+	//@Test
 	public void testGetList() {
 		service.getList();
 	}
 	
-	@Test
+	//@Test
 	public void testExist()
 	{
 		log.info(service);
@@ -134,6 +140,19 @@ public class RecipeServiceTests {
 		log.info(content);
 		
 		//log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
+		
+	}
+	
+	@Test
+	public void sdsd() {
+		Criteria cri = new Criteria(6,8);
+		cri.setType("");
+		cri.setKeyword("만");
+		cri.setWhere("recipe");
+		List<RecipeVO> list = recipeMapper.getListWithPaging(cri);
+		list.forEach(a->log.info(a));
+		searchService.getSimpleRecipeList(cri).forEach(b->log.info("@@@@"+b));
+		
 		
 	}
 }

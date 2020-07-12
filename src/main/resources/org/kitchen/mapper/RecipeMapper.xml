@@ -132,7 +132,7 @@
 
 <select id="getListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, c_code , thumbnail, regdate
+select r_num, title, u_num, c_code, thumbnail, regdate
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
@@ -153,11 +153,11 @@ from
 
 <select id="getRecipeListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, regdate , thumbnail
+select r_num, title, u_num, regdate , thumbnail, c_code
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num ,title, u_num, regdate , thumbnail
+		rownum rn, r_num ,title, u_num, regdate , thumbnail, c_code
 	
  	from
  		tbl_recipe
