@@ -1,5 +1,6 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kitchen.domain.CategoryVO;
@@ -84,7 +85,23 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public List<ContentVO> getCon(Long rno) {
       log.info("getCon......" + rno);
-      return contentMapper.read(rno);
+      List<ContentVO> contents = contentMapper.read(rno);
+      if(contents==null) {
+    	  contents = new ArrayList<ContentVO>();
+      } else if(contents.size()<10)
+      {
+    	  int j = contents.size();
+    	  for(int i=contents.size(); i<10; i++)
+    	  {
+    		  ContentVO content = new ContentVO();
+    		  content.setRno(rno);
+    		  content.setStepNo(j);
+    		  contents.add(content);
+    		  j++;
+    	  }
+    	  return contents;
+      }
+    	  return contentMapper.read(rno);
    }
 
    @Override

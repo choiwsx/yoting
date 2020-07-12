@@ -1,7 +1,11 @@
 package org.kitchen.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
@@ -92,22 +96,41 @@ public class RecipeController {
 //      return "redirect:/recipe/detail?rno"+recipe.getRno();
 //   }
    
-   @GetMapping("/modiRecipe")
-   public String modiRecipe(Model model, String rno, HttpSession session) {
-	  if(rno == null) return wrongAccess(model);
-      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
-      if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
-         return wrongAccess(model);
-      }
-      //로그인 한 사람===수정하려는 글 게시자 이면 ㅇㅋ
-      if(recipeService.isMyRecipe(Long.parseLong(rno), (Long)session.getAttribute("userNo"))) {
-          model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
-      } else {
-    	  //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
-          return wrongAccess(model);
-      }
-      return "/recipe/modiRecipe";   
-   }
+	   @GetMapping("/modiRecipe")
+	   public String modiRecipe(Model model, String rno, HttpSession session) {
+	     if(rno == null) return wrongAccess(model);
+	      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
+	      if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
+	         return wrongAccess(model);
+	      }
+	      //로그인 한 사람===수정하려는 글 게시자 이면 ㅇㅋ
+	      if(recipeService.isMyRecipe(Long.parseLong(rno), (Long)session.getAttribute("userNo"))) {
+	          model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
+	          
+	          
+	      } else {
+	         //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
+	          return wrongAccess(model);
+	      }
+	      // 레시피의 컨텐트가 없으면 컨텐트10개 만들어서 걍 넘겨준다.
+	      int size = recipeService.getCon(new Long(rno)).size();
+	      if(size == 0)
+	      {
+	       List<ContentVO> list = new ArrayList<>(10);
+	        int j=1;
+	        for(int i = 0; i<10; i++)
+	        {
+	           ContentVO tmp = new ContentVO();
+	           tmp.setRno(Long.parseLong(rno));
+	           tmp.setStepNo(j);
+	           list.add(tmp);
+	           j++;
+	        }
+	         model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
+	         model.addAttribute("list", list);
+	      }
+	      return "/recipe/modiRecipe";   
+	   }
    
    @PostMapping("/modiRecipe")
    public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
