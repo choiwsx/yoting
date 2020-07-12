@@ -45,22 +45,23 @@ public class SearchController {
 		//String more = cri.getWhere();
 		model.addAttribute("tag",recipeService.getTagNameList());
 		model.addAttribute("category", searchService.read());
-		switch (type) {
-		case "T":
-			model.addAttribute("list", searchService.getSimpleRecipeList(cri));
-			break;
-		case "W":
-			model.addAttribute("list_user", searchService.getUserList(cri));
-			break;
-		case "Tag":
-			model.addAttribute("list_tag", searchService.getTagNum(cri));
-			break;
-		case "A":
-			model.addAttribute("list", searchService.getSimpleRecipeList(cri));
-			model.addAttribute("list_user", searchService.getUserList(cri));
-			model.addAttribute("list_tag", searchService.getTagNum(cri));
-			break;
-		}
+//		switch (type) {
+//		case "T":
+//			model.addAttribute("list", searchService.getSimpleRecipeList(cri));
+//			break;
+//		case "W":
+//			model.addAttribute("list_user", searchService.getUserList(cri));
+//			break;
+//		case "Tag":
+//			model.addAttribute("list_tag", searchService.getTagNum(cri));
+//			break;
+//		case "A":
+//			
+//			break;
+//		}
+		model.addAttribute("list", searchService.getSimpleRecipeList(cri));
+		model.addAttribute("list_user", searchService.getUserList(cri));
+		model.addAttribute("list_tag", searchService.getTagNum(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, 100));
 		log.info("list : " + cri);
 		return "/search/result";
