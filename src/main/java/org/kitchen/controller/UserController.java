@@ -309,7 +309,7 @@ public class UserController {
 		//널이거나 숫자아니거나 유효회원 아니면 그냥 페이지로 보내기
 		if(userNo==null || !isNumeric(userNo) || !userService.isValidUser(Long.parseLong(userNo))) {
 			log.info("####################!!!!"+userNo);
-			return "recirect:/user/resendEmail";
+			return "/user/resendEmail";
 		}
 		//숫자면
 		UserVO user = userService.getUserByNo(Long.parseLong(userNo));

@@ -103,9 +103,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 						<a href="/recipe/modiRecipe?rno=${recipe.rno}">수정</a>
 	<a href="/recipe/del?rno=${recipe.rno}">삭제</a>
 						</div>
-						
 						</div>
-						
 	</c:forEach>
 	</c:if>
 </body>
