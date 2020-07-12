@@ -69,11 +69,26 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 		<button id="searchBtn">검색</button>		
 		<button id="initBtn">초기화</button>	<br>
 	<c:forEach items="${recipeList}" var="recipe">
-	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 200px; height: 100px; padding: 15px; margin: 33px; float: left;">
+	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 400px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
 					width="100" height="100"  onerror="imgError(this);" /></a></div>
-						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
-						<div><c:out value="${recipe.userNo}" /></div>
+						<div style="padding: 15px;">
+						<c:choose>
+						   <c:when test="${fn:length(recipe.title) > 15}">
+						      ${fn:substring(recipe.title,0,14)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.title}
+						  </c:otherwise>
+						</c:choose></div>
+						<div><c:choose>
+						   <c:when test="${fn:length(recipe.reContent) > 40}">
+						      ${fn:substring(recipe.reContent,0,39)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.reContent}
+						  </c:otherwise>
+						</c:choose></div>
 						</div>
 	</c:forEach>
 	</c:if>

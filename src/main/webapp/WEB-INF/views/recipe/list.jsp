@@ -31,7 +31,14 @@ a {
                      height=280px onerror="imgError(this);" >
                </div>
                <div style="margin-top: 10px;">
-                  <c:out value="${recipe.title }" />
+                  <c:choose>
+						   <c:when test="${fn:length(recipe.title) > 15}">
+						      ${fn:substring(recipe.title,0,14)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.title}
+						  </c:otherwise>
+						</c:choose>
                </div>
                <div>
                   by
