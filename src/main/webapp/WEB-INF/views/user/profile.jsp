@@ -82,7 +82,14 @@
 						  </c:otherwise>
 						</c:choose>
 </div>
-						<div><c:out value="${recipe.userNo}" /></div>
+						<div><c:choose>
+						   <c:when test="${fn:length(recipe.reContent) > 40}">
+						      ${fn:substring(recipe.reContent,0,39)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.reContent}
+						  </c:otherwise>
+						</c:choose></div>
 						</div>
 	</c:forEach>
 </c:if>
