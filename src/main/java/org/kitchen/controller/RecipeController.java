@@ -39,7 +39,7 @@ public class RecipeController {
 			return wrongAccess(model);
 		}
 		recipeService.register(recipe);
-		rttr.addFlashAttribute("result", recipe.getRno());
+		rttr.addFlashAttribute("result", "게시물을 등록하였습니다.");
 		return "redirect:/user/mkitchen";
 	}
 

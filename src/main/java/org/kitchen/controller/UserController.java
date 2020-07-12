@@ -37,7 +37,6 @@ import net.sf.json.JSONArray;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
-@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -62,6 +61,7 @@ public class UserController {
 		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
 		}
+		model.addAttribute("user", user);
 		log.info("#############"+userService.isLegitNewUser(user)+user);
 		//아이디, 이메일 중복 확인
 		String message = "";
@@ -75,7 +75,6 @@ public class UserController {
 			model.addAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
-			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
 		return "redirect:/user/registration";
@@ -387,10 +386,15 @@ public class UserController {
 		return wrongAccess(model, "언팔로우 실패");
 	}
 	
-	@GetMapping("/hotkitchen")
-	public void rank(Model model) {
-		model.addAttribute("list", searchService.getHotUserList(10));
-	}
+//	@GetMapping("/hotkitchen")
+//	public void rank(Model model) {
+//		model.addAttribute("list", searchService.getHotUserList(10));
+//	}
+	
+	   @GetMapping("/cookInfo")
+	   public void cookInfo() {
+	      
+	   }
 
 	
 	private String wrongAccess(Model model) {

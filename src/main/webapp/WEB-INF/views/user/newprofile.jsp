@@ -18,7 +18,7 @@
 <form id="form" action="/user/newprofile" method="POST" enctype="utf8">
     <div>
         <label>닉네임</label>
-        <input type="text" name="nickName" />
+        <input type="text" name="nickName" maxlength="20"/>
         <label>최대 20바이트.</label>
     </div>
     <div>
@@ -33,12 +33,12 @@
     </div>
     <div>
         <label>개인홈피주소</label>
-        <input type="text" name="webUrl" />
+        <input type="text" name="webUrl" maxlength="150"/>
         <label>최대 200바이트.</label>
     </div>
     <div>
         <label>소개글</label>
-        <input type="text" name="bio" />
+        <input type="text" name="bio" maxlength="300"/>
         <label>최대 500바이트.</label>
     </div>
     <!-- <div>
