@@ -268,7 +268,7 @@ if(session!=null) {
        -->
    </select>
    <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
-   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
+   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
    <button type="button" class='btn btn-default'>검색</button>
 </form>
