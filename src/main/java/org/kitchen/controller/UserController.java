@@ -300,12 +300,25 @@ public class UserController {
 	}
 	
 	@GetMapping("/resendEmail")
-	public String resendEmail(HttpSession session, Model model) {
+	public String resendEmail(HttpSession session, Model model, String userNo) {
 		//로그인 상태면 인증 메일 보내는 페이지 막기
-		if( session.getAttribute("userNo")!=null ) {
+		if( session.getAttribute("userNo")!=null) {
 			return wrongAccess(model);
 		}
-		return "/user/resendEmail";
+		//널이거나 숫자아니거나 유효회원 아니면 그냥 페이지로 보내기
+		if(userNo==null || !isNumeric(userNo) || userService.isValidUser(Long.parseLong(userNo))) return "/user/resendEmail";
+		//숫자면
+		UserVO user = userService.getUserByNo(Long.parseLong(userNo));
+		if(user.getStatus() == null) return wrongAccess(model);
+		if(UserStatus.PENDING.equals(user.getStatus())) {
+		userService.sendVerificationEmail(user);
+		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
+		return "/good";
+		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
+			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
+		} else {
+			return wrongAccess(model);
+		}
 	}
 	
 	@PostMapping("/resendEmail")
@@ -324,7 +337,7 @@ public class UserController {
 		if(user.getStatus().equals(UserStatus.PENDING)) {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
-		return "redirect:/";
+		return "/good";
 		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
 			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
 		}
