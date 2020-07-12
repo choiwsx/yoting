@@ -352,4 +352,8 @@ where rownum <=12
 SELECT MAX(r_num) FROM tbl_recipe 
 </select>
 
+<select id="countUserRecipeList" resultType="int">
+   select count(*) from tbl_recipe where u_num=#{userNo}
+</select>
+
 </mapper>

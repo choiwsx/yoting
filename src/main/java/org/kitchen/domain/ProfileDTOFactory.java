@@ -19,6 +19,7 @@ public class ProfileDTOFactory {
 		SimpleProfileDTO simpleProfile = new SimpleProfileDTO(user);
 		simpleProfile.setFollowers(userService.countFollower(user.getUserNo()));
 		simpleProfile.setFollowings(userService.countFollowing(user.getUserNo()));
+		simpleProfile.setRecipeCount(userService.countUserRecipeList(user.getUserNo()));
 		return simpleProfile;
 	}
 	

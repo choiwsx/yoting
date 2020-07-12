@@ -1,10 +1,13 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kitchen.domain.ProfileDTOFactory;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
@@ -263,6 +266,22 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		if(userNo==null) return false;
 		return userMapper.userExists(userNo);
+	}
+
+	@Override
+	public List<SimpleProfileDTO> getSimpleProfileList() {
+		// TODO Auto-generated method stub
+		List<UserVO> list = getTotalList();
+		List<SimpleProfileDTO> simpleProfileList = new ArrayList<>();
+		if(list==null) return null;
+		list.forEach(a->simpleProfileList.add(ProfileDTOFactory.getSimpleProfile(a)));
+		return simpleProfileList;
+	}
+
+	@Override
+	public int countUserRecipeList(Long userNo) {
+		// TODO Auto-generated method stub
+		return recipeMapper.countUserRecipeList(userNo);
 	}
 
 	

@@ -30,7 +30,7 @@
 				<c:if test="${empty profile.recipes}">
 				 	<b><c:out value="${profile.user.nickName}" />님</b>은 아직 작성한 레시피가 없어요.
 				</c:if>
-				<c:if test="${not empty empty profile.recipes}">
+				<c:if test="${not empty profile.recipes}">
 					<b><c:out value="${profile.user.nickName}" />님</b>은  <c:out value="${fn:length(profile.recipes)}" />개의 레시피가 있습니다.
 				</c:if>
 				
@@ -69,8 +69,8 @@
 		<button id="searchBtn">검색</button>		
 		<button id="initBtn">초기화</button>	<br>
 	<c:forEach items="${profile.recipes}" var="recipe">
-	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 200px; height: 100px; padding: 15px; margin: 33px; float: left;">
-	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
+	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 400px; height: 200px; padding: 15px; margin: 33px; float: left;">
+	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }" style="margin: 10px"/>"
 					width="100" height="100"  onerror="imgError(this);"  /></a></div>
 						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
 						<div><c:out value="${recipe.userNo}" /></div>
