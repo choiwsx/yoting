@@ -13,14 +13,14 @@
 <body>
 <h1><c:out value="${recipe.title }" /> 수정 페이지</h1>
    <form:form modelAttribute="recipe" action="/recipe/modiRecipe" method="post" id="form-id">
-      	        <h3>레시피 수정하기</h3>
-	
-	    <fieldset><legend>레시피 소개</legend>
-	
-	    
-		<form:hidden path="userNo" value="<%=userNo%>" />
+       <fieldset><legend>레시피 내용</legend>
+       
+       
+      <form:hidden path="userNo" value="${recipe.userNo}" />
+      <form:hidden path="rno" value="${recipe.rno}" />
+   
         <form:label
-            path="categoryNo" >카테고리(필수)</form:label>
+            path="categoryNo" >카테고리</form:label>
         
  <form:select
             path="categoryNo" id="categoryNo">
@@ -67,7 +67,7 @@
            <div class="photo <c:out value='${vs.count}' />">
            <c:if test="${content.photoUrl ne null}">
            <img 
-           src="${content.photoUrl}"
+           src="${content.photoUrl}'/>"
           width="350" height="350" onerror="imgError(this);"/>
            </div>           
            </c:if>

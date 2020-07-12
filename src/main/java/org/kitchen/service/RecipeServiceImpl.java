@@ -94,7 +94,8 @@ public class RecipeServiceImpl implements RecipeService {
     	  for(int i=contents.size(); i<10; i++)
     	  {
     		  ContentVO content = new ContentVO();
-    		  content.setRno(rno);
+//    		  content.setRno(rno);
+    		  log.info(rno);
     		  content.setStepNo(j);
     		  contents.add(content);
     		  j++;
