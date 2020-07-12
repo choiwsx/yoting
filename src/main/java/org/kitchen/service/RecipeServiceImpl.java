@@ -161,5 +161,10 @@ public class RecipeServiceImpl implements RecipeService {
 		return recipeMapper.read(rno);
 	}
 
+	@Override
+	public int checkCode(Long categoryNo) {
+		return categoryMapper.checkCode(categoryNo);
+	}
+
 
 }

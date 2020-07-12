@@ -138,8 +138,12 @@ public class RecipeController {
          }
          //카테고리 있으면 카테고리 리스트
          Long categoryNoLong = Long.parseLong(categoryNo);
+         if(recipeService.checkCode(categoryNoLong)<=0) {
+        	 return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
+         }
          model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
          model.addAttribute("list",recipeService.getCategoryCode(categoryNoLong));
+         
       }
       model.addAttribute("tag",recipeService.getTagNameList());      
       return "/recipe/list";

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>인증 이메일  다시보내기</title>
+<title>인증 이메일  다시 보내기</title>
 </head>
 <body>
 <h1>인증 이메일이 안왔나요?</h1>

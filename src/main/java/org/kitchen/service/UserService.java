@@ -68,4 +68,6 @@ public interface UserService {
 	
 	List<SimpleProfileDTO> getSimpleProfileList();
 	
+	String getNickNameByNo(Long userNo);
+	
 }
