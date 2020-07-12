@@ -59,12 +59,14 @@
 	    <div>
 	    <c:out value="${vs.count}" />번째 컨텐츠
 	        <div class="photo <c:out value='${vs.count}' />">
+	        <ul>
+	        </ul>
 	        </div>
 	        <div>
 	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="<c:out value='${vs.count}' />" />
 	        <form:input
-	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
+	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" />
 	        
 	        <form:textarea
 	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
@@ -100,7 +102,7 @@ function submitCheck(){
 }
 
 $(".fileUploader").change(function(){
-    upload(this);
+	upload(this);
  });
 
 
@@ -162,18 +164,21 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
 var filePath=$('input[type=file');
 var photoList=$(".photo");
 
-$(".photo").on("click", "i", function(e){
+$(".photo").on("click", "button", function(e){
+	var str="";
 	var targetFile = $(this).data("file");
 	var type = $(this).data("type");
-	console.log(targetFile);
-	
+	var targetLi = $(this).closest("li");
+	var idx = targetLi.data("id");	
 	$.ajax({
 		url: '/deleteFile',
 		data: {fileName: targetFile, type:type},
 		dataType : 'text',
 		type: 'Post',
 		success:function(result){
-			alert(result);
+			targetLi.remove();
+			uploaderList[idx].value=str;
+		   	$("#thumbnail"+idx).val(str);
 		}
 	
 	});
@@ -228,14 +233,14 @@ function setUploadedFile(uploadResultArr, idx)
       {
          fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
          console.log(fileCallPath);
-         str += "<ul><li data-path='"+obj.uploadPath+"'";
-         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
+         str += "<li data-path='"+obj.uploadPath+"'";
+         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
          str += "><div>";
          str += "<span>"+obj.fileName+"</span>";
-         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-         str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
+         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+         str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
-         str += "</li></ul>";
+         str += "</li>";
       }
       else
       {

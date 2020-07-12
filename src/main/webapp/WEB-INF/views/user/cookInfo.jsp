@@ -2,7 +2,7 @@
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
-<%@ include file="includes/tempnav.jsp"%>
+<%@ include file="../includes/tempnav.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,5 +18,5 @@
 </div>
 </div>
 </body>
-<%@ include file="includes/footer.jsp"%>
+<%@ include file="../includes/footer.jsp"%>
 </html>
