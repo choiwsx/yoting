@@ -25,9 +25,9 @@
         <form:select
             path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
-            <form:option class="options" value="11">주식</form:option>
+            <!--<form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
-            <form:option class="options" value="33">반찬</form:option>
+            <form:option class="options" value="33">반찬</form:option>-->
             <form:option class="options" value="44">외국주식</form:option>
             <form:option class="options" value="55">한식주식</form:option>
             <form:option class="options" value="66">한식디젓</form:option>
@@ -69,7 +69,7 @@
 	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
 	        
 	        <form:textarea
-	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
+	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="300"/>
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
@@ -231,12 +231,13 @@ function setUploadedFile(uploadResultArr, idx)
    $(uploadResultArr).each(function(i,obj){
       if(obj.image)
       {
-         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
          console.log(fileCallPath);
          str += "<li data-path='"+obj.uploadPath+"'";
          str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
          str += "><div>";
-         str += "<span>"+obj.fileName+"</span>";
+         str += "<span>"+obj.showFileName+"</span>";
          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
          str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
