@@ -386,10 +386,15 @@ public class UserController {
 		return wrongAccess(model, "언팔로우 실패");
 	}
 	
-	@GetMapping("/hotkitchen")
-	public void rank(Model model) {
-		model.addAttribute("list", searchService.getHotUserList(10));
-	}
+//	@GetMapping("/hotkitchen")
+//	public void rank(Model model) {
+//		model.addAttribute("list", searchService.getHotUserList(10));
+//	}
+	
+	   @GetMapping("/cookInfo")
+	   public void cookInfo() {
+	      
+	   }
 
 	
 	private String wrongAccess(Model model) {
