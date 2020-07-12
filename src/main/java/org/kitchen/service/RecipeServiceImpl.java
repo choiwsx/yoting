@@ -1,10 +1,13 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleRecipeDTO;
 import org.kitchen.domain.TagVO;
 import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.ContentMapper;
@@ -164,6 +167,16 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public int checkCode(Long categoryNo) {
 		return categoryMapper.checkCode(categoryNo);
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpeRecipeByCategory(Long categoryNoLong) {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = getCategoryCode(categoryNoLong);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
 	}
 
 

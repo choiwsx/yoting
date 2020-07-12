@@ -141,11 +141,11 @@ public class RecipeController {
          if(recipeService.checkCode(categoryNoLong)<=0) {
         	 return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
          }
-         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
-         model.addAttribute("list",recipeService.getCategoryCode(categoryNoLong));
+//         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
+         model.addAttribute("list",recipeService.getSimpeRecipeByCategory(categoryNoLong));
          
       }
-      model.addAttribute("tag",recipeService.getTagNameList());      
+//      model.addAttribute("tag",recipeService.getTagNameList());      
       return "/recipe/list";
    }
 
