@@ -52,8 +52,17 @@
 				<label>닉네임:</label><c:out value="${profile.user.nickName}" />
 			</div>
 			<div>
-				<label>웹사이트:</label><a href="<c:out value="${profile.user.webUrl}" />"><c:out value="${profile.user.webUrl}" /></a>
-			</div>
+				   <label>웹사이트:</label>
+            <c:set var = "tmpurl" value="${profile.user.webUrl}"/>
+            <c:set var = "webUrl" value="${fn:substring(tmpurl,0,7)}"/>
+            <c:choose>
+            	<c:when test="${webUrl eq 'http://'}">
+			            <a href="<c:out value="${profile.user.webUrl}" />"><c:out value="${profile.user.webUrl}" /></a>
+            	</c:when>
+            	<c:otherwise>
+			            <a href="<c:out value="http://${profile.user.webUrl}" />"><c:out value="${profile.user.webUrl}" /></a>
+            	</c:otherwise>
+			</c:choose></div>
 			<div>
 				<label>이메일:</label>${profile.user.email}
 			</div>
