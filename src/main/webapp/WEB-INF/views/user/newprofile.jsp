@@ -23,7 +23,9 @@
     </div>
     <div>
         <label>프사</label>
-        <div id='photo'>
+        <div class='photo'>
+        <ul>
+        </ul>
         </div>
         <img class="OpenImgUpload" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="file" />
@@ -85,15 +87,33 @@
 
 var regex = new RegExp("(.*?)\.(jpg|png|img)$");
 var maxSize = 5242880;
-
+var uploaderList = $(".fileUploader");
 $(".OpenImgUpload").click(function(){
     $("#file").click();
  });
 
+$(".photo").on("click", "button", function(e){
+	var str="";
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	var targetLi = $(this).closest("li");
+	$.ajax({
+		url: '/deleteFile',
+		data: {fileName: targetFile, type:type},
+		dataType : 'text',
+		type: 'Post',
+		success:function(result){
+			targetLi.remove();
+			uploaderList[0].value=str;
+		   	$("#profilePhoto").val(str);
+		}
+	
+	});
+});
+
 $('input[type="file"]').change(function(e){
      var formData = new FormData();
        var uploadFileName = "uploadFile";
-       console.log(e.target.files[0].name);
        if(!checkExtenstion(e.target.files[0].name, e.target.files[0].size)){
            return false;
        }          
@@ -112,6 +132,8 @@ $('input[type="file"]').change(function(e){
   });
 
   });
+  
+  var photoDiv = $(".photo");
 
   function setUploadedFile(uploadResultArr) {
      var str = "";
@@ -119,21 +141,21 @@ $('input[type="file"]').change(function(e){
      $(uploadResultArr).each(function(i,obj){
          if(obj.image)
          {
-            fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+            fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
             console.log(fileCallPath);
-            str += "<ul><li data-path='"+obj.uploadPath+"'";
+            str += "<li data-path='"+obj.uploadPath+"'";
             str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
             str += "><div>";
-            str += "<span>"+obj.fileName+"</span>";
-            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-            str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
+            str += "<span>"+obj.showFileName+"</span>";
+            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+            str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
             str += "</div>";
-            str += "</li></ul>";
+            str += "</li>";
          }
          else
          {
          }
-     $("#photo").html(str);
+     photoDiv.get(0).innerHTML = str;
      $("#profilePhoto").val("/display?fileName="+fileCallPath);
      
   });
