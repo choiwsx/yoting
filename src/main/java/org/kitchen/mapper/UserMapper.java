@@ -48,4 +48,6 @@ public interface UserMapper {
    public List<UserVO> getIdAutocomplete(String userId); 
 
    public List<Long> getHotUserList(int length);
+   
+   public String getNickNameByNo(Long userNo);
 }

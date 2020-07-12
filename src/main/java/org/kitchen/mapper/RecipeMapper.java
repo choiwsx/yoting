@@ -64,4 +64,5 @@ public interface RecipeMapper {
 	public List<TagVO> getTagNameList();
 	
 	public Long getLatestRno();
+
 }

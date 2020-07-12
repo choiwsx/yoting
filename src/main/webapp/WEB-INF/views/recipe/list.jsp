@@ -42,10 +42,10 @@ a {
                </div>
                <div>
                   by
-                  <c:out value="${recipe.userNo }" />
+                  <c:out value="${recipe.nickName }" />
                </div>
                <div>
-                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.updateDate }" />
+                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.regDate }" />
                </div>
             </div>
             </a>
