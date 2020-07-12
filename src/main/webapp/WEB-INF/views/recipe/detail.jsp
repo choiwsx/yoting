@@ -31,7 +31,9 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
                 
             </div>
             <div>
+                <c:if test="${not empty contentList }">
                 <h3>요리 순서</h3>
+                </c:if>
                 <c:set var="doneLoop" value="false" />
             <c:forEach items="${contentList}" var="content">
 				<c:if test="${empty content.photoUrl  && empty content.content }">
