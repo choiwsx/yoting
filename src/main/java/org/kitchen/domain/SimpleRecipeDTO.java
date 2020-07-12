@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class SimpleRecipeDTO {
-	Long rno;
-	String thumbnail;
-	String title;
-	String nickName;
-	Date regDate;
+	private Long rno;
+	private String thumbnail;
+	private String title;
+	private String nickName;
+	private int categoryNo;
+	private Date regDate;
 	
 	public SimpleRecipeDTO(RecipeVO recipe, String nickName) {
 		setRecipe(recipe);
@@ -24,5 +25,6 @@ public class SimpleRecipeDTO {
 		this.thumbnail=recipe.getThumbnail();
 		this.title=recipe.getTitle();
 		this.regDate=recipe.getRegDate();
+		this.categoryNo=recipe.getCategoryNo();
 	}
 }

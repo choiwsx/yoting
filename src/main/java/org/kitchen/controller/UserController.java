@@ -37,6 +37,7 @@ import net.sf.json.JSONArray;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
+@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
