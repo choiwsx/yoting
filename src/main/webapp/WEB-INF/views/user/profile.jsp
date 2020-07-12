@@ -74,13 +74,13 @@
 					width="100" height="100"  onerror="imgError(this);"  /></a></div>
 						<div style="padding: 15px;">
 						<c:choose>
-   <c:when test="${fn:length(recipe.title) > 15}">
-      ${fn:substring(recipe.title,0,14)}...
-   </c:when>
-  <c:otherwise>
-     ${recipe.title}
-  </c:otherwise>
-</c:choose>
+						   <c:when test="${fn:length(recipe.title) > 15}">
+						      ${fn:substring(recipe.title,0,14)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.title}
+						  </c:otherwise>
+						</c:choose>
 </div>
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
