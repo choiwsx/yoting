@@ -23,7 +23,7 @@
 	<div style="text-align: center;">
 	<h1><c:out value="${profile.user.nickName}" />님의 주방</h1>
 			<div>
-				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
+				<img src="<c:out value="${profile.user.profilePhoto}"/>"
 					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
