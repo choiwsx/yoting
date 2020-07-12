@@ -72,7 +72,6 @@ public class UserController {
 			message += " 중복된 이메일입니다.\n";
 		}
 		if(!message.equals("")) {
-			model.addAttribute("user", user);
 			model.addAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
@@ -301,12 +300,25 @@ public class UserController {
 	}
 	
 	@GetMapping("/resendEmail")
-	public String resendEmail(HttpSession session, Model model) {
+	public String resendEmail(HttpSession session, Model model, String userNo) {
 		//로그인 상태면 인증 메일 보내는 페이지 막기
-		if( session.getAttribute("userNo")!=null ) {
+		if( session.getAttribute("userNo")!=null) {
 			return wrongAccess(model);
 		}
-		return "/user/resendEmail";
+		//널이거나 숫자아니거나 유효회원 아니면 그냥 페이지로 보내기
+		if(userNo==null || !isNumeric(userNo) || userService.isValidUser(Long.parseLong(userNo))) return "/user/resendEmail";
+		//숫자면
+		UserVO user = userService.getUserByNo(Long.parseLong(userNo));
+		if(user.getStatus() == null) return wrongAccess(model);
+		if(UserStatus.PENDING.equals(user.getStatus())) {
+		userService.sendVerificationEmail(user);
+		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
+		return "/good";
+		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
+			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
+		} else {
+			return wrongAccess(model);
+		}
 	}
 	
 	@PostMapping("/resendEmail")
@@ -325,39 +337,11 @@ public class UserController {
 		if(user.getStatus().equals(UserStatus.PENDING)) {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");
-		return "redirect:/";
+		return "/good";
 		} else if(user.getStatus().equals(UserStatus.ACTIVE)) {
 			return wrongAccess(model, "이미 인증을 마친 회원입니다.");
 		}
 		return wrongAccess(model, "유효하지 않은 회원입니다.");
-	}
-	
-	
-	@GetMapping("/user/autocomplete")
-	public String AutoTest(Model model) {
-		//겟 막기
-		return wrongAccess(model);
-	}
-	
-	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
-	public String AutoTest(Locale locale, Model model, HttpServletRequest request,
-			HttpServletResponse resp,UserVO user) throws IOException {
-		
-		String result = request.getParameter("term");
-	
-		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
-		if(list == null) return wrongAccess(model);
-
-      JSONArray ja = new JSONArray();
-      if(ja == null) return wrongAccess(model);
-      for (int i = 0; i < list.size(); i++) {
-         ja.add(list.get(i).getUserId());
-      }
-      if(resp == null) return wrongAccess(model);
-      PrintWriter out = resp.getWriter();
-
-		out.print(ja.toString());
-		return "/user/autocomplete";
 	}
 	
 	@GetMapping("/follow")

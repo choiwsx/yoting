@@ -34,7 +34,7 @@
 $("#userKeyword").autocomplete({
 	source : function(request, response) {
 		$.ajax({
-			url : "/user/autocomplete",
+			url : "user/autocomplete",
 			type : "post",
 			dataType : "json",
 			data : request,

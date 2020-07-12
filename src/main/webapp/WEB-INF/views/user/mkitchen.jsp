@@ -71,7 +71,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 	<c:forEach items="${recipeList}" var="recipe">
 	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 400px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
-					width="100" height="100"  onerror="imgError(this);" /></a></div>
+					width="100" height="100"  onerror="imgError(this);" style="margin: 10px" /></a></div>
 						<div style="padding: 15px;">
 						<c:choose>
 						   <c:when test="${fn:length(recipe.title) > 15}">
