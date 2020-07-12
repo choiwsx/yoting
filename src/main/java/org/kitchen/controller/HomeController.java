@@ -67,7 +67,7 @@ public class HomeController {
       return "index";
    }
    
-   @GetMapping("/cookInfo")
+   @GetMapping("/user/cookInfo")
    public void cookInfo() {
       
    }

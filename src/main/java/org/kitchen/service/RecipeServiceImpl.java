@@ -99,6 +99,7 @@ public class RecipeServiceImpl implements RecipeService {
     		  contents.add(content);
     		  j++;
     	  }
+    	  log.info(contents);
     	  return contents;
       }
     	  return contentMapper.read(rno);
