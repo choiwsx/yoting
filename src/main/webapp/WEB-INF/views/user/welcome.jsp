@@ -33,7 +33,7 @@
                         
 이메일이 안왔나요? 
 
-<a href="/user/sendemail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
+<a href="/user/resendEmail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
 </div>
 
 

@@ -81,7 +81,7 @@
          form.submit();
          return;
       }
-      $("#message").html(str).wrap('<pre />');      
+      $("#message").html(str);     
    }
    
    function validateId() {
