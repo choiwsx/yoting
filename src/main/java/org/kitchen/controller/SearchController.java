@@ -47,7 +47,7 @@ public class SearchController {
 		model.addAttribute("category", searchService.read());
 		switch (type) {
 		case "T":
-			model.addAttribute("list", searchService.getRecipeList(cri));
+			model.addAttribute("list", searchService.getSimpleRecipeList(cri));
 			break;
 		case "W":
 			model.addAttribute("list_user", searchService.getUserList(cri));
@@ -56,7 +56,7 @@ public class SearchController {
 			model.addAttribute("list_tag", searchService.getTagNum(cri));
 			break;
 		case "A":
-			model.addAttribute("list", searchService.getRecipeList(cri));
+			model.addAttribute("list", searchService.getSimpleRecipeList(cri));
 			model.addAttribute("list_user", searchService.getUserList(cri));
 			model.addAttribute("list_tag", searchService.getTagNum(cri));
 			break;

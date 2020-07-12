@@ -78,26 +78,31 @@ a {
 			</c:if></td>
 				
 			<c:forEach items="${list}" var="recipe">
-		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+		<div style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
-					<div
-						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
+					<div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
 							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
 								height=280px onerror="imgError(this);">
 						</div>
 						<div style="margin-top: 10px;">
-							<c:out value="${recipe.title }" />
+							<c:choose>
+   <c:when test="${fn:length(recipe.title) > 15}">
+      ${fn:substring(recipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${recipe.title}
+  </c:otherwise>
+</c:choose>
 						</div>
 						<div>
 							by
-							<c:out value="${recipe.userNo }" />
+							<c:out value="${recipe.nickName }" />
 						</div>
-						카테고리코드:
-						<c:out value="${recipe.categoryNo }" />
+	
 						<div>
 							<fmt:formatDate pattern="yyyy-MM-dd"
-								value="${recipe.updateDate }" />
+								value="${recipe.regDate }" />
 						</div>
 					</div>
 				</a>
