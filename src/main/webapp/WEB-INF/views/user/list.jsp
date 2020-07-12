@@ -14,7 +14,7 @@
 <c:if test="${not empty simpleProfileList }">
 	
 	<table>
-	<div> <h3>먹스타그램에는 현재 총<c:out value="${fn:length(simpleProfileList)} " />명의 주방장이 있습니다.</h3></div>
+	<div> <h3>쿡스타그램에는 현재 총 <c:out value="${fn:length(simpleProfileList)} " />명의 주방장이 있습니다.</h3></div>
 	<br>
 		<c:forEach items="${simpleProfileList}" var="user">
 		<div style="height: 150px">
@@ -30,7 +30,7 @@
 		</c:forEach>
 	</table>
 	</c:if>
-	<c:if test="${empty simpleProfileList }"><h3>먹스타그램에 아직 주방장이 없습니다. 주방장으로 가입해서 레시피를 올려주세요! </h3></c:if>
+	<c:if test="${empty simpleProfileList }"><h3>쿡스타그램에 아직 주방장이 없습니다. 주방장으로 가입해서 레시피를 올려주세요! </h3></c:if>
 </body>
 
 <script type="text/javascript">
