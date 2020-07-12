@@ -112,7 +112,7 @@ public class RecipeController {
    @PostMapping("/modiRecipe")
    public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
 	  if(recipe==null) return wrongAccess(model);
-      log.info("!!recipe!!!"+recipe.getRno());
+      log.info("!!recipe!!!"+recipe);
       Long userNo = recipe.getUserNo();
       if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
          return wrongAccess(model);

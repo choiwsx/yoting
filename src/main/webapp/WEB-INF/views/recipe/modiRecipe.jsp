@@ -19,6 +19,7 @@
 	
 	    
 		<form:hidden path="userNo" value="<%=userNo%>" />
+		<form:hidden path="rno" value="${recipe.rno}" />
         <form:label
             path="categoryNo" >카테고리(필수)</form:label>
         
@@ -38,7 +39,7 @@
        
         <div class='photo 0'>
           <ul style="list-style:none;">
-      <li>          
+      <li>
       <img src='<c:if test="${empty recipe.thumbnail }"><c:out value="/display?filename=default.jpg" /></c:if>
        <c:if test="${not empty recipe.thumbnail }"><c:out value="${recipe.thumbnail}" /></c:if>' 
        width="350" height="350" onerror="imgError(this);" />
@@ -171,12 +172,13 @@ var photoList=$(".photo");
 $(".photo").on("click", "button", function(e){
 	var str="";
 	var targetFile = $(this).data("file");
+	console.log(targetFile);
 	var type = $(this).data("type");
 	var targetLi = $(this).closest("li");
 	var idx = targetLi.data("id");	
 	$.ajax({
 		url: '/deleteFile',
-		data: {fileName: targetFile, type:type},
+		data: {fileName: targetFile, type:"image"},
 		dataType : 'text',
 		type: 'Post',
 		success:function(result){
@@ -237,13 +239,14 @@ function setUploadedFile(uploadResultArr, idx)
    $(uploadResultArr).each(function(i,obj){
       if(obj.image)
       {
-         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
          console.log(fileCallPath);
          str += "<li data-path='"+obj.uploadPath+"'";
-         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'"+ "data-id='"+idx+"'";
+         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
          str += "><div>";
-         str += "<span>"+obj.fileName+"</span>";
-         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+         str += "<span>"+obj.showFileName+"</span>";
+         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
          str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
          str += "</li>";
@@ -254,7 +257,9 @@ function setUploadedFile(uploadResultArr, idx)
    });
    photoList.get(idx).innerHTML = str;
    $("#thumbnail"+idx).val("/display?fileName="+fileCallPath);
+   
 }
+
 
 
 
