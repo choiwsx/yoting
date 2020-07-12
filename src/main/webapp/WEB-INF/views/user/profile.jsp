@@ -63,7 +63,7 @@
 	</div>
 	   <c:if test="${not empty profile.recipes }">
 	
-		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}"/>님의 레시피 검색'  maxlength="300">
+		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}"/>님의 레시피 검색'  maxlength="300" style='width: 300px'>
 		<input type="hidden" name="userNo" value='<c:out value="${profile.user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
 		<button id="searchBtn">검색</button>		
@@ -83,8 +83,8 @@
 						</c:choose>
 </div>
 						<div><c:choose>
-						   <c:when test="${fn:length(recipe.reContent) > 40}">
-						      ${fn:substring(recipe.reContent,0,39)}...
+						   <c:when test="${fn:length(recipe.reContent) > 15}">
+						      ${fn:substring(recipe.reContent,0,14)}...
 						   </c:when>
 						  <c:otherwise>
 						     ${recipe.reContent}
