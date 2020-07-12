@@ -108,6 +108,7 @@ public class HomeController {
 			HttpServletResponse resp,UserVO user) throws IOException {
 		
 		String result = request.getParameter("term");
+		String type = request.getParameter("type");
 	
 		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
 

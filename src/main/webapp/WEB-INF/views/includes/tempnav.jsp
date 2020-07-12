@@ -339,6 +339,17 @@ if(session!=null) {
         </div>
 
    <script>
+   $("#type").change(function(){
+	   var type = $("#type").val();
+	   $.ajax({
+		    type: "post",
+		    url: "/autocomplete",
+		    data: type,
+		    success: function() {
+		        alert('성공');
+		    }
+		});
+   });
    
    $("#keyword").autocomplete({
 	   position: {  collision: "flip"  },
