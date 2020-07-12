@@ -113,27 +113,31 @@ $('input[type="file"]').change(function(e){
 
   });
 
+
   function setUploadedFile(uploadResultArr) {
-     var str = "";
-     var fileCallPath = "";
-     $(uploadResultArr).each(function(i,obj){
-         if(obj.image)
-         {
-            fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
-            console.log(fileCallPath);
-            str += "<ul><li data-path='"+obj.uploadPath+"'";
-            str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
-            str += "><div>";
-            str += "<span>"+obj.fileName+"</span>";
-            str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-            str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
-            str += "</div>";
-            str += "</li></ul>";
-         }
-         else
-         {
-         }
-     $("#photo").html(str);
+	  var str = "";
+	  var fileCallPath = "";
+	   console.log(uploadResultArr);
+	   $(uploadResultArr).each(function(i,obj){
+	      if(obj.image)
+	      {
+	         //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+	         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
+	         console.log(fileCallPath);
+	         str += "<li data-path='"+obj.uploadPath+"'";
+	         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
+	         str += "><div>";
+	         str += "<span>"+obj.showFileName+"</span>";
+	         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+	         str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
+	         str += "</div>";
+	         str += "</li>";
+	      }
+	      else
+	      {
+	      }
+	   });
+     $("#photo").innerHTML= str;
      $("#profilePhoto").val("/display?fileName="+fileCallPath);
      
   });
@@ -162,6 +166,26 @@ $('input[type="file"]').change(function(e){
  function uniLen(s) {
      return [...s].length
  }
+ 
+ $("#photo").on("click", "button", function(e){
+		var str="";
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		var targetLi = $(this).closest("li");
+		var idx = targetLi.data("id");	
+		$.ajax({
+			url: '/deleteFile',
+			data: {fileName: targetFile, type:type},
+			dataType : 'text',
+			type: 'Post',
+			success:function(result){
+				targetLi.remove();
+				uploaderList[idx].value=str;
+			   	$("#thumbnail"+idx).val(str);
+			}
+		
+		});
+	});
  
 </script>
 </body>
