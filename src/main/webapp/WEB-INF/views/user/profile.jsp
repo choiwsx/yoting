@@ -33,14 +33,14 @@
 				<c:if test="${not empty profile.recipes}">
 					<b><c:out value="${profile.user.nickName}" />님</b>은  <c:out value="${fn:length(profile.recipes)}" />개의 레시피가 있습니다.
 				</c:if>
-				
+				 <c:if test ="${not empty userNo}">
 				<form id="followForm" method="post">
 					<input type="hidden" name="followeeNo" value='<c:out value="${profile.user.userNo}" />'>
 					<input type="hidden" name="followerNo" value='<c:out value="${userNo}" />'>
 					<c:if test="${profile.following eq true}"><c:out value="<div><button type='button' id='unfollow'>구독 취소하기</button></div>" escapeXml="false" /></c:if>
 					<c:if test="${profile.following eq false}"><c:out value="<div><button type='button' id='follow'>구독하기</button></div>" escapeXml="false" /></c:if>
-					
 				</form>
+				</c:if>
 			</div>
 			<div>
 				<label>구독자 수:</label><c:out value="${profile.followers}" />
