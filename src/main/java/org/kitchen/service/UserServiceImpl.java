@@ -284,5 +284,11 @@ public class UserServiceImpl implements UserService {
 		return recipeMapper.countUserRecipeList(userNo);
 	}
 
+	@Override
+	public String getNickNameByNo(Long userNo) {
+		// TODO Auto-generated method stub
+		return userMapper.getNickNameByNo(userNo);
+	}
+
 	
 }

@@ -45,7 +45,7 @@ a {
                   <c:out value="${recipe.userNo }" />
                </div>
                <div>
-                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.updateDate }" />
+                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.regDate }" />
                </div>
             </div>
             </a>
