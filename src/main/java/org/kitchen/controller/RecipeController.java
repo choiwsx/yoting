@@ -112,7 +112,7 @@ public class RecipeController {
    @PostMapping("/modiRecipe")
    public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
 	  if(recipe==null) return wrongAccess(model);
-      log.info("!!recipe!!!"+recipe.getRno());
+      log.info("!!recipe!!!"+recipe);
       Long userNo = recipe.getUserNo();
       if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
          return wrongAccess(model);
@@ -141,11 +141,11 @@ public class RecipeController {
          if(recipeService.checkCode(categoryNoLong)<=0) {
         	 return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
          }
-         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
-         model.addAttribute("list",recipeService.getCategoryCode(categoryNoLong));
+//         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
+         model.addAttribute("list",recipeService.getSimpeRecipeByCategory(categoryNoLong));
          
       }
-      model.addAttribute("tag",recipeService.getTagNameList());      
+//      model.addAttribute("tag",recipeService.getTagNameList());      
       return "/recipe/list";
    }
 

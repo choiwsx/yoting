@@ -8,6 +8,7 @@ import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.SimpleProfileDTO;
+import org.kitchen.domain.SimpleRecipeDTO;
 import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.UserVO;
 import org.kitchen.mapper.CategoryMapper;
@@ -195,6 +196,16 @@ public class SearchServiceImpl implements SearchService {
 			result.add(ModelDTOFactory.getSimpleProfile(userMapper.selectByNo(userNoList.get(i))));
 		}
 		//유저 찾아서 준다.
+		return result;
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeList(Criteria cri) {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = getRecipeList(cri);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
 		return result;
 	}
 
