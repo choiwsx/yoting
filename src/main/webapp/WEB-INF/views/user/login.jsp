@@ -21,7 +21,7 @@
 </form>
 </div>
 <div>
-   <a href="/user/registration">회원가입</a>
+   <a href="/user/registration">회원 가입</a>
 </div>
 <br>
 <div> 
