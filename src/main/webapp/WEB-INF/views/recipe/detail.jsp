@@ -55,8 +55,12 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             </c:forEach>
 			</div>
 			<br><br>
-            <c:out value="작성일:${recipe.regDate}" /><br>
-            <c:out value="수정일:${recipe.updateDate}" />
+			작성일 : <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${recipe.regDate}"/><br>
+			수정일 : <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${recipe.updateDate}"/><br>
+			
+            
+            <!--<c:out value="작성일:${recipe.regDate}" /><br>
+            <c:out value="수정일:${recipe.updateDate}" />-->
     </div>
     <br><br>
     
