@@ -141,7 +141,7 @@ $('input[type="file"]').change(function(e){
      $("#profilePhoto").val("/display?fileName="+fileCallPath);
      
   });
-  };
+  
  
  function checkExtenstion(fileName, fileSize){
      if(fileSize >= maxSize){
@@ -163,10 +163,6 @@ $('input[type="file"]').change(function(e){
  }
  
 
- function uniLen(s) {
-     return [...s].length
- }
- 
  $("#photo").on("click", "button", function(e){
 		var str="";
 		var targetFile = $(this).data("file");
@@ -186,6 +182,11 @@ $('input[type="file"]').change(function(e){
 		
 		});
 	});
+ 
+ function uniLen(s) {
+     return [...s].length
+ }
+ 
  
 </script>
 </body>

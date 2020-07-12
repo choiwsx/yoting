@@ -73,12 +73,13 @@ public class UserController {
 		}
 		if(!message.equals("")) {
 			model.addAttribute("result", message);
+			
 		} else {
 			//중복 아니면 그 다음 단계로 이동
 			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
-		return "redirect:/user/registration";
+		return "/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
