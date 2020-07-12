@@ -233,7 +233,7 @@ function setUploadedFile(uploadResultArr, idx)
          str += "><div>";
          str += "<span>"+obj.fileName+"</span>";
          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-         str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
+         str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
          str += "</li></ul>";
       }
