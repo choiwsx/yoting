@@ -66,7 +66,7 @@
 	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="<c:out value='${vs.count}' />" />
 	        <form:input
-	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" />
+	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
 	        
 	        <form:textarea
 	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
