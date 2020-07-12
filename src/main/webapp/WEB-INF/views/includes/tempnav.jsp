@@ -259,16 +259,16 @@ if(session!=null) {
             <div class="mid_search_wrapper">
             <div id="searchBar">
 <form id='searchForm' action="/search/result" method='get'>
-   <select name='type' id="type">
+   <!--  <select name='type' id="type">
       <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합 검색</option>
       <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
       <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>주방장</option>
       <!-- 
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
        -->
-   </select>
+   </select>-->
 
-   <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
+   <input type='text' name='keyword' id="keyword" placeholder="통합검색 검색어를 입력하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
    <button type="button" class='btn btn-default'>검색</button>

@@ -40,13 +40,14 @@
         <div class='photo 0'>
           <ul style="list-style:none;">
       <li>
-      <img src='<c:if test="${empty recipe.thumbnail }"><c:out value="/display?filename=default.jpg" /></c:if>
-       <c:if test="${not empty recipe.thumbnail }"><c:out value="${recipe.thumbnail}" /></c:if>' 
-       width="350" height="350" onerror="imgError(this);" />
+       <c:if test="${not empty recipe.thumbnail }">
+           <button type="button" id="0" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button><br>
+           <img src="${recipe.thumbnail}" width="300" onerror="imgError(this);" >
+           </c:if>
       </li>
           </ul>
         </div>
-      <img class="OpenImgUpload" id="0" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
+      <img class="OpenImgUpload" id="0" src="https://i.ibb.co/w7Yv1X6/pic.png" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
       <input type="file" class="fileUploader" id="0" style="display:none"/>
       <form:input path="thumbnail" id="thumbnail0" value="${recipe.thumbnail }" style="display:none"/>
       <br>
@@ -65,13 +66,16 @@
        <c:forEach var="content" varStatus="vs" items="${recipe.contentList}">
        <div>
        <c:out value="${vs.count}" />번째 컨텐츠
-           <div class="photo <c:out value='${vs.count}' />">
-           <img 
-           src="${content.photoUrl}"
-          width="350" height="350" onerror="imgError(this);"/>
+           <div class="photo ${vs.count}"><div>
+           <li>
+           <c:if test="${not empty content.photoUrl }">
+           <button type="button" id="${vs.count}" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button><br>
+           <img src="${content.photoUrl}" width="300" onerror="imgError(this);" >
+           </c:if></div></li></div>
+           
            </div>
            <div>
-             <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
+             <img class="OpenImgUpload" id="${vs.count}" src="https://i.ibb.co/w7Yv1X6/pic.png" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
            <input type="file" class="fileUploader" style="display:none" id="<c:out value='${vs.count}' />" />
             <form:input
                path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" value="${content.photoUrl }" class="thumbList" style="display:none;" />
@@ -112,73 +116,117 @@ $(document).ready(function(){
 var regex = new RegExp("(.*?)\.(jpg|png|img)$");
 var maxSize = 5242880;
 
+ 
+function submitCheck(){
+	console.log("onclick");
+}
+
 $(".fileUploader").change(function(){
-    upload(this);
+	upload(this);
  });
+
 
 var uploaderList = $(".fileUploader");
 
 $(".OpenImgUpload").click(function(){
-   uploaderList[this.id].click();
+	uploaderList[this.id].click();
 });
- 
 
 var form = document.getElementById("form-id");
 var thumbList = $(".thumbList");
 var contentList  = $(".contentList");
 var mainTitle = $("#mainTitle");
 document.getElementById("btn-id").addEventListener("click", function (e) {
-   e.preventDefault();
-     let flag = false; // 빈칸 체크를 위한 flag
-     let blankIdx = 0; // 빈칸이 시작되는 인덱스
-     
-     if(mainTitle[0].value=="")
-     {
-        flag = true;
-        alert("메인 제목을 입력해주세요.");
-        return;
-     }   
-     for(let i=0; i<10; i++)
-     {
-        if((thumbList[i].value==""||thumbList[i].value==null)
-              &&(contentList[i].value==""||contentList[i].value==null)) // 사진과 내용이 빈칸이면 flag변수를 true로 변경
-         {
-                 blankIdx = i;
-                 break;
-         }
-    }
-     for(let i=blankIdx; i<10; i++)
-     {
-        if(thumbList[i].value!=""
-              ||contentList[i].value!="") 
-         {
-                 flag =  true;
-         }
-     }   
-     if(flag)
-     {
-        alert("순서에 빈 칸을 채우세요.");
-    }
-     else
-     {
-      form.submit();
-     }
-});
+	e.preventDefault();
+  	let flag = false; // 빈칸 체크를 위한 flag
+  	let blankIdx = 0; // 빈칸이 시작되는 인덱스
+  	
 
+  	if($("#categoryNo option:selected").val() == 0)
+  	{
+  		alert("카테고리를 선택해주세요!");
+  		return;
+  	}
+  	
+  	if(mainTitle[0].value=="")
+  	{
+  		flag = true;
+  		alert("레시피의 제목을 입력해주세요.");
+  		return;
+  	}	
+  	if(uniLen(mainTitle[0].value)>302) {
+  		alert("레시피의 제목이 너무 깁니다.(한글 최대 약 100자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="cookingTime"]').val())>32) {
+  		alert("레시피의 '소요 시간'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="portion"]').val())>32)  {
+  		alert("레시피의 '몇 인분'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="difficulty"]').val())>32) {
+  		alert("레시피의 '난이도'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('textarea[name ="reContent"]').val())>902) {
+  		alert("레시피의 '소개'에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
+  		return;
+  	}
+
+
+  	for(let i=0; i<10; i++)
+  	{
+  		if((thumbList[i].value==""||thumbList[i].value==null)
+  				&&(contentList[i].value==""||contentList[i].value==null)) // 사진과 내용이 빈칸이면 flag변수를 true로 변경
+			{
+  					blankIdx = i;
+  					break;
+			}
+  		if(uniLen(contentList[i].value)>902) {
+  			alert(i+"번 째 세부 순서에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
+  	  		return;
+  		}
+ 	}
+  	for(let i=blankIdx; i<10; i++)
+  	{
+  		if(thumbList[i].value!=""
+  				||contentList[i].value!="") 
+			{
+  					flag =  true;
+			}
+  	}	
+  	if(flag)
+  	{
+  		alert("순서에 빈 칸을 채우세요.");
+ 	}
+  	else
+  	{
+  		console.log("섭밋");
+		form.submit();
+  	}
+});
+ 
 var filePath=$('input[type=file');
 var photoList=$(".photo");
 
-
 $(".photo").on("click", "button", function(e){
 	var str="";
-	var targetFile = $(this).data("file");
-	console.log(targetFile);
-	var type = $(this).data("type");
 	var targetLi = $(this).closest("li");
 	var idx = targetLi.data("id");	
+	var targetFile = $(this).data("file");
+	if(targetFile==null) {
+		targetLi.remove();
+		uploaderList[idx].value=str;
+	   	$("#thumbnail"+idx).val(str);
+	   	return;
+	}
+	var type = $(this).data("type");
+	
 	$.ajax({
 		url: '/deleteFile',
-		data: {fileName: targetFile, type:"image"},
+		data: {fileName: targetFile, type:type},
 		dataType : 'text',
 		type: 'Post',
 		success:function(result){
@@ -189,7 +237,6 @@ $(".photo").on("click", "button", function(e){
 	
 	});
 });
- 
 function upload(e) {
     var arrNum = e.id;
     var formData = new FormData();
@@ -213,7 +260,6 @@ function upload(e) {
           {
              setUploadedFile(result, arrNum);
           } 
-            
  });
 
  };
@@ -258,6 +304,11 @@ function setUploadedFile(uploadResultArr, idx)
    photoList.get(idx).innerHTML = str;
    $("#thumbnail"+idx).val("/display?fileName="+fileCallPath);
    
+}
+
+
+function uniLen(s) {
+    return [...s].length
 }
 
 
