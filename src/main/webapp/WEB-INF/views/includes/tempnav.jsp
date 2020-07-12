@@ -319,14 +319,11 @@ if(session!=null) {
 
         <div class="header_innerBottom" data-group="main">
             <ul class="navBottom">
- 				<li><a href="/" id="nav">홈</a></li>
+                <li><a href="/" id="nav">홈</a></li>
                 <li><a href="/recipe/list?categoryNo=100" id="nav">주식</a></li>
                 <li><a href="/recipe/list?categoryNo=200" id="nav">반찬</a></li>
                 <li><a href="/recipe/list?categoryNo=300" id="nav">디저트</a></li>
                 <li><a href="/user/list" id="nav">주방장들</a></li>
-                <!--                 
-                <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
-                 -->
                <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav"><p style="color: red;">내 주방</p></a></li></c:if>
             </ul>
         </div>
