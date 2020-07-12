@@ -122,6 +122,7 @@ $("#searchBtn").on("click", function(e){
 	}
 	$("#initBtn").on("click",function(e){
 		e.preventDefault();
+		$("input[name=recipeKeyword]").val("");
 		 for(i=0;i<title.length;i++){
 			 title[i].style.display='block';
 		 }
