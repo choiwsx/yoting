@@ -339,17 +339,6 @@ if(session!=null) {
         </div>
 
    <script>
-   $("#type").change(function(){
-	   var type = $("#type").val();
-	   $.ajax({
-		    type: "post",
-		    url: "/autocomplete",
-		    data: type,
-		    success: function() {
-		        alert('성공');
-		    }
-		});
-   });
    
    $("#keyword").autocomplete({
 	   position: {  collision: "flip"  },
@@ -367,12 +356,12 @@ if(session!=null) {
 					response(result);
 				},
 				error : function(data) {
-					alert("에러가 발생하였습니다.")
+					/* alert("에러가 발생하였습니다.") */
 				}
 			});
 		}
 	});
-		   
+   
    var searchForm = $("#searchForm");
    
    $("#searchForm button").on("click", function() {
