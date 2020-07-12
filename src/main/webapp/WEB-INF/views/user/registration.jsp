@@ -14,7 +14,7 @@
 
 <h1>회원 가입</h1>
 
-<div id="message" style="height: 70px;">
+<div id="message" style="height: 70px; color: red;">
 <c:out value="${result }" default="" /> 
 </div>
 <div class="form">
@@ -52,8 +52,16 @@
 
 <a href="/user/resendEmail">인증 이메일 다시 보내기</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<br>
+<br>
 <script>
+	$('input[type="text"]').keydown(function() {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	    button();
+	  };
+	});
+	
    var form = $("form[name='form']");
    
    function button() {
@@ -95,13 +103,15 @@
    }
    
    function validateEmail() {
-      var email = $("input[name='email']").val();
-     const re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-     return re.test(email);
-   }
-   
+	    var email = $("input[name='email']").val();
+	   const re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+	   return re.test(email) && uniLen(email)<320;
+	 }
+	 
+	function uniLen(s) {
+	    return [...s].length
+	}
 
 </script>
-<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

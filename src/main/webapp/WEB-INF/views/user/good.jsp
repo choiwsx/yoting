@@ -17,6 +17,5 @@
 <h3>이멜 인증 성공</h3>
 </div>
 
-<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

@@ -28,6 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
    
    @Override
    public Long register(RecipeVO recipe) {
+	  if(recipe==null) return null; 
       recipeMapper.insert(recipe);
       recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
       recipe.getContentList().forEach(a ->registerCon(a));
@@ -74,7 +75,9 @@ public class RecipeServiceImpl implements RecipeService {
    public RecipeVO get(Long rno) {
       log.info("get.........." + rno);
       RecipeVO recipe = recipeMapper.read(rno);
-      recipe.setContentList(getCon(rno));
+      if(recipe!=null) {
+    	  recipe.setContentList(getCon(rno));
+      }
       return recipe;
    }
 
@@ -102,7 +105,9 @@ public class RecipeServiceImpl implements RecipeService {
    public List<RecipeVO> getCategoryCode(Long categoryNo) {
 	   log.info("getList..........");
 	      List<RecipeVO> list = recipeMapper.getCategoryCode(categoryNo);
-	      list.forEach(a->a.setContentList(getCon(a.getRno())));
+	      if(list!=null) {
+	    	  list.forEach(a->a.setContentList(getCon(a.getRno())));
+	      }
       return list;
    }
    
@@ -118,28 +123,43 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public void register_w(RecipeVO recipe)
    {
-      Long rno = register(recipe);
-      log.info("@@@rno"+rno);
-      
-      for(int i=0; i<recipe.getContentList().size(); i++)
-      {
-         recipe.getContentList().get(i).setRno(rno);
-         contentMapper.insert(recipe.getContentList().get(i));
-      }
+	   if(recipe!=null) {
+	      Long rno = register(recipe);
+	      
+	      for(int i=0; i<recipe.getContentList().size(); i++)
+	      {
+	         recipe.getContentList().get(i).setRno(rno);
+	         contentMapper.insert(recipe.getContentList().get(i));
+	      }
+	   }
    }
 
 
    @Override
-   public Long isMyRecipe(Long rno) {
+   public boolean isMyRecipe(Long rno, Long userNo) {
       // TODO Auto-generated method stub
-      return recipeMapper.getUserNoByRno(rno);
+	  Long authorNo = recipeMapper.getUserNoByRno(rno);
+	  if(authorNo!=null) {
+		  return authorNo.equals(userNo);
+	  }
+	  return false;
    }
 
 
-@Override
-public List<TagVO> getTagNameList() {
-	return recipeMapper.getTagNameList();
-}
+	@Override
+	public List<TagVO> getTagNameList() {
+		return recipeMapper.getTagNameList();
+	}
+	
+	@Override
+	public RecipeVO getLatestRecipe() {
+		// TODO Auto-generated method stub
+		Long rno = recipeMapper.getLatestRno();
+		if(rno==null) return null;
+		RecipeVO tmpRecipe = recipeMapper.read(rno);
+		if(tmpRecipe==null) return null;
+		return recipeMapper.read(rno);
+	}
 
 
 }

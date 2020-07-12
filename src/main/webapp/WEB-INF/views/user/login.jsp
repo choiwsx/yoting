@@ -29,6 +29,5 @@
 
 <a href="/user/resendEmail">인증 이메일 다시 보내기</a>
 </div>
-<%@ include file="../includes/footer.jsp"%>
 </body>
 </html>

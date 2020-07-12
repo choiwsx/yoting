@@ -84,7 +84,7 @@ a {
 						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
 							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
-								height=280px>
+								height=280px onerror="imgError(this);">
 						</div>
 						<div style="margin-top: 10px;">
 							<c:out value="${recipe.title }" />
@@ -105,7 +105,7 @@ a {
 			</c:forEach>
 		</div>
 </div>
-
+<!-- 
 <div class="taglist">
 	<c:if test="${where == tag or where==null}">
 	<hr>
@@ -117,7 +117,7 @@ a {
 				<c:forEach items="${list_tag}" var="recipe">
 			<div style="border: 1px solid; width: 330px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
-					width="200" height="200" /></a></div>
+					width="200" height="200"  onerror="imgError(this);" /></a></div>
 						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
@@ -129,6 +129,7 @@ a {
 			
 	</c:if>
 </div>
+ -->
 	<form id='actionForm' action="/search/result" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>

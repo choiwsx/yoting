@@ -35,12 +35,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 public class UploadController {
 	
 	@Autowired
-	private RecipeService service;
+	private RecipeService recipeService;
 
 	@GetMapping("/upload/uploadForm")
 	public void uploadForm() {
@@ -53,53 +54,53 @@ public class UploadController {
 //		log.info("upload ajax");
 	}
 	
-	@PostMapping("/upload/registrationTest")
-	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-		//recipeService에 저장하기
-		service.register(recipe);
-		return recipe;
-	}
+//	@PostMapping("/upload/registrationTest")
+//	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+//		//recipeService에 저장하기
+//		service.register(recipe);
+//		return recipe;
+//	}
 	
-	@PostMapping({"/upload/register"})
-	public String register(RecipeVO recipe, RedirectAttributes rttr)
-	{
-		log.info("==================");
-		log.info("register : "+ recipe);
-		
-		if(recipe.getContentList() != null)
-		{
-			recipe.getContentList().forEach(content->log.info(content));
-		}
-		
-		service.register_w(recipe);
-		
-		return "redirect:/recipe/list";
-		
-	}
+//	@PostMapping({"/upload/register"})
+//	public String register(RecipeVO recipe, RedirectAttributes rttr)
+//	{
+//		log.info("==================");
+//		log.info("register : "+ recipe);
+//		
+//		if(recipe.getContentList() != null)
+//		{
+//			recipe.getContentList().forEach(content->log.info(content));
+//		}
+//		
+//		service.register_w(recipe);
+//		
+//		return "redirect:/recipe/list";
+//		
+//	}
 	
 	
 	
-	@PostMapping("/upload/uploadFormAction")
-	public void uploadFormPost(MultipartFile[] uploadFile, Model model)
-	{
-		String uploadFolder = "C:\\upload";
-		
-		for(MultipartFile multipartFile : uploadFile)
-		{
-			log.info("-------------------");
-			log.info("Upload File Name : " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
-			
-			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch(Exception e)
-			{
-				log.error(e.getMessage());
-			}
-		}
-	}
+//	@PostMapping("/upload/uploadFormAction")
+//	public void uploadFormPost(MultipartFile[] uploadFile, Model model)
+//	{
+//		String uploadFolder = "C:\\upload";
+//		
+//		for(MultipartFile multipartFile : uploadFile)
+//		{
+//			log.info("-------------------");
+//			log.info("Upload File Name : " + multipartFile.getOriginalFilename());
+//			log.info("Upload File Size: " + multipartFile.getSize());
+//			
+//			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
+//			
+//			try {
+//				multipartFile.transferTo(saveFile);
+//			}catch(Exception e)
+//			{
+//				log.error(e.getMessage());
+//			}
+//		}
+//	}
 	
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -148,6 +149,14 @@ public class UploadController {
 		
 	}
 	
+	
+	@GetMapping("/deleteFile")
+	public String delteFile(Model model) {
+		//겟 막기
+		return wrongAccess(model);
+	}
+	
+	
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> delteFile(String fileName, String type, HttpServletRequest request)
@@ -174,6 +183,13 @@ public class UploadController {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 }
 		 return new ResponseEntity<String>("deleted", HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/upload/uploadAjaxAction")
+	public String uploadAjaxPost(Model model) {
+		//겟 막기
+		return wrongAccess(model);
 	}
 	
 	
@@ -234,6 +250,13 @@ public class UploadController {
 			}
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
 	}
 	
 }                                                       

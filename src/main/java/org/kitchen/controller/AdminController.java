@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+// 지호: null값 유효성체크 0711
 @RequestMapping("/admin/*")
 @Controller
 public class AdminController {

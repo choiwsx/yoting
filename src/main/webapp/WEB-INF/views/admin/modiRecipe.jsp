@@ -32,7 +32,7 @@
     	<label>썸네일</label>
     	<img src="<c:if test="${recipe.thumbnail eq null }">/img/default.jpg</c:if>
     	<c:if test="${recipe.thumbnail ne null }"><c:out value="${recipe.thumbnail}" /></c:if>
-    	" width="140" height="120" />
+    	" width="140" height="120" onerror="imgError(this);"/>
     	<input type="text" name="profilePhoto" value="<c:out value="${recipe.thumbnail }"/>" />
     	
     </div>

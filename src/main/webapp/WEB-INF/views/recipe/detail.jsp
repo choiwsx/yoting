@@ -17,8 +17,6 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 <title>레시피 상세</title>
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<div style="text-align: center;">
 		
@@ -33,7 +31,9 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
                 
             </div>
             <div>
+                <c:if test="${not empty contentList }">
                 <h3>요리 순서</h3>
+                </c:if>
                 <c:set var="doneLoop" value="false" />
             <c:forEach items="${contentList}" var="content">
 				<c:if test="${empty content.photoUrl  && empty content.content }">

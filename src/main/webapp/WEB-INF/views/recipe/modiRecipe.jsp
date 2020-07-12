@@ -65,10 +65,9 @@
        <div>
        <c:out value="${vs.count}" />번째 컨텐츠
            <div class="photo <c:out value='${vs.count}' />">
-           
            <img 
            src="${content.photoUrl}"
-          width="350" height="350" onerror="imgError(this);" />
+          width="350" height="350" onerror="imgError(this);"/>
            </div>
            <div>
              <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
@@ -95,10 +94,6 @@
        </fieldset>
    
    </form:form>
-   <script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"></script>
 
 <script>
 
@@ -171,6 +166,27 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
 
 var filePath=$('input[type=file');
 var photoList=$(".photo");
+
+
+$(".photo").on("click", "button", function(e){
+	var str="";
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	var targetLi = $(this).closest("li");
+	var idx = targetLi.data("id");	
+	$.ajax({
+		url: '/deleteFile',
+		data: {fileName: targetFile, type:type},
+		dataType : 'text',
+		type: 'Post',
+		success:function(result){
+			targetLi.remove();
+			uploaderList[idx].value=str;
+		   	$("#thumbnail"+idx).val(str);
+		}
+	
+	});
+});
  
 function upload(e) {
     var arrNum = e.id;
@@ -223,14 +239,14 @@ function setUploadedFile(uploadResultArr, idx)
       {
          fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
          console.log(fileCallPath);
-         str += "<ul><li data-path='"+obj.uploadPath+"'";
-         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
+         str += "<li data-path='"+obj.uploadPath+"'";
+         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'"+ "data-id='"+idx+"'";
          str += "><div>";
          str += "<span>"+obj.fileName+"</span>";
-         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-         str += "<img src='/display?fileName="+fileCallPath+"'>";
+         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+         str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
-         str += "</li></ul>";
+         str += "</li>";
       }
       else
       {

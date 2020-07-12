@@ -37,11 +37,13 @@
             <div class="info_inner">
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
-                        <a href="/cookInfo" target="_blank">회사소개</a><span>|</span>
-                        	광고문의<span>|</span>
-                        	개인정보처리방침<span>|</span>
-                        	이용약관 <span>|</span>
-                        	고객센터
+                        <a href="/cookInfo" target="_blank">회사소개</a>
+                        <!-- <span>|</span>
+                           광고문의<span>|</span>
+                           개인정보처리방침<span>|</span>
+                           이용약관 <span>|</span>
+                           고객센터
+                            -->
                     </p>
                     
                     <p class="info_link">대표 : 최원석 / E : help@Cookstagram.com<br>
@@ -50,18 +52,22 @@
                         쇼핑문의(쿡스타그램) : 02-1234-1234<br>
                         서비스 이용문의 : 070-1234-1234
                     </p>
-
+<!-- 
                     <p class="info_link">Copyright <b>©Cookstagram</b> Inc. All Rights Reserved</p>
                 </div>
+<!-- 
                 <div class="info_banner" style="padding-left:140px">
-                    <textarea id="customerSend" name="board_txt" class="form-control" rows="8" cols="40" placeholder="불편사항이나 제안사항​​이 있으신가요?      쿡스타그램에 전하고 싶은 의견을 남겨주세요."></textarea>
+                    <textarea id="customerSend" name="board_txt" class="form-control" rows="8" cols="40" placeholder="불편사항이나 제안사항  이 있으신가요?      쿡스타그램에 전하고 싶은 의견을 남겨주세요."></textarea>
                     <button class="form_control" >의견제출</button>
                     <p class="noti">개별회신을 원하시면 <a href="#" style="text-decoration:underline; color:#666;">여기</a>에 문의하세요.</p>
                 </div>
+                -->
             </div>
         </div>
+         
         <div class="footer" id="name_footer">
             <p style="padding-top: 17px;">Cookstagram Since 2020</p>
+        </div>
         </div>
     </footer>
 </div>

@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
+import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.UserService;
 import org.slf4j.Logger;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Handles requests for the application home page.
  */
+//지호: null값 유효성체크 0711
 @Controller
 public class HomeController {
 
@@ -40,46 +43,61 @@ public class HomeController {
    public String home(Locale locale, Model model, Criteria cri) {
       logger.info("Welcome home! The client locale is {}.", locale);
       logger.info("YO! Welcome home! The client locale is {}.", locale);
-      Date date = new Date();
-      DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
+      //Date date = new Date();
+      //DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+      //String formattedDate = dateFormat.format(date);
+      RecipeVO latestRecipe = recipeService.getLatestRecipe();
+      
+      UserVO author = userService.getUserByNo(latestRecipe.getUserNo());
+      model.addAttribute("latestRecipe", latestRecipe);
+      model.addAttribute("author", author);
+//      model.addAttribute("tag",recipeService.getTagNameList());
+//      model.addAttribute("pageMaker", new PageDTO(cri, 100));
+//      model.addAttribute("list", recipeService.getList());
+      model.addAttribute("list", recipeService.getList().subList(0, 12));
 
-		
-		int size = recipeService.getList().size();
-		Long rno = new Long(size);
-		Long user = recipeService.isMyRecipe(rno);
-		
-		model.addAttribute("tag",recipeService.getTagNameList());
-		model.addAttribute("pageMaker", new PageDTO(cri, 100));
-		model.addAttribute("list", recipeService.getList());
-		
-		model.addAttribute("serverTime", formattedDate);
-		
-		model.addAttribute("list", recipeService.getList());
-		model.addAttribute("last", recipeService.get(rno));
-		model.addAttribute("lastUser", userService.getUserByNo(user));
-		model.addAttribute("getList", recipeService.getList().subList(0, 12));
-		return "index";
-	}
-	
-	@GetMapping("/cookInfo")
-	public void cookInfo() {
-		
-	}
-	
-	@GetMapping("/good")
-	public void getGood() {
-		
+      return "index";
+   }
+   
+   @GetMapping("/cookInfo")
+   public void cookInfo() {
+      
+   }
+   
+   @GetMapping("/good")
+   public void getGood() {
+      
+   }
+
+   @PostMapping("/good")
+   public void postGood() {
+      
+   }
+   
+   @GetMapping("/error")
+   public void getError() {
+      
+   }
+   
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
 	}
 
-	@PostMapping("/good")
-	public void postGood() {
-		
+	private String wrongAccess(Model model, String string) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", string);
+		return "/error";
 	}
-	
-	@GetMapping("/error")
-	public void getError() {
-		
+
+	private boolean isNumeric(String no) {
+		try {
+			double d = Double.parseDouble(no);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }
 

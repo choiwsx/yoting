@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 @RequestMapping("/test/*")
 public class TestController {
 
 	@Autowired
-	private RecipeService service;
+	private RecipeService recipeService;
 
 	@GetMapping("/category")
 	public void list(Long categoryNo, Model model) {
 		if (categoryNo == null) {
-			model.addAttribute("list", service.getList());
+			model.addAttribute("list", recipeService.getList());
 		} else {
-			model.addAttribute("list", service.getCategoryCode(categoryNo));
+			model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
 		}
 	}
 

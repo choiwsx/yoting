@@ -19,12 +19,11 @@
 	
 	    
 		<form:hidden path="userNo" value="<%=userNo%>" />
-	
         <form:label
             path="categoryNo" >카테고리</form:label>
         
         <form:select
-            path="categoryNo" >
+            path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
             <form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
@@ -60,6 +59,8 @@
 	    <div>
 	    <c:out value="${vs.count}" />번째 컨텐츠
 	        <div class="photo <c:out value='${vs.count}' />">
+	        <ul>
+	        </ul>
 	        </div>
 	        <div>
 	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
@@ -68,11 +69,11 @@
 	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
 	        
 	        <form:textarea
-	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;"/>
+	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
-	        <hr />
+	        <hr/>
 	
 	        </div>
 	        <form:hidden path="contentList[${vs.index}].stepNo" value="${vs.count }"/>
@@ -101,7 +102,7 @@ function submitCheck(){
 }
 
 $(".fileUploader").change(function(){
-    upload(this);
+	upload(this);
  });
 
 
@@ -120,7 +121,8 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
   	
-  	if( ("#categoryNo option:selected").val() == 0 )
+
+  	if($("#categoryNo option:selected").val() == 0)
   	{
   		alert("카테고리를 선택해주세요!");
   		return;
@@ -161,7 +163,26 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
  
 var filePath=$('input[type=file');
 var photoList=$(".photo");
- 
+
+$(".photo").on("click", "button", function(e){
+	var str="";
+	var targetFile = $(this).data("file");
+	var type = $(this).data("type");
+	var targetLi = $(this).closest("li");
+	var idx = targetLi.data("id");	
+	$.ajax({
+		url: '/deleteFile',
+		data: {fileName: targetFile, type:type},
+		dataType : 'text',
+		type: 'Post',
+		success:function(result){
+			targetLi.remove();
+			uploaderList[idx].value=str;
+		   	$("#thumbnail"+idx).val(str);
+		}
+	
+	});
+});
 function upload(e) {
     var arrNum = e.id;
     var formData = new FormData();
@@ -212,14 +233,14 @@ function setUploadedFile(uploadResultArr, idx)
       {
          fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
          console.log(fileCallPath);
-         str += "<ul><li data-path='"+obj.uploadPath+"'";
-         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
+         str += "<li data-path='"+obj.uploadPath+"'";
+         str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
          str += "><div>";
          str += "<span>"+obj.fileName+"</span>";
-         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-         str += "<img src='/display?fileName="+fileCallPath+"'>";
+         str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
+         str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
-         str += "</li></ul>";
+         str += "</li>";
       }
       else
       {
