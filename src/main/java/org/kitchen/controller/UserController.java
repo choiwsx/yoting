@@ -72,7 +72,6 @@ public class UserController {
 			message += " 중복된 이메일입니다.\n";
 		}
 		if(!message.equals("")) {
-			model.addAttribute("user", user);
 			model.addAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
