@@ -81,7 +81,7 @@
                path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" value="${content.photoUrl }" class="thumbList" style="display:none;" />
            
            <form:textarea
-               path="contentList[${vs.index}].content" value="${content.content }" class="contentList" style="height:160px; width:430px;" />
+               path="contentList[${vs.index}].content" value="${content.content }" id="contentList" class="contentList" style="height:160px; width:430px;" />
                
    
            <hr />
@@ -140,7 +140,6 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
 	e.preventDefault();
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
-  	
 
   	if($("#categoryNo option:selected").val() == 0)
   	{
