@@ -66,10 +66,10 @@ public class UserController {
 		//아이디, 이메일 중복 확인
 		String message = "";
 		if(!userService.isLegitUserId(user.getUserId())) {
-			message += "중복된 아이디입니다.\n";
+			message += "이미 등록된 아이디입니다.";
 		}
 		if(!userService.isLegitUserEmail(user.getEmail())) {
-			message += " 중복된 이메일입니다.\n";
+			message += " 이미 등록된 이메일입니다.";
 		}
 		if(!message.equals("")) {
 			model.addAttribute("result", message);
@@ -78,7 +78,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
-		return "/user/registration";
+		return "redirect:/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
@@ -271,7 +271,7 @@ public class UserController {
 		//로그인 확인
 		UserVO result = userService.tempLogin(user);
 		if(result == null) {
-			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.2222");
+			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
 			return "/user/login";
 		}
 		//회원 상태 확인

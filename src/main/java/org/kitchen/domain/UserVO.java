@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public class UserVO {
 	private Long userNo;
 	private String userId;
@@ -20,6 +19,10 @@ public class UserVO {
 	private boolean emailSub;
 	private boolean privacy;
 	private UserStatus status;
+	
+	public UserVO() {
+		status = UserStatus.PENDING;
+	}
 	
 	public UserVO setNewProfile(String nickName, String bio, boolean privacy) {
 		this.nickName = nickName;
