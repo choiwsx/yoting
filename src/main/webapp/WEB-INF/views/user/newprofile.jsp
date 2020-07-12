@@ -72,6 +72,9 @@
 		if(uniLen(bio)>500) {
 			str += `닉네임이 500바이트를 초과했습니다. (`+uniLen(bio)+`/500 바이트)\n`;			
 		}
+		if(!validateURL()) {
+			str += `url 형식에 맞지않습니다.\n`;
+		}
 		
 		if(str==="") {
 			$("#form").submit();
@@ -148,6 +151,12 @@
 	    }
 	    return true;
 	 }
+	
+	function validateURL() {
+		var url = $("input[name='webUrl']").val();
+		const re = /[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/;
+		return re.test(url);
+	}
 	
 
 	function uniLen(s) {
