@@ -344,34 +344,6 @@ public class UserController {
 		return wrongAccess(model, "유효하지 않은 회원입니다.");
 	}
 	
-	
-	@GetMapping("/user/autocomplete")
-	public String AutoTest(Model model) {
-		//겟 막기
-		return wrongAccess(model);
-	}
-	
-	@RequestMapping(value = "/user/autocomplete", method = RequestMethod.POST)
-	public String AutoTest(Locale locale, Model model, HttpServletRequest request,
-			HttpServletResponse resp,UserVO user) throws IOException {
-		
-		String result = request.getParameter("term");
-	
-		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
-		if(list == null) return wrongAccess(model);
-
-      JSONArray ja = new JSONArray();
-      if(ja == null) return wrongAccess(model);
-      for (int i = 0; i < list.size(); i++) {
-         ja.add(list.get(i).getUserId());
-      }
-      if(resp == null) return wrongAccess(model);
-      PrintWriter out = resp.getWriter();
-
-		out.print(ja.toString());
-		return "/user/autocomplete";
-	}
-	
 	@GetMapping("/follow")
 	public String follow(Model model) {
 		//겟 막기
