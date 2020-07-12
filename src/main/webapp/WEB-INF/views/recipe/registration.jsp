@@ -128,24 +128,24 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
   	
-  	console.log(uniLen($('input[name ="portion"]').val()));
 
   	if($("#categoryNo option:selected").val() == 0)
   	{
   		alert("카테고리를 선택해주세요!");
   		return;
   	}
+  	
   	if(mainTitle[0].value=="")
   	{
   		flag = true;
   		alert("레시피의 제목을 입력해주세요.");
   		return;
   	}	
-  	if(uniLen(mainTitle[0].value)>302) {
+  	if(uniLen(mainTitle[0].value)>100) {
   		alert("레시피의 제목이 너무 깁니다.(한글 최대 약 100자)");
   		return;
   	}
-  	if(uniLen($('input[name ="cookingTime"]').val())>12) {
+  	if(uniLen($('input[name ="cookingTime"]').val())>10) {
   		alert("레시피의 '소요 시간'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
@@ -157,10 +157,11 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   		alert("레시피의 '난이도'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('textarea[name ="reContent"]').val())>902) {
+  	if(uniLen($('textarea[name ="reContent"]').val())>300) {
   		alert("레시피의 '소개'에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   		return;
   	}
+
 
   	for(let i=0; i<10; i++)
   	{
@@ -170,7 +171,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   					blankIdx = i;
   					break;
 			}
-  		if(uniLen(contentList[i].value)>902) {
+  		if(uniLen(contentList[i].value)>300) {
   			alert(i+"번 째 세부 순서에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   	  		return;
   		}
@@ -189,7 +190,8 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
  	}
   	else
   	{
-		//form.submit();
+  		console.log("섭밋");
+		form.submit();
   	}
 });
  
