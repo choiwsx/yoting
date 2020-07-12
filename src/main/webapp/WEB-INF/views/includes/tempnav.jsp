@@ -70,8 +70,8 @@ if(session!=null) {
 
     .navBottom {
         padding-top: 15px;
-        padding-left: 270px;
-        padding-right: 150px;
+        padding-left: 220px;
+        padding-right: 110px;
         display:inline-flex;
     }
 
@@ -151,14 +151,74 @@ if(session!=null) {
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+	  
+     var result = '<c:out value="${result}"/>';
+     var rno = '<c:out value="${rno}"/>';
+	//console.log("result@@@"+result);
+     //console.log('<c:out value="${userNo}"/>');
+	 checkModal(result, rno);
+     history.replaceState({},null,null);
+      
+  });
+  
+  
+  function checkModal(result, rno){
+
+      if(result==''&&rno==''){
+         return;
+      }
+      if(result!=='') {
+    	  $(".modal-body").html(result);
+      } else if(rno!==''){
+         $(".modal-body").html("레시피가 등록 되었습니다.");
+      }
+      $("#myModal").modal("show");
+   }
     
+  
+  function imgError(image) {
+      image.onerror = "";
+      image.src = "https://img.buzzfeed.com/buzzfeed-static/static/2020-03/5/23/enhanced/25a67c968a0a/enhanced-262-1583449224-1.png?downsize=600:*&output-format=auto&output-quality=auto";
+      return true;
+  }
+  
+  
+  var cnt = 1;
+  $(".tagBtnNext").on("click", function(e) {
+     cnt++;
+     switch (cnt) {
+     case 2:
+        $("#keywordDiv_1").hide();
+        $("#keywordDiv_2").show();
+        break;
+     case 3:
+        $("#keywordDiv_2").hide();
+        $("#keywordDiv_3").show();
+        break;
+     case 4:
+        $("#keywordDiv_3").hide();
+        $("#keywordDiv_1").show();
+        cnt = 1;
+        break;
+     }
+
+  });
+  
+  </script>
 <body>
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
          <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            <h4 class="modal-title" id="myModalLabel">안내</h4>
          </div>
          <div class="modal-body">처리가 완료되었습니다.</div>
          <div class="modal-footer">
@@ -176,7 +236,7 @@ if(session!=null) {
                 <li><button onclick="location.href='/user/registration'"class='button'>가입하기</button></li>
                 </c:if>
                  <c:if test ="${not empty userNo}"><li><button onclick="location.href='/user/logout'"class='button'>로그아웃</button></li></c:if>
-                <li><button class='button'>서비스 목록</button></li>
+              <!--   <li><button class='button'>서비스 목록</button></li> -->
                 
             </ul>
         </div>
@@ -188,6 +248,7 @@ if(session!=null) {
             </div>
         </div>
         <div class="header_innerMid"  data-group="mid">
+        
             <!--검색창-->
             <div class="mid_search_wrapper">
             <div id="searchBar">
@@ -196,15 +257,17 @@ if(session!=null) {
       <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
       <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
       <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
+      <!-- 
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
+       -->
    </select>
    <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-   <button class='btn btn-default'>검색</button>
+   <button type="button" class='btn btn-default'>검색</button>
 </form>
 </div>
-                <div class="search_keyword"
+              <!--   <div class="search_keyword"
                   style="display: inline; font-size: 17px;">
                   <ul id="keywordDiv_1" style="text-align: left;">
                      <c:forEach items="${tag}" var="tag" end="3">
@@ -229,22 +292,25 @@ if(session!=null) {
                               #<c:out value="${tag.tagName}" />
                         </a></li>
                      </c:forEach>
-                  </ul>
-               </div>                     
+                  </ul>     
+               </div>                 
                    <div class="keyword_btn">
                   <a href="#" class="tagBtnNext"><img
                      src="https://recipe1.ezmember.co.kr/img/btn_arrow2_r.gif"
                      alt="다음"></a>
+        
+
                </div>
+                -->
                 </div>
             </div>
            <div class="header_innerRight" data-group="mid">
  					<c:if test ="${not empty userNo}">
-               			<a href="#"><img
+<!--                			<a href="#"><img
                      	src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
-                     	style="width: 60px; height: 60px;" alt="찜목록"></a>
-                  		<a href="/recipe/registration"><img
-                     	src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
+                     	style="width: 60px; height: 60px;" alt="찜목록"></a> -->
+                  		<a href="/recipe/registration"> <img
+                     	src="https://i.ibb.co/xXYqnff/reci.png"
                      	style="width: 60px; height: 60px;" alt="레시피등록"></a>
                     </c:if>
          </div>
@@ -254,84 +320,47 @@ if(session!=null) {
         <div class="header_innerBottom" data-group="main">
             <ul class="navBottom">
                 <li><a href="/" id="nav">홈</a></li>
-                <li><a href="/recipe/list?categoryNo=11" id="nav">주식</a></li>
-                <li><a href="/recipe/list?categoryNo=22" id="nav">디저트</a></li>
-                <li><a href="/recipe/list?categoryNo=33" id="nav">반찬</a></li>
+                <li><a href="/recipe/list?categoryNo=100" id="nav">주식</a></li>
+                <li><a href="/recipe/list?categoryNo=200" id="nav">반찬</a></li>
+                <li><a href="/recipe/list?categoryNo=300" id="nav">디저트</a></li>
+                <li><a href="/user/list" id="nav">주방장들</a></li>
                 <!--                 
                 <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
                  -->
-                <li><a href="/user/mkitchen" id="nav">내 주방</a></li>
+               <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav"><p style="color: red;">내 주방</p></a></li></c:if>
             </ul>
         </div>
-            </div>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-     console.log('<c:out value="${userNo}"/>');
-     
-     var result = '<c:out value="${result}"/>';
-     
-     history.replaceState({},null,null);
-     
-     let tagTable = document.querySelectorAll("[data-value]");
-      var cnt = 1;
-      $(".tagBtnNext").on("click", function(e) {
-         cnt++;
-         switch (cnt) {
-         case 2:
-            $("#keywordDiv_1").hide();
-            $("#keywordDiv_2").show();
-            break;
-         case 3:
-            $("#keywordDiv_2").hide();
-            $("#keywordDiv_3").show();
-            break;
-         case 4:
-            $("#keywordDiv_3").hide();
-            $("#keywordDiv_1").show();
-            cnt = 1;
-            break;
-         }
-
-      });
-     
-     var searchForm = $("#searchForm");
-     $("#searchForm button").on("click", function(e){
-        if(!searchForm.find("option:selected").val()){
-           alert("검색종류를 선택하세요.");
-           return false;
-        }
-        
-        if(!searchForm.find("input[name='keyword']").val())
-        {
-           alert("키워드를 입력하세요.");
-           return false;
-        }
-        
-        searchForm.find("input[name='pageNum']").val("1");
-        e.preventDefault();
-        searchForm.submit();
-     });
-    checkModal(result);
-      
-      function checkModal(result){
-         if(result===''){
-            return;
-         }
-         if(parseInt(result)>0){
-            $(".modal-body").html("게시글 " + parseInt(result)+ "번이 등록 되었습니다.");
-         }
-         $("#myModal").modal("show");
-      }
-  });
-  
-  function imgError(image) {
-      image.onerror = "";
-      image.src = "https://img.buzzfeed.com/buzzfeed-static/static/2020-03/5/23/enhanced/25a67c968a0a/enhanced-262-1583449224-1.png?downsize=600:*&output-format=auto&output-quality=auto";
-      return true;
-  }
-  </script>
+   
+   <script>
+   
+   var searchForm = $("#searchForm");
+   
+   $("#searchForm button").on("click", function() {
+	   button();
+   });
+   
+	$('#keyword').keydown(function() {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		    button();
+		  };
+		});
+	
+	function button(){
+	     if(!searchForm.find("option:selected").val()){
+	        alert("검색종류를 선택하세요.");
+	        return false;
+	     }
+	     
+	     if(!searchForm.find("input[name='keyword']").val())
+	     {
+	        alert("키워드를 입력하세요.");
+	        return false;
+	     }
+	     
+	     searchForm.find("input[name='pageNum']").val("1");
+	     searchForm.submit();
+	  };
+	
+   </script>
