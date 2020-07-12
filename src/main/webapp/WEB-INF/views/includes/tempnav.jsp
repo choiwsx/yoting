@@ -341,6 +341,7 @@ if(session!=null) {
    <script>
    
    $("#keyword").autocomplete({
+	   position: {  collision: "flip"  },
 		source : function(request, response) {
 			$.ajax({
 				url : "/autocomplete",

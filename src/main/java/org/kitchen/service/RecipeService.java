@@ -40,4 +40,6 @@ public interface RecipeService {
 	public List<TagVO> getTagNameList();
 	
 	public RecipeVO getLatestRecipe();
+	
+	public int checkCode(Long categoryNo);
 }
