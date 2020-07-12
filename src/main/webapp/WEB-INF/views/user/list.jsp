@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-<title>주방장들 리스트</title>
+<title>주방장 리스트</title>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 </head>
 <body>

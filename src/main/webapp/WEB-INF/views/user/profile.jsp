@@ -14,7 +14,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-<title>profile</title>
+<title>프로필</title>
 </head>
 <body>
 	<script
@@ -43,22 +43,22 @@
 				</c:if>
 			</div>
 			<div>
-				<label>구독자 수:</label><c:out value="${profile.followers}" />
+				<c:out value="구독자 수:${profile.followers}" />
 			</div>
 			<div>
-				<label>아이디:</label><c:out value="${profile.user.userId}" />
+				<c:out value="아이디:${profile.user.userId}" />
 			</div>
 			<div>
-				<label>닉네임:</label><c:out value="${profile.user.nickName}" />
+				<c:out value="닉네임:${profile.user.nickName}" />
 			</div>
 			<div>
-				<label>웹사이트:</label><a href="<c:out value="${profile.user.webUrl}" />"><c:out value="${profile.user.webUrl}" /></a>
+				<a href="<c:out value="홈페이지:${profile.user.webUrl}" />"><c:out value="${profile.user.webUrl}" /></a>
 			</div>
 			<div>
-				<label>이메일:</label>${profile.user.email}
+				<c:out value="이메일:${profile.user.email}"/>
 			</div>
 			<div>
-				<label>자기소개:</label>${profile.user.bio}
+				<c:out value="자기 소개:${profile.user.bio}"/>
 			</div>
 	</div>
 	   <c:if test="${not empty profile.recipes }">

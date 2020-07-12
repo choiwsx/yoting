@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.Criteria;
-import org.kitchen.domain.ProfileDTOFactory;
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
@@ -187,10 +187,10 @@ public class UserController {
 				log.info("자기페이지");
 				return "redirect:/user/mkitchen";
 			}
-			model.addAttribute("profile", ProfileDTOFactory.getProfile(user, userNo));
+			model.addAttribute("profile", ModelDTOFactory.getProfile(user, userNo));
 		} else {
 			//로그인 중이지 않으면
-			model.addAttribute("profile", ProfileDTOFactory.getProfile(user));
+			model.addAttribute("profile", ModelDTOFactory.getProfile(user));
 		}
 		return "/user/profile";
 	}

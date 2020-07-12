@@ -37,10 +37,10 @@
     <div>
         <label>이메일</label>
         <input type="text" name="email" autocomplete="on" value="<c:out value="${user.email }" default=""  />" />
-        <label>※이메일 인증을 위해 정확한 메일 주소를 입력해 주세요.</label>
+        <label>※이메일 인증을 위해 정확한 이메일 주소를 입력해 주세요.</label>
     </div>
     <div>
-        <label>이메일로 먹스타그램 소식 받기</label>
+        <label>이메일로 쿡스타그램 소식 받기</label>
         <input type="checkbox" name="emailSub" />
     </div>
     <button type="button" onclick="button();">회원 가입</button>

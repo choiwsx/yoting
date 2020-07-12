@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.kitchen.domain.ProfileDTOFactory;
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
 		List<UserVO> list = getTotalList();
 		List<SimpleProfileDTO> simpleProfileList = new ArrayList<>();
 		if(list==null) return null;
-		list.forEach(a->simpleProfileList.add(ProfileDTOFactory.getSimpleProfile(a)));
+		list.forEach(a->simpleProfileList.add(ModelDTOFactory.getSimpleProfile(a)));
 		return simpleProfileList;
 	}
 

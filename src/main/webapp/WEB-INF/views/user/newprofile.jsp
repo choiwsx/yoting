@@ -12,7 +12,7 @@
 
 
 
-<h1>나의 주방에서 공개될 정보를 입력해주세요.</h1>
+<h1>내 주방에서 공개될 정보를 입력해 주세요.</h1>
 <div id="message" style="height: 70px;"></div>
 
 <form id="form" action="/user/newprofile" method="POST" enctype="utf8">
@@ -22,17 +22,17 @@
         <label>최대 20바이트.</label>
     </div>
     <div>
-        <label>프사</label>
+        <label>프로필 사진</label>
         <div class='photo'>
         <ul>
         </ul>
         </div>
-        <img class="OpenImgUpload" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
+        <img class="OpenImgUpload" src="https://i.ibb.co/w7Yv1X6/pic.png" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="file" />
 	        <input type="text" id="profilePhoto" name="profilePhoto" style="display:none"/>
     </div>
     <div>
-        <label>개인홈피주소</label>
+        <label>개인 홈페이지 주소</label>
         <input type="text" name="webUrl" maxlength="150"/>
         <label>최대 200바이트.</label>
     </div>
@@ -47,7 +47,7 @@
         <input type="hidden" value="off" name="privacy"/>
     </div> -->
 
-<button type="button" onclick="button();">프로필 생성하고 가입 완료</button>
+<button type="button" onclick="button();">주방장 프로필을 생성하고 가입 완료</button>
 </form>
  
  
@@ -87,7 +87,9 @@
 
 var regex = new RegExp("(.*?)\.(jpg|png|img)$");
 var maxSize = 5242880;
+
 var uploaderList = $(".fileUploader");
+
 $(".OpenImgUpload").click(function(){
     $("#file").click();
  });
@@ -142,7 +144,6 @@ $('input[type="file"]').change(function(e){
          if(obj.image)
          {
             fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
-            console.log(fileCallPath);
             str += "<li data-path='"+obj.uploadPath+"'";
             str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
             str += "><div>";
