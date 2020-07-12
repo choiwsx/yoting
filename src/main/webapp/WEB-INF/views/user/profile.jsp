@@ -21,7 +21,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<div style="text-align: center;">
-
+	<h1><c:out value="${profile.user.nickName}" />님의 주방</h1>
 			<div>
 				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
 					width="300" height="300" onerror="imgError(this);" /></a>
@@ -61,6 +61,8 @@
 				<label>자기소개:</label>${profile.user.bio}
 			</div>
 	</div>
+	   <c:if test="${not empty profile.recipes }">
+	
 		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}" />님의 레시피 검색'>
 		<input type="hidden" name="userNo" value='<c:out value="${profile.user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
@@ -74,7 +76,7 @@
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
 	</c:forEach>
-
+</c:if>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

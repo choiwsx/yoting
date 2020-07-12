@@ -339,7 +339,7 @@ if(session!=null) {
 	   button();
    });
    
-	$('input[type="text"]').keydown(function() {
+	$('#keyword').keydown(function() {
 		  if (event.keyCode === 13) {
 		    event.preventDefault();
 		    button();
