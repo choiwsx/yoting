@@ -62,7 +62,17 @@
                 <p><fmt:formatDate pattern="yyyy년 MM월 dd일" value="${latestRecipe.regDate}"/></p>
             </div>
             <div id="today_title" style="width: 400px; height: 80px; padding-top: 2px; text-align: left;">
-                제목:<a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>"><c:out value="${latestRecipe.title}"/></a><br>
+                제목:<a href="/recipe/detail?rno=<c:out value='${latestRecipe.rno }'/>">
+
+<c:choose>
+   <c:when test="${fn:length(latestRecipe.title) > 15}">
+      ${fn:substring(latestRecipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${latestRecipe.title}
+  </c:otherwise>
+</c:choose>
+</a><br>
                 주방장:<a href="/user/profile?userId=<c:out value='${author.userId }'/>">
                 <c:out value="${author.userId}"/><span><img src="<c:out value="${author.profilePhoto}"/>" onerror="imgError(this);" style="width: 19px; height: 18px;"></span>
                 </a>
@@ -86,7 +96,17 @@
                           <ul>
                             <li class="clearfix">
                             <div class="left-col">
-                                <a class="head-text" href="/recipe/detail?rno=<c:out value='${recipe.rno }'/>"><c:out value='${recipe.title }'/></a>
+                                <a class="head-text" href="/recipe/detail?rno=<c:out value='${recipe.rno }'/>">
+                                
+                                <c:choose>
+								   <c:when test="${fn:length(recipe.title) > 20}">
+								      ${fn:substring(recipe.title,0,19)}...
+								   </c:when>
+								  <c:otherwise>
+								     ${recipe.title}
+								  </c:otherwise>
+								</c:choose>
+                                </a>
                               </div>
                             </li>
                           </ul>
