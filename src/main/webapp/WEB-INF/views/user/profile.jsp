@@ -23,7 +23,7 @@
 	<div style="text-align: center;">
 	<h1><c:out value="${profile.user.nickName}" />님의 주방</h1>
 			<div>
-				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
+				<img src="<c:out value="${profile.user.profilePhoto}"/>"
 					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
@@ -33,14 +33,14 @@
 				<c:if test="${not empty profile.recipes}">
 					<b><c:out value="${profile.user.nickName}" />님</b>은  <c:out value="${fn:length(profile.recipes)}" />개의 레시피가 있습니다.
 				</c:if>
-				
+				 <c:if test ="${not empty userNo}">
 				<form id="followForm" method="post">
 					<input type="hidden" name="followeeNo" value='<c:out value="${profile.user.userNo}" />'>
 					<input type="hidden" name="followerNo" value='<c:out value="${userNo}" />'>
 					<c:if test="${profile.following eq true}"><c:out value="<div><button type='button' id='unfollow'>구독 취소하기</button></div>" escapeXml="false" /></c:if>
 					<c:if test="${profile.following eq false}"><c:out value="<div><button type='button' id='follow'>구독하기</button></div>" escapeXml="false" /></c:if>
-					
 				</form>
+				</c:if>
 			</div>
 			<div>
 				<label>구독자 수:</label><c:out value="${profile.followers}" />
@@ -63,7 +63,7 @@
 	</div>
 	   <c:if test="${not empty profile.recipes }">
 	
-		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}" />님의 레시피 검색'>
+		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}"/>님의 레시피 검색'  maxlength="300">
 		<input type="hidden" name="userNo" value='<c:out value="${profile.user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
 		<button id="searchBtn">검색</button>		
