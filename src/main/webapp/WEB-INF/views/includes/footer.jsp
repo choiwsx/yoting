@@ -37,7 +37,7 @@
             <div class="info_inner">
                 <div class="info_banner" style="width:440px; padding-left:45px">
                     <p class="info_link">
-                        <a href="/cookInfo" target="_blank">회사소개</a>
+                        <a href="/user/cookInfo" target="_blank">회사소개</a>
                         <!-- <span>|</span>
                            광고문의<span>|</span>
                            개인정보처리방침<span>|</span>
