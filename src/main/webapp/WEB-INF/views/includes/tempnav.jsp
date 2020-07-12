@@ -151,9 +151,14 @@ if(session!=null) {
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
      <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+     
+     <script	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+     
 
 <script type="text/javascript">
 
@@ -213,9 +218,6 @@ if(session!=null) {
   
   </script>
 <body>
-<script src="http://code.jquery.com/jquery-1.7.js"	type="text/javascript"></script>
-<script	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -265,8 +267,9 @@ if(session!=null) {
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
        -->
    </select>
-   <input type='text' class="search"name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
-   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
+
+   <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
+   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
    <button type="button" class='btn btn-default'>검색</button>
 </form>
@@ -335,7 +338,6 @@ if(session!=null) {
             </ul>
         </div>
 
-   
    <script>
    
    $("#keyword").autocomplete({

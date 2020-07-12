@@ -66,10 +66,10 @@ public class UserController {
 		//아이디, 이메일 중복 확인
 		String message = "";
 		if(!userService.isLegitUserId(user.getUserId())) {
-			message += "중복된 아이디입니다.\n";
+			message += "이미 등록된 아이디입니다.";
 		}
 		if(!userService.isLegitUserEmail(user.getEmail())) {
-			message += " 중복된 이메일입니다.\n";
+			message += " 이미 등록된 이메일입니다.";
 		}
 		if(!message.equals("")) {
 			model.addAttribute("result", message);
@@ -78,7 +78,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "/user/newprofile";
 		}
-		return "/user/registration";
+		return "redirect:/user/registration";
 	}
 	
 	@GetMapping("/newprofile")
@@ -146,7 +146,7 @@ public class UserController {
 			userService.activateUser(userNo);
 			//엠키친으로이동?@@@@
 			model.addAttribute("result", "인증되었습니다.");
-			return "redirect:/good";
+			return "/good";
 		}		
 		return wrongAccess(model, "이메일 인증 실패. 잘못된 인증 링크입니다.");
 	}
@@ -271,7 +271,7 @@ public class UserController {
 		//로그인 확인
 		UserVO result = userService.tempLogin(user);
 		if(result == null) {
-			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.2222");
+			model.addAttribute("result", "아이디와 비밀번호가 맞지않습니다.");
 			return "/user/login";
 		}
 		//회원 상태 확인
@@ -302,14 +302,17 @@ public class UserController {
 	@GetMapping("/resendEmail")
 	public String resendEmail(HttpSession session, Model model, String userNo) {
 		//로그인 상태면 인증 메일 보내는 페이지 막기
+		log.info("####################"+userNo);
 		if( session.getAttribute("userNo")!=null) {
 			return wrongAccess(model);
 		}
 		//널이거나 숫자아니거나 유효회원 아니면 그냥 페이지로 보내기
-		if(userNo==null || !isNumeric(userNo) || userService.isValidUser(Long.parseLong(userNo))) return "/user/resendEmail";
+		if(userNo==null || !isNumeric(userNo) || !userService.isValidUser(Long.parseLong(userNo))) {
+			log.info("####################!!!!"+userNo);
+			return "recirect:/user/resendEmail";
+		}
 		//숫자면
 		UserVO user = userService.getUserByNo(Long.parseLong(userNo));
-		if(user.getStatus() == null) return wrongAccess(model);
 		if(UserStatus.PENDING.equals(user.getStatus())) {
 		userService.sendVerificationEmail(user);
 		model.addAttribute("result", "인증 메일 전송 완료, 메일함을 확인해주세요.");

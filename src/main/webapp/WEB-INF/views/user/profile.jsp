@@ -23,7 +23,7 @@
 	<div style="text-align: center;">
 	<h1><c:out value="${profile.user.nickName}" />님의 주방</h1>
 			<div>
-				<a href="1"><img src="<c:out value="${profile.user.profilePhoto}"/>"
+				<img src="<c:out value="${profile.user.profilePhoto}"/>"
 					width="300" height="300" onerror="imgError(this);" /></a>
 			</div>
 			<div>
@@ -63,7 +63,7 @@
 	</div>
 	   <c:if test="${not empty profile.recipes }">
 	
-		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}" />님의 레시피 검색'>
+		<input type="text" name="recipeKeyword" placeholder='<c:out value="${profile.user.nickName}"/>님의 레시피 검색'  maxlength="300">
 		<input type="hidden" name="userNo" value='<c:out value="${profile.user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
 		<button id="searchBtn">검색</button>		

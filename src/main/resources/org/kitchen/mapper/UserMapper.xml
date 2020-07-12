@@ -100,7 +100,7 @@
 
 <update id="update" parameterType="org.kitchen.domain.UserVO">
    update tbl_user set u_id=#{userId}, u_pwd=#{userPwd}, email=#{email}, email_auth=#{emailAuth}, email_news=#{emailSub}, 
-   u_photo=#{profilePhoto}, u_url=#{webUrl}, u_public=#{privacy}, status=#{status, typeHandler=org.kitchen.handler.CodeEnumTypeHandler}, info=#{bio}, nickname=#{nickName}
+   u_photo=#{profilePhoto,jdbcType=VARCHAR}, u_url=#{webUrl,jdbcType=VARCHAR}, u_public=#{privacy}, status=#{status, typeHandler=org.kitchen.handler.CodeEnumTypeHandler}, info=#{bio,jdbcType=VARCHAR}, nickname=#{nickName,jdbcType=VARCHAR}
    where u_num = #{userNo}
 </update>
 

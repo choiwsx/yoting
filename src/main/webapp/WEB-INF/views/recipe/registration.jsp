@@ -22,18 +22,18 @@
         <form:label
             path="categoryNo" >카테고리</form:label>
         
-        <form:select
+ <form:select
             path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
             <!--<form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
             <form:option class="options" value="33">반찬</form:option>-->
-            <form:option class="options" value="44">외국주식</form:option>
-            <form:option class="options" value="55">한식주식</form:option>
-            <form:option class="options" value="66">한식디젓</form:option>
-            <form:option class="options" value="77">외국디젓</form:option>
-            <form:option class="options" value="88">야채반찬</form:option>
-            <form:option class="options" value="99">고기반찬</form:option>
+            <form:option class="options" value="101">한식 주식</form:option>
+            <form:option class="options" value="102">외국 주식</form:option>
+            <form:option class="options" value="201">고기 반찬</form:option>
+            <form:option class="options" value="202">야채 반찬</form:option>
+            <form:option class="options" value="301">한식 디저트</form:option>
+            <form:option class="options" value="302">외국 디저트</form:option>
         </form:select>
        
         <div class='photo 0'>
