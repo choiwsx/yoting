@@ -15,13 +15,13 @@
 </c:if>
 <div>
 <form action="/user/login" method="POST" enctype="utf8">
-    <label>아이디</label><input name="userId" type="text">
-    <label>비번</label><input name="userPwd" type="password">
+    <label>아이디</label><input name="userId" type="text" maxlength="30">
+    <label>비번</label><input name="userPwd" type="password" maxlength="30">
     <button type="submit">로그인</button>
 </form>
 </div>
 <div>
-   <a href="/user/registration">회원가입</a>
+   <a href="/user/registration">회원 가입</a>
 </div>
 <br>
 <div> 

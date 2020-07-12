@@ -29,11 +29,11 @@
 <div>
 이메일 인증만 하면 회원가입이 최종 완료됩니다. 이메일을 확인해주세요.
 
-
-                        
+<br>
+<br>                        
 이메일이 안왔나요? 
 
-<a href="/user/sendemail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
+<a href="/user/resendEmail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
 </div>
 
 

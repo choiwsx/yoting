@@ -1,8 +1,14 @@
 package org.kitchen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
@@ -19,6 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.sf.json.JSONArray;
 
 
 /**
@@ -59,11 +67,6 @@ public class HomeController {
       return "index";
    }
    
-   @GetMapping("/cookInfo")
-   public void cookInfo() {
-      
-   }
-   
    @GetMapping("/good")
    public void getGood() {
       
@@ -98,6 +101,23 @@ public class HomeController {
 			return false;
 		}
 		return true;
+	}
+	
+	@RequestMapping(value = "/autocomplete", method = RequestMethod.POST)
+	public void AutoTest(Locale locale, Model model, HttpServletRequest request,
+			HttpServletResponse resp,UserVO user) throws IOException {
+		
+		String result = request.getParameter("term");
+	
+		List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
+
+      JSONArray ja = new JSONArray();
+      for (int i = 0; i < list.size(); i++) {
+         ja.add(list.get(i).getUserId());
+      }
+      PrintWriter out = resp.getWriter();
+
+		out.print(ja.toString());
 	}
 }
 

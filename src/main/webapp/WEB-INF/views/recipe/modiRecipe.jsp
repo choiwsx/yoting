@@ -13,27 +13,27 @@
 <body>
 <h1><c:out value="${recipe.title }" /> 수정 페이지</h1>
    <form:form modelAttribute="recipe" action="/recipe/modiRecipe" method="post" id="form-id">
-       <fieldset><legend>레시피 내용</legend>
-       
-       
-      <form:hidden path="userNo" value="${recipe.userNo}" />
-      <form:hidden path="rno" value="${recipe.rno}" />
-   
+      	        <h3>레시피 수정하기</h3>
+	
+	    <fieldset><legend>레시피 소개</legend>
+	
+	    
+		<form:hidden path="userNo" value="<%=userNo%>" />
         <form:label
-            path="categoryNo" >카테고리</form:label>
+            path="categoryNo" >카테고리(필수)</form:label>
         
-        <form:select
-            path="categoryNo" >
+ <form:select
+            path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
-            <form:option class="options" value="11">주식</form:option>
+            <!--<form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
-            <form:option class="options" value="33">반찬</form:option>
-            <form:option class="options" value="44">외국주식</form:option>
-            <form:option class="options" value="55">한식주식</form:option>
-            <form:option class="options" value="66">한식디젓</form:option>
-            <form:option class="options" value="77">외국디젓</form:option>
-            <form:option class="options" value="88">야채반찬</form:option>
-            <form:option class="options" value="99">고기반찬</form:option>
+            <form:option class="options" value="33">반찬</form:option>-->
+            <form:option class="options" value="101">한식 주식</form:option>
+            <form:option class="options" value="102">외국 주식</form:option>
+            <form:option class="options" value="201">고기 반찬</form:option>
+            <form:option class="options" value="202">야채 반찬</form:option>
+            <form:option class="options" value="301">한식 디저트</form:option>
+            <form:option class="options" value="302">외국 디저트</form:option>
         </form:select>
        
         <div class='photo 0'>

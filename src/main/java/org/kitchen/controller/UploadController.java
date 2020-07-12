@@ -222,12 +222,14 @@ public class UploadController {
 			AttachFileDTO attachDTO = new AttachFileDTO();
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			attachDTO.setFileName(uploadFileName);
-			
+			attachDTO.setShowFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID();
+			String exeName = uploadFileName.substring(uploadFileName.lastIndexOf(".")+1);
 			
-			uploadFileName = uuid.toString() +"_"+uploadFileName;
+			uploadFileName = uuid.toString()+"."+exeName; 
+					//+"_"+uploadFileName;
+			attachDTO.setFileName(uploadFileName);
  			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);

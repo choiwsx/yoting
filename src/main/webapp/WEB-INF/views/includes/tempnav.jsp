@@ -151,9 +151,14 @@ if(session!=null) {
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
      <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+     
+     <script	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+     
 
 <script type="text/javascript">
 
@@ -213,6 +218,7 @@ if(session!=null) {
   
   </script>
 <body>
+
    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
          <div class="modal-content">
@@ -254,15 +260,15 @@ if(session!=null) {
             <div id="searchBar">
 <form id='searchForm' action="/search/result" method='get'>
    <select name='type'>
-      <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합검색</option>
+      <option value="A" <c:out value="${pageMaker.cri.type eq 'A' ? 'selected' : '' }"/>>통합 검색</option>
       <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : '' }"/>>제목</option>
-      <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>작성자</option>
+      <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>주방장</option>
       <!-- 
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
        -->
    </select>
    <input type='text' name='keyword' id="keyword" placeholder="레시피를 검색하세요!" 
-   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'>
+   value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
    <button type="button" class='btn btn-default'>검색</button>
 </form>
@@ -324,6 +330,9 @@ if(session!=null) {
                 <li><a href="/recipe/list?categoryNo=200" id="nav">반찬</a></li>
                 <li><a href="/recipe/list?categoryNo=300" id="nav">디저트</a></li>
                 <li><a href="/user/list" id="nav">주방장들</a></li>
+                <!--                 
+                <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
+                 -->
                <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav"><p style="color: red;">내 주방</p></a></li></c:if>
             </ul>
         </div>
@@ -344,6 +353,25 @@ if(session!=null) {
 		  };
 		});
 	
+	$("#keyword").autocomplete({
+		source : function(request, response) {
+			$.ajax({
+				url : "/autocomplete",
+				type : "post",
+				dataType : "json",
+				data : request,
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
+				success : function(data) {
+					var result = data;
+					response(result);
+				},
+				error : function(data) {
+					alert("에러가 발생하였습니다.")
+				}
+			});
+		}
+	});
+
 	function button(){
 	     if(!searchForm.find("option:selected").val()){
 	        alert("검색종류를 선택하세요.");

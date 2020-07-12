@@ -1,19 +1,29 @@
 package org.kitchen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.PageDTO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
 import org.kitchen.service.SearchService;
+import org.kitchen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONArray;
 
 //지호: null값 유효성체크 0711
 @Controller
@@ -24,7 +34,9 @@ public class SearchController {
 	@Autowired
 	SearchService searchService;
 	@Autowired
-	RecipeService recipeService; 
+	RecipeService recipeService;
+	@Autowired
+	UserService userService; 
 	@GetMapping("/result")
 	public String searchList(Criteria cri, Model model) {
 		
@@ -110,5 +122,5 @@ public class SearchController {
 		}
 		return true;
 	}
-
+	
 }

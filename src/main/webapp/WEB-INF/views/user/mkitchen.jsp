@@ -25,7 +25,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
       <div>
       </div>
          <div>
-            <a href="1"><img src="<c:out value="${user.profilePhoto}" />"
+           <img src="<c:out value="${user.profilePhoto}" />"
                width="300" height="300" onerror="imgError(this);" /></a>
          </div>
          <div>
@@ -53,7 +53,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             <label>닉네임:</label><c:out value="${user.nickName}" />
          </div>
          <div>
-            <label>웹사이트:</label><a href="<c:out value="${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
+            <label>웹사이트:</label><a href="<c:out value="http://www.${user.webUrl}" />"><c:out value="${user.webUrl}" /></a>
          </div>
          <div>
             <label>이메일:</label>${user.email}
@@ -63,7 +63,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
          </div>
    </div> 
    <c:if test="${not empty recipeList }">
-    <input type="text" name="recipeKeyword" placeholder='<c:out value="${user.nickName}" />님의 레시피 검색'>
+    <input type="text" name="recipeKeyword" placeholder='나의 레시피 검색' style='width: 300px'>
 		<input type="hidden" name="userNo" value='<c:out value="${user.userNo}" />'>
 		<input type="hidden" name="where" value="profile">
 		<button id="searchBtn">검색</button>		
@@ -71,7 +71,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 	<c:forEach items="${recipeList}" var="recipe">
 	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 400px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
-					width="100" height="100"  onerror="imgError(this);" /></a></div>
+					width="100" height="100"  onerror="imgError(this);" style="margin: 10px" /></a></div>
 						<div style="padding: 15px;">
 						<c:choose>
 						   <c:when test="${fn:length(recipe.title) > 15}">
@@ -82,8 +82,8 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 						  </c:otherwise>
 						</c:choose></div>
 						<div><c:choose>
-						   <c:when test="${fn:length(recipe.reContent) > 40}">
-						      ${fn:substring(recipe.reContent,0,39)}...
+						   <c:when test="${fn:length(recipe.reContent) > 15}">
+						      ${fn:substring(recipe.reContent,0,15)}...
 						   </c:when>
 						  <c:otherwise>
 						     ${recipe.reContent}

@@ -262,12 +262,10 @@ if(session!=null) {
             </ul>
         </div>
             </div>
-
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
      <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script type="text/javascript">
   $(document).ready(function(){
      console.log('<c:out value="${userNo}"/>');

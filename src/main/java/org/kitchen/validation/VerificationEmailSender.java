@@ -23,7 +23,7 @@ public class VerificationEmailSender {
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			messageHelper.setFrom(from);
 			messageHelper.setTo(user.getEmail());
-			messageHelper.setSubject("먹스타그램:주방이 준비되고있어요");
+			messageHelper.setSubject("쿡스타그램:주방이 준비되고있어요");
 			messageHelper.setText(setContent(user.getUserNo(), key));
 			mailSender.send(message);
 		} catch (MessagingException e) {
@@ -36,14 +36,14 @@ public class VerificationEmailSender {
 		String content =
 				System.getProperty("line.separator")+ //한줄씩 줄간격을 두기위해 작성
 	            System.getProperty("line.separator")+	                    
-	            "안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다."
+	            "안녕하세요, 회원님. 저희 홈페이지를 찾아주셔서 감사합니다."
 	            +System.getProperty("line.separator")+	  
 	            "다음 링크를 눌러서 이메일을 인증하시면 회원 가입이 완료됩니다."
 	            +System.getProperty("line.separator")+	    
 	            "http://localhost:5050/user/verify?key="+key+"&userno="+userNo
 	            +System.getProperty("line.separator")+	            
 	            System.getProperty("line.separator")+	            
-	            "주의:먹스타그램 가입한 적이 없다면 링크를 누르지 마세요."; 
+	            "주의:쿡스타그램에 가입한 적이 없다면 링크를 누르지 마세요."; 
 		return content;				
 	}
 	

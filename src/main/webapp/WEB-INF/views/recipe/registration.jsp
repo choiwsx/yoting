@@ -14,62 +14,69 @@
 <body>
 	<form:form modelAttribute="recipe" action="registration" method="post" id="form-id">
 	   
+	        <h3>레시피 작성하기</h3>
 	
-	    <fieldset><legend>레시피 내용</legend>
+	    <fieldset><legend>레시피 소개</legend>
 	
 	    
 		<form:hidden path="userNo" value="<%=userNo%>" />
         <form:label
-            path="categoryNo" >카테고리</form:label>
+            path="categoryNo" >카테고리(필수)</form:label>
         
-        <form:select
+ <form:select
             path="categoryNo" id="categoryNo">
             <form:option class="options" value="0">카테고리</form:option>
-            <form:option class="options" value="11">주식</form:option>
+            <!--<form:option class="options" value="11">주식</form:option>
             <form:option class="options" value="22">디저트</form:option>
-            <form:option class="options" value="33">반찬</form:option>
-            <form:option class="options" value="44">외국주식</form:option>
-            <form:option class="options" value="55">한식주식</form:option>
-            <form:option class="options" value="66">한식디젓</form:option>
-            <form:option class="options" value="77">외국디젓</form:option>
-            <form:option class="options" value="88">야채반찬</form:option>
-            <form:option class="options" value="99">고기반찬</form:option>
+            <form:option class="options" value="33">반찬</form:option>-->
+            <form:option class="options" value="101">한식 주식</form:option>
+            <form:option class="options" value="102">외국 주식</form:option>
+            <form:option class="options" value="201">고기 반찬</form:option>
+            <form:option class="options" value="202">야채 반찬</form:option>
+            <form:option class="options" value="301">한식 디저트</form:option>
+            <form:option class="options" value="302">외국 디저트</form:option>
         </form:select>
        
         <div class='photo 0'>
           <ul>
           </ul>
         </div>
-        <img class="OpenImgUpload" id="0" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
+        <img class="OpenImgUpload" id="0" src="https://i.ibb.co/w7Yv1X6/pic.png" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 		<input type="file" class="fileUploader" id="0" style="display:none"/>
 		<form:input path="thumbnail" id="thumbnail0" style="display:none" />
 		<br>
-		<form:input path="title" placeholder="제목" id="mainTitle"/>
+		제목(필수)<form:input path="title" placeholder="제목" id="mainTitle"/>
 		<br>
-		<form:input path="cookingTime" placeholder="소요시간"/>
+		소요 시간<form:input path="cookingTime" placeholder="소요 시간"/>
 		<br>
-		<form:input path="portion" placeholder="몇인분"/>
+		몇 인분<form:input path="portion" placeholder="몇 인분"/>
 		<br>
-		<form:input path="difficulty" placeholder="난이도"/>
+		난이도<form:input path="difficulty" placeholder="난이도"/>
 		<br>
-		<form:textarea path="reContent" placeholder="내용" style="height:160px; width:430px;"/>
+		소개<form:textarea path="reContent" placeholder="소개 내용" style="height:160px; width:430px;"/>
 		<hr/>
 	    <div id="dl_list_0">
+	    	    <h3>레시피 세부 순서 작성하기</h3>
+	    <pre><h4>
+	            레시피의 세부 내용을 조리 순서 대로 작성해 주세요.  
+	    <br>
+	       10번 째 순서까지 작성할 수 있습니다.<br>
+	       10번 째 순서까지 모두 작성할 필요는 없지만, 중간에 빈 순서가 있을 수는 없습니다. </h4></pre>
 	    <c:forEach var="content" varStatus="vs" items="${recipe.contentList}">
 	    <div>
-	    <c:out value="${vs.count}" />번째 컨텐츠
+	    <h4><c:out value="${vs.count}" />번 째 </h4>
 	        <div class="photo <c:out value='${vs.count}' />">
 	        <ul>
 	        </ul>
 	        </div>
 	        <div>
-	        <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
+	        <img class="OpenImgUpload" id="${vs.count}" src="https://i.ibb.co/w7Yv1X6/pic.png" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
 	        <input type="file" class="fileUploader" style="display:none" id="<c:out value='${vs.count}' />" />
 	        <form:input
 	            path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" class="thumbList" style="display:none"/>
 	        
-	        <form:textarea
-	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="10"/>
+	       내용 <form:textarea
+	            path="contentList[${vs.index}].content"  class="contentList" style="height:160px; width:430px;" maxlength="300"/>
 	            
 	        <!--  <a href="#" class="remove_item icon minus">remove</a>-->
 	
@@ -131,9 +138,30 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	if(mainTitle[0].value=="")
   	{
   		flag = true;
-  		alert("메인 제목을 입력해주세요.");
+  		alert("레시피의 제목을 입력해주세요.");
   		return;
   	}	
+  	if(uniLen(mainTitle[0].value)>302) {
+  		alert("레시피의 제목이 너무 깁니다.(한글 최대 약 100자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="cookingTime"]').val())>32) {
+  		alert("레시피의 '소요 시간'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="portion"]').val())>32)  {
+  		alert("레시피의 '몇 인분'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('input[name ="difficulty"]').val())>32) {
+  		alert("레시피의 '난이도'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
+  		return;
+  	}
+  	if(uniLen($('textarea[name ="reContent"]').val())>902) {
+  		alert("레시피의 '소개'에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
+  		return;
+  	}
+
   	for(let i=0; i<10; i++)
   	{
   		if((thumbList[i].value==""||thumbList[i].value==null)
@@ -142,6 +170,10 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   					blankIdx = i;
   					break;
 			}
+  		if(uniLen(contentList[i].value)>902) {
+  			alert(i+"번 째 세부 순서에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
+  	  		return;
+  		}
  	}
   	for(let i=blankIdx; i<10; i++)
   	{
@@ -231,12 +263,13 @@ function setUploadedFile(uploadResultArr, idx)
    $(uploadResultArr).each(function(i,obj){
       if(obj.image)
       {
-         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         //fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+         fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.fileName);
          console.log(fileCallPath);
          str += "<li data-path='"+obj.uploadPath+"'";
          str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'" + "data-id='"+idx+"'";
          str += "><div>";
-         str += "<span>"+obj.fileName+"</span>";
+         str += "<span>"+obj.showFileName+"</span>";
          str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' id='"+idx+"' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button></br>";
          str += "<img src='/display?fileName="+fileCallPath+"' onerror='imgError(this);' >";
          str += "</div>";
@@ -252,6 +285,9 @@ function setUploadedFile(uploadResultArr, idx)
 }
 
 
+function uniLen(s) {
+    return [...s].length
+}
 
 </script>
 </body>

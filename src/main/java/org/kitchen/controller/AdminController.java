@@ -99,7 +99,7 @@ public class AdminController {
 		} catch (NumberFormatException e) {
 			return wrongAccess(model);
 		}
-		return "/admin/userList";
+		return "redirect:/admin/userList";
 	}
 	
 	
