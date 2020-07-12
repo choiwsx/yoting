@@ -52,9 +52,9 @@
       <br>
       <form:input path="title" placeholder="제목" value="${recipe.title }" id="mainTitle"/>
       <br>
-      <form:input path="cookingTime" placeholder="소요시간" value="${recipe.cookingTime }" />
+      <form:input path="cookingTime" placeholder="소요 시간" value="${recipe.cookingTime }" />
       <br>
-      <form:input path="portion" placeholder="몇인분" value="${recipe.portion }" />
+      <form:input path="portion" placeholder="몇 인분" value="${recipe.portion }" />
       <br>
       <form:input path="difficulty" placeholder="난이도" value="${recipe.difficulty }" />
       <br>
@@ -62,13 +62,22 @@
       <br>
       <hr/>
        <div id="dl_list_0">
+	    	    <h3>레시피 세부 순서 작성하기</h3>
+	    <pre><h4>
+	            레시피의 세부 내용을 조리 순서 대로 작성해 주세요.  
+	    <br>
+	       10번 째 순서까지 작성할 수 있습니다.<br>
+	       10번 째 순서까지 모두 작성할 필요는 없지만, 중간에 빈 순서가 있을 수는 없습니다. </h4></pre>
        <c:forEach var="content" varStatus="vs" items="${recipe.contentList}">
        <div>
-       <c:out value="${vs.count}" />번째 컨텐츠
-           <div class="photo <c:out value='${vs.count}' />">
-           <img 
-           src="${content.photoUrl}"
-          width="350" height="350" onerror="imgError(this);"/>
+       <c:out value="${vs.count}" />번 째
+           <div class="photo ${vs.count}"><div>
+           <li>
+           <c:if test="${not empty content.photoUrl }">
+           <button type="button" id="${vs.count}" class="btn btn-warning btn-circle"><i class="fa fa-times"></i></button><br>
+           <img src="${content.photoUrl}" width="300" onerror="imgError(this);" >
+           </c:if></div></li></div>
+           
            </div>
            <div>
              <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >

@@ -28,6 +28,8 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 			<div>
 				<c:out value="난이도:${recipe.difficulty}" /><br>
 				<c:out value="분량:${recipe.portion}" /><br/>
+				<c:out value="소요 시간:${recipe.cookingTime}" /><br>
+				
 				<c:out value="내용:${recipe.reContent }"/>
 				<br>
                 
