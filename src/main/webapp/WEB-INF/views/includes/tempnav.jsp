@@ -176,8 +176,7 @@ if(session!=null) {
       }
       if(result!=='') {
     	  $(".modal-body").html(result);
-      }
-      if(rno!==''){
+      } else if(rno!==''){
          $(".modal-body").html("레시피가 등록 되었습니다.");
       }
       $("#myModal").modal("show");
@@ -311,7 +310,7 @@ if(session!=null) {
                      	src="https://png.pngtree.com/element_our/png_detail/20181206/folder-vector-icon-png_260858.jpg"
                      	style="width: 60px; height: 60px;" alt="찜목록"></a> -->
                   		<a href="/recipe/registration"> <img
-                     	src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT-LsVgb7CPM0yQoJXVff8SXjXhR_EVNNWylg&usqp=CAU"
+                     	src="https://i.ibb.co/xXYqnff/reci.png"
                      	style="width: 60px; height: 60px;" alt="레시피등록"></a>
                     </c:if>
          </div>
@@ -327,7 +326,7 @@ if(session!=null) {
                 <!--                 
                 <li><a href="/user/hotkitchen" id="nav">인기주방장</a></li>
                  -->
-               <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav">내 주방</a></li></c:if>
+               <c:if test ="${not empty userNo}"><li><a href="/user/mkitchen" id="nav"><p style="color: red;">내 주방</p></a></li></c:if>
             </ul>
         </div>
 

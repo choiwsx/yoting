@@ -28,7 +28,7 @@ public class RecipeServiceImpl implements RecipeService {
    
    @Override
    public Long register(RecipeVO recipe) {
-	   
+	  if(recipe==null) return null; 
       recipeMapper.insert(recipe);
       recipe.getContentList().forEach(a -> a.setRno(recipe.getRno()));
       recipe.getContentList().forEach(a ->registerCon(a));
@@ -75,7 +75,9 @@ public class RecipeServiceImpl implements RecipeService {
    public RecipeVO get(Long rno) {
       log.info("get.........." + rno);
       RecipeVO recipe = recipeMapper.read(rno);
-      recipe.setContentList(getCon(rno));
+      if(recipe!=null) {
+    	  recipe.setContentList(getCon(rno));
+      }
       return recipe;
    }
 
@@ -103,7 +105,9 @@ public class RecipeServiceImpl implements RecipeService {
    public List<RecipeVO> getCategoryCode(Long categoryNo) {
 	   log.info("getList..........");
 	      List<RecipeVO> list = recipeMapper.getCategoryCode(categoryNo);
-	      list.forEach(a->a.setContentList(getCon(a.getRno())));
+	      if(list!=null) {
+	    	  list.forEach(a->a.setContentList(getCon(a.getRno())));
+	      }
       return list;
    }
    
@@ -119,13 +123,15 @@ public class RecipeServiceImpl implements RecipeService {
    @Override
    public void register_w(RecipeVO recipe)
    {
-      Long rno = register(recipe);
-      
-      for(int i=0; i<recipe.getContentList().size(); i++)
-      {
-         recipe.getContentList().get(i).setRno(rno);
-         contentMapper.insert(recipe.getContentList().get(i));
-      }
+	   if(recipe!=null) {
+	      Long rno = register(recipe);
+	      
+	      for(int i=0; i<recipe.getContentList().size(); i++)
+	      {
+	         recipe.getContentList().get(i).setRno(rno);
+	         contentMapper.insert(recipe.getContentList().get(i));
+	      }
+	   }
    }
 
 

@@ -76,7 +76,7 @@
 				<div style="border: 1px solid; margin: 10px; float: left;">
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
-					height=85px>
+					height=85px onerror="imgError(this);">
 					<br><c:out value="${recipe.userId}"/>
 					<br><c:out value="${recipe.nickName}"/>
 					</a></div>
@@ -118,7 +118,7 @@ function showImage(fileCallPath)
 	//alert(fileCallPath);
 	$(".bigPictureWrapper").css("display", "flex").show();
 	$(".bigPicture")
-	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"' onerror='imgError(this);'>")
 	.animate({width:'100%', height:'100%'}, 500);
 }
 

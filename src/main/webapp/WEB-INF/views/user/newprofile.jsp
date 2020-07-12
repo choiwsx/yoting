@@ -39,11 +39,11 @@
         <input type="text" name="bio" />
         <label>최대 500바이트.</label>
     </div>
-    <div>
+    <!-- <div>
         <label>프로필공개여부</label>
         <input type="checkbox" name="privacy" />
         <input type="hidden" value="off" name="privacy"/>
-    </div>
+    </div> -->
 
 <button type="button" onclick="button();">프로필 생성하고 가입 완료</button>
 </form>
@@ -123,7 +123,7 @@
 	           str += "><div>";
 	           str += "<span>"+obj.fileName+"</span>";
 	           str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-	           str += "<img src='/display?fileName="+fileCallPath+"'>";
+	           str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
 	           str += "</div>";
 	           str += "</li></ul>";
 	        }

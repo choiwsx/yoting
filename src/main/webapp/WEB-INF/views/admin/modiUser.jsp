@@ -40,7 +40,7 @@
     </div>
         <div>
     	<label>프사</label>
-    	<img src="<%=user.getProfilePhoto().equals("")? "/img/default.jpg":user.getProfilePhoto() %>" >
+    	<img src="<%=user.getProfilePhoto().equals("")? "/img/default.jpg":user.getProfilePhoto() %>" onerror="imgError(this);" >
         <input type="text" name="profilePhoto" value="<c:out value="${user.profilePhoto }"/>" />
     </div>
     <div>
