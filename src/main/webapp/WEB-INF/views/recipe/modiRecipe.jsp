@@ -13,15 +13,15 @@
 <body>
 <h1><c:out value="${recipe.title }" /> 수정 페이지</h1>
    <form:form modelAttribute="recipe" action="/recipe/modiRecipe" method="post" id="form-id">
-      	        <h3>레시피 수정하기</h3>
-	
-	    <fieldset><legend>레시피 소개</legend>
-	
-	    
-		<form:hidden path="userNo" value="<%=userNo%>" />
-		<form:hidden path="rno" value="${recipe.rno}" />
+                 <h3>레시피 수정하기</h3>
+   
+       <fieldset><legend>레시피 소개</legend>
+   
+       
+      <form:hidden path="userNo" value="<%=userNo%>" />
+      <form:hidden path="rno" value="${recipe.rno}" />
         <form:label
-            path="categoryNo" >카테고리</form:label>
+            path="categoryNo" >카테고리(필수)</form:label>
         
  <form:select
             path="categoryNo" id="categoryNo">
@@ -66,12 +66,9 @@
        <div>
        <c:out value="${vs.count}" />번째 컨텐츠
            <div class="photo <c:out value='${vs.count}' />">
-           <c:if test="${content.photoUrl ne null}">
            <img 
-           src="${content.photoUrl}'/>"
+           src="${content.photoUrl}"
           width="350" height="350" onerror="imgError(this);"/>
-           </div>           
-           </c:if>
            </div>
            <div>
              <img class="OpenImgUpload" id="${vs.count}" src="https://recipe1.ezmember.co.kr/img/pic_none2.gif" width="50" height="50" style="cursor:pointer" onerror="imgError(this);" >
@@ -173,24 +170,24 @@ var photoList=$(".photo");
 
 
 $(".photo").on("click", "button", function(e){
-	var str="";
-	var targetFile = $(this).data("file");
-	console.log(targetFile);
-	var type = $(this).data("type");
-	var targetLi = $(this).closest("li");
-	var idx = targetLi.data("id");	
-	$.ajax({
-		url: '/deleteFile',
-		data: {fileName: targetFile, type:"image"},
-		dataType : 'text',
-		type: 'Post',
-		success:function(result){
-			targetLi.remove();
-			uploaderList[idx].value=str;
-		   	$("#thumbnail"+idx).val(str);
-		}
-	
-	});
+   var str="";
+   var targetFile = $(this).data("file");
+   console.log(targetFile);
+   var type = $(this).data("type");
+   var targetLi = $(this).closest("li");
+   var idx = targetLi.data("id");   
+   $.ajax({
+      url: '/deleteFile',
+      data: {fileName: targetFile, type:"image"},
+      dataType : 'text',
+      type: 'Post',
+      success:function(result){
+         targetLi.remove();
+         uploaderList[idx].value=str;
+            $("#thumbnail"+idx).val(str);
+      }
+   
+   });
 });
  
 function upload(e) {

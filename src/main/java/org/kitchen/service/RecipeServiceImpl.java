@@ -81,16 +81,12 @@ public class RecipeServiceImpl implements RecipeService {
       if(recipe!=null) {
     	  recipe.setContentList(getCon(rno));
       }
-      return recipe;
-   }
-
-   @Override
-   public List<ContentVO> getCon(Long rno) {
-      log.info("getCon......" + rno);
       List<ContentVO> contents = contentMapper.read(rno);
-      if(contents==null) {
+      if(contents==null)
+      {
     	  contents = new ArrayList<ContentVO>();
-      } else if(contents.size()<10)
+      }
+      else if(contents.size()<10)
       {
     	  int j = contents.size();
     	  for(int i=contents.size(); i<10; i++)
@@ -103,9 +99,15 @@ public class RecipeServiceImpl implements RecipeService {
     		  j++;
     	  }
     	  log.info(contents);
-    	  return contents;
+    	  recipe.setContentList(contents);
       }
-    	  return contentMapper.read(rno);
+      return recipe;
+   }
+
+   @Override
+   public List<ContentVO> getCon(Long rno) {
+      log.info("getCon......" + rno);
+      return contentMapper.read(rno);
    }
 
    @Override
