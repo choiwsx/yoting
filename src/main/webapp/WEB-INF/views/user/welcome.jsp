@@ -18,7 +18,7 @@
 <label>userId</label> <c:out value="${user.userId}" /><br>
 <label>userNickName</label> <c:out value="${user.nickName}" /><br>
 <label>userEmail</label> <c:out value="${user.email}" /><br>
-<label>userEmailAuth</label> <c:out value="${user.emailAuth}" /><br>
+<!-- <label>userEmailAuth</label> <c:out value="${user.emailAuth}" /><br> -->
 <label>userProfilePhoto</label> <img src='<c:out value="${user.profilePhoto}" />' onerror="imgError(this);" ><br>
 <label>userWeb</label> <c:out value="${user.webUrl}" /><br>
 <label>userBio</label> <c:out value="${user.bio}" /><br>

@@ -72,7 +72,16 @@
 	<div data-title="<c:out value="${recipe.title}" />" style="border: 1px solid; width: 400px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }" style="margin: 10px"/>"
 					width="100" height="100"  onerror="imgError(this);"  /></a></div>
-						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
+						<div style="padding: 15px;">
+						<c:choose>
+   <c:when test="${fn:length(recipe.title) > 15}">
+      ${fn:substring(recipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${recipe.title}
+  </c:otherwise>
+</c:choose>
+</div>
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
 	</c:forEach>

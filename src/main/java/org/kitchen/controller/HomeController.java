@@ -47,8 +47,7 @@ public class HomeController {
       //DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
       //String formattedDate = dateFormat.format(date);
       RecipeVO latestRecipe = recipeService.getLatestRecipe();
-      if(recipeService.getList() == null) return wrongAccess(model);
-      if(latestRecipe == null) return wrongAccess(model);
+      
       UserVO author = userService.getUserByNo(latestRecipe.getUserNo());
       model.addAttribute("latestRecipe", latestRecipe);
       model.addAttribute("author", author);
