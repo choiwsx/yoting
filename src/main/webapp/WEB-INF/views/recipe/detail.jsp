@@ -26,12 +26,12 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
                
 			</div>
 			<div>
-				난이도:<c:out value="${recipe.difficulty}" />
-				양:<c:out value="${recipe.portion}" />
+				<c:out value="난이도:${recipe.difficulty}" /><br>
+				<c:out value="분량:${recipe.portion}" />
                 
             </div>
             <div>
-                <c:if test="${not empty contentList }">
+                <c:if test="${not empty contentList[0].content }">
                 <h3>요리 순서</h3>
                 </c:if>
                 <c:set var="doneLoop" value="false" />
@@ -50,10 +50,13 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
                 
             </c:forEach>
 			</div>
-            작성일:<c:out value="${recipe.regDate}" />
-            수정일:<c:out value="${recipe.updateDate}" />
+			<br><br>
+            <c:out value="작성일:${recipe.regDate}" /><br>
+            <c:out value="수정일:${recipe.updateDate}" />
     </div>
+    <br><br>
     
+<div style="text-align:center">
 <div>
     레시피 만든이
     <a href="/user/profile?userId=<c:out value="${author.userId}" />">
@@ -67,6 +70,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 	<a href="/recipe/modiRecipe?rno=${recipe.rno}">수정</a>
 	<a href="/recipe/del?rno=${recipe.rno}">삭제</a>
 	</c:if>
+</div>
 </div>
 </body>
 
