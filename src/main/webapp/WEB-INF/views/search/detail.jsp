@@ -39,17 +39,24 @@
 								height=280px onerror="imgError(this);">
 						</div>
 						<div style="margin-top: 10px;">
-							<c:out value="${recipe.title }" />
+<c:choose>
+	<c:when test="${fn:length(recipe.title) > 15}">
+      ${fn:substring(recipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${recipe.title}
+  </c:otherwise>
+</c:choose>
 						</div>
 						<div>
 							by
-							<c:out value="${recipe.userNo }" />
+							<c:out value="${recipe.nickName }" />
 						</div>
-						카테고리코드:
-						<c:out value="${recipe.categoryNo }" />
+						<!-- 카테고리코드:
+						<c:out value="${recipe.categoryNo }" /> -->
 						<div>
 							<fmt:formatDate pattern="yyyy-MM-dd"
-								value="${recipe.updateDate }" />
+								value="${recipe.regDate }" />
 						</div>
 					</div>
 				</a>
@@ -91,7 +98,8 @@
 	<input type='hidden' name='where' value='<c:out value="${pageMaker.cri.where}"/>'>
 	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
-<div class='pull-right'>
+<div class='pull-right' style="float:right; margin-right:100px; font-size:15px">
+<div>
 <ul>
 	<c:if test="${pageMaker.prev}">
 		<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">Previous</a>
@@ -107,6 +115,7 @@
 
 
 </ul>
+</div>
 </div>
 <%@ include file="../includes/footer.jsp"%>
 </body>

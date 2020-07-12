@@ -61,7 +61,7 @@ a {
 
 
 			<br><c:if test="${list_user.size()>=6}">
-						<a class="more_button" href="user">더보기</a>
+						<a class="more_button" href="user">더 보기</a>
 					</c:if>
 	</div>
 	</c:if>
@@ -75,18 +75,17 @@ a {
 			개있습니다.
 		</label>
 		 -->
-		<c:if test="${list.size()>=5 and where==null}">
-					<a class="more_button" href="recipe">더보기</a>
-				</c:if>
+
 		<br>
-		<!-- 
-		<c:forEach items="${category}" var="category">
+		<!-- 카테고리 어떢하죵? -->
+		<!--<c:forEach items="${category}" var="category">
 				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
 						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
-				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5> <br><br><br>
-				 -->
+				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5>-->
+				 <br><br><br>
+				 
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
 		<tr>
 			<td><c:if test="${empty list}">
@@ -94,6 +93,8 @@ a {
 			</c:if></td>
 				
 			<c:forEach items="${list}" var="recipe">
+					<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+			
 		<div style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
 					<div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
@@ -122,9 +123,12 @@ a {
 						</div>
 					</div>
 				</a>
-		</div>
+		</div></div>
 			</c:forEach>
 		</div>
+				<c:if test="${list.size()>=5 and where==null}">
+					<h3 style="float:right; margin-right:100px"><a class="more_button" href="recipe">...더 보기</a></h3>
+				</c:if>
 </div>
 <!-- 
 <div class="taglist">
@@ -144,7 +148,7 @@ a {
 						</div>
 				</c:forEach>
 					<c:if test="${list_tag.size()>=3}">
-							<a class="more_button" href="tag">더보기</a>
+							<a class="more_button" href="tag">더 보기</a>
 						</c:if>
 			</c:if>
 			
@@ -225,7 +229,7 @@ a {
 		var moreListForm = $("#morelistForm");
 		$(".more_button").on("click", function(e) {
 			e.preventDefault();
-			console.log('click-더보기');
+			//console.log('click-더 보기');
 			moreListForm.find("input[name='where']").val($(this).attr("href"));
 			//actionForm.submit();
 			moreListForm.submit();
