@@ -162,27 +162,6 @@ $('input[type="file"]').change(function(e){
     return re.test(url);
  }
  
-
- $("#photo").on("click", "button", function(e){
-		var str="";
-		var targetFile = $(this).data("file");
-		var type = $(this).data("type");
-		var targetLi = $(this).closest("li");
-		var idx = targetLi.data("id");	
-		$.ajax({
-			url: '/deleteFile',
-			data: {fileName: targetFile, type:type},
-			dataType : 'text',
-			type: 'Post',
-			success:function(result){
-				targetLi.remove();
-				uploaderList[idx].value=str;
-			   	$("#thumbnail"+idx).val(str);
-			}
-		
-		});
-	});
- 
  function uniLen(s) {
      return [...s].length
  }
