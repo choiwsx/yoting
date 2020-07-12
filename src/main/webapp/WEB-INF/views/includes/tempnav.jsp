@@ -265,8 +265,7 @@ if(session!=null) {
       <option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : '' }"/>>주방장</option>
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
        -->
-   </select>-->
-
+   </select>
    <input type='text' name='keyword' id="keyword" placeholder="통합검색 검색어를 입력하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
@@ -360,7 +359,7 @@ if(session!=null) {
 			});
 		}
 	});
-		   
+   
    var searchForm = $("#searchForm");
    
    $("#searchForm button").on("click", function() {
@@ -375,10 +374,10 @@ if(session!=null) {
 		});
 	
 	function button(){
-	     if(!searchForm.find("option:selected").val()){
+/* 	     if(!searchForm.find("option:selected").val()){
 	        alert("검색종류를 선택하세요.");
 	        return false;
-	     }
+	     } */
 	     
 	     if(!searchForm.find("input[name='keyword']").val())
 	     {

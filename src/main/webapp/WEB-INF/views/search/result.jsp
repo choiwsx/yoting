@@ -138,8 +138,8 @@ a {
 	<form id='actionForm' action="/search/result" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='type'
-			value='<c:out value="${pageMaker.cri.type}"/>'> <input
+	<%-- 	<input type='hidden' name='type'
+			value='<c:out value="${pageMaker.cri.type}"/>'> --%> <input
 			type='hidden' name='where'
 			value='<c:out value="${pageMaker.cri.where}"/>'> <input
 			type='hidden' name='keyword'
@@ -149,8 +149,8 @@ a {
 	<form id="morelistForm" action="/search/detail" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='type'
-			value='<c:out value="${pageMaker.cri.type}"/>'> <input
+<%-- 		<input type='hidden' name='type'
+			value='<c:out value="${pageMaker.cri.type}"/>'> --%> <input
 			type='hidden' name='keyword'
 			value='<c:out value="${pageMaker.cri.keyword}"/>'> <input
 			type='hidden' name='where' value=''>
@@ -217,10 +217,10 @@ a {
 
 		var searchForm = $("#searchForm");
 		$("#searchForm button").on("click", function(e) {
-			if (!searchForm.find("option:selected").val()) {
+/* 			if (!searchForm.find("option:selected").val()) {
 				alert("검색종류를 선택하세요.");
 				return false;
-			}
+			} */
 
 			if (!searchForm.find("input[name='keyword']").val()) {
 				alert("키워드를 입력하세요.");
