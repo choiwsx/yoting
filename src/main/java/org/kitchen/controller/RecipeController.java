@@ -145,7 +145,7 @@ public class RecipeController {
          if(recipeService.checkCode(categoryNoLong)<=0) {
             return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
          }
-//         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
+         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
          model.addAttribute("list",recipeService.getSimpleRecipeByCategory(categoryNoLong));
          
       }
