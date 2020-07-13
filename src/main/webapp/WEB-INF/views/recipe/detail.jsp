@@ -66,7 +66,7 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
     
 <div style="text-align:center">
 <div>
-    레시피 만든이
+    주방장
     <a href="/user/profile?userId=<c:out value="${author.userId}" />">
     <img src="<c:out value="${author.profilePhoto}" />" width="140" height="120" onerror="imgError(this);" />
     <c:out value="${author.nickName}" />

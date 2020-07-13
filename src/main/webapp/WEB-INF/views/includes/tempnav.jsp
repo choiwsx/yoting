@@ -266,7 +266,7 @@ if(session!=null) {
       <option value="Tag" <c:out value="${pageMaker.cri.type eq 'Tag' ? 'selected' : '' }"/>>태그</option>
        -->
    </select>
-   <input type='text' name='keyword' id="keyword" placeholder="통합 검색 :검색어를 입력하세요!" 
+   <input type='text' name='keyword' id="keyword" placeholder="통합 검색 : 검색어를 입력하세요!" 
    value='<c:out value="${pageMaker.cri.keyword}"/>' style='width: 280px;'  maxlength="300">
    <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
    <button type="button" class='btn btn-default'>검색</button>
