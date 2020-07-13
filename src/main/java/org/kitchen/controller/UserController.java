@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 import net.sf.json.JSONArray;
@@ -37,6 +38,7 @@ import net.sf.json.JSONArray;
 @Controller
 @Log4j
 @RequestMapping("/user/*")
+@SessionAttributes("user")
 public class UserController {
 	
 	@Autowired
@@ -55,7 +57,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/registration")
-	public String validateuser(UserVO user, Model model, HttpSession session) {
+	public String validateuser(UserVO user, Model model, HttpSession session, RedirectAttributes rttr) {
 		if(user == null) return wrongAccess(model);
 		//로그인 상태면 가입 막기
 		if( session.getAttribute("userNo")!=null || user==null) {
@@ -72,7 +74,8 @@ public class UserController {
 			message += " 이미 등록된 이메일입니다.";
 		}
 		if(!message.equals("")) {
-			model.addAttribute("result", message);
+//			model.addAttribute("result", message);
+			rttr.addFlashAttribute("result", message);
 		} else {
 			//중복 아니면 그 다음 단계로 이동
 			return "/user/newprofile";
@@ -308,7 +311,7 @@ public class UserController {
 		//널이거나 숫자아니거나 유효회원 아니면 그냥 페이지로 보내기
 		if(userNo==null || !isNumeric(userNo) || !userService.isValidUser(Long.parseLong(userNo))) {
 			log.info("####################!!!!"+userNo);
-			return "recirect:/user/resendEmail";
+			return "/user/resendEmail";
 		}
 		//숫자면
 		UserVO user = userService.getUserByNo(Long.parseLong(userNo));

@@ -13,13 +13,13 @@
 <body>
 <h1><c:out value="${recipe.title }" /> 수정 페이지</h1>
    <form:form modelAttribute="recipe" action="/recipe/modiRecipe" method="post" id="form-id">
-      	        <h3>레시피 수정하기</h3>
-	
-	    <fieldset><legend>레시피 소개</legend>
-	
-	    
-		<form:hidden path="userNo" value="<%=userNo%>" />
-		<form:hidden path="rno" value="${recipe.rno}" />
+                 <h3>레시피 수정하기</h3>
+   
+       <fieldset><legend>레시피 소개</legend>
+   
+       
+      <form:hidden path="userNo" value="<%=userNo%>" />
+      <form:hidden path="rno" value="${recipe.rno}" />
         <form:label
             path="categoryNo" >카테고리(필수)</form:label>
         
@@ -53,9 +53,9 @@
       <br>
       <form:input path="title" placeholder="제목" value="${recipe.title }" id="mainTitle"/>
       <br>
-      <form:input path="cookingTime" placeholder="소요시간" value="${recipe.cookingTime }" />
+      <form:input path="cookingTime" placeholder="소요 시간" value="${recipe.cookingTime }" />
       <br>
-      <form:input path="portion" placeholder="몇인분" value="${recipe.portion }" />
+      <form:input path="portion" placeholder="몇 인분" value="${recipe.portion }" />
       <br>
       <form:input path="difficulty" placeholder="난이도" value="${recipe.difficulty }" />
       <br>
@@ -63,9 +63,15 @@
       <br>
       <hr/>
        <div id="dl_list_0">
+	    	    <h3>레시피 세부 순서 작성하기</h3>
+	    <pre><h4>
+	            레시피의 세부 내용을 조리 순서 대로 작성해 주세요.  
+	    <br>
+	       10번 째 순서까지 작성할 수 있습니다.<br>
+	       10번 째 순서까지 모두 작성할 필요는 없지만, 중간에 빈 순서가 있을 수는 없습니다. </h4></pre>
        <c:forEach var="content" varStatus="vs" items="${recipe.contentList}">
        <div>
-       <c:out value="${vs.count}" />번째 컨텐츠
+       <c:out value="${vs.count}" />번 째
            <div class="photo ${vs.count}"><div>
            <li>
            <c:if test="${not empty content.photoUrl }">
@@ -81,7 +87,7 @@
                path="contentList[${vs.index}].photoUrl" id="thumbnail${vs.count}" value="${content.photoUrl }" class="thumbList" style="display:none;" />
            
            <form:textarea
-               path="contentList[${vs.index}].content" value="${content.content }" class="contentList" style="height:160px; width:430px;" />
+               path="contentList[${vs.index}].content" value="${content.content }" id="contentList" class="contentList" style="height:160px; width:430px;" />
                
    
            <hr />
@@ -141,7 +147,6 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   	let flag = false; // 빈칸 체크를 위한 flag
   	let blankIdx = 0; // 빈칸이 시작되는 인덱스
   	
-
   	if($("#categoryNo option:selected").val() == 0)
   	{
   		alert("카테고리를 선택해주세요!");
@@ -154,23 +159,23 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   		alert("레시피의 제목을 입력해주세요.");
   		return;
   	}	
-  	if(uniLen(mainTitle[0].value)>302) {
+  	if(uniLen(mainTitle[0].value)>100) {
   		alert("레시피의 제목이 너무 깁니다.(한글 최대 약 100자)");
   		return;
   	}
-  	if(uniLen($('input[name ="cookingTime"]').val())>32) {
+  	if(uniLen($('input[name ="cookingTime"]').val())>10) {
   		alert("레시피의 '소요 시간'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('input[name ="portion"]').val())>32)  {
+  	if(uniLen($('input[name ="portion"]').val())>10)  {
   		alert("레시피의 '몇 인분'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('input[name ="difficulty"]').val())>32) {
+  	if(uniLen($('input[name ="difficulty"]').val())>10) {
   		alert("레시피의 '난이도'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('textarea[name ="reContent"]').val())>902) {
+  	if(uniLen($('textarea[name ="reContent"]').val())>300) {
   		alert("레시피의 '소개'에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   		return;
   	}
@@ -184,7 +189,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   					blankIdx = i;
   					break;
 			}
-  		if(uniLen(contentList[i].value)>902) {
+  		if(uniLen(contentList[i].value)>300) {
   			alert(i+"번 째 세부 순서에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   	  		return;
   		}

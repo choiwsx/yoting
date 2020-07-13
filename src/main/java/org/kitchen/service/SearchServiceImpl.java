@@ -209,5 +209,15 @@ public class SearchServiceImpl implements SearchService {
 		return result;
 	}
 
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeMoreList(Criteria cri) {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = moreRecipeList(cri);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
+	}
+
 
 }

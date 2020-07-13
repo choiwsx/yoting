@@ -78,29 +78,31 @@ public class RecipeServiceImpl implements RecipeService {
    public RecipeVO get(Long rno) {
       log.info("get.........." + rno);
       RecipeVO recipe = recipeMapper.read(rno);
-      if(recipe!=null) {
-         recipe.setContentList(getCon(rno));
+      if(recipe==null) {
+    	  return null;
       }
+      recipe.setContentList(getCon(rno));
       List<ContentVO> contents = contentMapper.read(rno);
       if(contents==null)
       {
          contents = new ArrayList<ContentVO>();
+         for(int i=0; i<10; i++)
+         {
+        	 contents.add(new ContentVO());
+         }
       }
       else if(contents.size()<10)
       {
-         int j = contents.size();
          for(int i=contents.size(); i<10; i++)
          {
             ContentVO content = new ContentVO();
-//            content.setRno(rno);
-            log.info(rno);
-            content.setStepNo(j);
             contents.add(content);
-            j++;
          }
-         log.info(contents);
-         recipe.setContentList(contents);
       }
+      for(int i = 0; i<10; i++) {
+    	  contents.get(i).setStepNo(i);
+      }
+      recipe.setContentList(contents);
       return recipe;
    }
 
@@ -190,9 +192,19 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public List<SimpleRecipeDTO> getSimpeRecipeByCategory(Long categoryNoLong) {
+	public List<SimpleRecipeDTO> getSimpleRecipeByCategory(Long categoryNoLong) {
 		// TODO Auto-generated method stub
 		List<RecipeVO> list = getCategoryCode(categoryNoLong);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeList() {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = getList();
 		if(list==null) return null;
 		List<SimpleRecipeDTO> result = new ArrayList<>();
 		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));

@@ -40,5 +40,7 @@ public interface SearchService {
 	public List<SimpleProfileDTO> getHotUserList(int length);
 	
 	public List<SimpleRecipeDTO> getSimpleRecipeList(Criteria cri);
+	public List<SimpleRecipeDTO> getSimpleRecipeMoreList(Criteria cri);
+
 
 }

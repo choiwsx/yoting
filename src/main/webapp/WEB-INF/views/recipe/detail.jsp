@@ -28,6 +28,8 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
 			<div>
 				<c:out value="난이도:${recipe.difficulty}" /><br>
 				<c:out value="분량:${recipe.portion}" /><br/>
+				<c:out value="소요 시간:${recipe.cookingTime}" /><br>
+				
 				<c:out value="내용:${recipe.reContent }"/>
 				<br>
                 
@@ -53,14 +55,18 @@ Long loggedInUserNo = (Long)session.getAttribute("loggedInUserNo");
             </c:forEach>
 			</div>
 			<br><br>
-            <c:out value="작성일:${recipe.regDate}" /><br>
-            <c:out value="수정일:${recipe.updateDate}" />
+			작성일 : <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${recipe.regDate}"/><br>
+			수정일 : <fmt:formatDate pattern="yyyy년 MM월 dd일 HH시 mm분" value="${recipe.updateDate}"/><br>
+			
+            
+            <!--<c:out value="작성일:${recipe.regDate}" /><br>
+            <c:out value="수정일:${recipe.updateDate}" />-->
     </div>
     <br><br>
     
 <div style="text-align:center">
 <div>
-    레시피 만든이
+    주방장
     <a href="/user/profile?userId=<c:out value="${author.userId}" />">
     <img src="<c:out value="${author.profilePhoto}" />" width="140" height="120" onerror="imgError(this);" />
     <c:out value="${author.nickName}" />

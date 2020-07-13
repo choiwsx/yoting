@@ -1,7 +1,11 @@
 package org.kitchen.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
@@ -24,49 +28,49 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/recipe/*")
 public class RecipeController {
 
-	@Autowired
-	private RecipeService recipeService;
-	@Autowired
-	private UserService userService;
+   @Autowired
+   private RecipeService recipeService;
+   @Autowired
+   private UserService userService;
 
-	@PostMapping("/registration")
-	public String register(RecipeVO recipe, RedirectAttributes rttr, Model model) {
-		if(recipe==null) {
-			return wrongAccess(model);
-		}
-		recipeService.register(recipe);
-		rttr.addFlashAttribute("result", "게시물을 등록하였습니다.");
-		return "redirect:/user/mkitchen";
-	}
+   @PostMapping("/registration")
+   public String register(RecipeVO recipe, RedirectAttributes rttr, Model model) {
+      if(recipe==null) {
+         return wrongAccess(model);
+      }
+      recipeService.register(recipe);
+      rttr.addFlashAttribute("result", "게시물을 등록하였습니다.");
+      return "redirect:/user/mkitchen";
+   }
 
-	@GetMapping("/registration")
-	public String registerform(Model model, HttpSession session) {
-		// 입력 폼에 레시피 VO만들어서 주기
-		if ((Long) session.getAttribute("userNo") == null) {
-			return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
-		}
-		Long userNo = (Long) session.getAttribute("userNo");
-		UserVO user = userService.getUserByNo(userNo);
-		if (user == null) {
-			return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
-		}else
-		model.addAttribute("recipe", new RecipeVO());
+   @GetMapping("/registration")
+   public String registerform(Model model, HttpSession session) {
+      // 입력 폼에 레시피 VO만들어서 주기
+      if ((Long) session.getAttribute("userNo") == null) {
+         return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+      }
+      Long userNo = (Long) session.getAttribute("userNo");
+      UserVO user = userService.getUserByNo(userNo);
+      if (user == null) {
+         return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+      }else
+      model.addAttribute("recipe", new RecipeVO());
 
-		return "/recipe/registration";
-	}
+      return "/recipe/registration";
+   }
 
-	@GetMapping("/result")
-	public String result(Model model) {
-		// 등록 결과를 겟하려하면 오류주기
-		return wrongAccess(model);
-	}
+   @GetMapping("/result")
+   public String result(Model model) {
+      // 등록 결과를 겟하려하면 오류주기
+      return wrongAccess(model);
+   }
 
-	@PostMapping("/result")
-	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-		// 레시피 등록하러 오면 recipeService에 저장하기
-		recipeService.register(recipe);
-		return recipe;
-	}
+   @PostMapping("/result")
+   public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+      // 레시피 등록하러 오면 recipeService에 저장하기
+      recipeService.register(recipe);
+      return recipe;
+   }
 
 //   @GetMapping("/get")
 //   public void get(Long rno, Model model) {
@@ -94,7 +98,7 @@ public class RecipeController {
    
    @GetMapping("/modiRecipe")
    public String modiRecipe(Model model, String rno, HttpSession session) {
-	  if(rno == null) return wrongAccess(model);
+     if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
       if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
          return wrongAccess(model);
@@ -103,7 +107,7 @@ public class RecipeController {
       if(recipeService.isMyRecipe(Long.parseLong(rno), (Long)session.getAttribute("userNo"))) {
           model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
       } else {
-    	  //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
+         //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
           return wrongAccess(model);
       }
       return "/recipe/modiRecipe";   
@@ -111,7 +115,7 @@ public class RecipeController {
    
    @PostMapping("/modiRecipe")
    public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
-	  if(recipe==null) return wrongAccess(model);
+     if(recipe==null) return wrongAccess(model);
       log.info("!!recipe!!!"+recipe);
       Long userNo = recipe.getUserNo();
       if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
@@ -130,7 +134,7 @@ public class RecipeController {
    public String list(String categoryNo, Model model) {
       //카테고리 없으면 그냥 전체 리스트
       if( categoryNo==null ) {
-         model.addAttribute("list", recipeService.getList());
+         model.addAttribute("list", recipeService.getSimpleRecipeList());
       } else {
          //카테고리 넘버 공백||숫자 유효성 체크
          if(categoryNo.equals("") || !isNumeric(categoryNo)) {
@@ -139,10 +143,10 @@ public class RecipeController {
          //카테고리 있으면 카테고리 리스트
          Long categoryNoLong = Long.parseLong(categoryNo);
          if(recipeService.checkCode(categoryNoLong)<=0) {
-        	 return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
+            return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
          }
 //         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
-         model.addAttribute("list",recipeService.getSimpeRecipeByCategory(categoryNoLong));
+         model.addAttribute("list",recipeService.getSimpleRecipeByCategory(categoryNoLong));
          
       }
 //      model.addAttribute("tag",recipeService.getTagNameList());      
@@ -151,13 +155,17 @@ public class RecipeController {
 
    @GetMapping("detail")
    public String detail(Model model, String rno, HttpSession session) {
-	  if(rno == null) return wrongAccess(model);
+     if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
       }
       Long rnoLong = Long.parseLong(rno);
       RecipeVO recipe = recipeService.get(rnoLong);
+      if(recipeService.get(rnoLong)==null)
+      {
+    	  return wrongAccess(model);
+      }
       if(recipe == null) return wrongAccess(model);
       model.addAttribute("tag",recipeService.getTagNameList());
       model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
@@ -173,7 +181,7 @@ public class RecipeController {
 
    @GetMapping("del")
    public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr ) {
-	  if(rno == null) return wrongAccess(model);
+     if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
@@ -185,30 +193,30 @@ public class RecipeController {
          return wrongAccess(model, "게시물 삭제에 실패하였습니다.");
       }
 //      String referer = request.getHeader("Referer");
-      	rttr.addFlashAttribute("result", "게시물을 삭제하였습니다.");
-		return "redirect:/user/mkitchen";
-	}
+         rttr.addFlashAttribute("result", "게시물을 삭제하였습니다.");
+      return "redirect:/user/mkitchen";
+   }
 
-	private String wrongAccess(Model model) {
-		// TODO Auto-generated method stub
-		model.addAttribute("result", "잘못된 접근입니다.");
-		return "/error";
-	}
+   private String wrongAccess(Model model) {
+      // TODO Auto-generated method stub
+      model.addAttribute("result", "잘못된 접근입니다.");
+      return "/error";
+   }
 
-	private String wrongAccess(Model model, String string) {
-		// TODO Auto-generated method stub
-		model.addAttribute("result", string);
-		return "/error";
-	}
+   private String wrongAccess(Model model, String string) {
+      // TODO Auto-generated method stub
+      model.addAttribute("result", string);
+      return "/error";
+   }
 
-	private boolean isNumeric(String no) {
-		try {
-			double d = Double.parseDouble(no);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
+   private boolean isNumeric(String no) {
+      try {
+         double d = Double.parseDouble(no);
+      } catch (NumberFormatException nfe) {
+         return false;
+      }
+      return true;
+   }
 
 //   @GetMapping("/category")
 //   public void list(Long categoryNo, Model model) {

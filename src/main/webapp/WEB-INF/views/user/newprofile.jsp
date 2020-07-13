@@ -19,7 +19,7 @@
     <div>
         <label>닉네임</label>
         <input type="text" name="nickName" maxlength="20"/>
-        <label>최대 20바이트.</label>
+        <label>최대 10자.</label>
     </div>
     <div>
         <label>프로필 사진</label>
@@ -34,12 +34,12 @@
     <div>
         <label>개인 홈페이지 주소</label>
         <input type="text" name="webUrl" maxlength="150"/>
-        <label>최대 200바이트.</label>
+        <label>최대 100자.</label>
     </div>
     <div>
         <label>소개글</label>
-        <input type="text" name="bio" maxlength="300"/>
-        <label>최대 500바이트.</label>
+        <textarea name="bio" maxlength="300" ></textarea>
+        <label>최대 300자.</label>
     </div>
     <!-- <div>
         <label>프로필공개여부</label>
@@ -53,7 +53,6 @@
  
  <script>
  
-<<<<<<< HEAD
 	$('input[type="text"]').keydown(function() {
 		  if (event.keyCode === 13) {
 		    event.preventDefault();
@@ -65,52 +64,23 @@
 		var str = "";
 		var nickName = $("input[name='nickName']").val();
 		var webUrl = $("input[name='webUrl']").val();
-		var bio = $("input[name='bio']").val();
-		if(uniLen(nickName)>20) {
-			str += `닉네임이 20바이트를 초과했습니다. (`+uniLen(nickName)+`/20 바이트)\n`;			
+		var bio = $("textarea[name='bio']").val();
+		if(uniLen(nickName)>10) {
+			str += "닉네임이 10글자를 초과했습니다.";			
 		}
-		if(uniLen(webUrl)>200) {
-			str += `닉네임이 200바이트를 초과했습니다. (`+uniLen(webUrl)+`/200 바이트)\n`;			
+		if(uniLen(webUrl)>100) {
+			str += "홈페이지 주소가 100글자를 초과했습니다.";			
 		}
-		if(uniLen(bio)>500) {
-			str += `닉네임이 500바이트를 초과했습니다. (`+uniLen(bio)+`/500 바이트)\n`;			
+		if(uniLen(bio)>300) {
+			str += "소개 내용이 300글자를 초과했습니다.";			
 		}
 		if(!validateURL()) {
-			str += `url 형식에 맞지않습니다.\n`;
+			str += "url 형식에 맞지않습니다.";
 		}
 		
 		if(str==="") {
 			$("#form").submit();
 			return;
-=======
- $('input[type="text"]').keydown(function() {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-        button();
-      };
-    });
- 
- function button() {
-    var str = "";
-    var nickName = $("input[name='nickName']").val();
-    var webUrl = $("input[name='webUrl']").val();
-    var bio = $("input[name='bio']").val();
-    if(uniLen(nickName)>20) {
-       str += `닉네임이 20바이트를 초과했습니다. (`+uniLen(nickName)+`/20 바이트)\n`;         
-    }
-    if(uniLen(webUrl)>200) {
-       str += `닉네임이 200바이트를 초과했습니다. (`+uniLen(webUrl)+`/200 바이트)\n`;         
-    }
-    if(uniLen(bio)>500) {
-       str += `닉네임이 500바이트를 초과했습니다. (`+uniLen(bio)+`/500 바이트)\n`;         
-    }
-    if(!validateURL()) {
-       str += `url 형식에 맞지않습니다.\n`;
-    }
-    
-    if(str==="") {
-       $("#form").submit();
-       return;
     }
     $("#message").html(str);      
  }
@@ -138,7 +108,6 @@ $(".photo").on("click", "button", function(e){
 			targetLi.remove();
 			uploaderList[0].value=str;
 		   	$("#profilePhoto").val(str);
->>>>>>> f93291d3086fa66a1dccb5c228e0fefe19e2c806
 		}
 	
 	});
@@ -218,60 +187,6 @@ $('input[type="file"]').change(function(e){
      return [...s].length
  }
  
-<<<<<<< HEAD
-	 function setUploadedFile(uploadResultArr) {
-	    var str = "";
-	    var fileCallPath = "";
-	    $(uploadResultArr).each(function(i,obj){
-	        if(obj.image)
-	        {
-	           fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
-	           console.log(fileCallPath);
-	           str += "<ul><li data-path='"+obj.uploadPath+"'";
-	           str += " data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'";
-	           str += "><div>";
-	           str += "<span>"+obj.fileName+"</span>";
-	           str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'>x</i></button></br>";
-	           str += "<img src='/display?fileName="+fileCallPath+" onerror='imgError(this);' >";
-	           str += "</div>";
-	           str += "</li></ul>";
-	        }
-	        else
-	        {
-	        }
-	    $("#photo").html(str);
-	    $("#profilePhoto").val("/display?fileName="+fileCallPath);
-	    
-	 });
-	 };
-	
-	function checkExtenstion(fileName, fileSize){
-	    if(fileSize >= maxSize){
-	       alert("파일 사이즈 초과");
-	       return false;
-	    }
-	    if(!regex.test(fileName))
-	    {
-	       alert("해당 종류의 파일은 업로드할 수 없습니다.");
-	       return false;
-	    }
-	    return true;
-	 }
-	
-	function validateURL() {
-		var url = $("input[name='webUrl']").val();
-		const re = /[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/;
-		return re.test(url);
-	}
-	
-
-	function uniLen(s) {
-	    return [...s].length
-	}
-	
- </script>
-=======
 </script>
->>>>>>> f93291d3086fa66a1dccb5c228e0fefe19e2c806
 </body>
 </html>

@@ -21,8 +21,7 @@ a {
 </style>
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<c:if test="${where == user or where==null}">
 	<div class="userlist">
 	<hr>
@@ -38,15 +37,31 @@ a {
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
 					height=85px onerror="imgError(this);">
-					<br><c:out value="${recipe.userId}"/>
-					<br><c:out value="${recipe.nickName}"/>
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.userId) > 9}">
+						      ${fn:substring(recipe.userId,0,8)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.userId}
+						  </c:otherwise>
+						</c:choose>
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.nickName) > 10}">
+						      ${fn:substring(recipe.nickName,0,9)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.nickName}
+						  </c:otherwise>
+						</c:choose>
 					</a></div>
 					</div>
 			</c:forEach>
 
 
 			<br><c:if test="${list_user.size()>=6}">
-						<a class="more_button" href="user">더보기</a>
+						<a class="more_button" href="user">더 보기</a>
 					</c:if>
 	</div>
 	</c:if>
@@ -54,23 +69,23 @@ a {
 	<div class="recipelist">
 	<hr>
 	<h3>레시피 리스트</h3>
-		<label>
+		<!-- <label>
 			총
 			<c:out value="${fn:length(list)}  " />
 			개있습니다.
 		</label>
-		<c:if test="${list.size()>=5 and where==null}">
-					<a class="more_button" href="recipe">더보기</a>
-				</c:if>
+		 -->
+
 		<br>
-		
+		<!-- 카테고리 어떢하죵? -->
 		<c:forEach items="${category}" var="category">
 				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
 						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
-				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5> <br><br><br>
-				
+				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5>
+				 <br><br><br>
+				 
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
 		<tr>
 			<td><c:if test="${empty list}">
@@ -78,7 +93,9 @@ a {
 			</c:if></td>
 				
 			<c:forEach items="${list}" var="recipe">
-		<div style="display: inline-block;">
+					<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+			
+<!-- 		<div style="display: inline-block;"> -->
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
 					<div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
@@ -109,6 +126,9 @@ a {
 		</div>
 			</c:forEach>
 		</div>
+				<c:if test="${list.size()>=5 and where==null}">
+					<h3 style="float:right; margin-right:100px"><a class="more_button" href="recipe">...더 보기</a></h3>
+				</c:if>
 </div>
 <!-- 
 <div class="taglist">
@@ -128,7 +148,7 @@ a {
 						</div>
 				</c:forEach>
 					<c:if test="${list_tag.size()>=3}">
-							<a class="more_button" href="tag">더보기</a>
+							<a class="more_button" href="tag">더 보기</a>
 						</c:if>
 			</c:if>
 			
@@ -209,7 +229,7 @@ a {
 		var moreListForm = $("#morelistForm");
 		$(".more_button").on("click", function(e) {
 			e.preventDefault();
-			console.log('click-더보기');
+			//console.log('click-더 보기');
 			moreListForm.find("input[name='where']").val($(this).attr("href"));
 			//actionForm.submit();
 			moreListForm.submit();

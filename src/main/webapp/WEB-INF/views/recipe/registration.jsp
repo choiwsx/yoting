@@ -141,26 +141,27 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   		alert("레시피의 제목을 입력해주세요.");
   		return;
   	}	
-  	if(uniLen(mainTitle[0].value)>302) {
+  	if(uniLen(mainTitle[0].value)>100) {
   		alert("레시피의 제목이 너무 깁니다.(한글 최대 약 100자)");
   		return;
   	}
-  	if(uniLen($('input[name ="cookingTime"]').val())>32) {
+  	if(uniLen($('input[name ="cookingTime"]').val())>10) {
   		alert("레시피의 '소요 시간'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('input[name ="portion"]').val())>32)  {
+  	if(uniLen($('input[name ="portion"]').val())>10)  {
   		alert("레시피의 '몇 인분'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('input[name ="difficulty"]').val())>32) {
+  	if(uniLen($('input[name ="difficulty"]').val())>10) {
   		alert("레시피의 '난이도'에 작성된 내용이 너무 깁니다.(한글 최대 약 10자)");
   		return;
   	}
-  	if(uniLen($('textarea[name ="reContent"]').val())>902) {
+  	if(uniLen($('textarea[name ="reContent"]').val())>300) {
   		alert("레시피의 '소개'에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   		return;
   	}
+
 
   	for(let i=0; i<10; i++)
   	{
@@ -170,7 +171,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
   					blankIdx = i;
   					break;
 			}
-  		if(uniLen(contentList[i].value)>902) {
+  		if(uniLen(contentList[i].value)>300) {
   			alert(i+"번 째 세부 순서에 작성된 내용이  너무 깁니다.(한글 최대 약 300자)");
   	  		return;
   		}
@@ -189,6 +190,7 @@ document.getElementById("btn-id").addEventListener("click", function (e) {
  	}
   	else
   	{
+  		console.log("섭밋");
 		form.submit();
   	}
 });

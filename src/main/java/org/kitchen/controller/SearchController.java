@@ -80,7 +80,7 @@ public class SearchController {
 		int total = 0;
 		switch (more) {
 		case "recipe":
-			model.addAttribute("moreList", searchService.moreRecipeList(cri));
+			model.addAttribute("moreList", searchService.getSimpleRecipeMoreList(cri));
 			total = searchService.getTotalRecipeCount(cri);
 			break;
 		case "user":
