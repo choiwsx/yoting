@@ -44,5 +44,7 @@ public interface RecipeService {
 	
 	public int checkCode(Long categoryNo);
 	
-	public List<SimpleRecipeDTO> getSimpeRecipeByCategory(Long categoryNoLong);
+	public List<SimpleRecipeDTO> getSimpleRecipeByCategory(Long categoryNoLong);
+		
+	public List<SimpleRecipeDTO> getSimpleRecipeList();
 }

@@ -134,7 +134,7 @@ public class RecipeController {
    public String list(String categoryNo, Model model) {
       //카테고리 없으면 그냥 전체 리스트
       if( categoryNo==null ) {
-         model.addAttribute("list", recipeService.getList());
+         model.addAttribute("list", recipeService.getSimpleRecipeList());
       } else {
          //카테고리 넘버 공백||숫자 유효성 체크
          if(categoryNo.equals("") || !isNumeric(categoryNo)) {
@@ -146,7 +146,7 @@ public class RecipeController {
             return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
          }
 //         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
-         model.addAttribute("list",recipeService.getSimpeRecipeByCategory(categoryNoLong));
+         model.addAttribute("list",recipeService.getSimpleRecipeByCategory(categoryNoLong));
          
       }
 //      model.addAttribute("tag",recipeService.getTagNameList());      
