@@ -49,7 +49,7 @@
 		<br>
 		소요 시간<form:input path="cookingTime" placeholder="소요 시간"/>
 		<br>
-		몇 인분<form:input path="portion" placeholder="몇 인분"/>
+		몇 인분<form:input path="portion" placeholder="몇 인분" maxlength="10"/>
 		<br>
 		난이도<form:input path="difficulty" placeholder="난이도"/>
 		<br>
