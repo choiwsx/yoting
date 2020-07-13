@@ -192,9 +192,19 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public List<SimpleRecipeDTO> getSimpeRecipeByCategory(Long categoryNoLong) {
+	public List<SimpleRecipeDTO> getSimpleRecipeByCategory(Long categoryNoLong) {
 		// TODO Auto-generated method stub
 		List<RecipeVO> list = getCategoryCode(categoryNoLong);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeList() {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = getList();
 		if(list==null) return null;
 		List<SimpleRecipeDTO> result = new ArrayList<>();
 		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));

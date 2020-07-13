@@ -78,12 +78,12 @@ a {
 
 		<br>
 		<!-- 카테고리 어떢하죵? -->
-		<!--<c:forEach items="${category}" var="category">
+		<c:forEach items="${category}" var="category">
 				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
 						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
-				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5>-->
+				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5>
 				 <br><br><br>
 				 
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
@@ -95,7 +95,7 @@ a {
 			<c:forEach items="${list}" var="recipe">
 					<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
 			
-		<div style="display: inline-block;">
+<!-- 		<div style="display: inline-block;"> -->
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
 					<div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
@@ -123,7 +123,7 @@ a {
 						</div>
 					</div>
 				</a>
-		</div></div>
+		</div>
 			</c:forEach>
 		</div>
 				<c:if test="${list.size()>=5 and where==null}">
