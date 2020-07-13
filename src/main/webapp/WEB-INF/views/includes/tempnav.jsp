@@ -170,12 +170,16 @@ if(session!=null) {
      //console.log('<c:out value="${userNo}"/>');
 	 checkModal(result, rno);
      history.replaceState({},null,null);
-      
-  });
-  
   
   function checkModal(result, rno){
-
+		
+	  console.log(history.state);
+	  if(history.state){
+		  console.log("여기 오는건 맞는데");
+		  //history.back();
+		  return;
+	  }
+	  
       if(result==''&&rno==''){
          return;
       }
@@ -187,6 +191,9 @@ if(session!=null) {
       $("#myModal").modal("show");
    }
     
+      
+  });
+  
   
   function imgError(image) {
       image.onerror = "";
