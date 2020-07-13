@@ -60,7 +60,7 @@ a {
 			</c:forEach>
 
 
-			<br><c:if test="${list_user.size()>=6}">
+			<br><c:if test="${list_user.size()>6}">
 						<a class="more_button" href="user">더 보기</a>
 					</c:if>
 	</div>
