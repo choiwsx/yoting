@@ -211,7 +211,8 @@ public class RecipeController {
 
    private boolean isNumeric(String no) {
       try {
-         double d = Double.parseDouble(no);
+    	  String t = no.trim();
+         double d = Double.parseDouble(t);
       } catch (NumberFormatException nfe) {
          return false;
       }
