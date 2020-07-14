@@ -72,10 +72,10 @@ public class HomeController {
       
    }
 
-   @PostMapping("/good")
-   public void postGood() {
-      
-   }
+//   @PostMapping("/good")
+//   public void postGood() {
+//      
+//   }
    
    @GetMapping("/error")
    public void getError() {

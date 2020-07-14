@@ -58,7 +58,6 @@ public class UserController {
 	
 	@PostMapping("/registration")
 	public String validateuser(UserVO user, Model model, HttpSession session, RedirectAttributes rttr) {
-		if(user == null) return wrongAccess(model);
 		//로그인 상태면 가입 막기
 		if( session.getAttribute("userNo")!=null || user==null) {
 			return wrongAccess(model);
