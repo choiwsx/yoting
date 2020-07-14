@@ -157,7 +157,8 @@ public class RecipeController {
 
    @GetMapping("detail")
    public String detail(Model model, String rno, HttpSession session) {
-     if(rno == null) return wrongAccess(model);
+	   log.info("여기 왔슴니다~");
+	   if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
@@ -182,13 +183,22 @@ public class RecipeController {
    }
 
    @GetMapping("del")
-   public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr ) {
+   public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr, HttpSession session ) {
      if(rno == null) return wrongAccess(model);
       //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
       if(rno.equals("") || rno==null || !isNumeric(rno)) {
          return wrongAccess(model);
       }
       Long rnoLong = Long.parseLong(rno);
+      RecipeVO checkRecipe = recipeService.get(rnoLong);
+      if(checkRecipe==null)
+      {
+    	  return wrongAccess(model);
+      }
+      if(!isLoginUser(session, checkRecipe.getUserNo()))
+      {
+    	  return wrongAccess(model);
+      }
       if (recipeService.remove(rnoLong)) {
          //model.addAttribute("result", "success");
       } else {
@@ -218,6 +228,18 @@ public class RecipeController {
          return false;
       }
       return true;
+   }
+   
+   //로그인한 세션 번호랑 유저 번호가 같는지 체크.
+   private boolean isLoginUser(HttpSession session, Long userNo)
+   {
+	   Long loginUno = (Long)session.getAttribute("userNo");
+	   if(loginUno.equals(userNo))
+	   {
+		   return true;
+	   }
+	   else
+		   return false;
    }
 
 //   @GetMapping("/category")
