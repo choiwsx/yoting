@@ -108,16 +108,18 @@ public class HomeController {
 	         HttpServletResponse resp,UserVO user) throws IOException {
 	      
 	      String result = request.getParameter("term");
-	   
+	   // 자동완성 메서드에서 term이라는 파라미터로 검색값을 전달
 	      List<UserVO> list = userService.getIdAutocomplete(result); //result값이 포함되어 있는 emp테이블의 네임을 리턴
-
+	    // 리스트 객체에 id값을 받아서 DB에 해당하는 글자가 들어간  id를 리스트에 저장한다. 
 	      JSONArray ja = new JSONArray();
 	      for (int i = 0; i < list.size(); i++) {
 	         ja.add(list.get(i).getUserId());
 	      }
+	      //json 객체를 만들고 검색된 list 객체 사이즈만큼 for문을 돌려 객체에 넣는다.
 	      PrintWriter out = resp.getWriter();
-
+	      // printwriter 객체로 반환
 	      out.print(ja.toString());
+	      // json 객체 toString
 	   } 
 }
 

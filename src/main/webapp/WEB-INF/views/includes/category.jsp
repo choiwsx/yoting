@@ -48,6 +48,7 @@
 	display:block
 }
 </style>
+    <!-- 카테고리 목록에서 부모번호를 제외한 카테고리의 번호와 주소를 받아 출력, 번호값을 a 링크에 걸어서 이동 -->
 <nav id="primary_nav_wrap">
 <ul>
 <c:forEach items="${category}" var="category">
@@ -64,5 +65,3 @@
 </ul>
 </nav>
 
-    
-    

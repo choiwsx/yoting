@@ -328,7 +328,7 @@ if(session!=null) {
          </div>
             </div>
         </div>
-
+ <!-- 카테고리 번호를 값으로 대분류 이동 -->
         <div class="header_innerBottom" data-group="main">
             <ul class="navBottom">
                 <li><a href="/" id="nav">홈</a></li>
@@ -344,7 +344,7 @@ if(session!=null) {
         </div>
 
    <script>
-   
+/*     자동완성을 위한 jQuery의  메소드 */
    $("#keyword").autocomplete({
 	   position: {  collision: "flip"  },
 		source : function(request, response) {
