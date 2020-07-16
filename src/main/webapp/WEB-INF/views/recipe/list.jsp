@@ -19,11 +19,8 @@ a {
 </head>
 <body>
 <%@ include file="../includes/category.jsp"%>
-   <div>
-      총
-      <c:out value="${fn:length(list)}  " />
-      개있습니다.
-   </div>
+<br><br>
+
 
    <div style="margin-left: 10%; margin-right: 10%;">
       <c:forEach items="${list}" var="recipe">
@@ -31,17 +28,24 @@ a {
             <div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
                <div>
                   <img src="<c:out value='${recipe.thumbnail }'/>" width=280px
-                     height=280px>
+                     height=280px onerror="imgError(this);" >
                </div>
                <div style="margin-top: 10px;">
-                  <c:out value="${recipe.title }" />
+                  <c:choose>
+						   <c:when test="${fn:length(recipe.title) > 15}">
+						      ${fn:substring(recipe.title,0,14)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.title}
+						  </c:otherwise>
+						</c:choose>
                </div>
                <div>
                   by
-                  <c:out value="${recipe.userNo }" />
+                  <c:out value="${recipe.nickName }" />
                </div>
                <div>
-                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.updateDate }" />
+                  <fmt:formatDate pattern="yyyy-MM-dd" value="${recipe.regDate }" />
                </div>
             </div>
             </a>

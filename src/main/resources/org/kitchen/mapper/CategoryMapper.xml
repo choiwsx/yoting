@@ -48,6 +48,13 @@ where c_code != prev_c_code
 	c_code = #{code}
 </select>
 
+<select id="checkCode" resultType="Integer">
+select count(*)
+from tbl_category
+where 
+c_code = #{code}
+</select>
+
 <insert id = "insertCategory">
 insert into tbl_category values(#{c_code}, #{CategoryName}, #{c_prev_code})
 </insert>

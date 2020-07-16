@@ -7,7 +7,9 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kitchen.domain.ContentVO;
+import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.mapper.RecipeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,13 +22,17 @@ import lombok.extern.log4j.Log4j;
 public class RecipeServiceTests {
 	@Autowired
 	private RecipeService service;
+	@Autowired
+	private SearchService searchService;
+	@Autowired
+	private RecipeMapper recipeMapper;
 
-	@Test
+	//@Test
 	public void testGetList() {
 		service.getList();
 	}
 	
-	@Test
+	//@Test
 	public void testExist()
 	{
 		log.info(service);
@@ -40,7 +46,7 @@ public class RecipeServiceTests {
 		ContentVO content = new ContentVO();
 		
 		// 1. �Խù� ����
-		recipe.setCookingTime(45L);
+		recipe.setCookingTime("45");
 		recipe.setDifficulty("3");
 		recipe.setUserNo(6L);
 		recipe.setThumbnail("������ ����");
@@ -112,7 +118,7 @@ public class RecipeServiceTests {
 		
 		recipe.setTitle("����3 ����");
 		recipe.setRegDate(recipe.getRegDate());
-		recipe.setCookingTime(25L);
+		recipe.setCookingTime("25");
 		recipe.setDifficulty("4");
 		recipe.setUserNo(5L);
 		recipe.setThumbnail("������ URL");
@@ -133,7 +139,20 @@ public class RecipeServiceTests {
 		content.setContent("����1 ����");
 		log.info(content);
 		
-		log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
+		//log.info("MODIFYCON RESULT : " + service.ModifyCon(content));
+		
+	}
+	
+	@Test
+	public void sdsd() {
+		Criteria cri = new Criteria(6,8);
+		cri.setType("");
+		cri.setKeyword("만");
+		cri.setWhere("recipe");
+		List<RecipeVO> list = recipeMapper.getListWithPaging(cri);
+		list.forEach(a->log.info(a));
+		searchService.getSimpleRecipeList(cri).forEach(b->log.info("@@@@"+b));
+		
 		
 	}
 }

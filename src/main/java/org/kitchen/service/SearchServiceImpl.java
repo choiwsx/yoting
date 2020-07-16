@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.log4j.Category;
 import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleProfileDTO;
+import org.kitchen.domain.SimpleRecipeDTO;
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.UserVO;
 import org.kitchen.mapper.CategoryMapper;
 import org.kitchen.mapper.RecipeMapper;
@@ -139,9 +141,7 @@ public class SearchServiceImpl implements SearchService {
 				String stringToConvert = String.valueOf(arr[i]);
 				Long convertedLong = Long.parseLong(stringToConvert);
 				rnoList.add(convertedLong);
-//			recipeList = recipeMapper.getRecipeByRno(listArr);
 			}
-			System.out.println("@@@@@@@@@" + rnoList);
 			if (rnoList.size() > 0)
 				return recipeMapper.getRecipeByRno(rnoList);
 		}
@@ -182,6 +182,41 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<CategoryVO> read() {
 		return categoryMapper.read();
+	}
+
+	//실패.안됑
+	@Override
+	public List<SimpleProfileDTO> getHotUserList(int length) {
+		// TODO Auto-generated method stub
+		//팔로워 수가 많은 순서대로 렝스만큼 유저 넘버를 가져온다
+		List<Long> userNoList = userMapper.getHotUserList(length);
+		userNoList.forEach(a -> log.info(a));
+		List<SimpleProfileDTO> result = new ArrayList<>();
+		for(int i = 0; i<userNoList.size(); i++) {
+			result.add(ModelDTOFactory.getSimpleProfile(userMapper.selectByNo(userNoList.get(i))));
+		}
+		//유저 찾아서 준다.
+		return result;
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeList(Criteria cri) {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = getRecipeList(cri);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
+	}
+
+	@Override
+	public List<SimpleRecipeDTO> getSimpleRecipeMoreList(Criteria cri) {
+		// TODO Auto-generated method stub
+		List<RecipeVO> list = moreRecipeList(cri);
+		if(list==null) return null;
+		List<SimpleRecipeDTO> result = new ArrayList<>();
+		list.forEach(a->result.add(ModelDTOFactory.getSimpleRecipe(a)));
+		return result;
 	}
 
 

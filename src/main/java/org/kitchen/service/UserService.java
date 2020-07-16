@@ -3,6 +3,7 @@ package org.kitchen.service;
 import java.util.List;
 
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.exception.DuplicatedUserException;
 import org.kitchen.exception.NoUserFoundException;
@@ -23,12 +24,14 @@ public interface UserService {
 	boolean isLegitUserId(String userId);
 
 	boolean isLegitUserEmail(String email);
+	
+	boolean isValidUser(Long userNo);
 
 	void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException;
 
 	void sendVerificationEmail(UserVO user);
 
-	boolean verifyEmail(String userno, String key);
+	boolean verifyEmail(Long userNo, String key);
 
 	boolean activateUser(Long userNo);
 
@@ -46,6 +49,8 @@ public interface UserService {
 	
 	List<RecipeVO> getUserRecipeList(Long userNo);
 	
+	int countUserRecipeList(Long userNo);
+	
 	UserVO tempLogin(UserVO user);
 	
 	boolean follow(Long followeeNo, Long followerNo);
@@ -58,4 +63,11 @@ public interface UserService {
 	
 
 	List<UserVO> getIdAutocomplete(String result);
+
+	int countFollowing(Long userNo);
+	
+	List<SimpleProfileDTO> getSimpleProfileList();
+	
+	String getNickNameByNo(Long userNo);
+	
 }

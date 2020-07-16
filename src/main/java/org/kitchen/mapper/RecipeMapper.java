@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.TagVO;
 import org.kitchen.domain.UserVO;
 
 public interface RecipeMapper {
@@ -55,6 +56,13 @@ public interface RecipeMapper {
 	public List<RecipeVO> searchUserRecipeList(Criteria cri);
 	
 	public List<RecipeVO> getUserRecipeList(Long userNo);
+	
+	public int countUserRecipeList(Long userNo);
 
 	public Long getUserNoByRno(Long rno);
+
+	public List<TagVO> getTagNameList();
+	
+	public Long getLatestRno();
+
 }

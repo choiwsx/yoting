@@ -16,7 +16,6 @@
 <title>검색:더보기</title>
 </head>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <c:if test="${moreList.size()>0}">
 
@@ -29,6 +28,7 @@
 	<h3>태그 포함 레시피 리스트</h3>
 		</c:if>
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
+			
 			<c:forEach items="${moreList}" var="recipe">
 		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
@@ -36,20 +36,27 @@
 						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
 							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
-								height=280px>
+								height=280px onerror="imgError(this);">
 						</div>
 						<div style="margin-top: 10px;">
-							<c:out value="${recipe.title }" />
+<c:choose>
+	<c:when test="${fn:length(recipe.title) > 15}">
+      ${fn:substring(recipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${recipe.title}
+  </c:otherwise>
+</c:choose>
 						</div>
 						<div>
 							by
-							<c:out value="${recipe.userNo }" />
+							<c:out value="${recipe.nickName }" />
 						</div>
-						카테고리코드:
-						<c:out value="${recipe.categoryNo }" />
+						<!-- 카테고리코드:
+						<c:out value="${recipe.categoryNo }" /> -->
 						<div>
 							<fmt:formatDate pattern="yyyy-MM-dd"
-								value="${recipe.updateDate }" />
+								value="${recipe.regDate }" />
 						</div>
 					</div>
 				</a>
@@ -75,7 +82,7 @@
 				<div style="border: 1px solid; margin: 10px; float: left;">
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
-					height=85px>
+					height=85px onerror="imgError(this);">
 					<br><c:out value="${recipe.userId}"/>
 					<br><c:out value="${recipe.nickName}"/>
 					</a></div>
@@ -91,13 +98,13 @@
 	<input type='hidden' name='where' value='<c:out value="${pageMaker.cri.where}"/>'>
 	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
 </form>
-<div class='pull-right'>
+<div class='pull-right' style="float:right; margin-right:100px; font-size:15px">
+<div>
 <ul>
 	<c:if test="${pageMaker.prev}">
 		<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">Previous</a>
 		</li>
 	</c:if>
-	
 	<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 	<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : ""}"><a href="${num}">${num}</a></li></c:forEach>
 	<c:if test="${pageMaker.next}">
@@ -108,9 +115,28 @@
 
 </ul>
 </div>
+</div>
+<%@ include file="../includes/footer.jsp"%>
 </body>
 
 <script type="text/javascript">
+function showImage(fileCallPath)
+{
+	//alert(fileCallPath);
+	$(".bigPictureWrapper").css("display", "flex").show();
+	$(".bigPicture")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"' onerror='imgError(this);'>")
+	.animate({width:'100%', height:'100%'}, 500);
+}
+
+$(".bigPictureWrapper").on("click",function(e){
+	$(".bigPicture").animate({width:'0%', height:'0%'},500);
+	setTimeout(()=>{
+		$(this).hide();
+	},500);
+});
+
+
 $(document).ready(function(){
 	
 	var result = '<c:out value="${result}"/>';
@@ -133,23 +159,6 @@ $(document).ready(function(){
 	});
 	
 	
-	var searchForm = $("#searchForm");
-	$("#searchForm button").on("click", function(e){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색종류를 선택하세요.");
-			return false;
-		}
-		
-		if(!searchForm.find("input[name='keyword']").val())
-		{
-			alert("키워드를 입력하세요.");
-			return false;
-		}
-		
-		searchForm.find("input[name='pageNum']").val("1");
-		e.preventDefault();
-		searchForm.submit();
-	});
 });
 </script>
 </html>

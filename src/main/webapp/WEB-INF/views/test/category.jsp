@@ -44,9 +44,8 @@
 	
 	</table>
 
-
+	<%@ include file="../includes/footer.jsp"%>
 </body>
-
 <script type="text/javascript">
 	
 </script>

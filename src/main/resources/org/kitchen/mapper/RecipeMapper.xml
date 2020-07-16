@@ -34,15 +34,20 @@
    <result property="status" column="status"  typeHandler="org.kitchen.handler.CodeEnumTypeHandler" />
 </resultMap>
 
+<resultMap id="tag"  type="org.kitchen.domain.TagVO">
+<result property="tagNo" column="t_num"/>
+<result property="tagName" column="t_content"/>
+</resultMap>
+
 <insert id="insert">
-	<selectKey keyProperty="rno" order="BEFORE"
-		resultType="long">
-		SELECT r_seq.nextval from dual
-	</selectKey>
-	INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
-	VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{reContent})
+   <selectKey keyProperty="rno" order="BEFORE"
+      resultType="long">
+      SELECT r_seq.nextval from dual
+   </selectKey>
+   INSERT INTO tbl_recipe(r_num, u_num, c_code, cookingTime, difficulty, portion, thumbnail, title, r_content)
+   VALUES (#{rno}, #{userNo}, #{categoryNo,jdbcType=NUMERIC}, #{cookingTime,jdbcType=NUMERIC}, #{difficulty,jdbcType=CHAR}, #{portion,jdbcType=CHAR}, #{thumbnail,jdbcType=VARCHAR}, #{title}, #{reContent})
 </insert>
-	
+
 <select id="read" resultMap="recipe">
    SELECT * FROM tbl_recipe WHERE r_num = #{rno}
 </select>
@@ -127,7 +132,7 @@
 
 <select id="getListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, c_code , thumbnail, regdate
+select r_num, title, u_num, c_code, thumbnail, regdate
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
@@ -148,11 +153,11 @@ from
 
 <select id="getRecipeListWithPaging" resultMap="recipe">
 <![CDATA[
-select r_num, title, u_num, regdate , thumbnail
+select r_num, title, u_num, regdate , thumbnail, c_code
 from
 (
 	select /*+INDEX_DESC(tbl_recipe)*/
-		rownum rn, r_num ,title, u_num, regdate , thumbnail
+		rownum rn, r_num ,title, u_num, regdate , thumbnail, c_code
 	
  	from
  		tbl_recipe
@@ -298,12 +303,14 @@ where
 </select>
 
 <select id="getCategoryCode" resultMap="recipe">
+
     select *
 	from 
-	tbl_recipe a inner join tbl_category b on a.c_code= b.prev_c_code
-	where 
-	a.c_code= #{categoryNo,jdbcType=INTEGER} or 
-    b.c_code = #{categoryNo,jdbcType=INTEGER}
+	 tbl_recipe
+    where c_code in 
+    (select c_code from tbl_category
+    where c_code = #{categoryNo,jdbcType=INTEGER} or prev_c_code = #{categoryNo,jdbcType=INTEGER})
+
 </select>
 
 <select id="searchUserRecipeList" resultMap="recipe">
@@ -328,6 +335,25 @@ where
 	select u_num
 	from tbl_recipe
 	where r_num = #{rno}
+</select>
+
+<select id="getTagNameList" resultMap="tag">
+<![CDATA[
+select *
+from (select * 
+from tbl_tag
+where t_num>0
+order by dbms_random.value)
+where rownum <=12
+]]>
+</select>
+
+<select id="getLatestRno" resultType="Long">
+SELECT MAX(r_num) FROM tbl_recipe 
+</select>
+
+<select id="countUserRecipeList" resultType="int">
+   select count(*) from tbl_recipe where u_num=#{userNo}
 </select>
 
 </mapper>

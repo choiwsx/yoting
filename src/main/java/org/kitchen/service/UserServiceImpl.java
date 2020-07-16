@@ -1,14 +1,16 @@
 package org.kitchen.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.kitchen.domain.ModelDTOFactory;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleProfileDTO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.enums.UserStatus;
 import org.kitchen.exception.DuplicatedUserException;
-import org.kitchen.exception.NoUserFoundException;
 import org.kitchen.exception.UserMapperFailException;
 import org.kitchen.mapper.RecipeMapper;
 import org.kitchen.mapper.UserMapper;
@@ -60,6 +62,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isLegitNewUser(UserVO user) {
 		// TODO Auto-generated method stub
+		if(user==null) return false;
 		return isLegitUserId(user.getUserId()) && isLegitUserEmail(user.getEmail());
 	}
 
@@ -84,38 +87,43 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void registerNewUser(UserVO user) throws DuplicatedUserException, UserMapperFailException {
 		// TODO Auto-generated method stub
-		if (!isLegitUserId(user.getUserId())) {
-			throw new DuplicatedUserException("id");
-		} else if (!isLegitUserEmail(user.getEmail())) {
-			throw new DuplicatedUserException("email");
-		}
-		try {
-			userMapper.insert(user);
-			sendVerificationEmail(user);
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			throw new UserMapperFailException();
+		if(user!=null) {
+			if (!isLegitUserId(user.getUserId())) {
+				throw new DuplicatedUserException("id");
+			} else if (!isLegitUserEmail(user.getEmail())) {
+				throw new DuplicatedUserException("email");
+			}		
+			try {
+				userMapper.insert(user);
+				sendVerificationEmail(user);
+			} catch (DataIntegrityViolationException e) {
+				e.printStackTrace();
+				throw new UserMapperFailException();
+			}
 		}
 	}
 
 	@Override
 	public void sendVerificationEmail(UserVO user) {
-		String key = VerificationEmailSender.generateString();
-		log.info("key:@@@@@@" + key);
-		if(userMapper.getVeriKey(user.getUserNo())==null) {
-		userMapper.insertVeriKey(user.getUserNo(), key);
-		} else {
-			userMapper.updateVeriKey(user.getUserNo(), key);
+		if(user!=null) {																
+			String key = VerificationEmailSender.generateString();
+			log.info("key:@@@@@@" + key);
+			
+			if(userMapper.getVeriKey(user.getUserNo())==null) {
+			userMapper.insertVeriKey(user.getUserNo(), key);
+			} else {
+				userMapper.updateVeriKey(user.getUserNo(), key);
+			}
+			verificationEmailSender.send(user, key);
 		}
-		verificationEmailSender.send(user, key);
 	}
 
 	@Override
-	public boolean verifyEmail(String userno, String paramKey) {
-		if (paramKey == null) {
+	public boolean verifyEmail(Long userNo, String paramKey) {
+		if (userNo == null || paramKey == null) {
 			return false;
 		}
-		String solidKey = userMapper.getVeriKey(Long.valueOf(userno));
+		String solidKey = userMapper.getVeriKey(userNo);
 		if (solidKey.equals(paramKey))
 			return true;
 		return false;
@@ -150,11 +158,10 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteUser(UserVO user) throws UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
-			int i = userMapper.delete(user);
-			if (i == 0) {
-				return false;
+			if (userMapper.delete(user) == 1) {
+				return true;
 			}
-			return true;
+			return false;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			throw new UserMapperFailException();
@@ -165,11 +172,10 @@ public class UserServiceImpl implements UserService {
 	public boolean deleteUserByNo(Long userNo) throws UserMapperFailException {
 		// TODO Auto-generated method stub
 		try {
-			int i = userMapper.deleteByNo(userNo);
-			if (i == 0) {
-				return false;
+			if (userMapper.deleteByNo(userNo) == 1) {
+				return true;
 			}
-			return true;
+			return false;
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
 			throw new UserMapperFailException();
@@ -208,12 +214,12 @@ public class UserServiceImpl implements UserService {
 	public UserVO tempLogin(UserVO user) {
 		// TODO Auto-generated method stub
 		if(user==null) {
-			return user;
+			return null;
 		}
 		UserVO userCompare = userMapper.selectById(user.getUserId());
 		if(userCompare==null) return null;
 		if(user.getUserPwd().equals(userCompare.getUserPwd())) {
-			return user=userCompare;
+			return userCompare;
 		}
 		return null;
 	}
@@ -221,15 +227,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean follow(Long followeeNo, Long followerNo) {
 		// TODO Auto-generated method stub
-		userMapper.follow(followeeNo, followerNo);
-		if(userMapper.countFollower(followeeNo, followerNo)==1) return true;
+		if(userMapper.userExists(followerNo)&&userMapper.userExists(followeeNo)) {
+			userMapper.follow(followeeNo, followerNo);
+			if(userMapper.countFollower(followeeNo, followerNo)==1) return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean unfollow(Long followeeNo, Long followerNo) {
 		// TODO Auto-generated method stub
-		return userMapper.unfollow(followeeNo, followerNo)==1;
+		if(userMapper.userExists(followerNo)&&userMapper.userExists(followeeNo)) {
+			return userMapper.unfollow(followeeNo, followerNo)==1;
+		}
+		return false;
 	}
 
 	@Override
@@ -242,6 +253,41 @@ public class UserServiceImpl implements UserService {
 	public int countFollower(Long followeeNo, Long followerNo) {
 		// TODO Auto-generated method stub
 		return userMapper.countFollower(followeeNo, followerNo);
+	}
+
+	@Override
+	public int countFollowing(Long followerNo) {
+		// TODO Auto-generated method stub
+		return userMapper.countFollowing(followerNo);
+	}
+
+	@Override
+	public boolean isValidUser(Long userNo) {
+		// TODO Auto-generated method stub
+		if(userNo==null) return false;
+		return userMapper.userExists(userNo);
+	}
+
+	@Override
+	public List<SimpleProfileDTO> getSimpleProfileList() {
+		// TODO Auto-generated method stub
+		List<UserVO> list = getTotalList();
+		List<SimpleProfileDTO> simpleProfileList = new ArrayList<>();
+		if(list==null) return null;
+		list.forEach(a->simpleProfileList.add(ModelDTOFactory.getSimpleProfile(a)));
+		return simpleProfileList;
+	}
+
+	@Override
+	public int countUserRecipeList(Long userNo) {
+		// TODO Auto-generated method stub
+		return recipeMapper.countUserRecipeList(userNo);
+	}
+
+	@Override
+	public String getNickNameByNo(Long userNo) {
+		// TODO Auto-generated method stub
+		return userMapper.getNickNameByNo(userNo);
 	}
 
 	

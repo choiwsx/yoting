@@ -9,35 +9,31 @@
 <title>회원 가입 완료</title>
 </head>
 <body>
-<h1>회원 가입을 축하합니다.</h1>
+<h1>쿡스타그램 회원 가입을 축하합니다.</h1>
 <div>
-<label>result : </label><c:out value="${result}" />
 </div>
 <div>
 <h1>새회원 정보</h1>
 <label>userNo</label> <c:out value="${user.userNo}" /><br>
 <label>userId</label> <c:out value="${user.userId}" /><br>
-<label>userPwd</label> <c:out value="${user.userPwd}" /><br>
+<label>userNickName</label> <c:out value="${user.nickName}" /><br>
 <label>userEmail</label> <c:out value="${user.email}" /><br>
-<label>userEmailAuth</label> <c:out value="${user.emailAuth}" /><br>
-<label>userProfilePhoto</label> <c:out value="${user.profilePhoto}" /><br>
+<!-- <label>userEmailAuth</label> <c:out value="${user.emailAuth}" /><br> -->
+<label>userProfilePhoto</label> <img src='<c:out value="${user.profilePhoto}" />' onerror="imgError(this);" ><br>
 <label>userWeb</label> <c:out value="${user.webUrl}" /><br>
 <label>userBio</label> <c:out value="${user.bio}" /><br>
 <label>userEmailSub</label> <c:out value="${user.emailSub}" /><br>
-<label>userPrivacy</label> <c:out value="${user.privacy}" /><br>
-<label>userStatus</label> <c:out value="${user.status}" /><br>
 </div>
 
 <div>
-이메일 인증만 하면 회원가입이 최종 완료됩니다. 이메일을 확인해주세요.
+이메일 인증만 완료하면 회원 가입이 완료됩니다. 이메일을 확인해주세요.
 
+<br>
+<br>                        
+인증 이메일이 안왔나요? 
 
-                        
-이메일이 안왔나요? 
-
-<a href="/user/sendemail?userNo=<c:out value="${user.userNo}" />">이메일 다시 보내기</a>
+<a href="/user/resendEmail?userNo=<c:out value="${user.userNo}" />">인증 이메일 다시 보내기</a>
 </div>
-
 
 
 </body>

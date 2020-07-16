@@ -1,14 +1,11 @@
 package org.kitchen.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.kitchen.domain.CategoryVO;
 import javax.servlet.http.HttpSession;
 
 import org.kitchen.domain.ContentVO;
-import org.kitchen.domain.Criteria;
 import org.kitchen.domain.RecipeVO;
 import org.kitchen.domain.UserVO;
 import org.kitchen.service.RecipeService;
@@ -20,164 +17,238 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 @RequestMapping("/recipe/*")
 public class RecipeController {
 
-	@Autowired
-	private RecipeService recipeService;
-	@Autowired
-	private UserService userService;
+   @Autowired
+   private RecipeService recipeService;
+   @Autowired
+   private UserService userService;
 
-	@GetMapping("/register")
-	public void register() {
+   @PostMapping("/registration")
+   public String register(RecipeVO recipe, RedirectAttributes rttr, Model model) {
+      if(recipe==null) {
+         return wrongAccess(model);
+      }
+      recipeService.register(recipe);
+      rttr.addFlashAttribute("result", "게시물을 등록하였습니다.");
+      return "redirect:/user/mkitchen";
+   }
 
-	}
+   @GetMapping("/registration")
+   public String registerform(Model model, HttpSession session) {
+      // 입력 폼에 레시피 VO만들어서 주기
+      if ((Long) session.getAttribute("userNo") == null) {
+         return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+      }
+      Long userNo = (Long) session.getAttribute("userNo");
+      UserVO user = userService.getUserByNo(userNo);
+      if (user == null) {
+         return wrongAccess(model, "로그인이 필요한 페이지 입니다.");
+      }else
+      model.addAttribute("recipe", new RecipeVO());
 
-	@PostMapping("/register")
-	public String register(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
-		log.info("register : " + recipe);
+      return "/recipe/registration";
+   }
 
-//		recipeService.register(recipe);
-//		recipeService.registerCon(content);
-		recipeService.register(recipe, content);
+   @GetMapping("/result")
+   public String result(Model model) {
+      // 등록 결과를 겟하려하면 오류주기
+      return wrongAccess(model);
+   }
 
-		rttr.addFlashAttribute("result", recipe.getRno());
-		rttr.addFlashAttribute("resultCon", content.getRno());
+   @PostMapping("/result")
+   public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+      // 레시피 등록하러 오면 recipeService에 저장하기
+      recipeService.register(recipe);
+      return recipe;
+   }
 
-		return "redirect:/recipe/list";
-	}
+//   @GetMapping("/get")
+//   public void get(Long rno, Model model) {
+//      log.info("/get");
+//      model.addAttribute("recipe", recipeService.get(rno));
+//      model.addAttribute("content", recipeService.getCon(rno));
+//   }
 
-	@GetMapping("/registration")
-	public void registerform(Model model) {
-		model.addAttribute("recipe", new RecipeVO());
-	}
-	
-	@GetMapping("/registration2")
-	public void register2form(Model model) {
-		model.addAttribute("recipe", new RecipeVO());
-	}
+//   //일단 포스트있어서 겟막기
+//   @GetMapping("/modify")
+//   public String modify(Model model) {
+//      return wrongAccess(model);
+//   }
+//   
+//   @PostMapping("/modify")
+//   public String modify(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
+//      log.info("modify: " + recipe);
+//      log.info("modify: " + content);
+//
+//      if (recipeService.modify(recipe)) {
+//         rttr.addFlashAttribute("result", "success");
+//      }
+//      return "redirect:/recipe/detail?rno"+recipe.getRno();
+//   }
+   
+   @GetMapping("/modiRecipe")
+   public String modiRecipe(Model model, String rno, HttpSession session) {
+     if(rno == null) return wrongAccess(model);
+      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크 & 로그인 상태 체크
+      if(rno==null  || rno.equals("") || !isNumeric(rno) || session.getAttribute("userNo")==null) {
+         return wrongAccess(model);
+      }
+      //로그인 한 사람===수정하려는 글 게시자 이면 ㅇㅋ
+      if(recipeService.isMyRecipe(Long.parseLong(rno), (Long)session.getAttribute("userNo"))) {
+          model.addAttribute("recipe", recipeService.get(Long.parseLong(rno)));
+      } else {
+         //로그인한사람!=수정하려는 글 게시자 || 수정하려는 글이 없다면 ㄴㄴ
+          return wrongAccess(model);
+      }
+      return "/recipe/modiRecipe";   
+   }
+   
+   @PostMapping("/modiRecipe")
+   public String modiRecipe(Model model, RecipeVO recipe, HttpSession session, RedirectAttributes rttr) {
+     if(recipe==null) return wrongAccess(model);
+      log.info("!!recipe!!!"+recipe);
+      Long userNo = recipe.getUserNo();
+      if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
+         return wrongAccess(model);
+      }
+      if(recipeService.get(recipe.getRno())==null) {
+         model.addAttribute("result", "수정할 레시피가 없어요");
+         return "/error";
+      }
+      recipeService.modify(recipe);
+      rttr.addFlashAttribute("result", "게시물을 수정하였습니다.");
+      return "redirect:/recipe/detail?rno="+recipe.getRno();
+   }
 
-	@PostMapping("/registrationTest")
-	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-		// recipeService에 저장하기
-		recipeService.register(recipe);
-		return recipe;
-	}
+   @GetMapping("/list")
+   public String list(String categoryNo, Model model) {
+      //카테고리 없으면 그냥 전체 리스트
+      if( categoryNo==null ) {
+         model.addAttribute("list", recipeService.getSimpleRecipeList());
+      } else {
+         //카테고리 넘버 공백||숫자 유효성 체크
+         if(categoryNo.equals("") || !isNumeric(categoryNo)) {
+            return wrongAccess(model);
+         }
+         //카테고리 있으면 카테고리 리스트
+         Long categoryNoLong = Long.parseLong(categoryNo);
+         if(recipeService.checkCode(categoryNoLong)<=0) {
+            return wrongAccess(model,"유효하지 않은 카테고리 번호 입니다.");
+         }
+         model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNoLong));
+         model.addAttribute("list",recipeService.getSimpleRecipeByCategory(categoryNoLong));
+         
+      }
+//      model.addAttribute("tag",recipeService.getTagNameList());      
+      return "/recipe/list";
+   }
 
-	@GetMapping("/get")
-	public void get(Long rno, Model model) {
-		log.info("/get");
-		model.addAttribute("recipe", recipeService.get(rno));
-		model.addAttribute("content", recipeService.getCon(rno));
-	}
+   @GetMapping("detail")
+   public String detail(Model model, String rno, HttpSession session) {
+	   log.info("여기 왔슴니다~");
+	   if(rno == null) return wrongAccess(model);
+      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
+      if(rno.equals("") || rno==null || !isNumeric(rno)) {
+         return wrongAccess(model);
+      }
+      Long rnoLong = Long.parseLong(rno);
+      RecipeVO recipe = recipeService.get(rnoLong);
+      if(recipeService.get(rnoLong)==null)
+      {
+    	  return wrongAccess(model);
+      }
+      if(recipe == null) return wrongAccess(model);
+      model.addAttribute("tag",recipeService.getTagNameList());
+      model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
+      model.addAttribute("recipe", recipe);
+      model.addAttribute("contentList", recipeService.getCon(rnoLong));
+      Long loginUno = (Long)session.getAttribute("userNo");
+      if(recipe.getUserNo().equals(loginUno))
+      {
+         model.addAttribute("canModify", "true");
+      }
+      return "/recipe/detail";
+   }
 
-	@PostMapping("/modify")
-	public String modify(RecipeVO recipe, ContentVO content, RedirectAttributes rttr) {
-		log.info("modify: " + recipe);
-		log.info("modify: " + content);
+   @GetMapping("del")
+   public String delelete(Model model, @RequestParam("rno") String rno, RedirectAttributes rttr, HttpSession session ) {
+     if(rno == null) return wrongAccess(model);
+      //게시글 넘버 잘못됐으면 . 공백||널||숫자 체크
+      if(rno.equals("") || rno==null || !isNumeric(rno)) {
+         return wrongAccess(model);
+      }
+      Long rnoLong = Long.parseLong(rno);
+      RecipeVO checkRecipe = recipeService.get(rnoLong);
+      if(checkRecipe==null)
+      {
+    	  return wrongAccess(model);
+      }
+      if(!isLoginUser(session, checkRecipe.getUserNo()))
+      {
+    	  return wrongAccess(model);
+      }
+      if (recipeService.remove(rnoLong)) {
+         //model.addAttribute("result", "success");
+      } else {
+         return wrongAccess(model, "게시물 삭제에 실패하였습니다.");
+      }
+//      String referer = request.getHeader("Referer");
+         rttr.addFlashAttribute("result", "게시물을 삭제하였습니다.");
+      return "redirect:/user/mkitchen";
+   }
 
-		if (recipeService.modify(recipe) && recipeService.ModifyCon(content)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/recipe/modify";
-	}
-	
-	@GetMapping("/modiRecipe")
-	public String modiRecipe(Model model, String rno, HttpSession session,RedirectAttributes redirectAttributes, HttpServletRequest request) {
-		Long checkUserNo = recipeService.isMyRecipe(Long.valueOf(rno));
-		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(checkUserNo) ) ) ) {
-			return wrongAccess(model);
-		}
-		if(rno==null) return wrongAccess(model);
-		try {
-			RecipeVO recipe = recipeService.get(Long.valueOf(rno));
-			if(recipe==null) {
-				model.addAttribute("result", "수정할 레시피가 없어요");
-				return "/error";
-			}
-			model.addAttribute("recipe", recipe);
-			String referer = request.getHeader("Referer");
-			model.addAttribute("prevPage", referer);
-			return "/recipe/modiRecipe";
-		} catch (NumberFormatException e) {
-			return wrongAccess(model);
-		}		
-	}
-	
-	@PostMapping("/modiRecipe")
-	public String modiRecipe(Model model, RecipeVO recipe, HttpSession session) {
-		Long userNo = recipe.getUserNo();
-		if( session.getAttribute("userNo")==null || (! ( ((Long)session.getAttribute("userNo")).equals(userNo) ) ) ) {
-			return wrongAccess(model);
-		}
-		if(recipe==null) return wrongAccess(model);
-		if(recipeService.get(recipe.getRno())==null) {
-			model.addAttribute("result", "수정할 레시피가 없어요");
-			return "/error";
-		}
-		recipeService.modify(recipe);
-		return "redirect:/recipe/detail?rno="+recipe.getRno();
-	}
-	
+   private String wrongAccess(Model model) {
+      // TODO Auto-generated method stub
+      model.addAttribute("result", "잘못된 접근입니다.");
+      return "/error";
+   }
 
-	@GetMapping("/list")
-	public void list(Long categoryNo,Model model) {
-		log.info("list");
-		model.hashCode();
-		if(categoryNo==null) {
-			model.addAttribute("list", recipeService.getList());
-		}else {
-//			List<CategoryVO> categoryList = recipeService.getCategoryNamebyPrevCode(categoryNo);
-			model.addAttribute("category",recipeService.getCategoryNamebyPrevCode(categoryNo));
-			model.addAttribute("list",recipeService.getCategoryCode(categoryNo));
-		}
-	}
-//		model.addAttribute("2ndCategory", recipeService.getCategoryNamebyPrevCode(categoryNo));
+   private String wrongAccess(Model model, String string) {
+      // TODO Auto-generated method stub
+      model.addAttribute("result", string);
+      return "/error";
+   }
 
-	@GetMapping("detail")
-	public void detail(Model model, Long rno, HttpSession session) {
-		RecipeVO recipe = recipeService.get(rno);
-		model.addAttribute("author", userService.getUserByNo(recipe.getUserNo()));
-		model.addAttribute("recipe", recipe);
-		model.addAttribute("contentList", recipeService.getCon(rno));
-		Long loginUno = (Long)session.getAttribute("userNo");
-		if(recipe.getUserNo().equals(loginUno))
-		{
-			model.addAttribute("canModify", "true");
-		}
-	}
+   private boolean isNumeric(String no) {
+      try {
+         double d = Double.parseDouble(no);
+      } catch (NumberFormatException nfe) {
+         return false;
+      }
+      return true;
+   }
+   
+   //로그인한 세션 번호랑 유저 번호가 같는지 체크.
+   private boolean isLoginUser(HttpSession session, Long userNo)
+   {
+	   Long loginUno = (Long)session.getAttribute("userNo");
+	   if(loginUno.equals(userNo))
+	   {
+		   return true;
+	   }
+	   else
+		   return false;
+   }
 
-	@GetMapping("del")
-	public String delelete(HttpServletRequest request, Model model, Long rno) {
-		if (recipeService.remove(rno)) {
-			model.addAttribute("result", "success");
-		} else {
-			model.addAttribute("result", "fail");
-		}
-		String referer = request.getHeader("Referer");
-		return "redirect:" + referer;
-	}
-	
-	private String wrongAccess(Model model) {
-		// TODO Auto-generated method stub
-		model.addAttribute("result", "잘못된 접근입니다.");
-		return "/error";
-	}
-	
-
-//	@GetMapping("/category")
-//	public void list(Long categoryNo, Model model) {
-//		if (categoryNo == null) {
-//			model.addAttribute("list", recipeService.getList());
-//		} else {
-//			model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
-//		}
-//	}
+//   @GetMapping("/category")
+//   public void list(Long categoryNo, Model model) {
+//      if (categoryNo == null) {
+//         model.addAttribute("list", recipeService.getList());
+//      } else {
+//         model.addAttribute("list", recipeService.getCategoryCode(categoryNo));
+//      }
+//   }
 
 }

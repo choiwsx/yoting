@@ -1,56 +1,57 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix='fn'%>
 <%@ include file="../includes/tempnav.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>회원 리스트</title>
+	<meta charset="utf-8">
+<title>주방장 리스트</title>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div>
-
-<h1>가입된 유저 리스트</h1>
-	<table border="1">
-	<thead>
-	<tr>
-		<th>userNo</th>
-		<th>userId</th>
-		<th>userPwd</th>
-		<th>email</th>
-		<th>emailAuth</th>
-		<th>nickName</th>
-		<th>profilePhoto</th>
-		<th>webUrl</th>
-		<th>bio</th>
-		<th>emailSub</th>
-		<th>privacy</th>
-		<th>status</th>
-		<th>삭제</th>
-	</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="user" items="${list}">
-		<tr>
-			<td><a href="<c:url value='/user/profile?userId=${user.userId}' />"><c:out value="${user.userNo}" /></a></td>
-			<td><c:out value="${user.userId}" /></td>
-			<td><c:out value="${user.userPwd}" /></td>
-			<td><c:out value="${user.email}" /></td>
-			<td><c:out value="${user.emailAuth}" /></td>
-			<td><c:out value="${user.nickName}" /></td>
-			<td><c:out value="${user.profilePhoto}" /></td>
-			<td><c:out value="${user.webUrl}" /></td>
-			<td><c:out value="${user.bio}" /></td>
-			<td><c:out value="${user.emailSub}" /></td>
-			<td><c:out value="${user.privacy}" /></td>
-			<td><c:out value="${user.status}" /></td>
-			<td><a href="<c:url value='/user/deluser?userno=${user.userNo}' />">삭제</a></td>
-		</tr>
+<c:if test="${not empty simpleProfileList }">
+	
+	<table>
+	<div> <h3>쿡스타그램에는 현재 총 <c:out value="${fn:length(simpleProfileList)} " />명의 주방장이 있습니다.</h3></div>
+	<br>
+		<c:forEach items="${simpleProfileList}" var="user">
+		<div style="height: 150px">
+			<a href='/user/profile?userId=<c:out value="${user.userId }" />' class="profileUrl" >
+				<img src="<c:out value="${user.profilePhoto}"/>" width="140" height="120" onerror="imgError(this);" style='float: left'/>
+				id:<c:out value="${user.userId}" /><br>
+				닉넴:<c:out value="${user.nickName}" /><br>
+				레시피 개수:<c:out value="${user.recipeCount}" />개<br>
+				구독자:<c:out value="${user.followers}" />명<br>
+				구독중:<c:out value="${user.followings}" />명 </a>
+				<br>
+				</div>
 		</c:forEach>
-	</tbody>
 	</table>
-
-
+	</c:if>
+	<c:if test="${empty simpleProfileList }"><h3>쿡스타그램에 아직 주방장이 없습니다. 주방장으로 가입해서 레시피를 올려주세요! </h3></c:if>
 </body>
+
+<script type="text/javascript">
+$("#userKeyword").autocomplete({
+	source : function(request, response) {
+		$.ajax({
+			url : "/user/autocomplete",
+			type : "post",
+			dataType : "json",
+			data : request,
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",				
+			success : function(data) {
+				var result = data;
+				response(result);
+			},
+			error : function(data) {
+				alert("에러가 발생하였습니다.")
+			}
+		});
+	}
+});
+
+</script>
 </html>

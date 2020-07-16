@@ -35,71 +35,72 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
+//지호: null값 유효성체크 0711
 @Controller
 @Log4j
 public class UploadController {
 	
 	@Autowired
-	private RecipeService service;
+	private RecipeService recipeService;
 
 	@GetMapping("/upload/uploadForm")
 	public void uploadForm() {
 		log.info("upload form");
 	}
 	
-	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration"})
+	@GetMapping({"/upload/uploadAjax", "/upload/register", "/upload/registration", "/upload/test"})
 	public void uploadAjax(Model model) {
 		model.addAttribute("recipe", new RecipeVO());
 //		log.info("upload ajax");
 	}
 	
-	@PostMapping("/upload/registrationTest")
-	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
-		//recipeService에 저장하기
-		service.register(recipe);
-		return recipe;
-	}
+//	@PostMapping("/upload/registrationTest")
+//	public @ModelAttribute("recipe") RecipeVO register2save(@ModelAttribute("recipe") RecipeVO recipe) {
+//		//recipeService에 저장하기
+//		service.register(recipe);
+//		return recipe;
+//	}
 	
-	@PostMapping({"/upload/register"})
-	public String register(RecipeVO recipe, RedirectAttributes rttr)
-	{
-		log.info("==================");
-		log.info("register : "+ recipe);
-		
-		if(recipe.getContentList() != null)
-		{
-			recipe.getContentList().forEach(content->log.info(content));
-		}
-		
-		service.register_w(recipe);
-		
-		return "redirect:/recipe/list";
-		
-	}
+//	@PostMapping({"/upload/register"})
+//	public String register(RecipeVO recipe, RedirectAttributes rttr)
+//	{
+//		log.info("==================");
+//		log.info("register : "+ recipe);
+//		
+//		if(recipe.getContentList() != null)
+//		{
+//			recipe.getContentList().forEach(content->log.info(content));
+//		}
+//		
+//		service.register_w(recipe);
+//		
+//		return "redirect:/recipe/list";
+//		
+//	}
 	
 	
 	
-	@PostMapping("/upload/uploadFormAction")
-	public void uploadFormPost(MultipartFile[] uploadFile, Model model)
-	{
-		String uploadFolder = "C:\\upload";
-		
-		for(MultipartFile multipartFile : uploadFile)
-		{
-			log.info("-------------------");
-			log.info("Upload File Name : " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
-			
-			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch(Exception e)
-			{
-				log.error(e.getMessage());
-			}
-		}
-	}
+//	@PostMapping("/upload/uploadFormAction")
+//	public void uploadFormPost(MultipartFile[] uploadFile, Model model)
+//	{
+//		String uploadFolder = "C:\\upload";
+//		
+//		for(MultipartFile multipartFile : uploadFile)
+//		{
+//			log.info("-------------------");
+//			log.info("Upload File Name : " + multipartFile.getOriginalFilename());
+//			log.info("Upload File Size: " + multipartFile.getSize());
+//			
+//			File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
+//			
+//			try {
+//				multipartFile.transferTo(saveFile);
+//			}catch(Exception e)
+//			{
+//				log.error(e.getMessage());
+//			}
+//		}
+//	}
 	
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -148,6 +149,14 @@ public class UploadController {
 		
 	}
 	
+	
+	@GetMapping("/deleteFile")
+	public String delteFile(Model model) {
+		//겟 막기
+		return wrongAccess(model);
+	}
+	
+	
 	@PostMapping("/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> delteFile(String fileName, String type, HttpServletRequest request)
@@ -174,6 +183,13 @@ public class UploadController {
 			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 }
 		 return new ResponseEntity<String>("deleted", HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/upload/uploadAjaxAction")
+	public String uploadAjaxPost(Model model) {
+		//겟 막기
+		return wrongAccess(model);
 	}
 	
 	
@@ -206,12 +222,14 @@ public class UploadController {
 			AttachFileDTO attachDTO = new AttachFileDTO();
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-			attachDTO.setFileName(uploadFileName);
-			
+			attachDTO.setShowFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID();
+			String exeName = uploadFileName.substring(uploadFileName.lastIndexOf(".")+1);
 			
-			uploadFileName = uuid.toString() +"_"+uploadFileName;
+			uploadFileName = uuid.toString()+"."+exeName; 
+					//+"_"+uploadFileName;
+			attachDTO.setFileName(uploadFileName);
  			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
@@ -223,7 +241,7 @@ public class UploadController {
 				{
 					attachDTO.setImage(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 350, 350);
 					thumbnail.close();
 				}
 				list.add(attachDTO);
@@ -234,6 +252,13 @@ public class UploadController {
 			}
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	
+	private String wrongAccess(Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("result", "잘못된 접근입니다.");
+		return "/error";
 	}
 	
 }                                                       

@@ -21,8 +21,7 @@ a {
 </style>
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<c:if test="${where == user or where==null}">
 	<div class="userlist">
 	<hr>
@@ -37,16 +36,32 @@ a {
 				<div style="border: 1px solid; margin: 10px; float: left;">
 					 <div>
 					 <a href='/user/profile?userId=<c:out value="${recipe.userId}"/>'><img src="<c:out value='${recipe.profilePhoto}'/>" width=85px
-					height=85px>
-					<br><c:out value="${recipe.userId}"/>
-					<br><c:out value="${recipe.nickName}"/>
+					height=85px onerror="imgError(this);">
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.userId) > 9}">
+						      ${fn:substring(recipe.userId,0,8)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.userId}
+						  </c:otherwise>
+						</c:choose>
+					<br>
+					<c:choose>
+						   <c:when test="${fn:length(recipe.nickName) > 10}">
+						      ${fn:substring(recipe.nickName,0,9)}...
+						   </c:when>
+						  <c:otherwise>
+						     ${recipe.nickName}
+						  </c:otherwise>
+						</c:choose>
 					</a></div>
 					</div>
 			</c:forEach>
 
 
-			<br><c:if test="${list_user.size()>=6}">
-						<a class="more_button" href="user">더보기</a>
+			<br><c:if test="${list_user.size()>6}">
+						<a class="more_button" href="user">더 보기</a>
 					</c:if>
 	</div>
 	</c:if>
@@ -54,23 +69,23 @@ a {
 	<div class="recipelist">
 	<hr>
 	<h3>레시피 리스트</h3>
-		<label>
+		<!-- <label>
 			총
 			<c:out value="${fn:length(list)}  " />
 			개있습니다.
 		</label>
-		<c:if test="${list.size()>=5 and where==null}">
-					<a class="more_button" href="recipe">더보기</a>
-				</c:if>
+		 -->
+
 		<br>
-		
+		<!-- 카테고리 어떢하죵? -->
 		<c:forEach items="${category}" var="category">
 				<h5 style="float:left"><a class="categorySelect" id=<c:out value="${category.categoryNo}" />
 					href="<c:out value="${category.categoryNo}" />"> #<c:out
 						value="${category.categoryName}" /></a></h5>
 		</c:forEach>
-				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5> <br><br><br>
-				
+				<h5 style="float:left"><a class="init" href="#"> [초기화]</a></h5>
+				 <br><br><br>
+				 
 <div style="width: 1420px; height: 880px; border: 1px solid gray; margin-left: 4.5%; margin-right: 4.5%;">
 		<tr>
 			<td><c:if test="${empty list}">
@@ -78,34 +93,44 @@ a {
 			</c:if></td>
 				
 			<c:forEach items="${list}" var="recipe">
-		<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+					<div data-category="<c:out value="${recipe.categoryNo }" />" style="display: inline-block;">
+			
+<!-- 		<div style="display: inline-block;"> -->
 				<a class="content" href="/recipe/detail?rno=${recipe.rno}">
-					<div
-						style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
+					<div style="text-align: center; border: 1px solid; width: 280px; height: 370px; margin: 33px; float: left;">
 						<div>
 							<img src="<c:out value='${recipe.thumbnail }'/>" width=280px
-								height=280px>
+								height=280px onerror="imgError(this);">
 						</div>
 						<div style="margin-top: 10px;">
-							<c:out value="${recipe.title }" />
+							<c:choose>
+   <c:when test="${fn:length(recipe.title) > 15}">
+      ${fn:substring(recipe.title,0,14)}...
+   </c:when>
+  <c:otherwise>
+     ${recipe.title}
+  </c:otherwise>
+</c:choose>
 						</div>
 						<div>
 							by
-							<c:out value="${recipe.userNo }" />
+							<c:out value="${recipe.nickName }" />
 						</div>
-						카테고리코드:
-						<c:out value="${recipe.categoryNo }" />
+	
 						<div>
 							<fmt:formatDate pattern="yyyy-MM-dd"
-								value="${recipe.updateDate }" />
+								value="${recipe.regDate }" />
 						</div>
 					</div>
 				</a>
 		</div>
 			</c:forEach>
 		</div>
+				<c:if test="${list.size()>=5 and where==null}">
+					<h3 style="float:right; margin-right:100px"><a class="more_button" href="recipe">...더 보기</a></h3>
+				</c:if>
 </div>
-
+<!-- 
 <div class="taglist">
 	<c:if test="${where == tag or where==null}">
 	<hr>
@@ -117,23 +142,24 @@ a {
 				<c:forEach items="${list_tag}" var="recipe">
 			<div style="border: 1px solid; width: 330px; height: 200px; padding: 15px; margin: 33px; float: left;">
 	<div style="float:left;"><a href="/recipe/detail?rno=${recipe.rno}"><img src="<c:out value="${recipe.thumbnail }"/>"
-					width="200" height="200" /></a></div>
+					width="200" height="200"  onerror="imgError(this);" /></a></div>
 						<div style="padding: 15px;"><c:out value="${recipe.title}" /></div>
 						<div><c:out value="${recipe.userNo}" /></div>
 						</div>
 				</c:forEach>
 					<c:if test="${list_tag.size()>=3}">
-							<a class="more_button" href="tag">더보기</a>
+							<a class="more_button" href="tag">더 보기</a>
 						</c:if>
 			</c:if>
 			
 	</c:if>
 </div>
+ -->
 	<form id='actionForm' action="/search/result" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='type'
-			value='<c:out value="${pageMaker.cri.type}"/>'> <input
+	<%-- 	<input type='hidden' name='type'
+			value='<c:out value="${pageMaker.cri.type}"/>'> --%> <input
 			type='hidden' name='where'
 			value='<c:out value="${pageMaker.cri.where}"/>'> <input
 			type='hidden' name='keyword'
@@ -143,8 +169,8 @@ a {
 	<form id="morelistForm" action="/search/detail" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='type'
-			value='<c:out value="${pageMaker.cri.type}"/>'> <input
+<%-- 		<input type='hidden' name='type'
+			value='<c:out value="${pageMaker.cri.type}"/>'> --%> <input
 			type='hidden' name='keyword'
 			value='<c:out value="${pageMaker.cri.keyword}"/>'> <input
 			type='hidden' name='where' value=''>
@@ -203,7 +229,7 @@ a {
 		var moreListForm = $("#morelistForm");
 		$(".more_button").on("click", function(e) {
 			e.preventDefault();
-			console.log('click-더보기');
+			//console.log('click-더 보기');
 			moreListForm.find("input[name='where']").val($(this).attr("href"));
 			//actionForm.submit();
 			moreListForm.submit();
@@ -211,10 +237,10 @@ a {
 
 		var searchForm = $("#searchForm");
 		$("#searchForm button").on("click", function(e) {
-			if (!searchForm.find("option:selected").val()) {
+/* 			if (!searchForm.find("option:selected").val()) {
 				alert("검색종류를 선택하세요.");
 				return false;
-			}
+			} */
 
 			if (!searchForm.find("input[name='keyword']").val()) {
 				alert("키워드를 입력하세요.");

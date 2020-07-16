@@ -5,13 +5,11 @@ import java.util.List;
 import org.kitchen.domain.CategoryVO;
 import org.kitchen.domain.ContentVO;
 import org.kitchen.domain.RecipeVO;
+import org.kitchen.domain.SimpleRecipeDTO;
+import org.kitchen.domain.TagVO;
 
 public interface RecipeService {
 	
-	public void register(RecipeVO recipe, ContentVO content);
-
-	public void register(RecipeVO recipe, List<ContentVO> contents);
-
 	public Long register(RecipeVO recipe);
 
 	public void registerCon(ContentVO content);
@@ -22,7 +20,7 @@ public interface RecipeService {
 
 	public boolean modify(RecipeVO recipe);
 
-	public boolean ModifyCon(ContentVO content);
+	public boolean modifyCon(ContentVO content);
 
 	public boolean remove(Long rno);
 
@@ -37,5 +35,16 @@ public interface RecipeService {
 	public void register_w(RecipeVO recipe);
 
 	public List<CategoryVO> getCategoryNamebyPrevCode(Long categoryNo);
-	public Long isMyRecipe(Long rno);
+	
+	public boolean isMyRecipe(Long rno, Long userNo);
+	
+	public List<TagVO> getTagNameList();
+	
+	public RecipeVO getLatestRecipe();
+	
+	public int checkCode(Long categoryNo);
+	
+	public List<SimpleRecipeDTO> getSimpleRecipeByCategory(Long categoryNoLong);
+		
+	public List<SimpleRecipeDTO> getSimpleRecipeList();
 }

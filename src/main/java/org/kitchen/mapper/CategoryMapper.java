@@ -29,7 +29,7 @@ public interface CategoryMapper {
 	//--update--
 	public void updateCategory(@Param("c_code") int c_code, @Param("CategoryName") String CategoryName, @Param("c_prev_code") int c_prev_code);
 
-
+	public int checkCode(Long categoryNo);
 	
 	
 	
